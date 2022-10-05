@@ -1,0 +1,15 @@
+export type Service =
+  | 'Accéder à du matériel'
+  | 'Accéder à une connexion internet'
+  | 'Accompagner les démarches de santé'
+  | 'Approfondir ma culture numérique'
+  | 'Créer avec le numérique'
+  | 'Créer et développer mon entreprise'
+  | 'Devenir autonome dans les démarches administratives'
+  | 'Favoriser mon insertion professionnelle'
+  | 'Prendre en main un ordinateur'
+  | 'Prendre en main un smartphone ou une tablette'
+  | 'Promouvoir la citoyenneté numérique'
+  | 'Réaliser des démarches administratives avec un accompagnement'
+  | 'Utiliser le numérique au quotidien'
+  | "S'équiper en matériel informatique";
