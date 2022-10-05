@@ -11,5 +11,6 @@ export type Service =
   | 'Prendre en main un smartphone ou une tablette'
   | 'Promouvoir la citoyenneté numérique'
   | 'Réaliser des démarches administratives avec un accompagnement'
+  | 'S’équiper en matériel informatique'
   | 'Utiliser le numérique au quotidien'
-  | "S'équiper en matériel informatique";
+  | "Soutenir la parentalité et l'éducation avec le numérique";

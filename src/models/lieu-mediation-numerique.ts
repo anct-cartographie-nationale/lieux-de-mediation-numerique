@@ -9,9 +9,9 @@ import { Presentation } from './presentation';
 import { Service } from './service';
 import { PublicAccueilli } from './public-accueilli';
 import { ConditionAccess } from './condition-access';
-import { ModalitesAccompagnement } from './modalites-accompagnement';
+import { ModaliteAccompagnement } from './modalite-accompagnement';
 import { Url } from './url/url';
-import { LabelNational } from './labels-nationaux';
+import { LabelNational } from './label-national';
 import { Pivot } from './pivot/pivot';
 import { CleBan } from './cle-ban/cle-ban';
 
@@ -34,7 +34,7 @@ export type LieuMediationNumerique = {
   conditions_access?: ConditionAccess[];
   labels_nationaux?: LabelNational[];
   labels_autres?: string[];
-  modalites_accompagnement?: ModalitesAccompagnement[];
+  modalites_accompagnement?: ModaliteAccompagnement[];
   accessibilite?: Url;
   prise_rdv?: Url;
 };
