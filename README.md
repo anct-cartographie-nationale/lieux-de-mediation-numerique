@@ -42,7 +42,7 @@ Voir le [guide de contribution](./CONTRIBUTING.md) du dépôt.
 
 Afin de maintenir un cycle de publication clair et de favoriser la rétrocompatibilité, la dénomination des versions suit la spécification décrite par la [Gestion sémantique de version](https://semver.org/lang/fr/)
 
-Les versions disponibles ainsi que les journaux décrivant les changements apportés sont disponibles depuis [la page des Releases](https://github.com/anct-cartographie-nationale/client-application/releases).
+Les versions disponibles ainsi que les journaux décrivant les changements apportés sont disponibles depuis [la page des Releases](https://github.com/anct-cartographie-nationale/lieux-de-mediation-numerique/releases).
 
 ## Licence
 

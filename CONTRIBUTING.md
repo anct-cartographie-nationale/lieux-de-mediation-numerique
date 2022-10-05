@@ -1,4 +1,4 @@
-# Contribution
+# Guide de contribution
 
 ## Table des matières
 
@@ -96,7 +96,7 @@ La branche `main`, ainsi que l'ensemble des branches de travail avec un préfixe
 
 - La branche principale est `main`, il n'est pas possible de publier en faisant un `push` depuis un dépôt local
 - Il faut forcément créer une nouvelle branche de travail avec l'un préfixe autorisé
-- À chaque publication sur une branche de travail, le workflow `Validate feature` sur [github actions](https://github.com/anct-cartographie-nationale/lieux-de-mediation-numerique/actions) vérifie
+- À chaque publication sur une branche de travail, le workflow `validate` sur [github actions](https://github.com/anct-cartographie-nationale/lieux-de-mediation-numerique/actions) vérifie
   - Qu'il est possible de créer un build sans erreur
   - Que la syntaxe correspond bien à ce qui est [défini par Prettier](https://github.com/anct-cartographie-nationale/client-base/blob/main/.prettierrc.json)
   - Que le code écrit en TypeScript respecte les conventions décrites par les [règles ESLint](https://github.com/anct-cartographie-nationale/client-base/blob/main/.eslintrc.json)
