@@ -1,7 +1,5 @@
-import { OptionalPropertyError } from '../../../errors';
-
-export class CommuneError extends OptionalPropertyError {
+export class CommuneError extends Error {
   constructor(commune: string) {
-    super('commune', `La commune ${commune} contient des caractères invalides`);
+    super(`La commune ${commune} contient des caractères invalides`);
   }
 }
