@@ -6,7 +6,7 @@ export * from './pivot/pivot';
 export * from './rna/rna';
 export * from './siret/siret';
 export * from './url/url';
-export * from './condition-access';
+export * from './condition-access/condition-access';
 export * from './label-national';
 export * from './lieu-mediation-numerique';
 export * from './modalite-accompagnement';

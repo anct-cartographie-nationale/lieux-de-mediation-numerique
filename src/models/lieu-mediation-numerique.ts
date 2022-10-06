@@ -8,7 +8,7 @@ import { Contact } from './contact/contact';
 import { Presentation } from './presentation';
 import { Service } from './service';
 import { PublicAccueilli } from './public-accueilli';
-import { ConditionAccess } from './condition-access';
+import { ConditionAccess } from './condition-access/condition-access';
 import { ModaliteAccompagnement } from './modalite-accompagnement';
 import { Url } from './url/url';
 import { LabelNational } from './label-national';
