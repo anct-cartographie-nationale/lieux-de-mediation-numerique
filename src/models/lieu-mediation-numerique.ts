@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { Adresse } from './adresse';
-import { Typologie } from './typologie';
+import { Typologies } from './typologie';
 import { Localisation } from './localisation';
 import { Contact } from './contact';
 /* eslint-disable-next-line @typescript-eslint/no-shadow */
 import { Presentation } from './presentation';
-import { Service } from './service';
+import { Services } from './service';
 import { PublicsAccueillis } from './public-accueilli';
 import { ConditionsAccess } from './condition-access';
 import { ModalitesAccompagnement } from './modalite-accompagnement';
@@ -22,14 +22,14 @@ export type LieuMediationNumerique = {
   adresse: Adresse;
   localisation: Localisation;
   cle_ban?: CleBan;
-  typologie?: Typologie[];
+  typologie?: Typologies;
   contact?: Contact;
   horaires?: string;
   presentation?: Presentation;
   source?: string;
   structure_parente?: string;
   date_maj?: Date;
-  services: Service[];
+  services: Services;
   publics_accueillis?: PublicsAccueillis;
   conditions_access?: ConditionsAccess;
   labels_nationaux?: LabelsNationaux;
