@@ -1,4 +1,5 @@
-import { Pivot, PivotError } from './pivot';
+import { Pivot } from './pivot';
+import { PivotError } from './errors';
 
 describe('pivot model', (): void => {
   it('should create a valide pivot using Siret id', (): void => {

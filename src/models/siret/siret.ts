@@ -1,10 +1,5 @@
 import { Model } from '../model';
-
-export class SiretError extends Error {
-  constructor(siret: string) {
-    super(`Le Siret ${siret} n'est pas valide`);
-  }
-}
+import { SiretError } from './errors';
 
 export type Siret = Model<'Siret', string>;
 

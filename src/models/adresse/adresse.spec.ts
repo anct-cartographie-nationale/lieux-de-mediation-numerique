@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase */
 
-import { Adresse, AdresseToValidate, CommuneError } from './adresse';
-import { CodeInseeError, CodePostalError } from './errors';
+import { Adresse, AdresseToValidate } from './adresse';
+import { CodeInseeError, CodePostalError, CommuneError } from './errors';
 
 describe('adresse model', (): void => {
   it('should create a valid address', (): void => {
