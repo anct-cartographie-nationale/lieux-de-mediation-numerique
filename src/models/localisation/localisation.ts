@@ -38,7 +38,3 @@ const throwLocalisationError = (localisationData: LocalisationToValidate): Local
 /* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const Localisation = (localisation: LocalisationToValidate): Localisation =>
   isValidLocalisation(localisation) ? { ...localisation } : throwLocalisationError(localisation);
-
-type NoLocalisation = { noLocalisation: true } & null;
-
-export const NO_LOCALISATION: Localisation = null as NoLocalisation;

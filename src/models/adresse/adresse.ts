@@ -1,6 +1,5 @@
 import { Model } from '../model';
-import { OptionalPropertyError } from '../../errors';
-import { CodeInseeError, CodePostalError } from './errors';
+import { CodeInseeError, CodePostalError, CommuneError } from './errors';
 
 export type Adresse = Model<
   'Adresse',
@@ -18,15 +17,9 @@ export type Adresse = Model<
 
 export type AdresseToValidate = Omit<Adresse, 'isAdresse'>;
 
-export class CommuneError extends OptionalPropertyError {
-  constructor(commune: string) {
-    super('commune', `La commune ${commune} contient des caractères invalides`);
-  }
-}
-
 const CODE_POSTAL_REG_EXP: RegExp = /^\d{5}$/u;
 
-const CODE_INSEE_REG_EXP: RegExp = /^\d[\dAB](?:0?\d{3}|-\d-\d{2}-\d{3})$/u;
+const CODE_INSEE_REG_EXP: RegExp = /^(?:[013-9]\d|2[AB1-9])(?:0?\d{3}|-\d-\d{2}-\d{3})$/u;
 
 const COMMUNE_REG_EXP: RegExp = /^[A-Za-z\dÀ-ú-'’ ]+$/u;
 

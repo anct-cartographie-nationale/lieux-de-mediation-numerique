@@ -1,4 +1,5 @@
-import { Rna, RnaError } from './rna';
+import { Rna } from './rna';
+import { RnaError } from './errors';
 
 describe('rna model', (): void => {
   it('should create a valide rna', (): void => {

@@ -1,4 +1,5 @@
-import { Url, UrlError } from './url';
+import { Url } from './url';
+import { UrlError } from './errors';
 
 describe('url model', (): void => {
   it('should create a valid url', (): void => {

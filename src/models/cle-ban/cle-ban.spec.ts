@@ -1,4 +1,5 @@
-import { CleBan, CleBanError } from './cle-ban';
+import { CleBan } from './cle-ban';
+import { CleBanError } from './errors';
 
 describe('cleBan model', (): void => {
   it('should create a valide cleBan', (): void => {

@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { Adresse } from './adresse/adresse';
+import { Adresse } from './adresse';
 import { Typologie } from './typologie';
-import { Localisation } from './localisation/localisation';
-import { Contact } from './contact/contact';
+import { Localisation } from './localisation';
+import { Contact } from './contact';
 /* eslint-disable-next-line @typescript-eslint/no-shadow */
 import { Presentation } from './presentation';
 import { Service } from './service';
-import { PublicAccueilli } from './public-accueilli';
-import { ConditionAccess } from './condition-access';
-import { ModalitesAccompagnement } from './modalites-accompagnement';
-import { Url } from './url/url';
-import { LabelNational } from './labels-nationaux';
-import { Pivot } from './pivot/pivot';
-import { CleBan } from './cle-ban/cle-ban';
+import { PublicsAccueillis } from './public-accueilli';
+import { ConditionsAccess } from './condition-access';
+import { ModalitesAccompagnement } from './modalite-accompagnement';
+import { Url } from './url';
+import { Pivot } from './pivot';
+import { CleBan } from './cle-ban';
+import { LabelsNationaux } from './label-national';
 
 export type LieuMediationNumerique = {
   id: string;
@@ -30,11 +30,11 @@ export type LieuMediationNumerique = {
   structure_parente?: string;
   date_maj?: Date;
   services: Service[];
-  publics_accueillis?: PublicAccueilli[];
-  conditions_access?: ConditionAccess[];
-  labels_nationaux?: LabelNational[];
+  publics_accueillis?: PublicsAccueillis;
+  conditions_access?: ConditionsAccess;
+  labels_nationaux?: LabelsNationaux;
   labels_autres?: string[];
-  modalites_accompagnement?: ModalitesAccompagnement[];
+  modalites_accompagnement?: ModalitesAccompagnement;
   accessibilite?: Url;
   prise_rdv?: Url;
 };

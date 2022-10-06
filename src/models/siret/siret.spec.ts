@@ -1,4 +1,5 @@
-import { Siret, SiretError } from './siret';
+import { Siret } from './siret';
+import { SiretError } from './errors';
 
 describe('siret model', (): void => {
   it('should create a valide siret', (): void => {
