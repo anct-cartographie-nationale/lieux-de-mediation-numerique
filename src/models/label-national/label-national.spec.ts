@@ -2,7 +2,7 @@ import { LabelNational, LabelsNationaux } from './label-national';
 import { LabelsNationauxError } from './errors';
 
 describe('label national model', (): void => {
-  it('should create a valid label national', (): void => {
+  it('should create valid labels nationaux', (): void => {
     const labelNationaux: LabelsNationaux = LabelsNationaux([LabelNational.CNFS]);
 
     expect(labelNationaux).toStrictEqual([LabelNational.CNFS]);

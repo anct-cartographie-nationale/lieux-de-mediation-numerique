@@ -2,7 +2,7 @@ import { PublicAccueilli, PublicsAccueillis } from './public-accueilli';
 import { PublicsAccueillisError } from './errors';
 
 describe('public accueilli model', (): void => {
-  it('should create a valid publics accueillis', (): void => {
+  it('should create valid publics accueillis', (): void => {
     const publicsAccueillis: PublicsAccueillis = PublicsAccueillis([PublicAccueilli.Adultes]);
 
     expect(publicsAccueillis).toStrictEqual([PublicAccueilli.Adultes]);

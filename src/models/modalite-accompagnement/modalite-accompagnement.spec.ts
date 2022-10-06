@@ -2,13 +2,13 @@ import { ModaliteAccompagnement, ModalitesAccompagnement } from './modalite-acco
 import { ModalitesAccompagnementError } from './errors';
 
 describe('modalite accompagnement model', (): void => {
-  it('should create a valid modalite accompagnement', (): void => {
+  it('should create valid modalites accompagnement', (): void => {
     const modalitesAccompagnement: ModalitesAccompagnement = ModalitesAccompagnement([ModaliteAccompagnement.AMaPlace]);
 
     expect(modalitesAccompagnement).toStrictEqual([ModaliteAccompagnement.AMaPlace]);
   });
 
-  it('should not create invalid modalite accompagnement', (): void => {
+  it('should not create invalid modalites accompagnement', (): void => {
     expect((): void => {
       ModalitesAccompagnement(['En autonomie' as ModaliteAccompagnement]);
     }).toThrow(new ModalitesAccompagnementError('En autonomie' as ModaliteAccompagnement));
