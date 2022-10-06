@@ -7,7 +7,7 @@ export * from './rna/rna';
 export * from './siret/siret';
 export * from './url/url';
 export * from './condition-access/condition-access';
-export * from './label-national';
+export * from './label-national/label-national';
 export * from './lieu-mediation-numerique';
 export * from './modalite-accompagnement';
 export * from './model';

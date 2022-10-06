@@ -11,9 +11,9 @@ import { PublicAccueilli } from './public-accueilli';
 import { ConditionAccess } from './condition-access/condition-access';
 import { ModaliteAccompagnement } from './modalite-accompagnement';
 import { Url } from './url/url';
-import { LabelNational } from './label-national';
 import { Pivot } from './pivot/pivot';
 import { CleBan } from './cle-ban/cle-ban';
+import { LabelsNationaux } from './label-national/label-national';
 
 export type LieuMediationNumerique = {
   id: string;
@@ -32,7 +32,7 @@ export type LieuMediationNumerique = {
   services: Service[];
   publics_accueillis?: PublicAccueilli[];
   conditions_access?: ConditionAccess[];
-  labels_nationaux?: LabelNational[];
+  labels_nationaux?: LabelsNationaux;
   labels_autres?: string[];
   modalites_accompagnement?: ModaliteAccompagnement[];
   accessibilite?: Url;

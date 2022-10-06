@@ -11,13 +11,13 @@ export enum ConditionAccess {
 
 export type ConditionsAccess = Model<'ConditionsAccess', ConditionAccess[]>;
 
-const CONDITION_ACCESS_INDEFINIE: ConditionAccess = "condition d'accès indéfinie" as ConditionAccess;
+export type ConditionsAccessIndefinie = "condition d'accès indéfinie";
 
 const firstInvalidConditionAccess = (conditionAccess: ConditionAccess): boolean =>
   !Object.values(ConditionAccess).includes(conditionAccess);
 
 const throwConditionsAccessError = (conditionsAccess: ConditionAccess[]): ConditionsAccess => {
-  throw new ConditionsAccessError(conditionsAccess.find(firstInvalidConditionAccess) ?? CONDITION_ACCESS_INDEFINIE);
+  throw new ConditionsAccessError(conditionsAccess.find(firstInvalidConditionAccess) ?? "condition d'accès indéfinie");
 };
 
 const isConditionsAccess = (conditionsAccess: ConditionAccess[]): conditionsAccess is ConditionsAccess =>
