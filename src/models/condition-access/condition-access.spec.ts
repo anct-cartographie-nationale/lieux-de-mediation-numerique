@@ -2,7 +2,7 @@ import { ConditionAccess, ConditionsAccess } from './condition-access';
 import { ConditionsAccessError } from './errors';
 
 describe('condition access model', (): void => {
-  it('should create a valide conditions access', (): void => {
+  it('should create a valid conditions access', (): void => {
     const conditionAccess: ConditionsAccess = ConditionsAccess([ConditionAccess.Adhesion]);
 
     expect(conditionAccess).toStrictEqual(['Adhésion']);
