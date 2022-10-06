@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { Adresse } from './adresse/adresse';
+import { Adresse } from './adresse';
 import { Typologie } from './typologie';
-import { Localisation } from './localisation/localisation';
-import { Contact } from './contact/contact';
+import { Localisation } from './localisation';
+import { Contact } from './contact';
 /* eslint-disable-next-line @typescript-eslint/no-shadow */
 import { Presentation } from './presentation';
 import { Service } from './service';
-import { PublicsAccueillis } from './public-accueilli/public-accueilli';
-import { ConditionsAccess } from './condition-access/condition-access';
-import { ModalitesAccompagnement } from './modalite-accompagnement/modalite-accompagnement';
-import { Url } from './url/url';
-import { Pivot } from './pivot/pivot';
-import { CleBan } from './cle-ban/cle-ban';
-import { LabelsNationaux } from './label-national/label-national';
+import { PublicsAccueillis } from './public-accueilli';
+import { ConditionsAccess } from './condition-access';
+import { ModalitesAccompagnement } from './modalite-accompagnement';
+import { Url } from './url';
+import { Pivot } from './pivot';
+import { CleBan } from './cle-ban';
+import { LabelsNationaux } from './label-national';
 
 export type LieuMediationNumerique = {
   id: string;
