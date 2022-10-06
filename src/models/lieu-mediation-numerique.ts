@@ -7,8 +7,8 @@ import { Contact } from './contact/contact';
 /* eslint-disable-next-line @typescript-eslint/no-shadow */
 import { Presentation } from './presentation';
 import { Service } from './service';
-import { PublicAccueilli } from './public-accueilli';
-import { ConditionAccess } from './condition-access/condition-access';
+import { PublicsAccueillis } from './public-accueilli/public-accueilli';
+import { ConditionsAccess } from './condition-access/condition-access';
 import { ModalitesAccompagnement } from './modalite-accompagnement/modalite-accompagnement';
 import { Url } from './url/url';
 import { Pivot } from './pivot/pivot';
@@ -30,8 +30,8 @@ export type LieuMediationNumerique = {
   structure_parente?: string;
   date_maj?: Date;
   services: Service[];
-  publics_accueillis?: PublicAccueilli[];
-  conditions_access?: ConditionAccess[];
+  publics_accueillis?: PublicsAccueillis;
+  conditions_access?: ConditionsAccess;
   labels_nationaux?: LabelsNationaux;
   labels_autres?: string[];
   modalites_accompagnement?: ModalitesAccompagnement;

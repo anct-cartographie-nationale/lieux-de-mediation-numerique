@@ -12,6 +12,6 @@ export * from './lieu-mediation-numerique';
 export * from './modalite-accompagnement/modalite-accompagnement';
 export * from './model';
 export * from './presentation';
-export * from './public-accueilli';
+export * from './public-accueilli/public-accueilli';
 export * from './service';
 export * from './typologie';
