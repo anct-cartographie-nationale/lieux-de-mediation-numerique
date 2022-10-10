@@ -29,7 +29,8 @@ const throwServicesError = (services: Service[]): Services => {
   throw new ServicesError(services.find(firstInvalidService) ?? 'service indéfini');
 };
 
-const isServices = (services: Service[]): services is Services => services.find(firstInvalidService) == null;
+const isServices = (services: Service[]): services is Services =>
+  services.length > 0 && services.find(firstInvalidService) == null;
 
 /* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const Services = (services: Service[]): Services =>

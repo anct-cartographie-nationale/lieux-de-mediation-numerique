@@ -19,4 +19,10 @@ describe('service model', (): void => {
       Services([Service.AccederADuMateriel, 'Sécuriser son ordinateur ou son téléphone' as Service]);
     }).toThrow(new ServicesError('Sécuriser son ordinateur ou son téléphone' as Service));
   });
+
+  it('should have at least one value to be valid services', (): void => {
+    expect((): void => {
+      Services([]);
+    }).toThrow(new ServicesError('service indéfini'));
+  });
 });
