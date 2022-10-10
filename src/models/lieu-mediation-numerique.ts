@@ -17,10 +17,10 @@ import { LabelsNationaux } from './label-national';
 
 export type LieuMediationNumerique = {
   id: string;
-  pivot?: Pivot;
+  pivot: Pivot;
   nom: string;
   adresse: Adresse;
-  localisation: Localisation;
+  localisation?: Localisation;
   cle_ban?: CleBan;
   typologie?: Typologies;
   contact?: Contact;
@@ -28,7 +28,7 @@ export type LieuMediationNumerique = {
   presentation?: Presentation;
   source?: string;
   structure_parente?: string;
-  date_maj?: Date;
+  date_maj: Date;
   services: Services;
   publics_accueillis?: PublicsAccueillis;
   conditions_access?: ConditionsAccess;

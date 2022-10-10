@@ -2,8 +2,8 @@ import { Model } from '../model';
 import { LatitudeError, LongitudeError } from './errors';
 
 export type LocalisationToValidate = {
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
 };
 
 export type Localisation = Model<
