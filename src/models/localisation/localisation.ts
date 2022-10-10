@@ -15,21 +15,21 @@ export type Localisation = Model<
 >;
 
 const isValidLatitude = (localisationData: LocalisationToValidate): boolean =>
-  localisationData.latitude != null && localisationData.latitude >= -90 && localisationData.latitude <= 90;
+  localisationData.latitude >= -90 && localisationData.latitude <= 90;
 
 const isValidLongitude = (localisationData: LocalisationToValidate): boolean =>
-  localisationData.longitude != null && localisationData.longitude >= -180 && localisationData.longitude <= 180;
+  localisationData.longitude >= -180 && localisationData.longitude <= 180;
 
 export const isValidLocalisation = (localisationData: LocalisationToValidate): localisationData is Localisation =>
   isValidLatitude(localisationData) && isValidLongitude(localisationData);
 
 const throwLocalisationError = (localisationData: LocalisationToValidate): Localisation => {
   if (!isValidLatitude(localisationData)) {
-    throw new LatitudeError(localisationData.latitude ?? 'indéfinie');
+    throw new LatitudeError(localisationData.latitude);
   }
 
   if (!isValidLongitude(localisationData)) {
-    throw new LongitudeError(localisationData.longitude ?? 'indéfinie');
+    throw new LongitudeError(localisationData.longitude);
   }
 
   throw new Error();

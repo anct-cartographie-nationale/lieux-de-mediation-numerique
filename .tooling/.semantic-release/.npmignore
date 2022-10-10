@@ -3,6 +3,7 @@
 .tooling/
 .tsconfig
 src
+.editorconfig
 .gitignore
 .prettierignore
 .prettierrc.cjs
