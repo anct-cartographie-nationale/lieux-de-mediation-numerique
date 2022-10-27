@@ -14,7 +14,7 @@ export enum Service {
   PrendreEnMainUnSmartphoneOuUneTablette = 'Prendre en main un smartphone ou une tablette',
   PromouvoirLaCitoyenneteNumerique = 'Promouvoir la citoyenneté numérique',
   RealiserDesDemarchesAdministratives = 'Réaliser des démarches administratives avec un accompagnement',
-  EquiperEnMaterielInformatique = 'S’équiper en matériel informatique',
+  EquiperEnMaterielInformatique = "S'équiper en matériel informatique",
   UtiliserLeNumerique = 'Utiliser le numérique au quotidien',
   SoutenirLaParentalite = "Soutenir la parentalité et l'éducation avec le numérique"
 }
