@@ -5,7 +5,7 @@ describe('condition access model', (): void => {
   it('should create valid conditions access', (): void => {
     const conditionAccess: ConditionsAccess = ConditionsAccess([ConditionAccess.Adhesion]);
 
-    expect(conditionAccess).toStrictEqual(['Adhésion']);
+    expect(conditionAccess).toStrictEqual(["Adhésion : L'accès au lieu et/ou à ses services nécessite d'y adhérer"]);
   });
 
   it('should not create invalid conditions access', (): void => {

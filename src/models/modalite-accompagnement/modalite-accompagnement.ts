@@ -2,7 +2,7 @@ import { ModalitesAccompagnementError } from './errors';
 import { Model } from '../model';
 
 export enum ModaliteAccompagnement {
-  AMaPlace = 'A ma place',
+  AMaPlace = 'A ma place : une personne habilitée fait les démarches à ma place',
   AvecDeLAide = "Avec de l'aide : je suis accompagné seul dans l'usage du numérique",
   DansUnAtelier = "Dans un atelier : j'apprends collectivement à utiliser le numérique",
   Seul = "Seul : j'ai accès à du matériel et une connexion"
