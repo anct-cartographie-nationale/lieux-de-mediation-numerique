@@ -58,7 +58,7 @@ describe('to schema', (): void => {
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
           'Devenir autonome dans les démarches administratives;Réaliser des démarches administratives avec un accompagnement;Prendre en main un smartphone ou une tablette;Prendre en main un ordinateur;Utiliser le numérique au quotidien;Approfondir ma culture numérique;Favoriser mon insertion professionnelle;Accéder à une connexion internet;Accéder à du matériel',
-        date_maj: new Date('2022-10-10')
+        date_maj: '2022-10-10'
       }
     ]);
   });
@@ -131,7 +131,7 @@ describe('to schema', (): void => {
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
           'Devenir autonome dans les démarches administratives;Réaliser des démarches administratives avec un accompagnement;Prendre en main un smartphone ou une tablette;Prendre en main un ordinateur;Utiliser le numérique au quotidien;Approfondir ma culture numérique;Favoriser mon insertion professionnelle;Accéder à une connexion internet;Accéder à du matériel',
-        date_maj: new Date('2022-10-10'),
+        date_maj: '2022-10-10',
         code_insee: '51454',
         complement_adresse: 'Le patio du bois de l’Aulne',
         latitude: 43.52609,

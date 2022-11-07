@@ -54,7 +54,7 @@ export type SchemaLieuMediationNumeriqueDisponibiliteFields = {
 };
 
 export type SchemaLieuMediationNumeriqueCollecteFields = {
-  date_maj: Date;
+  date_maj: string;
   source?: string;
 };
 
@@ -133,5 +133,5 @@ export const disponibiliteFields = (
 
 export const collecteFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueCollecteFields => ({
   ...(lieuMediationNumerique.source == null ? {} : { source: lieuMediationNumerique.source }),
-  date_maj: lieuMediationNumerique.date_maj
+  date_maj: lieuMediationNumerique.date_maj.toISOString().split('T')[0] ?? ''
 });
