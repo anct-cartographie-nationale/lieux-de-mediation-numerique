@@ -57,7 +57,7 @@ describe('to schema', (): void => {
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
-          'Devenir autonome dans les démarches administratives, Réaliser des démarches administratives avec un accompagnement, Prendre en main un smartphone ou une tablette, Prendre en main un ordinateur, Utiliser le numérique au quotidien, Approfondir ma culture numérique, Favoriser mon insertion professionnelle, Accéder à une connexion internet, Accéder à du matériel',
+          'Devenir autonome dans les démarches administratives;Réaliser des démarches administratives avec un accompagnement;Prendre en main un smartphone ou une tablette;Prendre en main un ordinateur;Utiliser le numérique au quotidien;Approfondir ma culture numérique;Favoriser mon insertion professionnelle;Accéder à une connexion internet;Accéder à du matériel',
         date_maj: new Date('2022-10-10')
       }
     ]);
@@ -130,7 +130,7 @@ describe('to schema', (): void => {
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
-          'Devenir autonome dans les démarches administratives, Réaliser des démarches administratives avec un accompagnement, Prendre en main un smartphone ou une tablette, Prendre en main un ordinateur, Utiliser le numérique au quotidien, Approfondir ma culture numérique, Favoriser mon insertion professionnelle, Accéder à une connexion internet, Accéder à du matériel',
+          'Devenir autonome dans les démarches administratives;Réaliser des démarches administratives avec un accompagnement;Prendre en main un smartphone ou une tablette;Prendre en main un ordinateur;Utiliser le numérique au quotidien;Approfondir ma culture numérique;Favoriser mon insertion professionnelle;Accéder à une connexion internet;Accéder à du matériel',
         date_maj: new Date('2022-10-10'),
         code_insee: '51454',
         complement_adresse: 'Le patio du bois de l’Aulne',
@@ -147,13 +147,13 @@ describe('to schema', (): void => {
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.',
         source: 'Hubik',
         structure_parente: 'Pôle emploi',
-        publics_accueillis: 'Familles/enfants, Adultes, Déficience visuelle',
+        publics_accueillis: 'Familles/enfants;Adultes;Déficience visuelle',
         conditions_access:
-          "Payant : L'accès au lieu et/ou à ses services est payant, Accepte le Pass numérique : Il est possible d'utiliser un Pass numérique pour accéder au lieu",
-        labels_nationaux: 'France Services, APTIC, Point relais CAF',
-        labels_autres: 'SudLabs, Nièvre médiation numérique',
+          "Payant : L'accès au lieu et/ou à ses services est payant;Accepte le Pass numérique : Il est possible d'utiliser un Pass numérique pour accéder au lieu",
+        labels_nationaux: 'France Services;APTIC;Point relais CAF',
+        labels_autres: 'SudLabs;Nièvre médiation numérique',
         modalites_accompagnement:
-          "Seul : j'ai accès à du matériel et une connexion, Avec de l'aide : je suis accompagné seul dans l'usage du numérique",
+          "Seul : j'ai accès à du matériel et une connexion;Avec de l'aide : je suis accompagné seul dans l'usage du numérique",
         accessibilite:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
         prise_rdv: 'https://www.rdv-solidarites.fr/',
