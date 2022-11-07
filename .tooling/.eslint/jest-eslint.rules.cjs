@@ -9,8 +9,7 @@ module.exports = {
   "jest/max-nested-describe": [
     "error",
     {
-      // TODO Descendre à trois un jour pour clean
-      max: 4,
+      max: 3,
     },
   ],
   "jest/no-alias-methods": "error",
