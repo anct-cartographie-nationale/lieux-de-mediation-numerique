@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/naming-convention, camelcase */
+
 import { LieuMediationNumerique } from '../../models';
 import {
   adresseFields,
   collecteFields,
   contactFields,
   disponibiliteFields,
-  generalFields,
+  structureGeneralFields,
   labelsFields,
   localisationFields,
   presentationFields,
@@ -12,20 +14,34 @@ import {
   SchemaStructureDataInclusionCollecteFields,
   SchemaStructureDataInclusionContactFields,
   SchemaStructureDataInclusionDisponibiliteFields,
-  SchemaStructureDataInclusionGeneralFields,
+  SchemaStructureDataInclusionStructureGeneralFields,
   SchemaStructureDataInclusionLabelsFields,
   SchemaStructureDataInclusionLocalisationFields,
-  SchemaStructureDataInclusionPresentationFields
+  SchemaStructureDataInclusionPresentationFields,
+  serviceGeneralFields,
+  SchemaStructureDataInclusionServiceGeneralFields,
+  SchemaStructureDataInclusionAccessFields,
+  accessFields
 } from './to-schema-data-inclusion-fields';
 
-export type SchemaStructureDataInclusion = SchemaStructureDataInclusionAdresseFields & SchemaStructureDataInclusionCollecteFields & SchemaStructureDataInclusionContactFields & SchemaStructureDataInclusionDisponibiliteFields & SchemaStructureDataInclusionGeneralFields & SchemaStructureDataInclusionLabelsFields & SchemaStructureDataInclusionLocalisationFields & SchemaStructureDataInclusionPresentationFields;
+export type SchemaStructureDataInclusion = SchemaStructureDataInclusionAdresseFields &
+  SchemaStructureDataInclusionCollecteFields &
+  SchemaStructureDataInclusionContactFields &
+  SchemaStructureDataInclusionDisponibiliteFields &
+  SchemaStructureDataInclusionLabelsFields &
+  SchemaStructureDataInclusionLocalisationFields &
+  SchemaStructureDataInclusionPresentationFields &
+  SchemaStructureDataInclusionStructureGeneralFields;
+
+export type SchemaServiceDataInclusion = SchemaStructureDataInclusionAccessFields &
+  SchemaStructureDataInclusionServiceGeneralFields;
 
 export const toSchemaStructureDataInclusion = (
   lieuxMediationNumerique: LieuMediationNumerique[]
 ): SchemaStructureDataInclusion[] =>
   lieuxMediationNumerique.map(
     (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusion => ({
-      ...generalFields(lieuMediationNumerique),
+      ...structureGeneralFields(lieuMediationNumerique),
       ...adresseFields(lieuMediationNumerique),
       ...collecteFields(lieuMediationNumerique),
       ...localisationFields(lieuMediationNumerique),
@@ -33,5 +49,13 @@ export const toSchemaStructureDataInclusion = (
       ...presentationFields(lieuMediationNumerique),
       ...disponibiliteFields(lieuMediationNumerique),
       ...labelsFields(lieuMediationNumerique)
+    })
+  );
+
+export const toSchemaServiceDataInclusion = (lieuxMediationNumerique: LieuMediationNumerique[]): SchemaServiceDataInclusion[] =>
+  lieuxMediationNumerique.map(
+    (lieuMediationNumerique: LieuMediationNumerique): SchemaServiceDataInclusion => ({
+      ...serviceGeneralFields(lieuMediationNumerique),
+      ...accessFields(lieuMediationNumerique)
     })
   );
