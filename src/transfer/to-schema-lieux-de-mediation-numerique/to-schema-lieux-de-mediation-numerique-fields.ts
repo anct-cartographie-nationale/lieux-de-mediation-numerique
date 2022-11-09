@@ -63,7 +63,7 @@ export const generalFields = (lieuMediationNumerique: LieuMediationNumerique): S
   nom: lieuMediationNumerique.nom,
   services: lieuMediationNumerique.services.join(';'),
   pivot: lieuMediationNumerique.pivot,
-  ...(lieuMediationNumerique.typologie == null ? {} : { typologie: lieuMediationNumerique.typologie.join(';') }),
+  ...(lieuMediationNumerique.typologies == null ? {} : { typologie: lieuMediationNumerique.typologies.join(';') }),
   ...(lieuMediationNumerique.structure_parente == null ? {} : { structure_parente: lieuMediationNumerique.structure_parente })
 });
 

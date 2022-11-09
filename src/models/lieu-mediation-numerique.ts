@@ -22,7 +22,7 @@ export type LieuMediationNumerique = {
   adresse: Adresse;
   localisation?: Localisation;
   cle_ban?: CleBan;
-  typologie?: Typologies;
+  typologies?: Typologies;
   contact?: Contact;
   horaires?: string;
   presentation?: Presentation;

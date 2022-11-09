@@ -24,7 +24,7 @@ import {
 import { SchemaLieuMediationNumerique, toSchemaLieuxDeMediationNumerique } from './to-schema-lieux-de-mediation-numerique';
 
 describe('to schema', (): void => {
-  it('should convert minimal lieux de mediation numerique model to schema', (): void => {
+  it('should convert minimal lieux de mediation numerique model to schema lieux mediation numérique', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
       id: 'structure-1',
       nom: 'Anonymal',
@@ -91,7 +91,7 @@ describe('to schema', (): void => {
         latitude: 43.52609,
         longitude: 5.41423
       }),
-      typologie: Typologies([Typologie.TIERS_LIEUX]),
+      typologies: Typologies([Typologie.TIERS_LIEUX]),
       contact: Contact({
         telephone: '+33180059880',
         courriel: 'contact@laquincaillerie.tl',
