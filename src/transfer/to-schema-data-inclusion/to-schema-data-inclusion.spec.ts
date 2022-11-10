@@ -23,8 +23,8 @@ import {
 import {
   SchemaServiceDataInclusion,
   SchemaStructureDataInclusion,
-  toSchemaServiceDataInclusion,
-  toSchemaStructureDataInclusion
+  toSchemaServicesDataInclusion,
+  toSchemaStructuresDataInclusion
 } from './to-schema-data-inclusion';
 
 describe('to schema data.inclusion', (): void => {
@@ -46,7 +46,7 @@ describe('to schema data.inclusion', (): void => {
       }
     };
 
-    expect(toSchemaStructureDataInclusion([minimalLieuMediationNumerique])).toStrictEqual<SchemaStructureDataInclusion[]>([
+    expect(toSchemaStructuresDataInclusion([minimalLieuMediationNumerique])).toStrictEqual<SchemaStructureDataInclusion[]>([
       {
         id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
         siret: '60487647500499',
@@ -55,7 +55,7 @@ describe('to schema data.inclusion', (): void => {
         code_postal: '09891',
         adresse: '3 RUE DE LECLERCQ',
         date_maj: '2022-04-28T00:00:00.000Z',
-        thematiques: ['numérique', 'numerique--devenir-autonome-dans-les-demarches-administratives'],
+        thematiques: ['numerique', 'numerique--devenir-autonome-dans-les-demarches-administratives'],
         presentation_resume:
           'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle'
       }
@@ -118,7 +118,7 @@ describe('to schema data.inclusion', (): void => {
       typologies: Typologies([Typologie.ASSO])
     };
 
-    expect(toSchemaStructureDataInclusion([lieuMediationNumerique])).toStrictEqual<SchemaStructureDataInclusion[]>([
+    expect(toSchemaStructuresDataInclusion([lieuMediationNumerique])).toStrictEqual<SchemaStructureDataInclusion[]>([
       {
         id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
         siret: '60487647500499',
@@ -147,7 +147,7 @@ describe('to schema data.inclusion', (): void => {
         labels_nationaux: ['france-service', 'aptic', 'point-relais-caf'],
         labels_autres: ['Nièvre médiation numérique'],
         thematiques: [
-          'numérique',
+          'numerique',
           'numerique--devenir-autonome-dans-les-demarches-administratives',
           'numerique--realiser-des-demarches-administratives-avec-un-accompagnement',
           'numerique--prendre-en-main-un-smartphone-ou-une-tablette',
@@ -183,13 +183,13 @@ describe('to schema data.inclusion', (): void => {
       source: 'solidagregateur'
     };
 
-    expect(toSchemaServiceDataInclusion([minimalLieuMediationNumerique])).toStrictEqual<SchemaServiceDataInclusion[]>([
+    expect(toSchemaServicesDataInclusion([minimalLieuMediationNumerique])).toStrictEqual<SchemaServiceDataInclusion[]>([
       {
         id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57-mediation-numerique',
         structure_id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
         source: 'solidagregateur',
         nom: 'Médiation numérique',
-        thematiques: ['numérique', 'numerique--acceder-a-une-connexion-internet', 'numerique--acceder-a-du-materiel']
+        thematiques: ['numerique', 'numerique--acceder-a-une-connexion-internet', 'numerique--acceder-a-du-materiel']
       }
     ]);
   });
@@ -246,7 +246,7 @@ describe('to schema data.inclusion', (): void => {
       ])
     };
 
-    expect(toSchemaServiceDataInclusion([lieuMediationNumerique])).toStrictEqual<SchemaServiceDataInclusion[]>([
+    expect(toSchemaServicesDataInclusion([lieuMediationNumerique])).toStrictEqual<SchemaServiceDataInclusion[]>([
       {
         id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57-mediation-numerique',
         structure_id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
@@ -254,7 +254,7 @@ describe('to schema data.inclusion', (): void => {
         nom: 'Médiation numérique',
         types: ['autonomie', 'delegation', 'accompagnement', 'atelier'],
         thematiques: [
-          'numérique',
+          'numerique',
           'numerique--devenir-autonome-dans-les-demarches-administratives',
           'numerique--realiser-des-demarches-administratives-avec-un-accompagnement',
           'numerique--prendre-en-main-un-smartphone-ou-une-tablette',

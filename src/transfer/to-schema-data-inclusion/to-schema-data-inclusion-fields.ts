@@ -135,6 +135,15 @@ const LABELS_NATIONAUX_MAP: Map<LabelNational, string> = new Map<LabelNational, 
   [LabelNational.RelaisPoleEmploi, 'relais-pole-emploi'] // todo: missing label in data.inclusion
 ]);
 
+const typologyIfExist = (typologie?: string): { typologie?: string } => (typologie == null ? {} : { typologie });
+
+const siteWebIfExist = (site_web?: string): { site_web?: string } => (site_web == null ? {} : { site_web });
+
+const fraisIfExist = (frais?: string): { frais?: string } => (frais == null ? {} : { frais });
+
+const fraisFromConditionAccess = (conditionAccess?: ConditionAccess): { frais?: string } =>
+  conditionAccess == null ? {} : fraisIfExist(CONDITION_ACCESS_TO_FRAIS.get(conditionAccess));
+
 export const structureGeneralFields = (
   lieuMediationNumerique: LieuMediationNumerique
 ): SchemaStructureDataInclusionStructureGeneralFields => ({
@@ -142,15 +151,15 @@ export const structureGeneralFields = (
   nom: lieuMediationNumerique.nom,
   siret: lieuMediationNumerique.pivot,
   ...(lieuMediationNumerique.typologies != null && lieuMediationNumerique.typologies.length > 0
-    ? // todo: throw
-      { typologie: lieuMediationNumerique.typologies[0]?.toString() ?? '' }
+    ? typologyIfExist(lieuMediationNumerique.typologies.at(0)?.toString())
     : {}),
   ...(lieuMediationNumerique.structure_parente == null ? {} : { structure_parente: lieuMediationNumerique.structure_parente }),
   ...(lieuMediationNumerique.accessibilite == null ? {} : { accessibilite: lieuMediationNumerique.accessibilite }),
   thematiques: [
-    'numérique',
-    // todo: throw
-    ...lieuMediationNumerique.services.map((service: Service): string => SERVICES_TO_THEMATIQUES.get(service) ?? '')
+    'numerique',
+    ...lieuMediationNumerique.services
+      .map((service: Service): string | null => SERVICES_TO_THEMATIQUES.get(service) ?? null)
+      .filter((service: string | null): service is string => service != null)
   ]
 });
 
@@ -177,8 +186,7 @@ export const contactFields = (lieuMediationNumerique: LieuMediationNumerique): S
   ...(lieuMediationNumerique.contact?.telephone == null ? {} : { telephone: lieuMediationNumerique.contact.telephone }),
   ...(lieuMediationNumerique.contact?.courriel == null ? {} : { courriel: lieuMediationNumerique.contact.courriel }),
   ...(lieuMediationNumerique.contact?.site_web != null && lieuMediationNumerique.contact.site_web.length > 0
-    ? // todo: throw
-      { site_web: lieuMediationNumerique.contact.site_web[0]?.toString() ?? '' }
+    ? siteWebIfExist(lieuMediationNumerique.contact.site_web.at(0)?.toString())
     : {})
 });
 
@@ -202,10 +210,9 @@ export const labelsFields = (lieuMediationNumerique: LieuMediationNumerique): Sc
   ...(lieuMediationNumerique.labels_nationaux == null
     ? {}
     : {
-        labels_nationaux: lieuMediationNumerique.labels_nationaux.map(
-          // todo: throw
-          (labelNational: LabelNational): string => LABELS_NATIONAUX_MAP.get(labelNational) ?? ''
-        )
+        labels_nationaux: lieuMediationNumerique.labels_nationaux
+          .map((labelNational: LabelNational): string | null => LABELS_NATIONAUX_MAP.get(labelNational) ?? null)
+          .filter((labelNational: string | null): labelNational is string => labelNational != null)
       }),
   ...(lieuMediationNumerique.labels_autres == null ? {} : { labels_autres: lieuMediationNumerique.labels_autres })
 });
@@ -221,49 +228,49 @@ export const collecteFields = (lieuMediationNumerique: LieuMediationNumerique): 
   date_maj: new Date(lieuMediationNumerique.date_maj).toISOString()
 });
 
+const throwNoSourceError = (): string => {
+  throw new Error('data.inclusion service should have a source');
+};
+
 export const serviceGeneralFields = (
   lieuMediationNumerique: LieuMediationNumerique
 ): SchemaStructureDataInclusionServiceGeneralFields => ({
   id: `${lieuMediationNumerique.id}-mediation-numerique`,
   structure_id: lieuMediationNumerique.id,
   nom: 'Médiation numérique',
-  // todo: throw
-  source: lieuMediationNumerique.source ?? '',
+  source: lieuMediationNumerique.source ?? throwNoSourceError(),
   ...(lieuMediationNumerique.prise_rdv == null
     ? {}
     : {
         prise_rdv: lieuMediationNumerique.prise_rdv
       }),
   thematiques: [
-    'numérique',
-    // todo: throw
-    ...lieuMediationNumerique.services.map((service: Service): string => SERVICES_TO_THEMATIQUES.get(service) ?? '')
+    'numerique',
+    ...lieuMediationNumerique.services
+      .map((service: Service): string | null => SERVICES_TO_THEMATIQUES.get(service) ?? null)
+      .filter((service: string | null): service is string => service != null)
   ]
 });
 
+const typesFromModalitesAccompagnement = (lieuMediationNumerique: LieuMediationNumerique): { types: string[] } => ({
+  types: (lieuMediationNumerique.modalites_accompagnement ?? [])
+    .map(
+      (modaliteAccompagnement: ModaliteAccompagnement): string | null =>
+        MODALITES_ACCOMPAGNEMENT_TO_TYPES_MAP.get(modaliteAccompagnement) ?? null
+    )
+    .filter((type: string | null): type is string => type != null)
+});
+
+const profilsFromPublicsAccueillis = (lieuMediationNumerique: LieuMediationNumerique): { profils: string[] } => ({
+  profils: (lieuMediationNumerique.publics_accueillis ?? [])
+    .map((publicAccueilli: PublicAccueilli): string | null => PUBLICS_ACCUEILLIS_TO_PROFILS.get(publicAccueilli) ?? null)
+    .filter((profil: string | null): profil is string => profil != null)
+});
+
 export const accessFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionAccessFields => ({
-  ...(lieuMediationNumerique.modalites_accompagnement == null
+  ...(lieuMediationNumerique.modalites_accompagnement == null ? {} : typesFromModalitesAccompagnement(lieuMediationNumerique)),
+  ...(lieuMediationNumerique.conditions_access == null
     ? {}
-    : {
-        types: lieuMediationNumerique.modalites_accompagnement.map(
-          (modaliteAccompagnement: ModaliteAccompagnement): string =>
-            // todo: throw
-            MODALITES_ACCOMPAGNEMENT_TO_TYPES_MAP.get(modaliteAccompagnement) ?? ''
-        )
-      }),
-  ...(lieuMediationNumerique.conditions_access == null || lieuMediationNumerique.conditions_access.length === 0
-    ? {}
-    : {
-        frais:
-          // todo: throw
-          CONDITION_ACCESS_TO_FRAIS.get(lieuMediationNumerique.conditions_access.at(0) ?? ConditionAccess.Gratuit) ?? ''
-      }),
-  ...(lieuMediationNumerique.publics_accueillis == null
-    ? {}
-    : {
-        profils: lieuMediationNumerique.publics_accueillis.map(
-          // todo: throw
-          (publicAccueilli: PublicAccueilli): string => PUBLICS_ACCUEILLIS_TO_PROFILS.get(publicAccueilli) ?? ''
-        )
-      })
+    : fraisFromConditionAccess(lieuMediationNumerique.conditions_access.at(0))),
+  ...(lieuMediationNumerique.publics_accueillis == null ? {} : profilsFromPublicsAccueillis(lieuMediationNumerique))
 });

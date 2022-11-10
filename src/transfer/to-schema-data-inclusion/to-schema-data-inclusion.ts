@@ -36,7 +36,7 @@ export type SchemaStructureDataInclusion = SchemaStructureDataInclusionAdresseFi
 export type SchemaServiceDataInclusion = SchemaStructureDataInclusionAccessFields &
   SchemaStructureDataInclusionServiceGeneralFields;
 
-export const toSchemaStructureDataInclusion = (
+export const toSchemaStructuresDataInclusion = (
   lieuxMediationNumerique: LieuMediationNumerique[]
 ): SchemaStructureDataInclusion[] =>
   lieuxMediationNumerique.map(
@@ -52,7 +52,9 @@ export const toSchemaStructureDataInclusion = (
     })
   );
 
-export const toSchemaServiceDataInclusion = (lieuxMediationNumerique: LieuMediationNumerique[]): SchemaServiceDataInclusion[] =>
+export const toSchemaServicesDataInclusion = (
+  lieuxMediationNumerique: LieuMediationNumerique[]
+): SchemaServiceDataInclusion[] =>
   lieuxMediationNumerique.map(
     (lieuMediationNumerique: LieuMediationNumerique): SchemaServiceDataInclusion => ({
       ...serviceGeneralFields(lieuMediationNumerique),
