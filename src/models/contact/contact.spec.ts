@@ -68,4 +68,14 @@ describe('contact model', (): void => {
       Contact(contactData);
     }).toThrow(new TelephoneError('error'));
   });
+
+  it('should allow accentued characters for courriel', (): void => {
+    const contactData: ContactToValidate = {
+      courriel: 'contact@cartographienationalé.fr'
+    };
+
+    const contact: Contact = Contact(contactData);
+
+    expect(contact).toStrictEqual({ ...contactData } as Contact);
+  });
 });
