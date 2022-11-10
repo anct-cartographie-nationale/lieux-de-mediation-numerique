@@ -144,4 +144,17 @@ describe('adresse model', (): void => {
       Adresse(adresseData);
     }).toThrow(new CommuneError(adresseData.commune));
   });
+
+  it('should allow Commune with accentued characters', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: '69 Bd Clemenceau',
+      code_postal: '57100',
+      code_insee: '57236',
+      commune: 'Marcq-en-Barœul'
+    };
+
+    const adresse: Adresse = Adresse(adresseData);
+
+    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  });
 });
