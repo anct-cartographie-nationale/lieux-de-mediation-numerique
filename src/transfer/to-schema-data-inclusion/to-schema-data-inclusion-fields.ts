@@ -3,7 +3,8 @@
 export type SchemaStructureDataInclusionStructureGeneralFields = {
   id: string;
   nom: string;
-  siret: string;
+  siret?: string;
+  rna?: string;
   typologie?: string;
   structure_parente?: string;
   thematiques?: string[];
