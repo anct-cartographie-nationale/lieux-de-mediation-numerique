@@ -1,5 +1,5 @@
 import { Model } from '../model';
-import { CodeInseeError, CodePostalError, CommuneError } from './errors';
+import { CodeInseeError, CodePostalError, CommuneError, VoieError } from './errors';
 
 export type Adresse = Model<
   'Adresse',
@@ -29,23 +29,19 @@ const isValidCodeInsee = (codeInsee: string): boolean => CODE_INSEE_REG_EXP.test
 
 const isValidCommune = (commune: string): boolean => COMMUNE_REG_EXP.test(commune);
 
+const isValidVoie = (voie: string): boolean => voie.length > 0;
+
 export const isValidAddress = (adresse: Omit<Adresse, 'isAdresse'>): adresse is Adresse =>
+  isValidVoie(adresse.voie) &&
   isValidCodePostal(adresse.code_postal) &&
   (adresse.code_insee == null || isValidCodeInsee(adresse.code_insee)) &&
   isValidCommune(adresse.commune);
 
 const throwAdresseError = (adresse: Omit<Adresse, 'isAdresse'>): Adresse => {
-  if (!isValidCodePostal(adresse.code_postal)) {
-    throw new CodePostalError(adresse.code_postal);
-  }
-
-  if (adresse.code_insee != null && !isValidCodeInsee(adresse.code_insee)) {
-    throw new CodeInseeError(adresse.code_insee);
-  }
-
-  if (!isValidCommune(adresse.commune)) {
-    throw new CommuneError(adresse.commune);
-  }
+  if (!isValidVoie(adresse.voie)) throw new VoieError();
+  if (!isValidCodePostal(adresse.code_postal)) throw new CodePostalError(adresse.code_postal);
+  if (adresse.code_insee != null && !isValidCodeInsee(adresse.code_insee)) throw new CodeInseeError(adresse.code_insee);
+  if (!isValidCommune(adresse.commune)) throw new CommuneError(adresse.commune);
 
   throw new Error();
 };
