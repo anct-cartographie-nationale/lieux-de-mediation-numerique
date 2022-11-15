@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase */
 
 import { Adresse, AdresseToValidate } from './adresse';
-import { CodeInseeError, CodePostalError, CommuneError } from './errors';
+import { CodeInseeError, CodePostalError, CommuneError, VoieError } from './errors';
 
 describe('adresse model', (): void => {
   it('should create a valid address', (): void => {
@@ -156,5 +156,18 @@ describe('adresse model', (): void => {
     const adresse: Adresse = Adresse(adresseData);
 
     expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  });
+
+  it('should throw VoieError when voie is empty', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: '',
+      code_postal: '57100',
+      code_insee: '57236',
+      commune: 'Metz'
+    };
+
+    expect((): void => {
+      Adresse(adresseData);
+    }).toThrow(new VoieError());
   });
 });
