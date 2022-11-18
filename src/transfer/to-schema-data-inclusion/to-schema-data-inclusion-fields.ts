@@ -76,21 +76,21 @@ import {
 } from '../../models';
 
 const SERVICES_TO_THEMATIQUES: Map<Service, string> = new Map<Service, string>([
-  [Service.DevenirAutonomeDansLesDemarchesAdministratives, 'numerique--devenir-autonome-dans-les-demarches-administratives'],
-  [Service.RealiserDesDemarchesAdministratives, 'numerique--realiser-des-demarches-administratives-avec-un-accompagnement'],
-  [Service.PrendreEnMainUnSmartphoneOuUneTablette, 'numerique--prendre-en-main-un-smartphone-ou-une-tablette'],
-  [Service.PrendreEnMainUnOrdinateur, 'numerique--prendre-en-main-un-ordinateur'],
-  [Service.UtiliserLeNumerique, 'numerique--utiliser-le-numerique-au-quotidien'],
-  [Service.ApprofondirMaCultureNumerique, 'numerique--approfondir-ma-culture-numerique'],
-  [Service.FavoriserMonInsertionProfessionnelle, 'numerique--favoriser-mon-insertion-professionnelle'],
-  [Service.AccederAUneConnexionInternet, 'numerique--acceder-a-une-connexion-internet'],
-  [Service.AccederADuMateriel, 'numerique--acceder-a-du-materiel'],
-  [Service.EquiperEnMaterielInformatique, 'numerique--s-equiper-en-materiel-informatique'],
-  [Service.CreerEtDevelopperMonEntreprise, 'numerique--creer-et-developper-mon-entreprise'],
-  [Service.CreerAvecLeNumerique, 'numerique--creer-avec-le-numerique'],
-  [Service.AccompagnerLesDemarchesDeSante, 'numerique--accompagner-les-demarches-de-sante'],
-  [Service.PromouvoirLaCitoyenneteNumerique, 'numerique--promouvoir-la-citoyennete-numerique'],
-  [Service.SoutenirLaParentalite, 'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique']
+  [Service.DevenirAutonomeDansLesDemarchesAdministratives, 'numerique-devenir-autonome-dans-les-demarches-administratives'],
+  [Service.RealiserDesDemarchesAdministratives, 'numerique-realiser-des-demarches-administratives-avec-un-accompagnement'],
+  [Service.PrendreEnMainUnSmartphoneOuUneTablette, 'numerique-prendre-en-main-un-smartphone-ou-une-tablette'],
+  [Service.PrendreEnMainUnOrdinateur, 'numerique-prendre-en-main-un-ordinateur'],
+  [Service.UtiliserLeNumerique, 'numerique-utiliser-le-numerique-au-quotidien'],
+  [Service.ApprofondirMaCultureNumerique, 'numerique-approfondir-ma-culture-numerique'],
+  [Service.FavoriserMonInsertionProfessionnelle, 'numerique-favoriser-mon-insertion-professionnelle'],
+  [Service.AccederAUneConnexionInternet, 'numerique-acceder-a-une-connexion-internet'],
+  [Service.AccederADuMateriel, 'numerique-acceder-a-du-materiel'],
+  [Service.EquiperEnMaterielInformatique, 'numerique-s-equiper-en-materiel-informatique'],
+  [Service.CreerEtDevelopperMonEntreprise, 'numerique-creer-et-developper-mon-entreprise'],
+  [Service.CreerAvecLeNumerique, 'numerique-creer-avec-le-numerique'],
+  [Service.AccompagnerLesDemarchesDeSante, 'numerique-accompagner-les-demarches-de-sante'],
+  [Service.PromouvoirLaCitoyenneteNumerique, 'numerique-promouvoir-la-citoyennete-numerique'],
+  [Service.SoutenirLaParentalite, 'numerique-soutenir-la-parentalite-et-l-education-avec-le-numerique']
 ]);
 
 const MODALITES_ACCOMPAGNEMENT_TO_TYPES_MAP: Map<ModaliteAccompagnement, string> = new Map<ModaliteAccompagnement, string>([

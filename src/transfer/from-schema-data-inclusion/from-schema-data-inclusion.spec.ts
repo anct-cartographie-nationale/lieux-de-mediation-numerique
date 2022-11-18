@@ -42,7 +42,7 @@ describe('from schema data inclusion', (): void => {
       nom: 'Médiation numérique',
       source: 'Hubik',
       structure_id: 'structure-1',
-      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives']
+      thematiques: ['numerique-devenir-autonome-dans-les-demarches-administratives']
     };
 
     const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
@@ -96,21 +96,21 @@ describe('from schema data inclusion', (): void => {
       structure_id: 'structure-1',
       thematiques: [
         'numerique',
-        'numerique--devenir-autonome-dans-les-demarches-administratives',
-        'numerique--realiser-des-demarches-administratives-avec-un-accompagnement',
-        'numerique--prendre-en-main-un-smartphone-ou-une-tablette',
-        'numerique--prendre-en-main-un-ordinateur',
-        'numerique--utiliser-le-numerique-au-quotidien',
-        'numerique--approfondir-ma-culture-numerique',
-        'numerique--favoriser-mon-insertion-professionnelle',
-        'numerique--acceder-a-une-connexion-internet',
-        'numerique--acceder-a-du-materiel',
-        'numerique--s-equiper-en-materiel-informatique',
-        'numerique--creer-et-developper-mon-entreprise',
-        'numerique--creer-avec-le-numerique',
-        'numerique--accompagner-les-demarches-de-sante',
-        'numerique--promouvoir-la-citoyennete-numerique',
-        'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique'
+        'numerique-devenir-autonome-dans-les-demarches-administratives',
+        'numerique-realiser-des-demarches-administratives-avec-un-accompagnement',
+        'numerique-prendre-en-main-un-smartphone-ou-une-tablette',
+        'numerique-prendre-en-main-un-ordinateur',
+        'numerique-utiliser-le-numerique-au-quotidien',
+        'numerique-approfondir-ma-culture-numerique',
+        'numerique-favoriser-mon-insertion-professionnelle',
+        'numerique-acceder-a-une-connexion-internet',
+        'numerique-acceder-a-du-materiel',
+        'numerique-s-equiper-en-materiel-informatique',
+        'numerique-creer-et-developper-mon-entreprise',
+        'numerique-creer-avec-le-numerique',
+        'numerique-accompagner-les-demarches-de-sante',
+        'numerique-promouvoir-la-citoyennete-numerique',
+        'numerique-soutenir-la-parentalite-et-l-education-avec-le-numerique'
       ],
       frais: 'gratuit-sous-conditions',
       types: ['autonomie', 'delegation', 'accompagnement', 'atelier'],
@@ -269,7 +269,7 @@ describe('from schema data inclusion', (): void => {
       nom: 'Médiation numérique',
       source: 'Hubik',
       structure_id: 'structure-1',
-      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives']
+      thematiques: ['numerique-devenir-autonome-dans-les-demarches-administratives']
     };
 
     const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
@@ -320,7 +320,7 @@ describe('from schema data inclusion', (): void => {
       nom: 'Médiation numérique',
       source: 'Hubik',
       structure_id: 'structure-1',
-      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives']
+      thematiques: ['numerique-devenir-autonome-dans-les-demarches-administratives']
     };
 
     const service2: SchemaServiceDataInclusion = {
@@ -328,7 +328,7 @@ describe('from schema data inclusion', (): void => {
       nom: 'Médiation numérique',
       source: 'Hubik',
       structure_id: 'structure-1',
-      thematiques: ['numerique--acceder-a-une-connexion-internet']
+      thematiques: ['numerique-acceder-a-une-connexion-internet']
     };
 
     const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service1, service2], structure);
@@ -363,7 +363,7 @@ describe('from schema data inclusion', (): void => {
       nom: 'Médiation numérique',
       source: 'Hubik',
       structure_id: 'structure-1',
-      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives'],
+      thematiques: ['numerique-devenir-autonome-dans-les-demarches-administratives'],
       frais: 'payant'
     };
 
@@ -372,7 +372,7 @@ describe('from schema data inclusion', (): void => {
       nom: 'Médiation numérique',
       source: 'Hubik',
       structure_id: 'structure-1',
-      thematiques: ['numerique--acceder-a-une-connexion-internet'],
+      thematiques: ['numerique-acceder-a-une-connexion-internet'],
       frais: 'gratuit'
     };
 
@@ -411,10 +411,10 @@ describe('from schema data inclusion', (): void => {
       structure_id: 'structure-1',
       thematiques: [
         'numerique',
-        'numerique--devenir-autonome-dans-les-demarches-administratives',
-        'numerique--realiser-des-demarches-administratives-avec-un-accompagnement',
-        'numerique--prendre-en-main-un-smartphone-ou-une-tablette',
-        'numerique--prendre-en-main-un-ordinateur'
+        'numerique-devenir-autonome-dans-les-demarches-administratives',
+        'numerique-realiser-des-demarches-administratives-avec-un-accompagnement',
+        'numerique-prendre-en-main-un-smartphone-ou-une-tablette',
+        'numerique-prendre-en-main-un-ordinateur'
       ],
       frais: 'adhesion',
       types: ['accompagnement', 'atelier'],
@@ -427,7 +427,7 @@ describe('from schema data inclusion', (): void => {
       nom: 'Médiation numérique',
       source: 'Hubik',
       structure_id: 'structure-1',
-      thematiques: ['numerique--prendre-en-main-un-ordinateur', 'numerique--prendre-en-main-un-smartphone-ou-une-tablette'],
+      thematiques: ['numerique-prendre-en-main-un-ordinateur', 'numerique-prendre-en-main-un-smartphone-ou-une-tablette'],
       frais: 'pass-numerique',
       types: ['delegation', 'accompagnement', 'atelier'],
       prise_rdv: 'https://www.rdv-solidarites.fr/service2',

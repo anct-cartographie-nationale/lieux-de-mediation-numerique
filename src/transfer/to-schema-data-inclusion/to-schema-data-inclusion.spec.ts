@@ -55,7 +55,7 @@ describe('to schema data.inclusion', (): void => {
         code_postal: '09891',
         adresse: '3 RUE DE LECLERCQ',
         date_maj: '2022-04-28T00:00:00.000Z',
-        thematiques: ['numerique', 'numerique--devenir-autonome-dans-les-demarches-administratives'],
+        thematiques: ['numerique', 'numerique-devenir-autonome-dans-les-demarches-administratives'],
         presentation_resume:
           'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle'
       }
@@ -148,21 +148,21 @@ describe('to schema data.inclusion', (): void => {
         labels_autres: ['Nièvre médiation numérique'],
         thematiques: [
           'numerique',
-          'numerique--devenir-autonome-dans-les-demarches-administratives',
-          'numerique--realiser-des-demarches-administratives-avec-un-accompagnement',
-          'numerique--prendre-en-main-un-smartphone-ou-une-tablette',
-          'numerique--prendre-en-main-un-ordinateur',
-          'numerique--utiliser-le-numerique-au-quotidien',
-          'numerique--approfondir-ma-culture-numerique',
-          'numerique--favoriser-mon-insertion-professionnelle',
-          'numerique--acceder-a-une-connexion-internet',
-          'numerique--acceder-a-du-materiel',
-          'numerique--s-equiper-en-materiel-informatique',
-          'numerique--creer-et-developper-mon-entreprise',
-          'numerique--creer-avec-le-numerique',
-          'numerique--accompagner-les-demarches-de-sante',
-          'numerique--promouvoir-la-citoyennete-numerique',
-          'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique'
+          'numerique-devenir-autonome-dans-les-demarches-administratives',
+          'numerique-realiser-des-demarches-administratives-avec-un-accompagnement',
+          'numerique-prendre-en-main-un-smartphone-ou-une-tablette',
+          'numerique-prendre-en-main-un-ordinateur',
+          'numerique-utiliser-le-numerique-au-quotidien',
+          'numerique-approfondir-ma-culture-numerique',
+          'numerique-favoriser-mon-insertion-professionnelle',
+          'numerique-acceder-a-une-connexion-internet',
+          'numerique-acceder-a-du-materiel',
+          'numerique-s-equiper-en-materiel-informatique',
+          'numerique-creer-et-developper-mon-entreprise',
+          'numerique-creer-avec-le-numerique',
+          'numerique-accompagner-les-demarches-de-sante',
+          'numerique-promouvoir-la-citoyennete-numerique',
+          'numerique-soutenir-la-parentalite-et-l-education-avec-le-numerique'
         ]
       }
     ]);
@@ -189,7 +189,7 @@ describe('to schema data.inclusion', (): void => {
         structure_id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
         source: 'solidagregateur',
         nom: 'Médiation numérique',
-        thematiques: ['numerique', 'numerique--acceder-a-une-connexion-internet', 'numerique--acceder-a-du-materiel']
+        thematiques: ['numerique', 'numerique-acceder-a-une-connexion-internet', 'numerique-acceder-a-du-materiel']
       }
     ]);
   });
@@ -255,21 +255,21 @@ describe('to schema data.inclusion', (): void => {
         types: ['autonomie', 'delegation', 'accompagnement', 'atelier'],
         thematiques: [
           'numerique',
-          'numerique--devenir-autonome-dans-les-demarches-administratives',
-          'numerique--realiser-des-demarches-administratives-avec-un-accompagnement',
-          'numerique--prendre-en-main-un-smartphone-ou-une-tablette',
-          'numerique--prendre-en-main-un-ordinateur',
-          'numerique--utiliser-le-numerique-au-quotidien',
-          'numerique--approfondir-ma-culture-numerique',
-          'numerique--favoriser-mon-insertion-professionnelle',
-          'numerique--acceder-a-une-connexion-internet',
-          'numerique--acceder-a-du-materiel',
-          'numerique--s-equiper-en-materiel-informatique',
-          'numerique--creer-et-developper-mon-entreprise',
-          'numerique--creer-avec-le-numerique',
-          'numerique--accompagner-les-demarches-de-sante',
-          'numerique--promouvoir-la-citoyennete-numerique',
-          'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique'
+          'numerique-devenir-autonome-dans-les-demarches-administratives',
+          'numerique-realiser-des-demarches-administratives-avec-un-accompagnement',
+          'numerique-prendre-en-main-un-smartphone-ou-une-tablette',
+          'numerique-prendre-en-main-un-ordinateur',
+          'numerique-utiliser-le-numerique-au-quotidien',
+          'numerique-approfondir-ma-culture-numerique',
+          'numerique-favoriser-mon-insertion-professionnelle',
+          'numerique-acceder-a-une-connexion-internet',
+          'numerique-acceder-a-du-materiel',
+          'numerique-s-equiper-en-materiel-informatique',
+          'numerique-creer-et-developper-mon-entreprise',
+          'numerique-creer-avec-le-numerique',
+          'numerique-accompagner-les-demarches-de-sante',
+          'numerique-promouvoir-la-citoyennete-numerique',
+          'numerique-soutenir-la-parentalite-et-l-education-avec-le-numerique'
         ],
         prise_rdv: 'https://www.rdv-solidarites.fr/',
         frais: 'payant',

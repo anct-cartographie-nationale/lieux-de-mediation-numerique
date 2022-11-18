@@ -23,21 +23,21 @@ import {
 import { SchemaStructureDataInclusion } from '../to-schema-data-inclusion/to-schema-data-inclusion';
 
 const THEMATIQUES_TO_SERVICES: Map<string, Service> = new Map<string, Service>([
-  ['numerique--devenir-autonome-dans-les-demarches-administratives', Service.DevenirAutonomeDansLesDemarchesAdministratives],
-  ['numerique--realiser-des-demarches-administratives-avec-un-accompagnement', Service.RealiserDesDemarchesAdministratives],
-  ['numerique--prendre-en-main-un-smartphone-ou-une-tablette', Service.PrendreEnMainUnSmartphoneOuUneTablette],
-  ['numerique--prendre-en-main-un-ordinateur', Service.PrendreEnMainUnOrdinateur],
-  ['numerique--utiliser-le-numerique-au-quotidien', Service.UtiliserLeNumerique],
-  ['numerique--approfondir-ma-culture-numerique', Service.ApprofondirMaCultureNumerique],
-  ['numerique--favoriser-mon-insertion-professionnelle', Service.FavoriserMonInsertionProfessionnelle],
-  ['numerique--acceder-a-une-connexion-internet', Service.AccederAUneConnexionInternet],
-  ['numerique--acceder-a-du-materiel', Service.AccederADuMateriel],
-  ['numerique--s-equiper-en-materiel-informatique', Service.EquiperEnMaterielInformatique],
-  ['numerique--creer-et-developper-mon-entreprise', Service.CreerEtDevelopperMonEntreprise],
-  ['numerique--creer-avec-le-numerique', Service.CreerAvecLeNumerique],
-  ['numerique--accompagner-les-demarches-de-sante', Service.AccompagnerLesDemarchesDeSante],
-  ['numerique--promouvoir-la-citoyennete-numerique', Service.PromouvoirLaCitoyenneteNumerique],
-  ['numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique', Service.SoutenirLaParentalite]
+  ['numerique-devenir-autonome-dans-les-demarches-administratives', Service.DevenirAutonomeDansLesDemarchesAdministratives],
+  ['numerique-realiser-des-demarches-administratives-avec-un-accompagnement', Service.RealiserDesDemarchesAdministratives],
+  ['numerique-prendre-en-main-un-smartphone-ou-une-tablette', Service.PrendreEnMainUnSmartphoneOuUneTablette],
+  ['numerique-prendre-en-main-un-ordinateur', Service.PrendreEnMainUnOrdinateur],
+  ['numerique-utiliser-le-numerique-au-quotidien', Service.UtiliserLeNumerique],
+  ['numerique-approfondir-ma-culture-numerique', Service.ApprofondirMaCultureNumerique],
+  ['numerique-favoriser-mon-insertion-professionnelle', Service.FavoriserMonInsertionProfessionnelle],
+  ['numerique-acceder-a-une-connexion-internet', Service.AccederAUneConnexionInternet],
+  ['numerique-acceder-a-du-materiel', Service.AccederADuMateriel],
+  ['numerique-s-equiper-en-materiel-informatique', Service.EquiperEnMaterielInformatique],
+  ['numerique-creer-et-developper-mon-entreprise', Service.CreerEtDevelopperMonEntreprise],
+  ['numerique-creer-avec-le-numerique', Service.CreerAvecLeNumerique],
+  ['numerique-accompagner-les-demarches-de-sante', Service.AccompagnerLesDemarchesDeSante],
+  ['numerique-promouvoir-la-citoyennete-numerique', Service.PromouvoirLaCitoyenneteNumerique],
+  ['numerique-soutenir-la-parentalite-et-l-education-avec-le-numerique', Service.SoutenirLaParentalite]
 ]);
 
 export const FRAIS_TO_CONDITION_ACCESS: Map<string, ConditionAccess> = new Map<string, ConditionAccess>([
