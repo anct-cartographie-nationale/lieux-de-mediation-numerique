@@ -1,5 +1,7 @@
-export class RnaError extends Error {
+import { ModelError } from '../../../errors';
+
+export class RnaError extends ModelError<{ rna: string }> {
   constructor(rna: string) {
-    super(`Le Rna ${rna} n'est pas valide`);
+    super('rna', `Le Rna ${rna} n'est pas valide`);
   }
 }

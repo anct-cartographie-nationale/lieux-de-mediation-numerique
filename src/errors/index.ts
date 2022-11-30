@@ -1,1 +1,1 @@
-export * from './optional-property.error';
+export * from './model.error';

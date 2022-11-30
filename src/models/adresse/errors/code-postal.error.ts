@@ -1,5 +1,8 @@
-export class CodePostalError extends Error {
+import { ModelError } from '../../../errors';
+import { Adresse } from '../adresse';
+
+export class CodePostalError extends ModelError<Adresse> {
   constructor(codePostal: string) {
-    super(`Le code postal ${codePostal} n'est pas valide`);
+    super('code_postal', `Le code postal ${codePostal} n'est pas valide`);
   }
 }

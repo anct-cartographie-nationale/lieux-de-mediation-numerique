@@ -1,5 +1,8 @@
-export class CommuneError extends Error {
+import { ModelError } from '../../../errors';
+import { Adresse } from '../adresse';
+
+export class CommuneError extends ModelError<Adresse> {
   constructor(commune: string) {
-    super(`La commune ${commune} contient des caractères invalides`);
+    super('commune', `La commune ${commune} n'est pas valide`);
   }
 }
