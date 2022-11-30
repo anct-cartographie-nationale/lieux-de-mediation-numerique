@@ -467,4 +467,39 @@ describe('from schema data inclusion', (): void => {
       prise_rdv: Url('https://www.rdv-solidarites.fr/service2')
     });
   });
+
+  it('should remove brackets from commune and trim spaces', (): void => {
+    const structure: SchemaStructureDataInclusion = {
+      adresse: '12 BIS RUE DE LECLERCQ',
+      code_postal: '51100',
+      commune: 'Reims (51)',
+      date_maj: new Date('2022-10-10').toISOString(),
+      id: 'structure-1',
+      nom: 'Anonymal',
+      siret: '43493312300029'
+    };
+
+    const service: SchemaServiceDataInclusion = {
+      id: 'structure-1-mediation-numerique',
+      nom: 'Médiation numérique',
+      source: 'Hubik',
+      structure_id: 'structure-1',
+      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives']
+    };
+
+    const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
+
+    expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
+      id: 'structure-1',
+      nom: 'Anonymal',
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '51100',
+        commune: 'Reims',
+        voie: '12 BIS RUE DE LECLERCQ'
+      }),
+      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      date_maj: new Date('2022-10-10')
+    });
+  });
 });
