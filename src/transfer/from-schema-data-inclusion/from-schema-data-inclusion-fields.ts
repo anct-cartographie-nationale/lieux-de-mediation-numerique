@@ -192,15 +192,18 @@ export const labelsFromDataInclusion = (
   ...(labels_autres == null ? {} : { labels_autres })
 });
 
-export const adresseFromDataInclusion = (structure: SchemaStructureDataInclusion): { adresse: Adresse } => ({
-  adresse: Adresse({
-    code_postal: structure.code_postal,
-    commune: structure.commune.replace(/\(([^)]+)\)/gu, '').trim(),
-    voie: structure.adresse,
-    ...(structure.complement_adresse == null ? {} : { complement_adresse: structure.complement_adresse }),
-    ...(structure.code_insee == null ? {} : { code_insee: structure.code_insee })
-  })
-});
+export const adresseFromDataInclusion = (structure: SchemaStructureDataInclusion): { adresse: Adresse } => {
+  const communeRegex = /\(([^)]+)\)/gu;
+  return {
+    adresse: Adresse({
+      code_postal: structure.code_postal,
+      commune: structure.commune.replace(communeRegex, '').trim(),
+      voie: structure.adresse,
+      ...(structure.complement_adresse == null ? {} : { complement_adresse: structure.complement_adresse }),
+      ...(structure.code_insee == null ? {} : { code_insee: structure.code_insee })
+    })
+  };
+};
 
 export const servicesFromDataInclusion = (thematiques?: string[]): { services: Services } => ({
   services: Services(
