@@ -195,7 +195,7 @@ export const labelsFromDataInclusion = (
 export const adresseFromDataInclusion = (structure: SchemaStructureDataInclusion): { adresse: Adresse } => ({
   adresse: Adresse({
     code_postal: structure.code_postal,
-    commune: structure.commune,
+    commune: structure.commune.replace(/\(([^)]+)\)/gu, '').trim(),
     voie: structure.adresse,
     ...(structure.complement_adresse == null ? {} : { complement_adresse: structure.complement_adresse }),
     ...(structure.code_insee == null ? {} : { code_insee: structure.code_insee })
