@@ -1,5 +1,5 @@
 export class VoieError extends Error {
-  constructor() {
-    super('La voie ne peut pas être vide');
+  constructor(voie: string) {
+    super(`La voie ${voie} n'est pas valide`);
   }
 }

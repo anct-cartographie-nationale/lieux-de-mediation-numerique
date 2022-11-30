@@ -1,5 +1,5 @@
 import { Model } from '../model';
-import { Url } from '../url/url';
+import { Url } from '../url';
 import { CourrielError, TelephoneError } from './errors';
 
 export type Contact = Model<
