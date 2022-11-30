@@ -23,13 +23,15 @@ const CODE_INSEE_REG_EXP: RegExp = /^(?:[013-9]\d|2[AB1-9])(?:0?\d{3}|-\d-\d{2}-
 
 const COMMUNE_REG_EXP: RegExp = /^[A-Za-z\dÀ-ÖØ-öø-ÿœ\-'’ ]+$/u;
 
+const VOIE_REG_EXP: RegExp = /^[0-9A-Za-z\dÀ-ÖØ-öø-ÿœ\-'’ ]+$/u;
+
 const isValidCodePostal = (codePostal: string): boolean => CODE_POSTAL_REG_EXP.test(codePostal);
 
 const isValidCodeInsee = (codeInsee: string): boolean => CODE_INSEE_REG_EXP.test(codeInsee);
 
 const isValidCommune = (commune: string): boolean => COMMUNE_REG_EXP.test(commune);
 
-const isValidVoie = (voie: string): boolean => voie.length > 0;
+const isValidVoie = (voie: string): boolean => voie.length > 0 && VOIE_REG_EXP.test(voie);
 
 export const isValidAddress = (adresse: Omit<Adresse, 'isAdresse'>): adresse is Adresse =>
   isValidVoie(adresse.voie) &&
@@ -38,7 +40,7 @@ export const isValidAddress = (adresse: Omit<Adresse, 'isAdresse'>): adresse is 
   isValidCommune(adresse.commune);
 
 const throwAdresseError = (adresse: Omit<Adresse, 'isAdresse'>): Adresse => {
-  if (!isValidVoie(adresse.voie)) throw new VoieError();
+  if (!isValidVoie(adresse.voie)) throw new VoieError(adresse.voie);
   if (!isValidCodePostal(adresse.code_postal)) throw new CodePostalError(adresse.code_postal);
   if (adresse.code_insee != null && !isValidCodeInsee(adresse.code_insee)) throw new CodeInseeError(adresse.code_insee);
   if (!isValidCommune(adresse.commune)) throw new CommuneError(adresse.commune);

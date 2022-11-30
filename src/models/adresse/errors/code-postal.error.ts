@@ -1,7 +1,5 @@
-import { OptionalPropertyError } from '../../../errors';
-
-export class CodePostalError extends OptionalPropertyError {
+export class CodePostalError extends Error {
   constructor(codePostal: string) {
-    super('codePostal', `Le code postal ${codePostal} n'est pas valide`);
+    super(`Le code postal ${codePostal} n'est pas valide`);
   }
 }

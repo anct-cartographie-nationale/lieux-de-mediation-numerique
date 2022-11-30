@@ -132,7 +132,7 @@ describe('adresse model', (): void => {
     expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
   });
 
-  it('should throw CommuneError when commune contains invalid characters', (): void => {
+  it('should throw CommuneError when commune contains $ invalid character', (): void => {
     const adresseData: AdresseToValidate = {
       voie: '4 rue des Acacias',
       code_postal: '57100',
@@ -143,6 +143,18 @@ describe('adresse model', (): void => {
     expect((): void => {
       Adresse(adresseData);
     }).toThrow(new CommuneError(adresseData.commune));
+  });
+
+  it('should throw CommuneError when commune contains " invalid character', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: '"Château de la Roche" Route de Louerre',
+      code_postal: '49350',
+      commune: 'Gennes-Val-de-Loire'
+    };
+
+    expect((): void => {
+      Adresse(adresseData);
+    }).toThrow(new VoieError(adresseData.voie));
   });
 
   it('should allow Commune with accentued characters', (): void => {
@@ -168,6 +180,6 @@ describe('adresse model', (): void => {
 
     expect((): void => {
       Adresse(adresseData);
-    }).toThrow(new VoieError());
+    }).toThrow(new VoieError(adresseData.voie));
   });
 });
