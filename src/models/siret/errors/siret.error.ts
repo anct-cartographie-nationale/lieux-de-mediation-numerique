@@ -1,5 +1,7 @@
-export class SiretError extends Error {
+import { ModelError } from '../../../errors';
+
+export class SiretError extends ModelError<{ siret: string }> {
   constructor(siret: string) {
-    super(`Le Siret ${siret} n'est pas valide`);
+    super('siret', `Le Siret ${siret} n'est pas valide`);
   }
 }

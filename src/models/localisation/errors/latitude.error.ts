@@ -1,5 +1,8 @@
-export class LatitudeError extends Error {
+import { ModelError } from '../../../errors';
+import { Localisation } from '../localisation';
+
+export class LatitudeError extends ModelError<Localisation> {
   constructor(latitude: number | 'indéfinie') {
-    super(`La latitude ${latitude} n'est pas valide`);
+    super('latitude', `La latitude ${latitude} n'est pas valide`);
   }
 }

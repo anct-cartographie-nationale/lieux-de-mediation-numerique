@@ -1,7 +1,8 @@
-import { OptionalPropertyError } from '../../../errors';
+import { ModelError } from '../../../errors';
+import { Adresse } from '../adresse';
 
-export class CodeInseeError extends OptionalPropertyError {
+export class CodeInseeError extends ModelError<Adresse> {
   constructor(codeInsee: string) {
-    super('codeInsee', `Le code insee ${codeInsee} n'est pas valide`);
+    super('code_insee', `Le code insee ${codeInsee} n'est pas valide`);
   }
 }

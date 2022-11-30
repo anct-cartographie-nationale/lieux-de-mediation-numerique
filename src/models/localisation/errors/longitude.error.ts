@@ -1,5 +1,8 @@
-export class LongitudeError extends Error {
+import { ModelError } from '../../../errors';
+import { Localisation } from '../localisation';
+
+export class LongitudeError extends ModelError<Localisation> {
   constructor(longitude: number | 'indéfinie') {
-    super(`La longitude ${longitude} n'est pas valide`);
+    super('longitude', `La longitude ${longitude} n'est pas valide`);
   }
 }

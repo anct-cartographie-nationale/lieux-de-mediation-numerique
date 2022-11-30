@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase */
 
-import { Url } from '../url/url';
+import { Url } from '../url';
 import { Contact, ContactToValidate } from './contact';
 import { CourrielError, TelephoneError } from './errors';
 
