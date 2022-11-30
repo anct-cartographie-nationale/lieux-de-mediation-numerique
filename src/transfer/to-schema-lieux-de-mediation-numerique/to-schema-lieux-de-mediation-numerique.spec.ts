@@ -95,7 +95,7 @@ describe('to schema', (): void => {
       contact: Contact({
         telephone: '+33180059880',
         courriel: 'contact@laquincaillerie.tl',
-        site_web: [Url('https://www.laquincaillerie.tl/,https://m.facebook.com/laquincaillerienumerique/')]
+        site_web: [Url('https://www.laquincaillerie.tl/'), Url('https://m.facebook.com/laquincaillerienumerique/')]
       }),
       horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
       presentation: {
@@ -139,7 +139,7 @@ describe('to schema', (): void => {
         typologie: 'TIERS_LIEUX',
         telephone: '+33180059880',
         courriel: 'contact@laquincaillerie.tl',
-        site_web: 'https://www.laquincaillerie.tl/,https://m.facebook.com/laquincaillerienumerique/',
+        site_web: 'https://www.laquincaillerie.tl/;https://m.facebook.com/laquincaillerienumerique/',
         horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
         presentation_resumee:
           'Notre association propose des formations aux outils numériques à destination des personnes âgées.',

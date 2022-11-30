@@ -169,7 +169,7 @@ export const contactFromDataInclusion = (courriel?: string, telephone?: string, 
         contact: Contact({
           ...(courriel == null ? {} : { courriel }),
           ...(telephone == null ? {} : { telephone }),
-          ...(site_web == null ? {} : { site_web: [Url(site_web)] })
+          ...(site_web == null ? {} : { site_web: site_web.split(';').map(Url) })
         })
       };
 

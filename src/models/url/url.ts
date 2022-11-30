@@ -2,7 +2,7 @@ import { Model } from '../model';
 import { UrlError } from './errors';
 
 const URL_REGEXP: RegExp =
-  /[A-Za-z]{3,9}:(?:\/\/)?(?:[;:&=+$,\w-]+@)?[A-Za-z0-9.-]+|(?:www\.|[;:&=+$,\w-]+@)[A-Za-z0-9.-]+(?:(?:\/[+~%/.\w_-]*)?\??[-+=&;%@.\w_]*#?[.!/\\\w]*)?/u;
+  /^[A-Za-z]{3,9}:(?:\/\/)?(?:[;:&=+$,\w-]+@)?[A-Za-z0-9.-]+(?:(?:\/[+~%/.\w_-]*)?\??[-+=&;%@.\w_]*#?[.!/\\\w]*)?$/u;
 
 export type Url = Model<'Url', string>;
 
