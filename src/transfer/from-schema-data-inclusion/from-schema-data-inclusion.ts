@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase */
 
-import { LieuMediationNumerique, Pivot } from '../../models';
+import { Id, LieuMediationNumerique, Nom, Pivot } from '../../models';
 import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../to-schema-data-inclusion/to-schema-data-inclusion';
 import {
   accessibiliteFromDataInclusion,
@@ -60,8 +60,8 @@ const toLieuMediationNumerique = (
   structure: SchemaStructureDataInclusion,
   service: SchemaServiceDataInclusion
 ): LieuMediationNumerique => ({
-  id: structure.id,
-  nom: structure.nom,
+  id: Id(structure.id),
+  nom: Nom(structure.nom),
   pivot: Pivot(structure.siret ?? structure.rna ?? throwMandatorySiretOrRnaError()),
   ...adresseFromDataInclusion(structure),
   ...localisationFromDataInclusion(structure.latitude, structure.longitude),

@@ -5,12 +5,14 @@ import {
   ConditionAccess,
   ConditionsAccess,
   Contact,
+  Id,
   LabelNational,
   LabelsNationaux,
   LieuMediationNumerique,
   Localisation,
   ModaliteAccompagnement,
   ModalitesAccompagnement,
+  Nom,
   Pivot,
   PublicAccueilli,
   PublicsAccueillis,
@@ -48,8 +50,8 @@ describe('from schema data inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
 
     expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
-      id: 'structure-1',
-      nom: 'Anonymal',
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
       pivot: Pivot('43493312300029'),
       adresse: Adresse({
         code_postal: '51100',
@@ -133,8 +135,8 @@ describe('from schema data inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
 
     expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
-      id: 'structure-1',
-      nom: 'Anonymal',
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
       pivot: Pivot('43493312300029'),
       adresse: Adresse({
         code_postal: '51100',
@@ -275,8 +277,8 @@ describe('from schema data inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
 
     expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
-      id: 'structure-1',
-      nom: 'Anonymal',
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
       pivot: Pivot('W9R2003255'),
       adresse: Adresse({
         code_postal: '51100',
@@ -334,8 +336,8 @@ describe('from schema data inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service1, service2], structure);
 
     expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
-      id: 'structure-1',
-      nom: 'Anonymal',
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
       pivot: Pivot('W9R2003255'),
       adresse: Adresse({
         code_postal: '51100',
@@ -379,8 +381,8 @@ describe('from schema data inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service1, service2], structure);
 
     expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
-      id: 'structure-1',
-      nom: 'Anonymal',
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
       pivot: Pivot('W9R2003255'),
       adresse: Adresse({
         code_postal: '51100',
@@ -437,8 +439,8 @@ describe('from schema data inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service1, service2], structure);
 
     expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
-      id: 'structure-1',
-      nom: 'Anonymal',
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
       pivot: Pivot('43493312300029'),
       adresse: Adresse({
         code_postal: '51100',
