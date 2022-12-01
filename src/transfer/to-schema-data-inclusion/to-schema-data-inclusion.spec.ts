@@ -5,12 +5,14 @@ import {
   ConditionAccess,
   ConditionsAccess,
   Contact,
+  Id,
   LabelNational,
   LabelsNationaux,
   LieuMediationNumerique,
   Localisation,
   ModaliteAccompagnement,
   ModalitesAccompagnement,
+  Nom,
   Pivot,
   PublicAccueilli,
   PublicsAccueillis,
@@ -30,8 +32,8 @@ import {
 describe('to schema data.inclusion', (): void => {
   it('should convert minimal lieux de mediation numerique model to data.inclusion structure schema', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
-      id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
-      nom: 'MOBILETTE',
+      id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
+      nom: Nom('MOBILETTE'),
       pivot: Pivot('60487647500499'),
       adresse: Adresse({
         code_postal: '09891',
@@ -64,8 +66,8 @@ describe('to schema data.inclusion', (): void => {
 
   it('should convert full lieux de mediation numerique model to data.inclusion structure schema', (): void => {
     const lieuMediationNumerique: LieuMediationNumerique = {
-      id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
-      nom: 'MOBILETTE',
+      id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
+      nom: Nom('MOBILETTE'),
       pivot: Pivot('60487647500499'),
       adresse: Adresse({
         code_postal: '09891',
@@ -170,8 +172,8 @@ describe('to schema data.inclusion', (): void => {
 
   it('should convert minimal lieux de mediation numerique model to data.inclusion service schema', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
-      id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
-      nom: 'MOBILETTE',
+      id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
+      nom: Nom('MOBILETTE'),
       pivot: Pivot('60487647500499'),
       adresse: Adresse({
         code_postal: '09891',
@@ -196,8 +198,8 @@ describe('to schema data.inclusion', (): void => {
 
   it('should convert full lieux de mediation numerique model to data.inclusion service schema', (): void => {
     const lieuMediationNumerique: LieuMediationNumerique = {
-      id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
-      nom: 'MOBILETTE',
+      id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
+      nom: Nom('MOBILETTE'),
       pivot: Pivot('60487647500499'),
       adresse: Adresse({
         code_postal: '09891',

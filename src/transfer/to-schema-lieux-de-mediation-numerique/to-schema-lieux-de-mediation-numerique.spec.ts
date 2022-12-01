@@ -6,12 +6,14 @@ import {
   ConditionAccess,
   ConditionsAccess,
   Contact,
+  Id,
   LabelNational,
   LabelsNationaux,
   LieuMediationNumerique,
   Localisation,
   ModaliteAccompagnement,
   ModalitesAccompagnement,
+  Nom,
   Pivot,
   PublicAccueilli,
   PublicsAccueillis,
@@ -26,8 +28,8 @@ import { SchemaLieuMediationNumerique, toSchemaLieuxDeMediationNumerique } from 
 describe('to schema', (): void => {
   it('should convert minimal lieux de mediation numerique model to schema lieux mediation numérique', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
-      id: 'structure-1',
-      nom: 'Anonymal',
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
       pivot: Pivot('43493312300029'),
       adresse: Adresse({
         code_postal: '51100',
@@ -65,8 +67,8 @@ describe('to schema', (): void => {
 
   it('should convert full lieux de mediation numerique model to schema', (): void => {
     const lieuMediationNumerique: LieuMediationNumerique = {
-      id: 'structure-1',
-      nom: 'Anonymal',
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
       pivot: Pivot('43493312300029'),
       adresse: Adresse({
         code_postal: '51100',

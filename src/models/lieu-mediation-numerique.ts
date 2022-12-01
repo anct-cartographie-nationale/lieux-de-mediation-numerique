@@ -14,11 +14,13 @@ import { Url } from './url';
 import { Pivot } from './pivot';
 import { CleBan } from './cle-ban';
 import { LabelsNationaux } from './label-national';
+import { Id } from './id';
+import { Nom } from './nom';
 
 export type LieuMediationNumerique = {
-  id: string;
+  id: Id;
   pivot: Pivot;
-  nom: string;
+  nom: Nom;
   adresse: Adresse;
   localisation?: Localisation;
   cle_ban?: CleBan;
