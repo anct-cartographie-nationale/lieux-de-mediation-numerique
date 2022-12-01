@@ -32,19 +32,20 @@ export type SchemaLieuMediationNumerique = SchemaLieuMediationNumeriqueAccessFie
   SchemaLieuMediationNumeriqueLocalisationFields &
   SchemaLieuMediationNumeriquePresentationFields;
 
+export const toSchemaLieuMediationNumerique = (
+  lieuMediationNumerique: LieuMediationNumerique
+): SchemaLieuMediationNumerique => ({
+  ...generalFields(lieuMediationNumerique),
+  ...adresseFields(lieuMediationNumerique),
+  ...localisationFields(lieuMediationNumerique),
+  ...contactFields(lieuMediationNumerique),
+  ...presentationFields(lieuMediationNumerique),
+  ...accessFields(lieuMediationNumerique),
+  ...labelsFields(lieuMediationNumerique),
+  ...disponibiliteFields(lieuMediationNumerique),
+  ...collecteFields(lieuMediationNumerique)
+});
+
 export const toSchemaLieuxDeMediationNumerique = (
   lieuxMediationNumerique: LieuMediationNumerique[]
-): SchemaLieuMediationNumerique[] =>
-  lieuxMediationNumerique.map(
-    (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumerique => ({
-      ...generalFields(lieuMediationNumerique),
-      ...adresseFields(lieuMediationNumerique),
-      ...localisationFields(lieuMediationNumerique),
-      ...contactFields(lieuMediationNumerique),
-      ...presentationFields(lieuMediationNumerique),
-      ...accessFields(lieuMediationNumerique),
-      ...labelsFields(lieuMediationNumerique),
-      ...disponibiliteFields(lieuMediationNumerique),
-      ...collecteFields(lieuMediationNumerique)
-    })
-  );
+): SchemaLieuMediationNumerique[] => lieuxMediationNumerique.map(toSchemaLieuMediationNumerique);
