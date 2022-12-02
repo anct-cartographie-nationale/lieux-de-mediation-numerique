@@ -3,8 +3,8 @@
 import {
   Adresse,
   CleBan,
-  ConditionAccess,
-  ConditionsAccess,
+  ConditionAcces,
+  ConditionsAcces,
   Contact,
   Id,
   LabelNational,
@@ -22,10 +22,11 @@ import {
   Typologie,
   Typologies,
   Url
-} from '../../models';
-import { SchemaLieuMediationNumerique, toSchemaLieuxDeMediationNumerique } from './to-schema-lieux-de-mediation-numerique';
+} from '../../../models';
+import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
+import { toSchemaLieuxDeMediationNumerique } from './to-schema-lieux-de-mediation-numerique';
 
-describe('to schema', (): void => {
+describe('to schema lieux de mediation numerique', (): void => {
   it('should convert minimal lieux de mediation numerique model to schema lieux mediation numérique', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
       id: Id('structure-1'),
@@ -65,7 +66,7 @@ describe('to schema', (): void => {
     ]);
   });
 
-  it('should convert full lieux de mediation numerique model to schema', (): void => {
+  it('should convert full lieux de mediation numerique model to schema lieux mediation numérique', (): void => {
     const lieuMediationNumerique: LieuMediationNumerique = {
       id: Id('structure-1'),
       nom: Nom('Anonymal'),
@@ -101,7 +102,7 @@ describe('to schema', (): void => {
       }),
       horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
       presentation: {
-        resumee: 'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
+        resume: 'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
         detail:
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.'
       },
@@ -112,7 +113,7 @@ describe('to schema', (): void => {
         PublicAccueilli.Adultes,
         PublicAccueilli.DeficienceVisuelle
       ]),
-      conditions_access: ConditionsAccess([ConditionAccess.Payant, ConditionAccess.AccepteLePassNumerique]),
+      conditions_acces: ConditionsAcces([ConditionAcces.Payant, ConditionAcces.AccepteLePassNumerique]),
       labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC, LabelNational.PointRelaisCAF]),
       labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
       modalites_accompagnement: ModalitesAccompagnement([ModaliteAccompagnement.Seul, ModaliteAccompagnement.AvecDeLAide]),
@@ -143,14 +144,14 @@ describe('to schema', (): void => {
         courriel: 'contact@laquincaillerie.tl',
         site_web: 'https://www.laquincaillerie.tl/;https://m.facebook.com/laquincaillerienumerique/',
         horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
-        presentation_resumee:
+        presentation_resume:
           'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
         presentation_detail:
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.',
         source: 'Hubik',
         structure_parente: 'Pôle emploi',
         publics_accueillis: 'Familles/enfants;Adultes;Déficience visuelle',
-        conditions_access:
+        conditions_acces:
           "Payant : L'accès au lieu et/ou à ses services est payant;Accepte le Pass numérique : Il est possible d'utiliser un Pass numérique pour accéder au lieu",
         labels_nationaux: 'France Services;APTIC;Point relais CAF',
         labels_autres: 'SudLabs;Nièvre médiation numérique',

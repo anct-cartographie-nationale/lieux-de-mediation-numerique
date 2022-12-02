@@ -8,7 +8,7 @@ import { Contact } from './contact';
 import { Presentation } from './presentation';
 import { Services } from './service';
 import { PublicsAccueillis } from './public-accueilli';
-import { ConditionsAccess } from './condition-access';
+import { ConditionsAcces } from './condition-access';
 import { ModalitesAccompagnement } from './modalite-accompagnement';
 import { Url } from './url';
 import { Pivot } from './pivot';
@@ -33,7 +33,7 @@ export type LieuMediationNumerique = {
   date_maj: Date;
   services: Services;
   publics_accueillis?: PublicsAccueillis;
-  conditions_access?: ConditionsAccess;
+  conditions_acces?: ConditionsAcces;
   labels_nationaux?: LabelsNationaux;
   labels_autres?: string[];
   modalites_accompagnement?: ModalitesAccompagnement;

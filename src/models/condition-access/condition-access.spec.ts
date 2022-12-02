@@ -1,22 +1,22 @@
-import { ConditionAccess, ConditionsAccess } from './condition-access';
-import { ConditionsAccessError } from './errors';
+import { ConditionAcces, ConditionsAcces } from './condition-acces';
+import { ConditionsAccesError } from './errors';
 
 describe('condition access model', (): void => {
   it('should create valid conditions access', (): void => {
-    const conditionAccess: ConditionsAccess = ConditionsAccess([ConditionAccess.Adhesion]);
+    const conditionAccess: ConditionsAcces = ConditionsAcces([ConditionAcces.Adhesion]);
 
     expect(conditionAccess).toStrictEqual(["Adhésion : L'accès au lieu et/ou à ses services nécessite d'y adhérer"]);
   });
 
   it('should not create invalid conditions access', (): void => {
     expect((): void => {
-      ConditionsAccess(['Remboursable par la sécurité sociale' as ConditionAccess]);
-    }).toThrow(new ConditionsAccessError('Remboursable par la sécurité sociale' as ConditionAccess));
+      ConditionsAcces(['Remboursable par la sécurité sociale' as ConditionAcces]);
+    }).toThrow(new ConditionsAccesError('Remboursable par la sécurité sociale' as ConditionAcces));
   });
 
   it('should not create invalid conditions access containing a valid and an invalid value', (): void => {
     expect((): void => {
-      ConditionsAccess([ConditionAccess.Adhesion, 'Remboursable par la sécurité sociale' as ConditionAccess]);
-    }).toThrow(new ConditionsAccessError('Remboursable par la sécurité sociale' as ConditionAccess));
+      ConditionsAcces([ConditionAcces.Adhesion, 'Remboursable par la sécurité sociale' as ConditionAcces]);
+    }).toThrow(new ConditionsAccesError('Remboursable par la sécurité sociale' as ConditionAcces));
   });
 });

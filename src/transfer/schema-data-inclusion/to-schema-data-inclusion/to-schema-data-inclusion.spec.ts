@@ -2,8 +2,8 @@
 
 import {
   Adresse,
-  ConditionAccess,
-  ConditionsAccess,
+  ConditionAcces,
+  ConditionsAcces,
   Contact,
   Id,
   LabelNational,
@@ -21,13 +21,9 @@ import {
   Typologie,
   Typologies,
   Url
-} from '../../models';
-import {
-  SchemaServiceDataInclusion,
-  SchemaStructureDataInclusion,
-  toSchemaServicesDataInclusion,
-  toSchemaStructuresDataInclusion
-} from './to-schema-data-inclusion';
+} from '../../../models';
+import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
+import { toSchemaServicesDataInclusion, toSchemaStructuresDataInclusion } from './to-schema-data-inclusion';
 
 describe('to schema data.inclusion', (): void => {
   it('should convert minimal lieux de mediation numerique model to data.inclusion structure schema', (): void => {
@@ -43,7 +39,7 @@ describe('to schema data.inclusion', (): void => {
       services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
       date_maj: new Date('2022-04-28'),
       presentation: {
-        resumee:
+        resume:
           'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle'
       }
     };
@@ -108,7 +104,7 @@ describe('to schema data.inclusion', (): void => {
       }),
       horaires: 'Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off',
       presentation: {
-        resumee:
+        resume:
           'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle, nous sommes spécialisés dans la mobilité en milieu rurale, mais nous pouvons également proposer un accompagnement pour la mobilité en milieu urbain.',
         detail:
           "connaissance de l'offre de transport du territoire / accès à un véhicule 2 ou 4 roues / transport solidaire / accès au permis"
@@ -231,7 +227,7 @@ describe('to schema data.inclusion', (): void => {
         ModaliteAccompagnement.AvecDeLAide,
         ModaliteAccompagnement.DansUnAtelier
       ]),
-      conditions_access: ConditionsAccess([ConditionAccess.Payant, ConditionAccess.AccepteLePassNumerique]),
+      conditions_acces: ConditionsAcces([ConditionAcces.Payant, ConditionAcces.AccepteLePassNumerique]),
       prise_rdv: Url('https://www.rdv-solidarites.fr/'),
       publics_accueillis: PublicsAccueillis([
         PublicAccueilli.Seniors,

@@ -1,1 +1,1 @@
-export * from './conditions-access.error';
+export * from './conditions-acces.error';

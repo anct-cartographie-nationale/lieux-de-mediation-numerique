@@ -1,4 +1,4 @@
 export type Presentation = {
-  resumee?: string;
+  resume?: string;
   detail?: string;
 };

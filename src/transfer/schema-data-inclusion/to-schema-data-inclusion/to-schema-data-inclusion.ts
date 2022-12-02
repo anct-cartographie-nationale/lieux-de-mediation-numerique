@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/naming-convention, camelcase */
-
-import { LieuMediationNumerique } from '../../models';
+import { LieuMediationNumerique } from '../../../models';
+import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import {
   adresseFields,
   collecteFields,
@@ -10,31 +9,9 @@ import {
   labelsFields,
   localisationFields,
   presentationFields,
-  SchemaStructureDataInclusionAdresseFields,
-  SchemaStructureDataInclusionCollecteFields,
-  SchemaStructureDataInclusionContactFields,
-  SchemaStructureDataInclusionDisponibiliteFields,
-  SchemaStructureDataInclusionStructureGeneralFields,
-  SchemaStructureDataInclusionLabelsFields,
-  SchemaStructureDataInclusionLocalisationFields,
-  SchemaStructureDataInclusionPresentationFields,
   serviceGeneralFields,
-  SchemaStructureDataInclusionServiceGeneralFields,
-  SchemaStructureDataInclusionAccessFields,
   accessFields
 } from './to-schema-data-inclusion-fields';
-
-export type SchemaStructureDataInclusion = SchemaStructureDataInclusionAdresseFields &
-  SchemaStructureDataInclusionCollecteFields &
-  SchemaStructureDataInclusionContactFields &
-  SchemaStructureDataInclusionDisponibiliteFields &
-  SchemaStructureDataInclusionLabelsFields &
-  SchemaStructureDataInclusionLocalisationFields &
-  SchemaStructureDataInclusionPresentationFields &
-  SchemaStructureDataInclusionStructureGeneralFields;
-
-export type SchemaServiceDataInclusion = SchemaStructureDataInclusionAccessFields &
-  SchemaStructureDataInclusionServiceGeneralFields;
 
 export const toSchemaStructuresDataInclusion = (
   lieuxMediationNumerique: LieuMediationNumerique[]

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase */
 
-import { Id, LieuMediationNumerique, Nom, Pivot } from '../../models';
-import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../to-schema-data-inclusion/to-schema-data-inclusion';
+import { Id, LieuMediationNumerique, Nom, Pivot } from '../../../models';
+import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import {
   accessibiliteFromDataInclusion,
   adresseFromDataInclusion,
-  conditionsAccessFromDataInclusion,
+  conditionsAccesFromDataInclusion,
   contactFromDataInclusion,
   FRAIS_TO_CONDITION_ACCESS,
   horairesFromDataInclusion,
@@ -70,7 +70,7 @@ const toLieuMediationNumerique = (
   ...contactFromDataInclusion(structure.courriel, structure.telephone, structure.site_web),
   ...sourceFromDataInclusion(structure.source),
   ...accessibiliteFromDataInclusion(structure.accessibilite),
-  ...(service.frais == null ? {} : conditionsAccessFromDataInclusion(FRAIS_TO_CONDITION_ACCESS.get(service.frais))),
+  ...(service.frais == null ? {} : conditionsAccesFromDataInclusion(FRAIS_TO_CONDITION_ACCESS.get(service.frais))),
   ...horairesFromDataInclusion(structure.horaires_ouverture),
   ...labelsFromDataInclusion(structure.labels_nationaux, structure.labels_autres),
   ...modalitesAccompagnementFromDataInclusion(service.types),

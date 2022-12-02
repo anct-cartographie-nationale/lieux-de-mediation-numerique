@@ -1,62 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase */
 
-import { LieuMediationNumerique } from '../../models';
-
-export type SchemaLieuMediationNumeriqueGeneralFields = {
-  id: string;
-  nom: string;
-  services: string;
-  pivot: string;
-  typologie?: string;
-  structure_parente?: string;
-};
-
-export type SchemaLieuMediationNumeriqueAdresseFields = {
-  commune: string;
-  code_postal: string;
-  adresse: string;
-  code_insee?: string;
-  complement_adresse?: string;
-  cle_ban?: string;
-};
-
-export type SchemaLieuMediationNumeriqueLocalisationFields = {
-  latitude?: number;
-  longitude?: number;
-};
-
-export type SchemaLieuMediationNumeriqueContactFields = {
-  telephone?: string;
-  courriel?: string;
-  site_web?: string;
-};
-
-export type SchemaLieuMediationNumeriquePresentationFields = {
-  presentation_resumee?: string;
-  presentation_detail?: string;
-};
-
-export type SchemaLieuMediationNumeriqueAccessFields = {
-  publics_accueillis?: string;
-  conditions_access?: string;
-  modalites_accompagnement?: string;
-  accessibilite?: string;
-};
-
-export type SchemaLieuMediationNumeriqueLabelsFields = {
-  labels_nationaux?: string;
-  labels_autres?: string;
-};
-
-export type SchemaLieuMediationNumeriqueDisponibiliteFields = {
-  horaires?: string;
-  prise_rdv?: string;
-};
-
-export type SchemaLieuMediationNumeriqueCollecteFields = {
-  date_maj: string;
-  source?: string;
-};
+import { LieuMediationNumerique } from '../../../models';
+import {
+  SchemaLieuMediationNumeriqueAccesFields,
+  SchemaLieuMediationNumeriqueAdresseFields,
+  SchemaLieuMediationNumeriqueCollecteFields,
+  SchemaLieuMediationNumeriqueContactFields,
+  SchemaLieuMediationNumeriqueDisponibiliteFields,
+  SchemaLieuMediationNumeriqueGeneralFields,
+  SchemaLieuMediationNumeriqueLabelsFields,
+  SchemaLieuMediationNumeriqueLocalisationFields,
+  SchemaLieuMediationNumeriquePresentationFields
+} from '../schema-lieux-de-mediation-numerique';
 
 export const generalFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueGeneralFields => ({
   id: lieuMediationNumerique.id,
@@ -96,21 +51,21 @@ export const contactFields = (lieuMediationNumerique: LieuMediationNumerique): S
 export const presentationFields = (
   lieuMediationNumerique: LieuMediationNumerique
 ): SchemaLieuMediationNumeriquePresentationFields => ({
-  ...(lieuMediationNumerique.presentation?.resumee == null
+  ...(lieuMediationNumerique.presentation?.resume == null
     ? {}
-    : { presentation_resumee: lieuMediationNumerique.presentation.resumee }),
+    : { presentation_resume: lieuMediationNumerique.presentation.resume }),
   ...(lieuMediationNumerique.presentation?.detail == null
     ? {}
     : { presentation_detail: lieuMediationNumerique.presentation.detail })
 });
 
-export const accessFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueAccessFields => ({
+export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueAccesFields => ({
   ...(lieuMediationNumerique.publics_accueillis == null
     ? {}
     : { publics_accueillis: lieuMediationNumerique.publics_accueillis.join(';') }),
-  ...(lieuMediationNumerique.conditions_access == null
+  ...(lieuMediationNumerique.conditions_acces == null
     ? {}
-    : { conditions_access: lieuMediationNumerique.conditions_access.join(';') }),
+    : { conditions_acces: lieuMediationNumerique.conditions_acces.join(';') }),
   ...(lieuMediationNumerique.modalites_accompagnement == null
     ? {}
     : { modalites_accompagnement: lieuMediationNumerique.modalites_accompagnement.join(';') }),
