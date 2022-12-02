@@ -1,6 +1,6 @@
 export * from './adresse';
 export * from './cle-ban';
-export * from './condition-access';
+export * from './condition-acces';
 export * from './contact';
 export * from './id';
 export * from './label-national';
