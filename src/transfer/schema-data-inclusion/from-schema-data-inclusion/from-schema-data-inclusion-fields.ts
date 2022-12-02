@@ -40,7 +40,7 @@ const THEMATIQUES_TO_SERVICES: Map<string, Service> = new Map<string, Service>([
   ['numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique', Service.SoutenirLaParentalite]
 ]);
 
-export const FRAIS_TO_CONDITION_ACCESS: Map<string, ConditionAcces> = new Map<string, ConditionAcces>([
+export const FRAIS_TO_CONDITION_ACCES: Map<string, ConditionAcces> = new Map<string, ConditionAcces>([
   ['gratuit', ConditionAcces.Gratuit],
   ['gratuit-sous-conditions', ConditionAcces.GratuitSousCondition],
   ['payant', ConditionAcces.Payant],

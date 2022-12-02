@@ -60,7 +60,7 @@ export type SchemaStructureDataInclusionCollecteFields = {
   lien_source?: string;
 };
 
-export type SchemaStructureDataInclusionAccessFields = {
+export type SchemaStructureDataInclusionAccesFields = {
   profils?: string[];
   frais?: string;
   types?: string[];
@@ -75,5 +75,5 @@ export type SchemaStructureDataInclusion = SchemaStructureDataInclusionAdresseFi
   SchemaStructureDataInclusionPresentationFields &
   SchemaStructureDataInclusionStructureGeneralFields;
 
-export type SchemaServiceDataInclusion = SchemaStructureDataInclusionAccessFields &
+export type SchemaServiceDataInclusion = SchemaStructureDataInclusionAccesFields &
   SchemaStructureDataInclusionServiceGeneralFields;

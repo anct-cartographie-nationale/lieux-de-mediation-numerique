@@ -1,15 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase, max-lines */
 
+import { LabelNational, LieuMediationNumerique, ModaliteAccompagnement, PublicAccueilli, Service } from '../../../models';
 import {
-  ConditionAcces,
-  LabelNational,
-  LieuMediationNumerique,
-  ModaliteAccompagnement,
-  PublicAccueilli,
-  Service
-} from '../../../models';
-import {
-  SchemaStructureDataInclusionAccessFields,
+  SchemaStructureDataInclusionAccesFields,
   SchemaStructureDataInclusionAdresseFields,
   SchemaStructureDataInclusionCollecteFields,
   SchemaStructureDataInclusionContactFields,
@@ -20,6 +13,7 @@ import {
   SchemaStructureDataInclusionServiceGeneralFields,
   SchemaStructureDataInclusionStructureGeneralFields
 } from '../schema-data-inclusion';
+import { ConditionAcces } from '../../../models/condition-acces';
 
 const SERVICES_TO_THEMATIQUES: Map<Service, string> = new Map<Service, string>([
   [Service.DevenirAutonomeDansLesDemarchesAdministratives, 'numerique--devenir-autonome-dans-les-demarches-administratives'],
@@ -46,7 +40,7 @@ const MODALITES_ACCOMPAGNEMENT_TO_TYPES_MAP: Map<ModaliteAccompagnement, string>
   [ModaliteAccompagnement.DansUnAtelier, 'atelier']
 ]);
 
-const CONDITION_ACCESS_TO_FRAIS: Map<ConditionAcces, string> = new Map<ConditionAcces, string>([
+const CONDITION_ACCES_TO_FRAIS: Map<ConditionAcces, string> = new Map<ConditionAcces, string>([
   [ConditionAcces.Gratuit, 'gratuit'],
   [ConditionAcces.GratuitSousCondition, 'gratuit-sous-conditions'],
   [ConditionAcces.Payant, 'payant'],
@@ -88,8 +82,8 @@ const siteWebIfExist = (site_web?: string): { site_web?: string } => (site_web =
 
 const fraisIfExist = (frais?: string): { frais?: string } => (frais == null ? {} : { frais });
 
-const fraisFromConditionAcces = (conditionAccess?: ConditionAcces): { frais?: string } =>
-  conditionAccess == null ? {} : fraisIfExist(CONDITION_ACCESS_TO_FRAIS.get(conditionAccess));
+const fraisFromConditionAcces = (conditionAcces?: ConditionAcces): { frais?: string } =>
+  conditionAcces == null ? {} : fraisIfExist(CONDITION_ACCES_TO_FRAIS.get(conditionAcces));
 
 export const structureGeneralFields = (
   lieuMediationNumerique: LieuMediationNumerique
@@ -214,7 +208,7 @@ const profilsFromPublicsAccueillis = (lieuMediationNumerique: LieuMediationNumer
     .filter((profil: string | null): profil is string => profil != null)
 });
 
-export const accessFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionAccessFields => ({
+export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionAccesFields => ({
   ...(lieuMediationNumerique.modalites_accompagnement == null ? {} : typesFromModalitesAccompagnement(lieuMediationNumerique)),
   ...(lieuMediationNumerique.conditions_acces == null
     ? {}

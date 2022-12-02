@@ -10,7 +10,7 @@ import {
   localisationFields,
   presentationFields,
   serviceGeneralFields,
-  accessFields
+  accesFields
 } from './to-schema-data-inclusion-fields';
 
 export const toSchemaStructuresDataInclusion = (
@@ -35,6 +35,6 @@ export const toSchemaServicesDataInclusion = (
   lieuxMediationNumerique.map(
     (lieuMediationNumerique: LieuMediationNumerique): SchemaServiceDataInclusion => ({
       ...serviceGeneralFields(lieuMediationNumerique),
-      ...accessFields(lieuMediationNumerique)
+      ...accesFields(lieuMediationNumerique)
     })
   );
