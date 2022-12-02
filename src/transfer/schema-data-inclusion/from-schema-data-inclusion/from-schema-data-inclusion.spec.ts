@@ -2,8 +2,8 @@
 
 import {
   Adresse,
-  ConditionAccess,
-  ConditionsAccess,
+  ConditionAcces,
+  ConditionsAcces,
   Contact,
   Id,
   LabelNational,
@@ -22,8 +22,8 @@ import {
   Typologie,
   Typologies,
   Url
-} from '../../models';
-import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../to-schema-data-inclusion/to-schema-data-inclusion';
+} from '../../../models';
+import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import { fromSchemaDataInclusion } from './from-schema-data-inclusion';
 import { MandatorySiretOrRnaError } from './errors/mandatory-siret-or-rna.error';
 
@@ -175,7 +175,7 @@ describe('from schema data inclusion', (): void => {
       }),
       horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
       presentation: {
-        resumee: 'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
+        resume: 'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
         detail:
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.'
       },
@@ -194,7 +194,7 @@ describe('from schema data inclusion', (): void => {
         PublicAccueilli.UniquementFemmes,
         PublicAccueilli.Illettrisme
       ]),
-      conditions_access: ConditionsAccess([ConditionAccess.GratuitSousCondition]),
+      conditions_acces: ConditionsAcces([ConditionAcces.GratuitSousCondition]),
       labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC]),
       labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
       modalites_accompagnement: ModalitesAccompagnement([
@@ -391,7 +391,7 @@ describe('from schema data inclusion', (): void => {
       }),
       services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives, Service.AccederAUneConnexionInternet]),
       date_maj: new Date('2022-10-10'),
-      conditions_access: ConditionsAccess([ConditionAccess.Payant])
+      conditions_acces: ConditionsAcces([ConditionAcces.Payant])
     });
   });
 
@@ -460,7 +460,7 @@ describe('from schema data inclusion', (): void => {
         PublicAccueilli.Adultes,
         PublicAccueilli.Jeunes
       ]),
-      conditions_access: ConditionsAccess([ConditionAccess.Adhesion]),
+      conditions_acces: ConditionsAcces([ConditionAcces.Adhesion]),
       modalites_accompagnement: ModalitesAccompagnement([
         ModaliteAccompagnement.AvecDeLAide,
         ModaliteAccompagnement.DansUnAtelier,

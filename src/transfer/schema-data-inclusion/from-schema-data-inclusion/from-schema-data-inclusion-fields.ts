@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase, max-lines */
 
+import { SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import {
   Adresse,
-  ConditionAccess,
-  ConditionsAccess,
+  ConditionAcces,
+  ConditionsAcces,
   Contact,
   LabelNational,
   LabelsNationaux,
@@ -19,8 +20,7 @@ import {
   Typologie,
   Typologies,
   Url
-} from '../../models';
-import { SchemaStructureDataInclusion } from '../to-schema-data-inclusion/to-schema-data-inclusion';
+} from '../../../models';
 
 const THEMATIQUES_TO_SERVICES: Map<string, Service> = new Map<string, Service>([
   ['numerique--devenir-autonome-dans-les-demarches-administratives', Service.DevenirAutonomeDansLesDemarchesAdministratives],
@@ -40,12 +40,12 @@ const THEMATIQUES_TO_SERVICES: Map<string, Service> = new Map<string, Service>([
   ['numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique', Service.SoutenirLaParentalite]
 ]);
 
-export const FRAIS_TO_CONDITION_ACCESS: Map<string, ConditionAccess> = new Map<string, ConditionAccess>([
-  ['gratuit', ConditionAccess.Gratuit],
-  ['gratuit-sous-conditions', ConditionAccess.GratuitSousCondition],
-  ['payant', ConditionAccess.Payant],
-  ['adhesion', ConditionAccess.Adhesion],
-  ['pass-numerique', ConditionAccess.AccepteLePassNumerique]
+export const FRAIS_TO_CONDITION_ACCESS: Map<string, ConditionAcces> = new Map<string, ConditionAcces>([
+  ['gratuit', ConditionAcces.Gratuit],
+  ['gratuit-sous-conditions', ConditionAcces.GratuitSousCondition],
+  ['payant', ConditionAcces.Payant],
+  ['adhesion', ConditionAcces.Adhesion],
+  ['pass-numerique', ConditionAcces.AccepteLePassNumerique]
 ]);
 
 const LABELS_NATIONAUX_MAP: Map<string, LabelNational> = new Map<string, LabelNational>([
@@ -157,10 +157,8 @@ export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>
   ['UDAF', Typologie.UDAF]
 ]);
 
-export const conditionsAccessFromDataInclusion = (
-  conditionAccess?: ConditionAccess
-): { conditions_access?: ConditionsAccess } =>
-  conditionAccess == null ? {} : { conditions_access: ConditionsAccess([conditionAccess]) };
+export const conditionsAccesFromDataInclusion = (conditionAcces?: ConditionAcces): { conditions_acces?: ConditionsAcces } =>
+  conditionAcces == null ? {} : { conditions_acces: ConditionsAcces([conditionAcces]) };
 
 export const contactFromDataInclusion = (courriel?: string, telephone?: string, site_web?: string): { contact?: Contact } =>
   courriel == null && telephone == null && site_web == null
@@ -237,7 +235,7 @@ export const presentationFromDataInclusion = (
     : {
         presentation: {
           ...(presentation_detail == null ? {} : { detail: presentation_detail }),
-          ...(presentation_resume == null ? {} : { resumee: presentation_resume })
+          ...(presentation_resume == null ? {} : { resume: presentation_resume })
         }
       };
 

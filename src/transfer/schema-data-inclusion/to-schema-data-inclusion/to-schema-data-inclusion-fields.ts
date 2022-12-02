@@ -1,79 +1,25 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase, max-lines */
 
-export type SchemaStructureDataInclusionStructureGeneralFields = {
-  id: string;
-  nom: string;
-  siret?: string;
-  rna?: string;
-  typologie?: string;
-  structure_parente?: string;
-  thematiques?: string[];
-  accessibilite?: string;
-};
-
-export type SchemaStructureDataInclusionServiceGeneralFields = {
-  id: string;
-  structure_id: string;
-  nom: string;
-  prise_rdv?: string;
-  thematiques?: string[];
-  source: string;
-  presentation_resume?: string;
-};
-
-export type SchemaStructureDataInclusionAdresseFields = {
-  commune: string;
-  code_postal: string;
-  adresse: string;
-  code_insee?: string;
-  complement_adresse?: string;
-};
-
-export type SchemaStructureDataInclusionLocalisationFields = {
-  latitude?: number;
-  longitude?: number;
-};
-
-export type SchemaStructureDataInclusionContactFields = {
-  telephone?: string;
-  courriel?: string;
-  site_web?: string;
-};
-
-export type SchemaStructureDataInclusionPresentationFields = {
-  presentation_resume?: string;
-  presentation_detail?: string;
-};
-
-export type SchemaStructureDataInclusionLabelsFields = {
-  labels_nationaux?: string[];
-  labels_autres?: string[];
-};
-
-export type SchemaStructureDataInclusionDisponibiliteFields = {
-  horaires_ouverture?: string;
-};
-
-export type SchemaStructureDataInclusionCollecteFields = {
-  date_maj: string;
-  source?: string;
-  lien_source?: string;
-};
-
-export type SchemaStructureDataInclusionAccessFields = {
-  profils?: string[];
-  frais?: string;
-  types?: string[];
-};
-
 import {
-  ConditionAccess,
+  ConditionAcces,
   LabelNational,
   LieuMediationNumerique,
   ModaliteAccompagnement,
   PublicAccueilli,
   Service
-} from '../../models';
+} from '../../../models';
+import {
+  SchemaStructureDataInclusionAccessFields,
+  SchemaStructureDataInclusionAdresseFields,
+  SchemaStructureDataInclusionCollecteFields,
+  SchemaStructureDataInclusionContactFields,
+  SchemaStructureDataInclusionDisponibiliteFields,
+  SchemaStructureDataInclusionLabelsFields,
+  SchemaStructureDataInclusionLocalisationFields,
+  SchemaStructureDataInclusionPresentationFields,
+  SchemaStructureDataInclusionServiceGeneralFields,
+  SchemaStructureDataInclusionStructureGeneralFields
+} from '../schema-data-inclusion';
 
 const SERVICES_TO_THEMATIQUES: Map<Service, string> = new Map<Service, string>([
   [Service.DevenirAutonomeDansLesDemarchesAdministratives, 'numerique--devenir-autonome-dans-les-demarches-administratives'],
@@ -100,12 +46,12 @@ const MODALITES_ACCOMPAGNEMENT_TO_TYPES_MAP: Map<ModaliteAccompagnement, string>
   [ModaliteAccompagnement.DansUnAtelier, 'atelier']
 ]);
 
-const CONDITION_ACCESS_TO_FRAIS: Map<ConditionAccess, string> = new Map<ConditionAccess, string>([
-  [ConditionAccess.Gratuit, 'gratuit'],
-  [ConditionAccess.GratuitSousCondition, 'gratuit-sous-conditions'],
-  [ConditionAccess.Payant, 'payant'],
-  [ConditionAccess.Adhesion, 'adhesion'],
-  [ConditionAccess.AccepteLePassNumerique, 'pass-numerique']
+const CONDITION_ACCESS_TO_FRAIS: Map<ConditionAcces, string> = new Map<ConditionAcces, string>([
+  [ConditionAcces.Gratuit, 'gratuit'],
+  [ConditionAcces.GratuitSousCondition, 'gratuit-sous-conditions'],
+  [ConditionAcces.Payant, 'payant'],
+  [ConditionAcces.Adhesion, 'adhesion'],
+  [ConditionAcces.AccepteLePassNumerique, 'pass-numerique']
 ]);
 
 const PUBLICS_ACCUEILLIS_TO_PROFILS: Map<PublicAccueilli, string> = new Map<PublicAccueilli, string>([
@@ -142,7 +88,7 @@ const siteWebIfExist = (site_web?: string): { site_web?: string } => (site_web =
 
 const fraisIfExist = (frais?: string): { frais?: string } => (frais == null ? {} : { frais });
 
-const fraisFromConditionAccess = (conditionAccess?: ConditionAccess): { frais?: string } =>
+const fraisFromConditionAcces = (conditionAccess?: ConditionAcces): { frais?: string } =>
   conditionAccess == null ? {} : fraisIfExist(CONDITION_ACCESS_TO_FRAIS.get(conditionAccess));
 
 export const structureGeneralFields = (
@@ -194,13 +140,13 @@ export const contactFields = (lieuMediationNumerique: LieuMediationNumerique): S
 export const presentationFields = (
   lieuMediationNumerique: LieuMediationNumerique
 ): SchemaStructureDataInclusionPresentationFields => ({
-  ...(lieuMediationNumerique.presentation?.resumee == null
+  ...(lieuMediationNumerique.presentation?.resume == null
     ? {}
     : {
         presentation_resume:
-          lieuMediationNumerique.presentation.resumee.length > 280
-            ? `${lieuMediationNumerique.presentation.resumee.slice(0, 277)}...`
-            : lieuMediationNumerique.presentation.resumee
+          lieuMediationNumerique.presentation.resume.length > 280
+            ? `${lieuMediationNumerique.presentation.resume.slice(0, 277)}...`
+            : lieuMediationNumerique.presentation.resume
       }),
   ...(lieuMediationNumerique.presentation?.detail == null
     ? {}
@@ -270,8 +216,8 @@ const profilsFromPublicsAccueillis = (lieuMediationNumerique: LieuMediationNumer
 
 export const accessFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionAccessFields => ({
   ...(lieuMediationNumerique.modalites_accompagnement == null ? {} : typesFromModalitesAccompagnement(lieuMediationNumerique)),
-  ...(lieuMediationNumerique.conditions_access == null
+  ...(lieuMediationNumerique.conditions_acces == null
     ? {}
-    : fraisFromConditionAccess(lieuMediationNumerique.conditions_access.at(0))),
+    : fraisFromConditionAcces(lieuMediationNumerique.conditions_acces.at(0))),
   ...(lieuMediationNumerique.publics_accueillis == null ? {} : profilsFromPublicsAccueillis(lieuMediationNumerique))
 });
