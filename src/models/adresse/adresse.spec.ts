@@ -182,4 +182,17 @@ describe('adresse model', (): void => {
       Adresse(adresseData);
     }).toThrow(new VoieError(adresseData.voie));
   });
+
+  it('should accept comma in voie', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: '128, Rue Jean Jaurès',
+      code_postal: '57100',
+      code_insee: '57236',
+      commune: 'Metz'
+    };
+
+    const adresse: Adresse = Adresse(adresseData);
+
+    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  });
 });
