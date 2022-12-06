@@ -56,7 +56,7 @@ const throwMandatorySiretOrRnaError = (): Pivot => {
   throw new MandatorySiretOrRnaError();
 };
 
-const toLieuMediationNumerique = (
+const fromSchemaDataInclusionItem = (
   structure: SchemaStructureDataInclusion,
   service: SchemaServiceDataInclusion
 ): LieuMediationNumerique => ({
@@ -84,4 +84,4 @@ const toLieuMediationNumerique = (
 export const fromSchemaDataInclusion = (
   services: SchemaServiceDataInclusion[],
   structure: SchemaStructureDataInclusion
-): LieuMediationNumerique => toLieuMediationNumerique(structure, mergeServices(services, structure));
+): LieuMediationNumerique => fromSchemaDataInclusionItem(structure, mergeServices(services, structure));

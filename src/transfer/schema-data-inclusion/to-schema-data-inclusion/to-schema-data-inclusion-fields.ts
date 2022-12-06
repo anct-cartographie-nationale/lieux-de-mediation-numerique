@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase, max-lines */
 
-import { LabelNational, LieuMediationNumerique, ModaliteAccompagnement, PublicAccueilli, Service } from '../../../models';
+import {
+  ConditionAcces,
+  LabelNational,
+  LieuMediationNumerique,
+  ModaliteAccompagnement,
+  PublicAccueilli,
+  Service
+} from '../../../models';
 import {
   SchemaStructureDataInclusionAccesFields,
   SchemaStructureDataInclusionAdresseFields,
@@ -13,7 +20,6 @@ import {
   SchemaStructureDataInclusionServiceGeneralFields,
   SchemaStructureDataInclusionStructureGeneralFields
 } from '../schema-data-inclusion';
-import { ConditionAcces } from '../../../models/condition-acces';
 
 const SERVICES_TO_THEMATIQUES: Map<Service, string> = new Map<Service, string>([
   [Service.DevenirAutonomeDansLesDemarchesAdministratives, 'numerique--devenir-autonome-dans-les-demarches-administratives'],
