@@ -23,7 +23,7 @@ const CODE_INSEE_REG_EXP: RegExp = /^(?:[013-9]\d|2[AB1-9])(?:0?\d{3}|-\d-\d{2}-
 
 const COMMUNE_REG_EXP: RegExp = /^[A-Za-z\dÀ-ÖØ-öø-ÿœ\-'’ ]+$/u;
 
-const VOIE_REG_EXP: RegExp = /^[0-9A-Za-z\dÀ-ÖØ-öø-ÿœ\-,'’ ]+$/u;
+const VOIE_REG_EXP: RegExp = /^[0-9A-Za-z\dÀ-ÖØ-öø-ÿœ\-,()°.&:+–|;'’ ]+$/u;
 
 const isValidCodePostal = (codePostal: string): boolean => CODE_POSTAL_REG_EXP.test(codePostal);
 

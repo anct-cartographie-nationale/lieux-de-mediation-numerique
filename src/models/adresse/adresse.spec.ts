@@ -195,4 +195,121 @@ describe('adresse model', (): void => {
 
     expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
   });
+
+  it('should accept parentheses in voie', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: 'Rond-Point Ibrahim Ali (1978-1995)',
+      code_postal: '57100',
+      code_insee: '57236',
+      commune: 'Metz'
+    };
+
+    const adresse: Adresse = Adresse(adresseData);
+
+    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  });
+
+  it('should accept ° in voie', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: 'APPARTEMENT N°3 1 R PIERRE LEMIÈRE',
+      code_postal: '57100',
+      code_insee: '57236',
+      commune: 'Metz'
+    };
+
+    const adresse: Adresse = Adresse(adresseData);
+
+    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  });
+
+  it('should accept dot in voie', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: '5 ter. avenue des Sports',
+      code_postal: '57100',
+      code_insee: '57236',
+      commune: 'Metz'
+    };
+
+    const adresse: Adresse = Adresse(adresseData);
+
+    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  });
+
+  it('should accept & in voie', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: 'CENTRE VIE & LIBERTE 10 R DU DOYENNE',
+      code_postal: '57100',
+      code_insee: '57236',
+      commune: 'Metz'
+    };
+
+    const adresse: Adresse = Adresse(adresseData);
+
+    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  });
+
+  it('should accept double dot in voie', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: 'ADRESSE ADMINISTRATIVE : 8 R DES PECHEURS COUX',
+      code_postal: '57100',
+      code_insee: '57236',
+      commune: 'Metz'
+    };
+
+    const adresse: Adresse = Adresse(adresseData);
+
+    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  });
+
+  it('should accept + in voie', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: 'ACCUEIL FEMMES + ENFANTS 35 R FESSART',
+      code_postal: '57100',
+      code_insee: '57236',
+      commune: 'Metz'
+    };
+
+    const adresse: Adresse = Adresse(adresseData);
+
+    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  });
+
+  it('should accept long dash in voie', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: '2067 chemin ST Claude – Nova Antipolis',
+      code_postal: '57100',
+      code_insee: '57236',
+      commune: 'Metz'
+    };
+
+    const adresse: Adresse = Adresse(adresseData);
+
+    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  });
+
+  it('should accept pipe in voie', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: '1022 R Antoine de Saint-exupery | R Antoine Saint-exupery',
+      code_postal: '57100',
+      code_insee: '57236',
+      commune: 'Metz'
+    };
+
+    const adresse: Adresse = Adresse(adresseData);
+
+    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  });
+
+  it('should accept semicolon in voie', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: "53 Avenue de l'Europe Ecopolis; 1er étage bureau 09",
+      code_postal: '57100',
+      code_insee: '57236',
+      commune: 'Metz'
+    };
+
+    const adresse: Adresse = Adresse(adresseData);
+
+    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  });
 });
