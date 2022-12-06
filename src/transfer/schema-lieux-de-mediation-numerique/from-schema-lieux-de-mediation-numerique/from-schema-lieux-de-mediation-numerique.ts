@@ -22,15 +22,9 @@ import {
   typologiesIfAny
 } from './from-schema-lieux-de-mediation-numerique-fields';
 
-const toLieuMediationNumerique = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNumerique): LieuMediationNumerique => ({
-  id: Id(schemaLieuMediationNumeriqueItem.id),
-  pivot: Pivot(schemaLieuMediationNumeriqueItem.pivot),
+const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNumerique): Partial<LieuMediationNumerique> => ({
   ...localisationIfAny(schemaLieuMediationNumeriqueItem.latitude, schemaLieuMediationNumeriqueItem.longitude),
   ...cleBanIfAny(schemaLieuMediationNumeriqueItem.cle_ban),
-  nom: Nom(schemaLieuMediationNumeriqueItem.nom),
-  ...adresse(schemaLieuMediationNumeriqueItem),
-  services: Services(listFromString(schemaLieuMediationNumeriqueItem.services)),
-  date_maj: new Date(schemaLieuMediationNumeriqueItem.date_maj),
   ...typologiesIfAny(schemaLieuMediationNumeriqueItem.typologie),
   ...contactIfAny(schemaLieuMediationNumeriqueItem),
   ...horairesIfAny(schemaLieuMediationNumeriqueItem.horaires),
@@ -46,6 +40,18 @@ const toLieuMediationNumerique = (schemaLieuMediationNumeriqueItem: SchemaLieuMe
   ...priseRdvIfAny(schemaLieuMediationNumeriqueItem.prise_rdv)
 });
 
+export const fromSchemaLieuDeMediationNumerique = (
+  schemaLieuMediationNumeriqueItem: SchemaLieuMediationNumerique
+): LieuMediationNumerique => ({
+  id: Id(schemaLieuMediationNumeriqueItem.id),
+  pivot: Pivot(schemaLieuMediationNumeriqueItem.pivot),
+  nom: Nom(schemaLieuMediationNumeriqueItem.nom),
+  ...adresse(schemaLieuMediationNumeriqueItem),
+  services: Services(listFromString(schemaLieuMediationNumeriqueItem.services)),
+  date_maj: new Date(schemaLieuMediationNumeriqueItem.date_maj),
+  ...optionalFields(schemaLieuMediationNumeriqueItem)
+});
+
 export const fromSchemaLieuxDeMediationNumerique = (
   schemaLieuxMediationNumerique: SchemaLieuMediationNumerique[]
-): LieuMediationNumerique[] => schemaLieuxMediationNumerique.map(toLieuMediationNumerique);
+): LieuMediationNumerique[] => schemaLieuxMediationNumerique.map(fromSchemaLieuDeMediationNumerique);

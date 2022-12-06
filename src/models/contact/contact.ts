@@ -21,9 +21,9 @@ const COURRIEL_REG_EXP: RegExp =
 const TELEPHONE_REG_EXP: RegExp =
   /^(?:(?:\+|00)(?:33|594|262|596|269|687|689|590|508|681)[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/u;
 
-const isValidCourriel = (courriel: string): boolean => COURRIEL_REG_EXP.test(courriel);
+export const isValidCourriel = (courriel: string): boolean => COURRIEL_REG_EXP.test(courriel);
 
-const isValidTelephone = (telephone: string): boolean => TELEPHONE_REG_EXP.test(telephone);
+export const isValidTelephone = (telephone: string): boolean => TELEPHONE_REG_EXP.test(telephone);
 
 const isValidContact = (contact: Omit<Contact, 'isContact'>): contact is Contact =>
   (contact.courriel == null || isValidCourriel(contact.courriel)) &&
