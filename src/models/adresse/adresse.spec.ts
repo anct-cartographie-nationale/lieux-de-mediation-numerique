@@ -312,4 +312,17 @@ describe('adresse model', (): void => {
 
     expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
   });
+
+  it('should accept slash in voie', (): void => {
+    const adresseData: AdresseToValidate = {
+      voie: '17/19 Rue du Colonel Driant',
+      code_postal: '57100',
+      code_insee: '57236',
+      commune: 'Metz'
+    };
+
+    const adresse: Adresse = Adresse(adresseData);
+
+    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  });
 });
