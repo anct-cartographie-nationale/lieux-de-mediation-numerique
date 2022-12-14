@@ -30,8 +30,8 @@ export type SchemaStructureDataInclusionAdresseFields = {
 };
 
 export type SchemaStructureDataInclusionLocalisationFields = {
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
 };
 
 export type SchemaStructureDataInclusionContactFields = {

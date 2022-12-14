@@ -171,8 +171,8 @@ export const contactFromDataInclusion = (courriel?: string, telephone?: string, 
         })
       };
 
-export const localisationFromDataInclusion = (latitude?: number, longitude?: number): { localisation?: Localisation } =>
-  latitude == null || longitude == null ? {} : { localisation: Localisation({ latitude, longitude }) };
+export const localisationFromDataInclusion = (latitude: number, longitude: number): Localisation =>
+  Localisation({ latitude, longitude });
 
 export const labelsFromDataInclusion = (
   labels_nationaux?: string[],

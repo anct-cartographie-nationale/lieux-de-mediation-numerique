@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase */
 
-import { Id, LieuMediationNumerique, Nom, Pivot, Services } from '../../../models';
+import { Id, LieuMediationNumerique, Localisation, Nom, Pivot, Services } from '../../../models';
 import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import {
   accessibiliteIfAny,
@@ -12,7 +12,7 @@ import {
   labelsAutresIfAny,
   labelsNationauxIfAny,
   listFromString,
-  localisationIfAny,
+  localisation,
   modalitesAccompagnementIfAny,
   presentationIfAny,
   priseRdvIfAny,
@@ -23,7 +23,6 @@ import {
 } from './from-schema-lieux-de-mediation-numerique-fields';
 
 const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNumerique): Partial<LieuMediationNumerique> => ({
-  ...localisationIfAny(schemaLieuMediationNumeriqueItem.latitude, schemaLieuMediationNumeriqueItem.longitude),
   ...cleBanIfAny(schemaLieuMediationNumeriqueItem.cle_ban),
   ...typologiesIfAny(schemaLieuMediationNumeriqueItem.typologie),
   ...contactIfAny(schemaLieuMediationNumeriqueItem),
@@ -49,6 +48,7 @@ export const fromSchemaLieuDeMediationNumerique = (
   ...adresse(schemaLieuMediationNumeriqueItem),
   services: Services(listFromString(schemaLieuMediationNumeriqueItem.services)),
   date_maj: new Date(schemaLieuMediationNumeriqueItem.date_maj),
+  ...localisation(schemaLieuMediationNumeriqueItem),
   ...optionalFields(schemaLieuMediationNumeriqueItem)
 });
 

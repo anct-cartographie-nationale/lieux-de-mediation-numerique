@@ -123,10 +123,8 @@ export const adresseFields = (lieuMediationNumerique: LieuMediationNumerique): S
 export const localisationFields = (
   lieuMediationNumerique: LieuMediationNumerique
 ): SchemaStructureDataInclusionLocalisationFields => ({
-  ...(lieuMediationNumerique.localisation?.latitude == null ? {} : { latitude: lieuMediationNumerique.localisation.latitude }),
-  ...(lieuMediationNumerique.localisation?.longitude == null
-    ? {}
-    : { longitude: lieuMediationNumerique.localisation.longitude })
+  latitude: lieuMediationNumerique.localisation.latitude,
+  longitude: lieuMediationNumerique.localisation.longitude
 });
 
 export const contactFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionContactFields => ({

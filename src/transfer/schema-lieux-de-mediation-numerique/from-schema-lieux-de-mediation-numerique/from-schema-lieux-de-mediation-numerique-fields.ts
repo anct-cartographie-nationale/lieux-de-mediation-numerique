@@ -20,9 +20,6 @@ const toListOf = <T>(listItem: string): T => listItem as T;
 
 export const listFromString = <T>(stringList: string): T[] => stringList.split(';').map(toListOf<T>);
 
-export const localisationIfAny = (latitude?: number, longitude?: number): { localisation?: Localisation } =>
-  latitude == null || longitude == null ? {} : { localisation: Localisation({ latitude, longitude }) };
-
 export const cleBanIfAny = (cleBan?: string): { cle_ban?: CleBan } => (cleBan == null ? {} : { cle_ban: CleBan(cleBan) });
 
 export const adresse = (schemaLieuMediationNumerique: SchemaLieuMediationNumerique): { adresse: Adresse } => ({
@@ -32,6 +29,13 @@ export const adresse = (schemaLieuMediationNumerique: SchemaLieuMediationNumeriq
     voie: schemaLieuMediationNumerique.adresse,
     ...codeInseeIfAny(schemaLieuMediationNumerique.code_insee),
     ...complementAdresseIfAny(schemaLieuMediationNumerique.complement_adresse)
+  })
+});
+
+export const localisation = (schemaLieuMediationNumerique: SchemaLieuMediationNumerique): { localisation: Localisation } => ({
+  localisation: Localisation({
+    latitude: schemaLieuMediationNumerique.latitude,
+    longitude: schemaLieuMediationNumerique.longitude
   })
 });
 

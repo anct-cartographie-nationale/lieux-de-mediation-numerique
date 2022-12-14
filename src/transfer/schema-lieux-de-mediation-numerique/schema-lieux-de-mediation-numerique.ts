@@ -19,8 +19,8 @@ export type SchemaLieuMediationNumeriqueAdresseFields = {
 };
 
 export type SchemaLieuMediationNumeriqueLocalisationFields = {
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
 };
 
 export type SchemaLieuMediationNumeriqueContactFields = {

@@ -22,7 +22,7 @@ export type LieuMediationNumerique = {
   pivot: Pivot;
   nom: Nom;
   adresse: Adresse;
-  localisation?: Localisation;
+  localisation: Localisation;
   cle_ban?: CleBan;
   typologies?: Typologies;
   contact?: Contact;
