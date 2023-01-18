@@ -28,7 +28,7 @@ import { fromSchemaDataInclusion } from './from-schema-data-inclusion';
 import { MandatorySiretOrRnaError } from './errors/mandatory-siret-or-rna.error';
 
 describe('from schema data inclusion', (): void => {
-  it("should get a minimal lieu de mediation numerique form a minmal structure d'inclusion and a minimal service d'inclusion", (): void => {
+  it("should get a minimal lieu de mediation numerique form a minimal structure d'inclusion and a minimal service d'inclusion", (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',
       code_postal: '51100',
@@ -114,7 +114,7 @@ describe('from schema data inclusion', (): void => {
         'numerique--promouvoir-la-citoyennete-numerique',
         'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique'
       ],
-      frais: 'gratuit-sous-conditions',
+      frais: ['gratuit-sous-conditions'],
       types: ['autonomie', 'delegation', 'accompagnement', 'atelier'],
       prise_rdv: 'https://www.rdv-solidarites.fr/',
       profils: [
@@ -366,7 +366,7 @@ describe('from schema data inclusion', (): void => {
       source: 'Hubik',
       structure_id: 'structure-1',
       thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives'],
-      frais: 'payant'
+      frais: ['payant']
     };
 
     const service2: SchemaServiceDataInclusion = {
@@ -375,7 +375,7 @@ describe('from schema data inclusion', (): void => {
       source: 'Hubik',
       structure_id: 'structure-1',
       thematiques: ['numerique--acceder-a-une-connexion-internet'],
-      frais: 'gratuit'
+      frais: ['gratuit']
     };
 
     const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service1, service2], structure);
@@ -391,7 +391,7 @@ describe('from schema data inclusion', (): void => {
       }),
       services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives, Service.AccederAUneConnexionInternet]),
       date_maj: new Date('2022-10-10'),
-      conditions_acces: ConditionsAcces([ConditionAcces.Payant])
+      conditions_acces: ConditionsAcces([ConditionAcces.Payant, ConditionAcces.Gratuit])
     });
   });
 
@@ -418,7 +418,7 @@ describe('from schema data inclusion', (): void => {
         'numerique--prendre-en-main-un-smartphone-ou-une-tablette',
         'numerique--prendre-en-main-un-ordinateur'
       ],
-      frais: 'adhesion',
+      frais: ['adhesion'],
       types: ['accompagnement', 'atelier'],
       prise_rdv: 'https://www.rdv-solidarites.fr/service1',
       profils: ['seniors-65', 'familles-enfants', 'adultes', 'jeunes-16-26']
@@ -430,7 +430,7 @@ describe('from schema data inclusion', (): void => {
       source: 'Hubik',
       structure_id: 'structure-1',
       thematiques: ['numerique--prendre-en-main-un-ordinateur', 'numerique--prendre-en-main-un-smartphone-ou-une-tablette'],
-      frais: 'pass-numerique',
+      frais: ['pass-numerique'],
       types: ['delegation', 'accompagnement', 'atelier'],
       prise_rdv: 'https://www.rdv-solidarites.fr/service2',
       profils: ['seniors-65', 'adultes', 'jeunes-16-26']
@@ -460,7 +460,7 @@ describe('from schema data inclusion', (): void => {
         PublicAccueilli.Adultes,
         PublicAccueilli.Jeunes
       ]),
-      conditions_acces: ConditionsAcces([ConditionAcces.Adhesion]),
+      conditions_acces: ConditionsAcces([ConditionAcces.Adhesion, ConditionAcces.AccepteLePassNumerique]),
       modalites_accompagnement: ModalitesAccompagnement([
         ModaliteAccompagnement.AvecDeLAide,
         ModaliteAccompagnement.DansUnAtelier,
