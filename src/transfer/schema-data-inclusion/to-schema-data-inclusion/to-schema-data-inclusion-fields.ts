@@ -86,9 +86,9 @@ const typologyIfExist = (typologie?: string): { typologie?: string } => (typolog
 
 const siteWebIfExist = (site_web?: string): { site_web?: string } => (site_web == null ? {} : { site_web });
 
-const fraisIfExist = (frais?: string): { frais?: string } => (frais == null ? {} : { frais });
+const fraisIfExist = (frais?: string): { frais?: string[] } => (frais == null ? {} : { frais: [frais] });
 
-const fraisFromConditionAcces = (conditionAcces?: ConditionAcces): { frais?: string } =>
+const fraisFromConditionAcces = (conditionAcces?: ConditionAcces): { frais?: string[] } =>
   conditionAcces == null ? {} : fraisIfExist(CONDITION_ACCES_TO_FRAIS.get(conditionAcces));
 
 export const structureGeneralFields = (

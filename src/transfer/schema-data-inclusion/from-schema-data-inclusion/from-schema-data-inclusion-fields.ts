@@ -157,8 +157,16 @@ export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>
   ['UDAF', Typologie.UDAF]
 ]);
 
-export const conditionsAccesFromDataInclusion = (conditionAcces?: ConditionAcces): { conditions_acces?: ConditionsAcces } =>
-  conditionAcces == null ? {} : { conditions_acces: ConditionsAcces([conditionAcces]) };
+export const conditionsAccesFromDataInclusion = (conditionsAcces?: string[]): { conditions_acces?: ConditionsAcces } =>
+  conditionsAcces == null || conditionsAcces.length === 0
+    ? {}
+    : {
+        conditions_acces: ConditionsAcces(
+          conditionsAcces
+            .map((conditionAcces: string): ConditionAcces | undefined => FRAIS_TO_CONDITION_ACCES.get(conditionAcces))
+            .filter((conditionAcces?: ConditionAcces): conditionAcces is ConditionAcces => conditionAcces != null)
+        )
+      };
 
 export const contactFromDataInclusion = (courriel?: string, telephone?: string, site_web?: string): { contact?: Contact } =>
   courriel == null && telephone == null && site_web == null
@@ -278,22 +286,10 @@ export const mergeTypes = (types?: string[], typesToAdd?: string[]): { types: st
   types: Array.from(new Set([...(types ?? []), ...(typesToAdd ?? [])]))
 });
 
-const FRAIS_HIERARCHY: string[] = ['gratuit', 'gratuit-sous-conditions', 'pass-numerique', 'adhesion', 'payant'];
+const fraisIfDefined = (frais?: string[]): { frais?: string[] } => (frais == null ? {} : { frais });
 
-const findMostConstrainingFrais = (frais: string, fraisToAdd: string): string | undefined =>
-  FRAIS_HIERARCHY[
-    Math.max(
-      FRAIS_HIERARCHY.findIndex((hierarchizedFrais: string): boolean => hierarchizedFrais === frais),
-      FRAIS_HIERARCHY.findIndex((hierarchizedFrais: string): boolean => hierarchizedFrais === fraisToAdd)
-    )
-  ];
-
-const fraisIfDefined = (frais?: string): { frais?: string } => (frais == null ? {} : { frais });
-
-export const mergeFrais = (frais?: string, fraisToAdd?: string): { frais?: string } =>
-  frais == null || fraisToAdd == null
-    ? fraisIfDefined(frais ?? fraisToAdd)
-    : fraisIfDefined(findMostConstrainingFrais(frais, fraisToAdd));
+export const mergeFrais = (frais?: string[], fraisToAdd?: string[]): { frais?: string[] } =>
+  fraisIfDefined(Array.from(new Set([...(frais ?? []), ...(fraisToAdd ?? [])])));
 
 export const mergePriseRdv = (priseRdv?: string, priseRdvToAdd?: string): { prise_rdv?: string } =>
   priseRdv == null && priseRdvToAdd == null ? {} : { prise_rdv: priseRdvToAdd ?? priseRdv ?? '' };

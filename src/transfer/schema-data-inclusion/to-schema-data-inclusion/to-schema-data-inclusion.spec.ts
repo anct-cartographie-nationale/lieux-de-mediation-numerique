@@ -270,7 +270,7 @@ describe('to schema data.inclusion', (): void => {
           'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique'
         ],
         prise_rdv: 'https://www.rdv-solidarites.fr/',
-        frais: 'payant',
+        frais: ['payant'],
         profils: [
           'seniors-65',
           'familles-enfants',
