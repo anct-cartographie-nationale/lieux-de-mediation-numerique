@@ -69,6 +69,18 @@ describe('contact model', (): void => {
     }).toThrow(new TelephoneError('error'));
   });
 
+  it('should allow 0 8XX XX XX XX telephone format', (): void => {
+    const contactData: ContactToValidate = {
+      telephone: '0 809 36 12 12'
+    };
+
+    const contact: Contact = Contact(contactData);
+
+    expect(contact).toStrictEqual({
+      telephone: '0 809 36 12 12'
+    });
+  });
+
   it('should allow accentued characters for courriel', (): void => {
     const contactData: ContactToValidate = {
       courriel: 'contact@cartographienationalé.fr'
