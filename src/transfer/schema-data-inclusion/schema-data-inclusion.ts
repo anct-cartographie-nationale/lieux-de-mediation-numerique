@@ -9,6 +9,7 @@ export type SchemaStructureDataInclusionStructureGeneralFields = {
   structure_parente?: string;
   thematiques?: string[];
   accessibilite?: string;
+  site_web?: string;
 };
 
 export type SchemaStructureDataInclusionServiceGeneralFields = {
@@ -19,6 +20,8 @@ export type SchemaStructureDataInclusionServiceGeneralFields = {
   thematiques?: string[];
   source: string;
   presentation_resume?: string;
+  presentation_detail?: string;
+  date_maj?: string;
 };
 
 export type SchemaStructureDataInclusionAdresseFields = {
@@ -37,7 +40,6 @@ export type SchemaStructureDataInclusionLocalisationFields = {
 export type SchemaStructureDataInclusionContactFields = {
   telephone?: string;
   courriel?: string;
-  site_web?: string;
 };
 
 export type SchemaStructureDataInclusionPresentationFields = {
@@ -77,3 +79,8 @@ export type SchemaStructureDataInclusion = SchemaStructureDataInclusionAdresseFi
 
 export type SchemaServiceDataInclusion = SchemaStructureDataInclusionAccesFields &
   SchemaStructureDataInclusionServiceGeneralFields;
+
+export type SchemaServiceDataInclusionWithAdresse = SchemaServiceDataInclusion &
+  SchemaStructureDataInclusionAdresseFields &
+  SchemaStructureDataInclusionContactFields &
+  SchemaStructureDataInclusionLocalisationFields;
