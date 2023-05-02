@@ -69,6 +69,16 @@ describe('contact model', (): void => {
     }).toThrow(new TelephoneError('error'));
   });
 
+  it('should throw TelephoneError when telephone has missing numbers', (): void => {
+    const contactData: ContactToValidate = {
+      telephone: '024178384'
+    };
+
+    expect((): void => {
+      Contact(contactData);
+    }).toThrow(new TelephoneError('024178384'));
+  });
+
   it('should allow 0 8XX XX XX XX telephone format', (): void => {
     const contactData: ContactToValidate = {
       telephone: '0 809 36 12 12'
