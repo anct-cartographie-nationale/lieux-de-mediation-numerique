@@ -4,7 +4,9 @@ import {
   SchemaServiceDataInclusion,
   SchemaServiceDataInclusionWithAdresse,
   SchemaStructureDataInclusion,
-  SchemaStructureDataInclusionAdresseFields
+  SchemaStructureDataInclusionAdresseFields,
+  SchemaStructureDataInclusionContactFields,
+  SchemaStructureDataInclusionPresentationFields
 } from '../schema-data-inclusion';
 
 export const isServiceWithAdresse = (
@@ -20,6 +22,18 @@ const adresseFromService = (service: SchemaServiceDataInclusionWithAdresse): Sch
   ...(service.complement_adresse == null ? {} : { complement_adresse: service.complement_adresse })
 });
 
+const presentationFromService = (
+  service: SchemaServiceDataInclusionWithAdresse
+): SchemaStructureDataInclusionPresentationFields => ({
+  ...(service.presentation_resume == null ? {} : { presentation_resume: service.presentation_resume }),
+  ...(service.presentation_detail == null ? {} : { presentation_detail: service.presentation_detail })
+});
+
+const contactFromService = (service: SchemaServiceDataInclusionWithAdresse): SchemaStructureDataInclusionContactFields => ({
+  ...(service.telephone == null ? {} : { telephone: service.telephone }),
+  ...(service.courriel == null ? {} : { courriel: service.courriel })
+});
+
 export const toStructureDataInclusion = (
   service: SchemaServiceDataInclusionWithAdresse,
   structure: SchemaStructureDataInclusion
@@ -32,8 +46,7 @@ export const toStructureDataInclusion = (
   date_maj: service.date_maj ?? structure.date_maj,
   source: service.source,
   structure_parente: service.structure_id,
-  ...(service.presentation_resume == null ? {} : { presentation_resume: service.presentation_resume }),
-  ...(service.presentation_detail == null ? {} : { presentation_detail: service.presentation_detail }),
-  ...(service.telephone == null ? {} : { telephone: service.telephone }),
-  ...(service.courriel == null ? {} : { courriel: service.courriel })
+  ...presentationFromService(service),
+  ...contactFromService(service),
+  ...(structure.siret == null ? {} : { siret: structure.siret })
 });
