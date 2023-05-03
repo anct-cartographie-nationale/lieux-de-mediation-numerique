@@ -15,7 +15,8 @@ describe('service data inclusion to structure data inclusion', (): void => {
       commune: 'Paris',
       date_maj: '2022-04-28T00:00:00.000Z',
       id: '456138a4-45ac-d8fa-d44a-fd45a5fd4948',
-      nom: 'CCAS Paris 13'
+      nom: 'CCAS Paris 13',
+      siret: '43493312300029'
     };
 
     const service: SchemaServiceDataInclusionWithAdresse = {
@@ -33,6 +34,7 @@ describe('service data inclusion to structure data inclusion', (): void => {
     expect(structureFromService).toStrictEqual<SchemaStructureDataInclusion>({
       id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
       nom: 'Médiation numérique',
+      siret: '43493312300029',
       commune: 'Metz',
       code_postal: '57100',
       adresse: '4 rue des Acacia',
@@ -49,7 +51,8 @@ describe('service data inclusion to structure data inclusion', (): void => {
       commune: 'Paris',
       date_maj: '2022-04-28T00:00:00.000Z',
       id: '456138a4-45ac-d8fa-d44a-fd45a5fd4948',
-      nom: 'CCAS Paris 13'
+      nom: 'CCAS Paris 13',
+      siret: '43493312300029'
     };
 
     const service: SchemaServiceDataInclusionWithAdresse = {
@@ -110,6 +113,7 @@ describe('service data inclusion to structure data inclusion', (): void => {
     expect(structureFromService).toStrictEqual<SchemaStructureDataInclusion>({
       id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
       nom: 'Médiation numérique',
+      siret: '43493312300029',
       commune: 'Metz',
       code_postal: '57100',
       code_insee: '57260',
