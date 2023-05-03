@@ -132,9 +132,9 @@ describe('from schema data inclusion', (): void => {
       ]
     };
 
-    const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
+    const lieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
 
-    expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
+    expect(lieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
       id: Id('structure-1'),
       nom: Nom('Anonymal'),
       pivot: Pivot('43493312300029'),
