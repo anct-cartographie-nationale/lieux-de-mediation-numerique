@@ -39,7 +39,7 @@ const toSingleService = (
   ...mergePriseRdv(mergedService.prise_rdv, service.prise_rdv)
 });
 
-const mergeServices = (
+export const mergeServices = (
   services: SchemaServiceDataInclusion[],
   structure: SchemaStructureDataInclusion
 ): SchemaServiceDataInclusion =>
