@@ -71,7 +71,7 @@ const PUBLICS_ACCUEILLIS_TO_PROFILS: Map<PublicAccueilli, string> = new Map<Publ
 const LABELS_NATIONAUX_MAP: Map<LabelNational, string> = new Map<LabelNational, string>([
   [LabelNational.AidantsConnect, 'aidants-connect'],
   [LabelNational.APTIC, 'aptic'],
-  [LabelNational.CampusConnecte, 'adultes'],
+  [LabelNational.CampusConnecte, 'campus-connecte'],
   [LabelNational.CNFS, 'conseiller-numerique'], // todo: missing label in data.inclusion
   [LabelNational.FabriquesDeTerritoire, 'fabrique-de-territoire'],
   [LabelNational.FranceServices, 'france-service'],

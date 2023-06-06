@@ -51,7 +51,7 @@ export const FRAIS_TO_CONDITION_ACCES: Map<string, ConditionAcces> = new Map<str
 const LABELS_NATIONAUX_MAP: Map<string, LabelNational> = new Map<string, LabelNational>([
   ['aidants-connect', LabelNational.AidantsConnect],
   ['aptic', LabelNational.APTIC],
-  ['adultes', LabelNational.CampusConnecte],
+  ['campus-connecte', LabelNational.CampusConnecte],
   ['conseiller-numerique', LabelNational.CNFS], // todo: missing label in data.inclusion
   ['fabrique-de-territoire', LabelNational.FabriquesDeTerritoire],
   ['france-service', LabelNational.FranceServices],
