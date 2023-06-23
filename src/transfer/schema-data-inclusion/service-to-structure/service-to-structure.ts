@@ -39,7 +39,7 @@ export const toStructureDataInclusion = (
   structure: SchemaStructureDataInclusion
 ): SchemaStructureDataInclusion => ({
   id: service.id,
-  nom: service.nom,
+  nom: service.nom === 'Médiation numérique' ? structure.nom : service.nom,
   ...adresseFromService(service),
   ...(service.latitude == null ? {} : { latitude: service.latitude }),
   ...(service.longitude == null ? {} : { longitude: service.longitude }),
