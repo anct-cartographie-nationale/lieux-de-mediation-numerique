@@ -12,6 +12,7 @@ import {
   SchemaStructureDataInclusionPresentationFields,
   SchemaStructureDataInclusionStructureGeneralFields
 } from '../schema-data-inclusion';
+import { isValidCourriel, isValidTelephone } from '../../../models';
 
 export const isServiceWithAdresse = (
   service: Partial<SchemaStructureDataInclusionAdresseFields> & SchemaServiceDataInclusion
@@ -42,8 +43,8 @@ const contactFromServiceOrStructure = (
 ): SchemaStructureDataInclusionContactFields => ({
   ...(structure.telephone == null ? {} : { telephone: structure.telephone }),
   ...(structure.courriel == null ? {} : { courriel: structure.courriel }),
-  ...(service.telephone == null ? {} : { telephone: service.telephone }),
-  ...(service.courriel == null ? {} : { courriel: service.courriel })
+  ...(isValidTelephone(service.telephone ?? '') ? { telephone: service.telephone } : {}),
+  ...(isValidCourriel(service.courriel ?? '') ? { courriel: service.courriel } : {})
 });
 
 const labelsFromStructure = (structure: SchemaStructureDataInclusion): SchemaStructureDataInclusionLabelsFields => ({
