@@ -26,14 +26,22 @@ const adresseFromService = (service: SchemaServiceDataInclusionWithAdresse): Sch
   ...(service.complement_adresse == null ? {} : { complement_adresse: service.complement_adresse })
 });
 
-const presentationFromService = (
-  service: SchemaServiceDataInclusionWithAdresse
+const presentationFromServiceOrStructure = (
+  service: SchemaServiceDataInclusionWithAdresse,
+  structure: SchemaStructureDataInclusion
 ): SchemaStructureDataInclusionPresentationFields => ({
+  ...(structure.presentation_resume == null ? {} : { presentation_resume: structure.presentation_resume }),
+  ...(structure.presentation_detail == null ? {} : { presentation_detail: structure.presentation_detail }),
   ...(service.presentation_resume == null ? {} : { presentation_resume: service.presentation_resume }),
   ...(service.presentation_detail == null ? {} : { presentation_detail: service.presentation_detail })
 });
 
-const contactFromService = (service: SchemaServiceDataInclusionWithAdresse): SchemaStructureDataInclusionContactFields => ({
+const contactFromServiceOrStructure = (
+  service: SchemaServiceDataInclusionWithAdresse,
+  structure: SchemaStructureDataInclusion
+): SchemaStructureDataInclusionContactFields => ({
+  ...(structure.telephone == null ? {} : { telephone: structure.telephone }),
+  ...(structure.courriel == null ? {} : { courriel: structure.courriel }),
   ...(service.telephone == null ? {} : { telephone: service.telephone }),
   ...(service.courriel == null ? {} : { courriel: service.courriel })
 });
@@ -43,9 +51,9 @@ const labelsFromStructure = (structure: SchemaStructureDataInclusion): SchemaStr
   ...(structure.labels_autres == null ? {} : { labels_autres: structure.labels_autres })
 });
 
-const generalFieldsFromStructureAndService = (
-  structure: SchemaStructureDataInclusion,
-  service: SchemaServiceDataInclusionWithAdresse
+const generalFieldsFromServiceAndStructure = (
+  service: SchemaServiceDataInclusionWithAdresse,
+  structure: SchemaStructureDataInclusion
 ): SchemaStructureDataInclusionStructureGeneralFields => ({
   id: service.id,
   nom: service.nom,
@@ -56,9 +64,9 @@ const generalFieldsFromStructureAndService = (
   ...(structure.site_web == null ? {} : { site_web: structure.site_web })
 });
 
-const collecteFieldsFromStructureAndService = (
-  structure: SchemaStructureDataInclusion,
-  service: SchemaServiceDataInclusionWithAdresse
+const collecteFieldsFromServiceAndStructure = (
+  service: SchemaServiceDataInclusionWithAdresse,
+  structure: SchemaStructureDataInclusion
 ): SchemaStructureDataInclusionCollecteFields => ({
   date_maj: service.date_maj ?? structure.date_maj,
   source: service.source
@@ -75,12 +83,12 @@ export const toStructureDataInclusion = (
   service: SchemaServiceDataInclusionWithAdresse,
   structure: SchemaStructureDataInclusion
 ): SchemaStructureDataInclusion => ({
-  ...generalFieldsFromStructureAndService(structure, service),
-  ...collecteFieldsFromStructureAndService(structure, service),
+  ...generalFieldsFromServiceAndStructure(service, structure),
+  ...collecteFieldsFromServiceAndStructure(service, structure),
   ...localisationFieldsFromService(service),
   ...adresseFromService(service),
-  ...presentationFromService(service),
-  ...contactFromService(service),
+  ...presentationFromServiceOrStructure(service, structure),
+  ...contactFromServiceOrStructure(service, structure),
   ...labelsFromStructure(structure),
   ...(structure.horaires_ouverture == null ? {} : { horaires_ouverture: structure.horaires_ouverture })
 });
