@@ -5,8 +5,12 @@ import {
   SchemaServiceDataInclusionWithAdresse,
   SchemaStructureDataInclusion,
   SchemaStructureDataInclusionAdresseFields,
+  SchemaStructureDataInclusionCollecteFields,
   SchemaStructureDataInclusionContactFields,
-  SchemaStructureDataInclusionPresentationFields
+  SchemaStructureDataInclusionLabelsFields,
+  SchemaStructureDataInclusionLocalisationFields,
+  SchemaStructureDataInclusionPresentationFields,
+  SchemaStructureDataInclusionStructureGeneralFields
 } from '../schema-data-inclusion';
 
 export const isServiceWithAdresse = (
@@ -34,19 +38,49 @@ const contactFromService = (service: SchemaServiceDataInclusionWithAdresse): Sch
   ...(service.courriel == null ? {} : { courriel: service.courriel })
 });
 
+const labelsFromStructure = (structure: SchemaStructureDataInclusion): SchemaStructureDataInclusionLabelsFields => ({
+  ...(structure.labels_nationaux == null ? {} : { labels_nationaux: structure.labels_nationaux }),
+  ...(structure.labels_autres == null ? {} : { labels_autres: structure.labels_autres })
+});
+
+const generalFieldsFromStructureAndService = (
+  structure: SchemaStructureDataInclusion,
+  service: SchemaServiceDataInclusionWithAdresse
+): SchemaStructureDataInclusionStructureGeneralFields => ({
+  id: service.id,
+  nom: service.nom,
+  ...(structure.siret == null ? {} : { siret: structure.siret }),
+  ...(structure.typologie == null ? {} : { typologie: structure.typologie }),
+  structure_parente: service.structure_id,
+  ...(structure.accessibilite == null ? {} : { accessibilite: structure.accessibilite }),
+  ...(structure.site_web == null ? {} : { site_web: structure.site_web })
+});
+
+const collecteFieldsFromStructureAndService = (
+  structure: SchemaStructureDataInclusion,
+  service: SchemaServiceDataInclusionWithAdresse
+): SchemaStructureDataInclusionCollecteFields => ({
+  date_maj: service.date_maj ?? structure.date_maj,
+  source: service.source
+});
+
+const localisationFieldsFromService = (
+  service: SchemaServiceDataInclusionWithAdresse
+): SchemaStructureDataInclusionLocalisationFields => ({
+  ...(service.latitude == null ? {} : { latitude: service.latitude }),
+  ...(service.longitude == null ? {} : { longitude: service.longitude })
+});
+
 export const toStructureDataInclusion = (
   service: SchemaServiceDataInclusionWithAdresse,
   structure: SchemaStructureDataInclusion
 ): SchemaStructureDataInclusion => ({
-  id: service.id,
-  nom: service.nom,
+  ...generalFieldsFromStructureAndService(structure, service),
+  ...collecteFieldsFromStructureAndService(structure, service),
+  ...localisationFieldsFromService(service),
   ...adresseFromService(service),
-  ...(service.latitude == null ? {} : { latitude: service.latitude }),
-  ...(service.longitude == null ? {} : { longitude: service.longitude }),
-  date_maj: service.date_maj ?? structure.date_maj,
-  source: service.source,
-  structure_parente: service.structure_id,
   ...presentationFromService(service),
   ...contactFromService(service),
-  ...(structure.siret == null ? {} : { siret: structure.siret })
+  ...labelsFromStructure(structure),
+  ...(structure.horaires_ouverture == null ? {} : { horaires_ouverture: structure.horaires_ouverture })
 });
