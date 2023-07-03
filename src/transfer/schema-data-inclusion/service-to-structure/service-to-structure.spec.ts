@@ -167,8 +167,6 @@ describe('service data inclusion to structure data inclusion', (): void => {
       date_maj: '2023-05-02T00:00:00.000Z',
       source: 'Hubik',
       structure_parente: 'structure-1',
-      presentation_resume: 'Résumé de la présentation',
-      presentation_detail: 'Détails de la présentation',
       telephone: '0102030405',
       courriel: 'julie@example.net'
     });
@@ -271,8 +269,9 @@ describe('service data inclusion to structure data inclusion', (): void => {
       date_maj: '2023-05-02T00:00:00.000Z',
       source: 'Hubik',
       structure_parente: 'structure-1',
-      presentation_resume: 'Résumé de la présentation',
-      presentation_detail: 'Détails de la présentation',
+      presentation_detail:
+        'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.',
+      presentation_resume: 'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
       telephone: '0102030405',
       courriel: 'julie@example.net',
       site_web: 'https://www.laquincaillerie.tl/;https://m.facebook.com/laquincaillerienumerique/',

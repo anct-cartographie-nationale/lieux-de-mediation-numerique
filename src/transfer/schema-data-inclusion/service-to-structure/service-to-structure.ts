@@ -27,14 +27,11 @@ const adresseFromService = (service: SchemaServiceDataInclusionWithAdresse): Sch
   ...(service.complement_adresse == null ? {} : { complement_adresse: service.complement_adresse })
 });
 
-const presentationFromServiceOrStructure = (
-  service: SchemaServiceDataInclusionWithAdresse,
+const presentationFromStructure = (
   structure: SchemaStructureDataInclusion
 ): SchemaStructureDataInclusionPresentationFields => ({
   ...(structure.presentation_resume == null ? {} : { presentation_resume: structure.presentation_resume }),
-  ...(structure.presentation_detail == null ? {} : { presentation_detail: structure.presentation_detail }),
-  ...(service.presentation_resume == null ? {} : { presentation_resume: service.presentation_resume }),
-  ...(service.presentation_detail == null ? {} : { presentation_detail: service.presentation_detail })
+  ...(structure.presentation_detail == null ? {} : { presentation_detail: structure.presentation_detail })
 });
 
 const contactFromServiceOrStructure = (
@@ -88,7 +85,7 @@ export const toStructureDataInclusion = (
   ...collecteFieldsFromServiceAndStructure(service, structure),
   ...localisationFieldsFromService(service),
   ...adresseFromService(service),
-  ...presentationFromServiceOrStructure(service, structure),
+  ...presentationFromStructure(structure),
   ...contactFromServiceOrStructure(service, structure),
   ...labelsFromStructure(structure),
   ...(structure.horaires_ouverture == null ? {} : { horaires_ouverture: structure.horaires_ouverture })
