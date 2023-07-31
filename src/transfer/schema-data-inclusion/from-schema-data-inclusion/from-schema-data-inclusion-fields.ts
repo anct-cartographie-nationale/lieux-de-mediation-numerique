@@ -198,13 +198,16 @@ export const labelsFromDataInclusion = (
   ...(labels_autres == null ? {} : { labels_autres })
 });
 
+const hasCodeInsee = (structure: SchemaStructureDataInclusion): boolean =>
+  structure.code_insee == null && structure._di_geocodage_code_insee == null;
+
 export const adresseFromDataInclusion = (structure: SchemaStructureDataInclusion): { adresse: Adresse } => ({
   adresse: Adresse({
     code_postal: structure.code_postal,
     commune: structure.commune,
     voie: structure.adresse,
     ...(structure.complement_adresse == null ? {} : { complement_adresse: structure.complement_adresse }),
-    ...(structure.code_insee == null ? {} : { code_insee: structure.code_insee })
+    ...(hasCodeInsee(structure) ? {} : { code_insee: structure.code_insee ?? structure._di_geocodage_code_insee })
   })
 });
 

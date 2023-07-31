@@ -19,11 +19,14 @@ export const isServiceWithAdresse = (
 ): service is SchemaServiceDataInclusionWithAdresse =>
   service.adresse != null && service.commune != null && service.code_postal != null;
 
+const hasCodeInsee = (service: SchemaServiceDataInclusionWithAdresse): boolean =>
+  service.code_insee == null && service._di_geocodage_code_insee == null;
+
 const adresseFromService = (service: SchemaServiceDataInclusionWithAdresse): SchemaStructureDataInclusionAdresseFields => ({
   commune: service.commune,
   code_postal: service.code_postal,
   adresse: service.adresse,
-  ...(service.code_insee == null ? {} : { code_insee: service.code_insee }),
+  ...(hasCodeInsee(service) ? {} : { code_insee: service.code_insee ?? service._di_geocodage_code_insee }),
   ...(service.complement_adresse == null ? {} : { complement_adresse: service.complement_adresse })
 });
 
