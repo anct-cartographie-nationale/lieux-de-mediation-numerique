@@ -290,6 +290,43 @@ describe('from schema data inclusion', (): void => {
     });
   });
 
+  it('should geocoded insee code as default value', (): void => {
+    const structure: SchemaStructureDataInclusion = {
+      adresse: '12 BIS RUE DE LECLERCQ',
+      code_postal: '51100',
+      commune: 'Reims',
+      date_maj: new Date('2022-10-10').toISOString(),
+      id: 'structure-1',
+      nom: 'Anonymal',
+      siret: '43493312300029',
+      _di_geocodage_code_insee: '51105'
+    };
+
+    const service: SchemaServiceDataInclusion = {
+      id: 'structure-1-mediation-numerique',
+      nom: 'Médiation numérique',
+      source: 'Hubik',
+      structure_id: 'structure-1',
+      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives']
+    };
+
+    const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
+
+    expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '51100',
+        code_insee: '51105',
+        commune: 'Reims',
+        voie: '12 BIS RUE DE LECLERCQ'
+      }),
+      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      date_maj: new Date('2022-10-10')
+    });
+  });
+
   it('should fail when there is no service associated with the structure', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',

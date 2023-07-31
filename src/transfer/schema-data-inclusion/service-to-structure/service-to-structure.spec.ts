@@ -45,6 +45,44 @@ describe('service data inclusion to structure data inclusion', (): void => {
     });
   });
 
+  it('should convert service data inclusion to structure with default code INSEE', (): void => {
+    const structure: SchemaStructureDataInclusion = {
+      adresse: '12 rue Baudricourt',
+      code_postal: '75013',
+      commune: 'Paris',
+      date_maj: '2022-04-28T00:00:00.000Z',
+      id: '456138a4-45ac-d8fa-d44a-fd45a5fd4948',
+      nom: 'CCAS Paris 13',
+      siret: '43493312300029'
+    };
+
+    const service: SchemaServiceDataInclusionWithAdresse = {
+      id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
+      nom: 'Médiation numérique',
+      source: 'Hubik',
+      structure_id: 'structure-1',
+      commune: 'Metz',
+      code_postal: '57280',
+      _di_geocodage_code_insee: '57433',
+      adresse: '4 rue des Acacia'
+    };
+
+    const structureFromService: SchemaStructureDataInclusion = toStructureDataInclusion(service, structure);
+
+    expect(structureFromService).toStrictEqual<SchemaStructureDataInclusion>({
+      id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
+      nom: 'Médiation numérique',
+      siret: '43493312300029',
+      commune: 'Metz',
+      code_postal: '57280',
+      code_insee: '57433',
+      adresse: '4 rue des Acacia',
+      date_maj: '2022-04-28T00:00:00.000Z',
+      source: 'Hubik',
+      structure_parente: 'structure-1'
+    });
+  });
+
   it('should not override structure phone or email with invalid service phone or email', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 rue Baudricourt',

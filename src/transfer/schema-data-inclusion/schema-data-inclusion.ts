@@ -29,6 +29,7 @@ export type SchemaStructureDataInclusionAdresseFields = {
   code_postal: string;
   adresse: string;
   code_insee?: string;
+  _di_geocodage_code_insee?: string;
   complement_adresse?: string;
 };
 
