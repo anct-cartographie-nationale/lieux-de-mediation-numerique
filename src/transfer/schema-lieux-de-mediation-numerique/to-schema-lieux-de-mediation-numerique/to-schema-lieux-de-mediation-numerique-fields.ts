@@ -86,7 +86,12 @@ export const disponibiliteFields = (
   ...(lieuMediationNumerique.prise_rdv == null ? {} : { prise_rdv: lieuMediationNumerique.prise_rdv })
 });
 
+const stringDate = (lieuMediationNumerique: LieuMediationNumerique): string | undefined =>
+  lieuMediationNumerique.date_maj instanceof Date
+    ? lieuMediationNumerique.date_maj.toISOString()
+    : lieuMediationNumerique.date_maj;
+
 export const collecteFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueCollecteFields => ({
   ...(lieuMediationNumerique.source == null ? {} : { source: lieuMediationNumerique.source }),
-  date_maj: lieuMediationNumerique.date_maj.toISOString().split('T')[0] ?? ''
+  date_maj: stringDate(lieuMediationNumerique)?.split('T')[0] ?? ''
 });

@@ -164,4 +164,43 @@ describe('to schema lieux de mediation numerique', (): void => {
       }
     ]);
   });
+
+  it('should convert lieu with sring date maj to schema lieux mediation numérique', (): void => {
+    const minimalLieuMediationNumerique: LieuMediationNumerique = {
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '51100',
+        commune: 'Reims',
+        voie: '12 BIS RUE DE LECLERCQ'
+      }),
+      services: Services([
+        Service.DevenirAutonomeDansLesDemarchesAdministratives,
+        Service.RealiserDesDemarchesAdministratives,
+        Service.PrendreEnMainUnSmartphoneOuUneTablette,
+        Service.PrendreEnMainUnOrdinateur,
+        Service.UtiliserLeNumerique,
+        Service.ApprofondirMaCultureNumerique,
+        Service.FavoriserMonInsertionProfessionnelle,
+        Service.AccederAUneConnexionInternet,
+        Service.AccederADuMateriel
+      ]),
+      date_maj: '2022-10-10T00:00:00.000Z' as unknown as Date
+    };
+
+    expect(toSchemaLieuxDeMediationNumerique([minimalLieuMediationNumerique])).toStrictEqual<SchemaLieuMediationNumerique[]>([
+      {
+        id: 'structure-1',
+        nom: 'Anonymal',
+        pivot: '43493312300029',
+        commune: 'Reims',
+        code_postal: '51100',
+        adresse: '12 BIS RUE DE LECLERCQ',
+        services:
+          'Devenir autonome dans les démarches administratives;Réaliser des démarches administratives avec un accompagnement;Prendre en main un smartphone ou une tablette;Prendre en main un ordinateur;Utiliser le numérique au quotidien;Approfondir ma culture numérique;Favoriser mon insertion professionnelle;Accéder à une connexion internet;Accéder à du matériel',
+        date_maj: '2022-10-10'
+      }
+    ]);
+  });
 });
