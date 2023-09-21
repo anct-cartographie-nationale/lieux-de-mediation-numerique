@@ -203,4 +203,164 @@ describe('to schema lieux de mediation numerique', (): void => {
       }
     ]);
   });
+
+  it('should not get arrondissement insee code when city is not Lyon, Marseille or Paris', (): void => {
+    const lieuMediationNumeriqueNotInABigCity: LieuMediationNumerique = {
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '51100',
+        code_insee: '51454',
+        commune: 'Reims',
+        voie: '12 BIS RUE DE LECLERCQ'
+      }),
+      services: Services([Service.AccederADuMateriel]),
+      date_maj: new Date('2022-10-10')
+    };
+
+    expect(toSchemaLieuxDeMediationNumerique([lieuMediationNumeriqueNotInABigCity], true)).toStrictEqual<
+      SchemaLieuMediationNumerique[]
+    >([
+      {
+        id: 'structure-1',
+        nom: 'Anonymal',
+        pivot: '43493312300029',
+        commune: 'Reims',
+        code_postal: '51100',
+        code_insee: '51454',
+        adresse: '12 BIS RUE DE LECLERCQ',
+        services: Service.AccederADuMateriel,
+        date_maj: '2022-10-10'
+      }
+    ]);
+  });
+
+  it('should get arrondissement 69382 as insee code when city is Lyon and code postal is 69002', (): void => {
+    const lieuMediationNumeriqueNotInABigCity: LieuMediationNumerique = {
+      id: Id('structure-1'),
+      nom: Nom('Médiation numérique Bellecour'),
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '69002',
+        code_insee: '69123',
+        commune: 'Lyon',
+        voie: '23 place Bellecour'
+      }),
+      services: Services([Service.AccederADuMateriel]),
+      date_maj: new Date('2022-10-10')
+    };
+
+    expect(toSchemaLieuxDeMediationNumerique([lieuMediationNumeriqueNotInABigCity], true)).toStrictEqual<
+      SchemaLieuMediationNumerique[]
+    >([
+      {
+        id: 'structure-1',
+        nom: 'Médiation numérique Bellecour',
+        pivot: '43493312300029',
+        commune: 'Lyon',
+        code_postal: '69002',
+        code_insee: '69382',
+        adresse: '23 place Bellecour',
+        services: Service.AccederADuMateriel,
+        date_maj: '2022-10-10'
+      }
+    ]);
+  });
+
+  it('should get arrondissement 69381 as insee code when city is Lyon and code postal is 69001', (): void => {
+    const lieuMediationNumeriqueNotInABigCity: LieuMediationNumerique = {
+      id: Id('structure-1'),
+      nom: Nom('Médiation numérique St Jean'),
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '69001',
+        code_insee: '69123',
+        commune: 'Lyon',
+        voie: '3 place St Jean'
+      }),
+      services: Services([Service.AccederADuMateriel]),
+      date_maj: new Date('2022-10-10')
+    };
+
+    expect(toSchemaLieuxDeMediationNumerique([lieuMediationNumeriqueNotInABigCity], true)).toStrictEqual<
+      SchemaLieuMediationNumerique[]
+    >([
+      {
+        id: 'structure-1',
+        nom: 'Médiation numérique St Jean',
+        pivot: '43493312300029',
+        commune: 'Lyon',
+        code_postal: '69001',
+        code_insee: '69381',
+        adresse: '3 place St Jean',
+        services: Service.AccederADuMateriel,
+        date_maj: '2022-10-10'
+      }
+    ]);
+  });
+
+  it('should get arrondissement 75113 as insee code when city is Paris and code postal is 75013', (): void => {
+    const lieuMediationNumeriqueNotInABigCity: LieuMediationNumerique = {
+      id: Id('structure-1'),
+      nom: Nom('Médiation numérique 13'),
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '75013',
+        code_insee: '75056',
+        commune: 'Paris',
+        voie: '12 rue Beaudricourt'
+      }),
+      services: Services([Service.AccederADuMateriel]),
+      date_maj: new Date('2022-10-10')
+    };
+
+    expect(toSchemaLieuxDeMediationNumerique([lieuMediationNumeriqueNotInABigCity], true)).toStrictEqual<
+      SchemaLieuMediationNumerique[]
+    >([
+      {
+        id: 'structure-1',
+        nom: 'Médiation numérique 13',
+        pivot: '43493312300029',
+        commune: 'Paris',
+        code_postal: '75013',
+        code_insee: '75113',
+        adresse: '12 rue Beaudricourt',
+        services: Service.AccederADuMateriel,
+        date_maj: '2022-10-10'
+      }
+    ]);
+  });
+
+  it('should get arrondissement 13202 as insee code when city is Marseille and code postal is 13002', (): void => {
+    const lieuMediationNumeriqueNotInABigCity: LieuMediationNumerique = {
+      id: Id('structure-1'),
+      nom: Nom('Médiation numérique 13'),
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '13002',
+        code_insee: '13055',
+        commune: 'Marseille',
+        voie: '12 rue du vieux Port'
+      }),
+      services: Services([Service.AccederADuMateriel]),
+      date_maj: new Date('2022-10-10')
+    };
+
+    expect(toSchemaLieuxDeMediationNumerique([lieuMediationNumeriqueNotInABigCity], true)).toStrictEqual<
+      SchemaLieuMediationNumerique[]
+    >([
+      {
+        id: 'structure-1',
+        nom: 'Médiation numérique 13',
+        pivot: '43493312300029',
+        commune: 'Marseille',
+        code_postal: '13002',
+        code_insee: '13202',
+        adresse: '12 rue du vieux Port',
+        services: Service.AccederADuMateriel,
+        date_maj: '2022-10-10'
+      }
+    ]);
+  });
 });
