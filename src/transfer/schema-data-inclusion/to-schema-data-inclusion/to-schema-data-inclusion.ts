@@ -13,28 +13,28 @@ import {
   accesFields
 } from './to-schema-data-inclusion-fields';
 
+export const toSchemaStructureDataInclusion = (
+  lieuMediationNumerique: LieuMediationNumerique
+): SchemaStructureDataInclusion => ({
+  ...structureGeneralFields(lieuMediationNumerique),
+  ...adresseFields(lieuMediationNumerique),
+  ...collecteFields(lieuMediationNumerique),
+  ...localisationFields(lieuMediationNumerique),
+  ...contactFields(lieuMediationNumerique),
+  ...presentationFields(lieuMediationNumerique),
+  ...disponibiliteFields(lieuMediationNumerique),
+  ...labelsFields(lieuMediationNumerique)
+});
+
 export const toSchemaStructuresDataInclusion = (
   lieuxMediationNumerique: LieuMediationNumerique[]
-): SchemaStructureDataInclusion[] =>
-  lieuxMediationNumerique.map(
-    (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusion => ({
-      ...structureGeneralFields(lieuMediationNumerique),
-      ...adresseFields(lieuMediationNumerique),
-      ...collecteFields(lieuMediationNumerique),
-      ...localisationFields(lieuMediationNumerique),
-      ...contactFields(lieuMediationNumerique),
-      ...presentationFields(lieuMediationNumerique),
-      ...disponibiliteFields(lieuMediationNumerique),
-      ...labelsFields(lieuMediationNumerique)
-    })
-  );
+): SchemaStructureDataInclusion[] => lieuxMediationNumerique.map(toSchemaStructureDataInclusion);
+
+export const toSchemaServiceDataInclusion = (lieuMediationNumerique: LieuMediationNumerique): SchemaServiceDataInclusion => ({
+  ...serviceGeneralFields(lieuMediationNumerique),
+  ...accesFields(lieuMediationNumerique)
+});
 
 export const toSchemaServicesDataInclusion = (
   lieuxMediationNumerique: LieuMediationNumerique[]
-): SchemaServiceDataInclusion[] =>
-  lieuxMediationNumerique.map(
-    (lieuMediationNumerique: LieuMediationNumerique): SchemaServiceDataInclusion => ({
-      ...serviceGeneralFields(lieuMediationNumerique),
-      ...accesFields(lieuMediationNumerique)
-    })
-  );
+): SchemaServiceDataInclusion[] => lieuxMediationNumerique.map(toSchemaServiceDataInclusion);
