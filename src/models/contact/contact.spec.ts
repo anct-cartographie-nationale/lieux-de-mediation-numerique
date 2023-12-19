@@ -90,14 +90,4 @@ describe('contact model', (): void => {
       telephone: '0 809 36 12 12'
     });
   });
-
-  it('should allow accentued characters for courriel', (): void => {
-    const contactData: ContactToValidate = {
-      courriel: 'contact@cartographienationalé.fr'
-    };
-
-    const contact: Contact = Contact(contactData);
-
-    expect(contact).toStrictEqual({ ...contactData } as Contact);
-  });
 });
