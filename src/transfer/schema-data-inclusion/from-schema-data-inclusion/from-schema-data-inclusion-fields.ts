@@ -57,9 +57,8 @@ const LABELS_NATIONAUX_MAP: Map<string, LabelNational> = new Map<string, LabelNa
   ['france-service', LabelNational.FranceServices],
   ['french-tech', LabelNational.FrenchTech],
   ['grandes-ecoles-du-numerique', LabelNational.GrandesEcolesDuNumerique],
-  ['point-numerique-caf', LabelNational.PointNumeriqueCAF], // todo: missing label in data.inclusion
-  ['point-relais-caf', LabelNational.PointRelaisCAF], // todo: missing label in data.inclusion
-  ['relais-pole-emploi', LabelNational.RelaisPoleEmploi] // todo: missing label in data.inclusion
+  ['caf', LabelNational.PointRelaisCAF],
+  ['pole-emploi', LabelNational.RelaisPoleEmploi]
 ]);
 
 const TYPES_TO_MODALITES_ACCOMPAGNEMENT_MAP: Map<string, ModaliteAccompagnement> = new Map<string, ModaliteAccompagnement>([
