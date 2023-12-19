@@ -109,7 +109,13 @@ describe('to schema data.inclusion', (): void => {
         detail:
           "connaissance de l'offre de transport du territoire / accès à un véhicule 2 ou 4 roues / transport solidaire / accès au permis"
       },
-      labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC, LabelNational.PointRelaisCAF]),
+      labels_nationaux: LabelsNationaux([
+        LabelNational.FranceServices,
+        LabelNational.APTIC,
+        LabelNational.PointRelaisCAF,
+        LabelNational.PointNumeriqueCAF,
+        LabelNational.RelaisPoleEmploi
+      ]),
       labels_autres: ['Nièvre médiation numérique'],
       source: 'solidagregateur',
       structure_parente: '7713e292-abd1-42fc-b1f0-071b7e7a2f61',
@@ -142,7 +148,7 @@ describe('to schema data.inclusion', (): void => {
         horaires_ouverture: 'Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off',
         accessibilite:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
-        labels_nationaux: ['france-service', 'aptic', 'point-relais-caf'],
+        labels_nationaux: ['france-service', 'aptic', 'caf', 'pole-emploi'],
         labels_autres: ['Nièvre médiation numérique'],
         thematiques: [
           'numerique',

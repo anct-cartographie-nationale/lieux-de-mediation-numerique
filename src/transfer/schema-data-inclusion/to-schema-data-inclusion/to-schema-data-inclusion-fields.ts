@@ -77,9 +77,9 @@ const LABELS_NATIONAUX_MAP: Map<LabelNational, string> = new Map<LabelNational, 
   [LabelNational.FranceServices, 'france-service'],
   [LabelNational.FrenchTech, 'french-tech'],
   [LabelNational.GrandesEcolesDuNumerique, 'grandes-ecoles-du-numerique'],
-  [LabelNational.PointNumeriqueCAF, 'point-numerique-caf'], // todo: missing label in data.inclusion
-  [LabelNational.PointRelaisCAF, 'point-relais-caf'], // todo: missing label in data.inclusion
-  [LabelNational.RelaisPoleEmploi, 'relais-pole-emploi'] // todo: missing label in data.inclusion
+  [LabelNational.PointNumeriqueCAF, 'caf'],
+  [LabelNational.PointRelaisCAF, 'caf'],
+  [LabelNational.RelaisPoleEmploi, 'pole-emploi']
 ]);
 
 const typologyIfExist = (typologie?: string): { typologie?: string } => (typologie == null ? {} : { typologie });
@@ -157,9 +157,13 @@ export const labelsFields = (lieuMediationNumerique: LieuMediationNumerique): Sc
   ...(lieuMediationNumerique.labels_nationaux == null
     ? {}
     : {
-        labels_nationaux: lieuMediationNumerique.labels_nationaux
-          .map((labelNational: LabelNational): string | null => LABELS_NATIONAUX_MAP.get(labelNational) ?? null)
-          .filter((labelNational: string | null): labelNational is string => labelNational != null)
+        labels_nationaux: Array.from(
+          new Set(
+            lieuMediationNumerique.labels_nationaux
+              .map((labelNational: LabelNational): string | null => LABELS_NATIONAUX_MAP.get(labelNational) ?? null)
+              .filter((labelNational: string | null): labelNational is string => labelNational != null)
+          )
+        )
       }),
   ...(lieuMediationNumerique.labels_autres == null ? {} : { labels_autres: lieuMediationNumerique.labels_autres })
 });
