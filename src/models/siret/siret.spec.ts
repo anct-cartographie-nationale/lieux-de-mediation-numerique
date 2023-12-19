@@ -13,4 +13,10 @@ describe('siret model', (): void => {
       Siret('42');
     }).toThrow(new SiretError('42'));
   });
+
+  it('should throw SiretError if siret contains spaces', (): void => {
+    expect((): void => {
+      Siret('842 887 408 00');
+    }).toThrow(new SiretError('84288740800'));
+  });
 });
