@@ -15,7 +15,7 @@ export type Contact = Model<
 export type ContactToValidate = Omit<Contact, 'isContact'>;
 
 const COURRIEL_REG_EXP: RegExp =
-  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/u;
+  /^[a-zA-Z0-9_][a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9])+$/u;
 
 const TELEPHONE_REG_EXP: RegExp =
   /^(?:(?:\+|00)(?:33|594|262|596|269|687|689|590|508|681)[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)(?:(?:[1-9](?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]\d{3}){2})|\s\d{3}(?:\s\d{2}){3})$/u;
