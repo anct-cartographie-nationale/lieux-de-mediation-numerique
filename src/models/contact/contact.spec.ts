@@ -90,4 +90,16 @@ describe('contact model', (): void => {
       telephone: '0 809 36 12 12'
     });
   });
+
+  it('should allow nouvelle caledonie telephone format (indicatif + 6 digits)', (): void => {
+    const contactData: ContactToValidate = {
+      telephone: '+687241541'
+    };
+
+    const contact: Contact = Contact(contactData);
+
+    expect(contact).toStrictEqual({
+      telephone: '+687241541'
+    });
+  });
 });
