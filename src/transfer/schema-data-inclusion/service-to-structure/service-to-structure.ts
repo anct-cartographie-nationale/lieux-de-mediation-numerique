@@ -12,7 +12,8 @@ import {
   SchemaStructureDataInclusionPresentationFields,
   SchemaStructureDataInclusionStructureGeneralFields
 } from '../schema-data-inclusion';
-import { isValidCourriel, isValidTelephone } from '../../../models';
+import { isValidTelephone } from '../../../models';
+import { isValidCourriel } from '../../../models/courriel';
 
 export const isServiceWithAdresse = (
   service: Partial<SchemaStructureDataInclusionAdresseFields> & SchemaServiceDataInclusion

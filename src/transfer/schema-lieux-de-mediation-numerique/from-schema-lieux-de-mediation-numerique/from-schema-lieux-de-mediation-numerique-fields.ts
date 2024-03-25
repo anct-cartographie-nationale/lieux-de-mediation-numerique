@@ -5,6 +5,7 @@ import {
   CleBan,
   ConditionsAcces,
   Contact,
+  Courriel,
   LabelsNationaux,
   Localisation,
   ModalitesAccompagnement,
@@ -45,7 +46,8 @@ export const typologiesIfAny = (typologies?: string): { typologies?: Typologies 
 
 const telephoneIfAny = (telephone?: string): { telephone?: string } => (telephone == null ? {} : { telephone });
 
-const courrielIfAny = (courriel?: string): { courriel?: string } => (courriel == null ? {} : { courriel });
+const courrielIfAny = (courriel?: string): { courriel?: Courriel[] } =>
+  courriel == null ? {} : { courriel: listFromString(courriel) };
 
 const siteWebIfAny = (siteWeb?: string): { site_web?: Url[] } => (siteWeb == null ? {} : { site_web: listFromString(siteWeb) });
 

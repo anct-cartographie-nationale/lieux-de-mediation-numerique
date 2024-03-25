@@ -86,6 +86,8 @@ const typologyIfExist = (typologie?: string): { typologie?: string } => (typolog
 
 const siteWebIfExist = (site_web?: string): { site_web?: string } => (site_web == null ? {} : { site_web });
 
+const courrielIfExist = (courriel?: string): { courriel?: string } => (courriel == null ? {} : { courriel });
+
 const fraisIfExist = (frais?: string): { frais?: string[] } => (frais == null ? {} : { frais: [frais] });
 
 const fraisFromConditionAcces = (conditionAcces?: ConditionAcces): { frais?: string[] } =>
@@ -131,7 +133,9 @@ export const localisationFields = (
 
 export const contactFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionContactFields => ({
   ...(lieuMediationNumerique.contact?.telephone == null ? {} : { telephone: lieuMediationNumerique.contact.telephone }),
-  ...(lieuMediationNumerique.contact?.courriel == null ? {} : { courriel: lieuMediationNumerique.contact.courriel }),
+  ...(lieuMediationNumerique.contact?.courriel != null && lieuMediationNumerique.contact.courriel.length > 0
+    ? courrielIfExist(lieuMediationNumerique.contact.courriel.at(0)?.toString())
+    : {}),
   ...(lieuMediationNumerique.contact?.site_web != null && lieuMediationNumerique.contact.site_web.length > 0
     ? siteWebIfExist(lieuMediationNumerique.contact.site_web.at(0)?.toString())
     : {})
