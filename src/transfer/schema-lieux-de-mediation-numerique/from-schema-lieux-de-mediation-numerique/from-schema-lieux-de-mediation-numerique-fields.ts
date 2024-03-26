@@ -3,7 +3,7 @@
 import {
   Adresse,
   CleBan,
-  ConditionsAcces,
+  FraisACharge,
   Contact,
   Courriel,
   LabelsNationaux,
@@ -90,8 +90,8 @@ export const structureParenteIfAny = (structureParente?: string): { structure_pa
 export const publicsAccueillisIfAny = (publicsAccueillis?: string): { publics_accueillis?: PublicsAccueillis } =>
   publicsAccueillis == null ? {} : { publics_accueillis: PublicsAccueillis(listFromString(publicsAccueillis)) };
 
-export const conditionsAccesIfAny = (conditionsAcces?: string): { conditions_acces?: ConditionsAcces } =>
-  conditionsAcces == null ? {} : { conditions_acces: ConditionsAcces(listFromString(conditionsAcces)) };
+export const conditionsAccesIfAny = (conditionsAcces?: string): { frais_a_charge?: FraisACharge } =>
+  conditionsAcces == null ? {} : { frais_a_charge: FraisACharge(listFromString(conditionsAcces)) };
 
 export const labelsNationauxIfAny = (labelsNationaux?: string): { labels_nationaux?: LabelsNationaux } =>
   labelsNationaux == null ? {} : { labels_nationaux: LabelsNationaux(listFromString(labelsNationaux)) };

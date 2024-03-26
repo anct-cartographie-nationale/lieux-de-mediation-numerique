@@ -2,10 +2,10 @@
 
 import {
   Adresse,
-  ConditionAcces,
-  ConditionsAcces,
   Contact,
   Courriel,
+  Frais,
+  FraisACharge,
   Id,
   LabelNational,
   LabelsNationaux,
@@ -25,8 +25,8 @@ import {
   Url
 } from '../../../models';
 import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
-import { fromSchemaDataInclusion } from './from-schema-data-inclusion';
 import { MandatorySiretOrRnaError } from './errors/mandatory-siret-or-rna.error';
+import { fromSchemaDataInclusion } from './from-schema-data-inclusion';
 
 describe('from schema data inclusion', (): void => {
   it("should get a minimal lieu de mediation numerique form a minimal structure d'inclusion and a minimal service d'inclusion", (): void => {
@@ -195,7 +195,7 @@ describe('from schema data inclusion', (): void => {
         PublicAccueilli.UniquementFemmes,
         PublicAccueilli.Illettrisme
       ]),
-      conditions_acces: ConditionsAcces([ConditionAcces.GratuitSousCondition]),
+      frais_a_charge: FraisACharge([Frais.GratuitSousCondition]),
       labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC]),
       labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
       modalites_accompagnement: ModalitesAccompagnement([
@@ -429,7 +429,7 @@ describe('from schema data inclusion', (): void => {
       }),
       services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives, Service.AccederAUneConnexionInternet]),
       date_maj: new Date('2022-10-10'),
-      conditions_acces: ConditionsAcces([ConditionAcces.Payant, ConditionAcces.Gratuit])
+      frais_a_charge: FraisACharge([Frais.Payant, Frais.Gratuit])
     });
   });
 
@@ -498,7 +498,7 @@ describe('from schema data inclusion', (): void => {
         PublicAccueilli.Adultes,
         PublicAccueilli.Jeunes
       ]),
-      conditions_acces: ConditionsAcces([ConditionAcces.Adhesion, ConditionAcces.AccepteLePassNumerique]),
+      frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
       modalites_accompagnement: ModalitesAccompagnement([
         ModaliteAccompagnement.AvecDeLAide,
         ModaliteAccompagnement.DansUnAtelier,

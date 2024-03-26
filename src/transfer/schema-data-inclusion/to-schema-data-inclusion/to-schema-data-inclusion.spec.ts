@@ -2,8 +2,8 @@
 
 import {
   Adresse,
-  ConditionAcces,
-  ConditionsAcces,
+  FraisACharge,
+  Frais,
   Contact,
   Courriel,
   Id,
@@ -234,7 +234,7 @@ describe('to schema data.inclusion', (): void => {
         ModaliteAccompagnement.AvecDeLAide,
         ModaliteAccompagnement.DansUnAtelier
       ]),
-      conditions_acces: ConditionsAcces([ConditionAcces.Payant, ConditionAcces.AccepteLePassNumerique]),
+      frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
       prise_rdv: Url('https://www.rdv-solidarites.fr/'),
       publics_accueillis: PublicsAccueillis([
         PublicAccueilli.Seniors,

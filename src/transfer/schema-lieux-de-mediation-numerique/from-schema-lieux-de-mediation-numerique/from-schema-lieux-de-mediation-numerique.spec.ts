@@ -3,8 +3,8 @@
 import {
   Adresse,
   CleBan,
-  ConditionAcces,
-  ConditionsAcces,
+  Frais,
+  FraisACharge,
   Contact,
   Courriel,
   Id,
@@ -97,8 +97,8 @@ describe('from schema lieux de mediation numerique', (): void => {
         source: 'Hubik',
         structure_parente: 'Pôle emploi',
         publics_accueillis: 'Familles/enfants;Adultes;Déficience visuelle',
-        conditions_acces:
-          "Payant : L'accès au lieu et/ou à ses services est payant;Accepte le Pass numérique : Il est possible d'utiliser un Pass numérique pour accéder au lieu",
+        frais_a_charge:
+          "Payant : L'accès au lieu et/ou à ses services est payant;Gratuit sous condition : La gratuité est conditionnée à des critères (situation familiale, convention avec un organisme social...)",
         labels_nationaux: 'France Services;APTIC;Point relais CAF',
         labels_autres: 'SudLabs;Nièvre médiation numérique',
         modalites_accompagnement:
@@ -157,7 +157,7 @@ describe('from schema lieux de mediation numerique', (): void => {
           PublicAccueilli.Adultes,
           PublicAccueilli.DeficienceVisuelle
         ]),
-        conditions_acces: ConditionsAcces([ConditionAcces.Payant, ConditionAcces.AccepteLePassNumerique]),
+        frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
         labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC, LabelNational.PointRelaisCAF]),
         labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
         modalites_accompagnement: ModalitesAccompagnement([ModaliteAccompagnement.Seul, ModaliteAccompagnement.AvecDeLAide]),

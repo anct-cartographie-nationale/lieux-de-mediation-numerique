@@ -3,8 +3,8 @@
 import { SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import {
   Adresse,
-  ConditionAcces,
-  ConditionsAcces,
+  Frais,
+  FraisACharge,
   Contact,
   Courriel,
   LabelNational,
@@ -41,12 +41,12 @@ const THEMATIQUES_TO_SERVICES: Map<string, Service> = new Map<string, Service>([
   ['numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique', Service.SoutenirLaParentalite]
 ]);
 
-export const FRAIS_TO_CONDITION_ACCES: Map<string, ConditionAcces> = new Map<string, ConditionAcces>([
-  ['gratuit', ConditionAcces.Gratuit],
-  ['gratuit-sous-conditions', ConditionAcces.GratuitSousCondition],
-  ['payant', ConditionAcces.Payant],
-  ['adhesion', ConditionAcces.Adhesion],
-  ['pass-numerique', ConditionAcces.AccepteLePassNumerique]
+export const FRAIS_TO_CONDITION_ACCES: Map<string, Frais> = new Map<string, Frais>([
+  ['gratuit', Frais.Gratuit],
+  ['gratuit-sous-conditions', Frais.GratuitSousCondition],
+  ['payant', Frais.Payant],
+  ['adhesion', Frais.Payant],
+  ['pass-numerique', Frais.GratuitSousCondition]
 ]);
 
 const LABELS_NATIONAUX_MAP: Map<string, LabelNational> = new Map<string, LabelNational>([
@@ -157,14 +157,14 @@ export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>
   ['UDAF', Typologie.UDAF]
 ]);
 
-export const conditionsAccesFromDataInclusion = (conditionsAcces?: string[]): { conditions_acces?: ConditionsAcces } =>
+export const conditionsAccesFromDataInclusion = (conditionsAcces?: string[]): { frais_a_charge?: FraisACharge } =>
   conditionsAcces == null || conditionsAcces.length === 0
     ? {}
     : {
-        conditions_acces: ConditionsAcces(
+        frais_a_charge: FraisACharge(
           conditionsAcces
-            .map((conditionAcces: string): ConditionAcces | undefined => FRAIS_TO_CONDITION_ACCES.get(conditionAcces))
-            .filter((conditionAcces?: ConditionAcces): conditionAcces is ConditionAcces => conditionAcces != null)
+            .map((conditionAcces: string): Frais | undefined => FRAIS_TO_CONDITION_ACCES.get(conditionAcces))
+            .filter((conditionAcces?: Frais): conditionAcces is Frais => conditionAcces != null)
         )
       };
 

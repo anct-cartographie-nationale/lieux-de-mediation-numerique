@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase, max-lines */
 
 import {
-  ConditionAcces,
+  Frais,
   LabelNational,
   LieuMediationNumerique,
   ModaliteAccompagnement,
@@ -46,12 +46,10 @@ const MODALITES_ACCOMPAGNEMENT_TO_TYPES_MAP: Map<ModaliteAccompagnement, string>
   [ModaliteAccompagnement.DansUnAtelier, 'atelier']
 ]);
 
-const CONDITION_ACCES_TO_FRAIS: Map<ConditionAcces, string> = new Map<ConditionAcces, string>([
-  [ConditionAcces.Gratuit, 'gratuit'],
-  [ConditionAcces.GratuitSousCondition, 'gratuit-sous-conditions'],
-  [ConditionAcces.Payant, 'payant'],
-  [ConditionAcces.Adhesion, 'adhesion'],
-  [ConditionAcces.AccepteLePassNumerique, 'pass-numerique']
+const CONDITION_ACCES_TO_FRAIS: Map<Frais, string> = new Map<Frais, string>([
+  [Frais.Gratuit, 'gratuit'],
+  [Frais.GratuitSousCondition, 'gratuit-sous-conditions'],
+  [Frais.Payant, 'payant']
 ]);
 
 const PUBLICS_ACCUEILLIS_TO_PROFILS: Map<PublicAccueilli, string> = new Map<PublicAccueilli, string>([
@@ -90,7 +88,7 @@ const courrielIfExist = (courriel?: string): { courriel?: string } => (courriel 
 
 const fraisIfExist = (frais?: string): { frais?: string[] } => (frais == null ? {} : { frais: [frais] });
 
-const fraisFromConditionAcces = (conditionAcces?: ConditionAcces): { frais?: string[] } =>
+const fraisFromConditionAcces = (conditionAcces?: Frais): { frais?: string[] } =>
   conditionAcces == null ? {} : fraisIfExist(CONDITION_ACCES_TO_FRAIS.get(conditionAcces));
 
 export const structureGeneralFields = (
@@ -224,8 +222,8 @@ const profilsFromPublicsAccueillis = (lieuMediationNumerique: LieuMediationNumer
 
 export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionAccesFields => ({
   ...(lieuMediationNumerique.modalites_accompagnement == null ? {} : typesFromModalitesAccompagnement(lieuMediationNumerique)),
-  ...(lieuMediationNumerique.conditions_acces == null
+  ...(lieuMediationNumerique.frais_a_charge == null
     ? {}
-    : fraisFromConditionAcces(lieuMediationNumerique.conditions_acces.at(0))),
+    : fraisFromConditionAcces(lieuMediationNumerique.frais_a_charge.at(0))),
   ...(lieuMediationNumerique.publics_accueillis == null ? {} : profilsFromPublicsAccueillis(lieuMediationNumerique))
 });

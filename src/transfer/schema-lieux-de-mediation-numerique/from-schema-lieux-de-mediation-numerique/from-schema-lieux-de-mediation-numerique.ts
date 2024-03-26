@@ -32,7 +32,7 @@ const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNum
   ...sourceIfAny(schemaLieuMediationNumeriqueItem.source),
   ...structureParenteIfAny(schemaLieuMediationNumeriqueItem.structure_parente),
   ...publicsAccueillisIfAny(schemaLieuMediationNumeriqueItem.publics_accueillis),
-  ...conditionsAccesIfAny(schemaLieuMediationNumeriqueItem.conditions_acces),
+  ...conditionsAccesIfAny(schemaLieuMediationNumeriqueItem.frais_a_charge),
   ...labelsNationauxIfAny(schemaLieuMediationNumeriqueItem.labels_nationaux),
   ...labelsAutresIfAny(schemaLieuMediationNumeriqueItem.labels_autres),
   ...modalitesAccompagnementIfAny(schemaLieuMediationNumeriqueItem.modalites_accompagnement),
