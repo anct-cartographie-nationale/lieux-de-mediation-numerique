@@ -61,7 +61,7 @@ const generalFieldsFromServiceAndStructure = (
   ...(structure.siret == null ? {} : { siret: structure.siret }),
   ...(structure.typologie == null ? {} : { typologie: structure.typologie }),
   structure_parente: service.structure_id,
-  ...(structure.accessibilite == null ? {} : { accessibilite: structure.accessibilite }),
+  ...(structure.fiche_acces_libre == null ? {} : { fiche_acces_libre: structure.fiche_acces_libre }),
   ...(structure.site_web == null ? {} : { site_web: structure.site_web })
 });
 

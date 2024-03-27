@@ -265,8 +265,8 @@ export const typologiesFromDataInclusion = (typologie?: Typologie): { typologies
 
 export const sourceFromDataInclusion = (source?: string): { source?: string } => (source == null ? {} : { source });
 
-export const accessibiliteFromDataInclusion = (accessibilite?: string): { accessibilite?: Url } =>
-  accessibilite == null ? {} : { accessibilite: Url(accessibilite) };
+export const ficheAccesLibreFromDataInclusion = (ficheAccesLibre?: string): { fiche_acces_libre?: Url } =>
+  ficheAccesLibre == null ? {} : { fiche_acces_libre: Url(ficheAccesLibre) };
 
 export const horairesFromDataInclusion = (horaires?: string): { horaires?: string } => (horaires == null ? {} : { horaires });
 

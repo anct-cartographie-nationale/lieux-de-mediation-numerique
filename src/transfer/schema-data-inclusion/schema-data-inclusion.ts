@@ -8,7 +8,7 @@ export type SchemaStructureDataInclusionStructureGeneralFields = {
   typologie?: string;
   structure_parente?: string;
   thematiques?: string[];
-  accessibilite?: string;
+  fiche_acces_libre?: string;
   site_web?: string;
 };
 

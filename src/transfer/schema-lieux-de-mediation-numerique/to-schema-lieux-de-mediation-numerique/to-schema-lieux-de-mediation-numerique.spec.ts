@@ -117,7 +117,7 @@ describe('to schema lieux de mediation numerique', (): void => {
       labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC, LabelNational.PointRelaisCAF]),
       labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
       modalites_accompagnement: ModalitesAccompagnement([ModaliteAccompagnement.Seul, ModaliteAccompagnement.AvecDeLAide]),
-      accessibilite: Url(
+      fiche_acces_libre: Url(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       ),
       prise_rdv: Url('https://www.rdv-solidarites.fr/'),
@@ -157,7 +157,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         labels_autres: 'SudLabs;Nièvre médiation numérique',
         modalites_accompagnement:
           "Seul : j'ai accès à du matériel et une connexion;Avec de l'aide : je suis accompagné seul dans l'usage du numérique",
-        accessibilite:
+        fiche_acces_libre:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
         prise_rdv: 'https://www.rdv-solidarites.fr/',
         cle_ban: '13001_3079_00001'

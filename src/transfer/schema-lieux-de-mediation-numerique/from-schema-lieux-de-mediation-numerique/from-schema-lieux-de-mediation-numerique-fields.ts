@@ -104,7 +104,7 @@ export const modalitesAccompagnementIfAny = (
     ? {}
     : { modalites_accompagnement: ModalitesAccompagnement(listFromString(modalitesAccompagnement)) };
 
-export const accessibiliteIfAny = (accessibilite?: string): { accessibilite?: Url } =>
-  accessibilite == null ? {} : { accessibilite: Url(accessibilite) };
+export const ficheAccesLibreIfAny = (ficheAccesLibre?: string): { fiche_acces_libre?: Url } =>
+  ficheAccesLibre == null ? {} : { fiche_acces_libre: Url(ficheAccesLibre) };
 
 export const priseRdvIfAny = (priseRdv?: string): { prise_rdv?: Url } => (priseRdv == null ? {} : { prise_rdv: Url(priseRdv) });

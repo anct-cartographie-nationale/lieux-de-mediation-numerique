@@ -38,7 +38,7 @@ export type SchemaLieuMediationNumeriqueAccesFields = {
   publics_accueillis?: string;
   conditions_acces?: string;
   modalites_accompagnement?: string;
-  accessibilite?: string;
+  fiche_acces_libre?: string;
 };
 
 export type SchemaLieuMediationNumeriqueLabelsFields = {
