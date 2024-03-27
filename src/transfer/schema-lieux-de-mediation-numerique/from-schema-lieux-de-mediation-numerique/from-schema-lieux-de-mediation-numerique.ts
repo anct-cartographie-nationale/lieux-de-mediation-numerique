@@ -3,7 +3,7 @@
 import { Id, LieuMediationNumerique, Nom, Pivot, Services } from '../../../models';
 import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import {
-  accessibiliteIfAny,
+  ficheAccesLibreIfAny,
   adresse,
   cleBanIfAny,
   conditionsAccesIfAny,
@@ -36,7 +36,7 @@ const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNum
   ...labelsNationauxIfAny(schemaLieuMediationNumeriqueItem.labels_nationaux),
   ...labelsAutresIfAny(schemaLieuMediationNumeriqueItem.labels_autres),
   ...modalitesAccompagnementIfAny(schemaLieuMediationNumeriqueItem.modalites_accompagnement),
-  ...accessibiliteIfAny(schemaLieuMediationNumeriqueItem.accessibilite),
+  ...ficheAccesLibreIfAny(schemaLieuMediationNumeriqueItem.fiche_acces_libre),
   ...priseRdvIfAny(schemaLieuMediationNumeriqueItem.prise_rdv)
 });
 

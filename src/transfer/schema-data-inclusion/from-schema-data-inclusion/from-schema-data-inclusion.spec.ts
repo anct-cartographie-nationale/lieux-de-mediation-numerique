@@ -75,7 +75,8 @@ describe('from schema data inclusion', (): void => {
       nom: 'Anonymal',
       siret: '43493312300029',
       source: 'Hubik',
-      accessibilite: 'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
+      fiche_acces_libre:
+        'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
       courriel: 'contact@laquincaillerie.tl',
       telephone: '+33180059880',
       site_web: 'https://www.laquincaillerie.tl/;https://m.facebook.com/laquincaillerienumerique/',
@@ -203,7 +204,7 @@ describe('from schema data inclusion', (): void => {
         ModaliteAccompagnement.AvecDeLAide,
         ModaliteAccompagnement.DansUnAtelier
       ]),
-      accessibilite: Url(
+      fiche_acces_libre: Url(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       ),
       prise_rdv: Url('https://www.rdv-solidarites.fr/')

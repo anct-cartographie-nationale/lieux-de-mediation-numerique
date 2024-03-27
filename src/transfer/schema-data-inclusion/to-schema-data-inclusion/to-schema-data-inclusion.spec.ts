@@ -94,7 +94,7 @@ describe('to schema data.inclusion', (): void => {
         latitude: 48.7703,
         longitude: 7.848133
       }),
-      accessibilite: Url(
+      fiche_acces_libre: Url(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       ),
       contact: Contact({
@@ -146,7 +146,7 @@ describe('to schema data.inclusion', (): void => {
         source: 'solidagregateur',
         structure_parente: '7713e292-abd1-42fc-b1f0-071b7e7a2f61',
         horaires_ouverture: 'Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off',
-        accessibilite:
+        fiche_acces_libre:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
         labels_nationaux: ['france-service', 'aptic', 'caf', 'pole-emploi'],
         labels_autres: ['Nièvre médiation numérique'],

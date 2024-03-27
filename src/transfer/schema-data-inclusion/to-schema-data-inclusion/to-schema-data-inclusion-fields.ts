@@ -101,7 +101,7 @@ export const structureGeneralFields = (
     ? typologyIfExist(lieuMediationNumerique.typologies.at(0)?.toString())
     : {}),
   ...(lieuMediationNumerique.structure_parente == null ? {} : { structure_parente: lieuMediationNumerique.structure_parente }),
-  ...(lieuMediationNumerique.accessibilite == null ? {} : { accessibilite: lieuMediationNumerique.accessibilite }),
+  ...(lieuMediationNumerique.fiche_acces_libre == null ? {} : { fiche_acces_libre: lieuMediationNumerique.fiche_acces_libre }),
   thematiques: [
     'numerique',
     ...lieuMediationNumerique.services

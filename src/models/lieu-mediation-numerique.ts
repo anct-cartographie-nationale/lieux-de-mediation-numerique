@@ -37,6 +37,6 @@ export type LieuMediationNumerique = {
   labels_nationaux?: LabelsNationaux;
   labels_autres?: string[];
   modalites_accompagnement?: ModalitesAccompagnement;
-  accessibilite?: Url;
+  fiche_acces_libre?: Url;
   prise_rdv?: Url;
 };

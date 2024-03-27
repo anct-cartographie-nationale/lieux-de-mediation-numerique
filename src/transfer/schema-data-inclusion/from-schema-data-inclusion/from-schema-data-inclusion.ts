@@ -3,7 +3,7 @@
 import { Id, LieuMediationNumerique, Nom, Pivot } from '../../../models';
 import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import {
-  accessibiliteFromDataInclusion,
+  ficheAccesLibreFromDataInclusion,
   adresseFromDataInclusion,
   conditionsAccesFromDataInclusion,
   contactFromDataInclusion,
@@ -68,7 +68,7 @@ const fromSchemaDataInclusionItem = (
   date_maj: new Date(structure.date_maj),
   ...contactFromDataInclusion(structure.courriel, structure.telephone, structure.site_web),
   ...sourceFromDataInclusion(structure.source),
-  ...accessibiliteFromDataInclusion(structure.accessibilite),
+  ...ficheAccesLibreFromDataInclusion(structure.fiche_acces_libre),
   ...conditionsAccesFromDataInclusion(service.frais),
   ...horairesFromDataInclusion(structure.horaires_ouverture),
   ...labelsFromDataInclusion(structure.labels_nationaux, structure.labels_autres),
