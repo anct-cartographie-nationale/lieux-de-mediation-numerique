@@ -2,10 +2,10 @@ import { ModalitesAccompagnementError } from './errors';
 import { Model } from '../model';
 
 export enum ModaliteAccompagnement {
-  AMaPlace = 'A ma place : une personne habilitée fait les démarches à ma place',
-  AvecDeLAide = "Avec de l'aide : je suis accompagné seul dans l'usage du numérique",
-  DansUnAtelier = "Dans un atelier : j'apprends collectivement à utiliser le numérique",
-  Seul = "Seul : j'ai accès à du matériel et une connexion"
+  EnAutonomie = 'En autonomie',
+  AccompagnementIndividuel = 'Accompagnement individuel',
+  DansUnAtelier = "Dans un atelier collectif (j'apprends collectivement à utiliser le numérique)",
+  ADistance = 'À distance (par téléphone ou en visioconférence)'
 }
 
 export type ModalitesAccompagnement = Model<'ModalitesAccompagnement', ModaliteAccompagnement[]>;
@@ -27,7 +27,9 @@ const isModalitesAccompagnement = (
   modalitesAccompagnement.find(firstInvalidModaliteAccompagnement) == null;
 
 /* eslint-disable-next-line @typescript-eslint/naming-convention */
-export const ModalitesAccompagnement = (modalitesAccompagnement: ModaliteAccompagnement[]): ModalitesAccompagnement =>
-  isModalitesAccompagnement(modalitesAccompagnement)
-    ? modalitesAccompagnement
+export const ModalitesAccompagnement = (modalitesAccompagnement: ModaliteAccompagnement[]): ModalitesAccompagnement => {
+  const modalitesAccompagnementWithoutDuplicates: ModaliteAccompagnement[] = Array.from(new Set(modalitesAccompagnement));
+  return isModalitesAccompagnement(modalitesAccompagnementWithoutDuplicates)
+    ? modalitesAccompagnementWithoutDuplicates
     : throwModalitesAccompagnementError(modalitesAccompagnement);
+};

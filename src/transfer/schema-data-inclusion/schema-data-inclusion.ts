@@ -67,6 +67,7 @@ export type SchemaStructureDataInclusionAccesFields = {
   profils?: string[];
   frais?: string[];
   types?: string[];
+  modes_accueil?: string[];
 };
 
 export type SchemaStructureDataInclusion = SchemaStructureDataInclusionAdresseFields &

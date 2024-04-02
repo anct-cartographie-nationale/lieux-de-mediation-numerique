@@ -2,6 +2,7 @@
 
 import { Id, LieuMediationNumerique, Nom, Pivot } from '../../../models';
 import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
+import { MandatorySiretOrRnaError } from './errors/mandatory-siret-or-rna.error';
 import {
   accessibiliteFromDataInclusion,
   adresseFromDataInclusion,
@@ -11,6 +12,7 @@ import {
   labelsFromDataInclusion,
   localisationFromDataInclusion,
   mergeFrais,
+  mergeModesAccueil,
   mergePriseRdv,
   mergeProfils,
   mergeThematiques,
@@ -25,7 +27,6 @@ import {
   TYPOLOGIES_MAP,
   typologiesFromDataInclusion
 } from './from-schema-data-inclusion-fields';
-import { MandatorySiretOrRnaError } from './errors/mandatory-siret-or-rna.error';
 
 const toSingleService = (
   mergedService: SchemaServiceDataInclusion,
@@ -36,6 +37,7 @@ const toSingleService = (
   ...mergeFrais(mergedService.frais, service.frais),
   ...mergeProfils(mergedService.profils, service.profils),
   ...mergeTypes(mergedService.types, service.types),
+  ...mergeModesAccueil(mergedService.modes_accueil, service.modes_accueil),
   ...mergePriseRdv(mergedService.prise_rdv, service.prise_rdv)
 });
 
@@ -72,7 +74,7 @@ const fromSchemaDataInclusionItem = (
   ...conditionsAccesFromDataInclusion(service.frais),
   ...horairesFromDataInclusion(structure.horaires_ouverture),
   ...labelsFromDataInclusion(structure.labels_nationaux, structure.labels_autres),
-  ...modalitesAccompagnementFromDataInclusion(service.types),
+  ...modalitesAccompagnementFromDataInclusion(service.types, service.modes_accueil),
   ...presentationFromDataInclusion(structure.presentation_detail, structure.presentation_resume),
   ...priseRdvFromDataInclusion(service.prise_rdv),
   ...publicsAccueillisFromDataInclusion(service.profils),

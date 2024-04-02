@@ -2,9 +2,9 @@
 
 import {
   Adresse,
-  FraisACharge,
-  Frais,
   Contact,
+  Frais,
+  FraisACharge,
   Courriel,
   Id,
   LabelNational,
@@ -229,9 +229,9 @@ describe('to schema data.inclusion', (): void => {
       date_maj: new Date('2022-04-28'),
       source: 'solidagregateur',
       modalites_accompagnement: ModalitesAccompagnement([
-        ModaliteAccompagnement.Seul,
-        ModaliteAccompagnement.AMaPlace,
-        ModaliteAccompagnement.AvecDeLAide,
+        ModaliteAccompagnement.ADistance,
+        ModaliteAccompagnement.EnAutonomie,
+        ModaliteAccompagnement.AccompagnementIndividuel,
         ModaliteAccompagnement.DansUnAtelier
       ]),
       frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
@@ -257,7 +257,8 @@ describe('to schema data.inclusion', (): void => {
         structure_id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
         source: 'solidagregateur',
         nom: 'Médiation numérique',
-        types: ['autonomie', 'delegation', 'accompagnement', 'atelier'],
+        types: ['autonomie', 'accompagnement', 'atelier'],
+        modes_accueil: ['a-distance', 'en-presentiel'],
         thematiques: [
           'numerique',
           'numerique--devenir-autonome-dans-les-demarches-administratives',
@@ -291,6 +292,63 @@ describe('to schema data.inclusion', (): void => {
           'femmes',
           'personnes-en-situation-illettrisme'
         ]
+      }
+    ]);
+  });
+
+  it("should have mode d'accueil a-distance only when modalité accompagnement is à distance", (): void => {
+    const minimalLieuMediationNumerique: LieuMediationNumerique = {
+      id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
+      nom: Nom('MOBILETTE'),
+      pivot: Pivot('60487647500499'),
+      adresse: Adresse({
+        code_postal: '09891',
+        commune: 'Robinboeuf',
+        voie: '3 RUE DE LECLERCQ'
+      }),
+      services: Services([Service.AccederAUneConnexionInternet, Service.AccederADuMateriel]),
+      date_maj: new Date('2022-04-28'),
+      source: 'solidagregateur',
+      modalites_accompagnement: ModalitesAccompagnement([ModaliteAccompagnement.ADistance])
+    };
+
+    expect(toSchemaServicesDataInclusion([minimalLieuMediationNumerique])).toStrictEqual<SchemaServiceDataInclusion[]>([
+      {
+        id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57-mediation-numerique',
+        structure_id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
+        source: 'solidagregateur',
+        nom: 'Médiation numérique',
+        thematiques: ['numerique', 'numerique--acceder-a-une-connexion-internet', 'numerique--acceder-a-du-materiel'],
+        modes_accueil: ['a-distance']
+      }
+    ]);
+  });
+
+  it("should have mode d'accueil en-presentiel only when modalité accompagnement is present and not à distance", (): void => {
+    const minimalLieuMediationNumerique: LieuMediationNumerique = {
+      id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
+      nom: Nom('MOBILETTE'),
+      pivot: Pivot('60487647500499'),
+      adresse: Adresse({
+        code_postal: '09891',
+        commune: 'Robinboeuf',
+        voie: '3 RUE DE LECLERCQ'
+      }),
+      services: Services([Service.AccederAUneConnexionInternet, Service.AccederADuMateriel]),
+      date_maj: new Date('2022-04-28'),
+      source: 'solidagregateur',
+      modalites_accompagnement: ModalitesAccompagnement([ModaliteAccompagnement.EnAutonomie])
+    };
+
+    expect(toSchemaServicesDataInclusion([minimalLieuMediationNumerique])).toStrictEqual<SchemaServiceDataInclusion[]>([
+      {
+        id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57-mediation-numerique',
+        structure_id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
+        source: 'solidagregateur',
+        nom: 'Médiation numérique',
+        thematiques: ['numerique', 'numerique--acceder-a-une-connexion-internet', 'numerique--acceder-a-du-materiel'],
+        types: ['autonomie'],
+        modes_accueil: ['en-presentiel']
       }
     ]);
   });

@@ -101,8 +101,9 @@ describe('from schema lieux de mediation numerique', (): void => {
           "Payant : L'accès au lieu et/ou à ses services est payant;Gratuit sous condition : La gratuité est conditionnée à des critères (situation familiale, convention avec un organisme social...)",
         labels_nationaux: 'France Services;APTIC;Point relais CAF',
         labels_autres: 'SudLabs;Nièvre médiation numérique',
-        modalites_accompagnement:
-          "Seul : j'ai accès à du matériel et une connexion;Avec de l'aide : je suis accompagné seul dans l'usage du numérique",
+        modalites_accompagnement: [ModaliteAccompagnement.AccompagnementIndividuel, ModaliteAccompagnement.EnAutonomie].join(
+          ';'
+        ),
         accessibilite:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
         prise_rdv: 'https://www.rdv-solidarites.fr/',
@@ -160,7 +161,10 @@ describe('from schema lieux de mediation numerique', (): void => {
         frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
         labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC, LabelNational.PointRelaisCAF]),
         labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
-        modalites_accompagnement: ModalitesAccompagnement([ModaliteAccompagnement.Seul, ModaliteAccompagnement.AvecDeLAide]),
+        modalites_accompagnement: ModalitesAccompagnement([
+          ModaliteAccompagnement.AccompagnementIndividuel,
+          ModaliteAccompagnement.EnAutonomie
+        ]),
         accessibilite: Url(
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
         ),

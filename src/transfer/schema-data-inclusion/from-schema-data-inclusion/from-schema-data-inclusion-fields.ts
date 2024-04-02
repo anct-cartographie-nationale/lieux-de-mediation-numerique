@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase, max-lines */
 
-import { SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import {
   Adresse,
+  Contact,
   Frais,
   FraisACharge,
-  Contact,
   Courriel,
   LabelNational,
   LabelsNationaux,
@@ -22,6 +21,7 @@ import {
   Typologies,
   Url
 } from '../../../models';
+import { SchemaStructureDataInclusion } from '../schema-data-inclusion';
 
 const THEMATIQUES_TO_SERVICES: Map<string, Service> = new Map<string, Service>([
   ['numerique--devenir-autonome-dans-les-demarches-administratives', Service.DevenirAutonomeDansLesDemarchesAdministratives],
@@ -63,9 +63,9 @@ const LABELS_NATIONAUX_MAP: Map<string, LabelNational> = new Map<string, LabelNa
 ]);
 
 const TYPES_TO_MODALITES_ACCOMPAGNEMENT_MAP: Map<string, ModaliteAccompagnement> = new Map<string, ModaliteAccompagnement>([
-  ['autonomie', ModaliteAccompagnement.Seul],
-  ['accompagnement', ModaliteAccompagnement.AvecDeLAide],
-  ['delegation', ModaliteAccompagnement.AMaPlace],
+  ['autonomie', ModaliteAccompagnement.EnAutonomie],
+  ['accompagnement', ModaliteAccompagnement.AccompagnementIndividuel],
+  ['delegation', ModaliteAccompagnement.AccompagnementIndividuel],
   ['atelier', ModaliteAccompagnement.DansUnAtelier]
 ]);
 
@@ -220,19 +220,21 @@ export const servicesFromDataInclusion = (thematiques?: string[]): { services: S
 });
 
 export const modalitesAccompagnementFromDataInclusion = (
-  types?: string[]
+  types?: string[],
+  modesAccueil?: string[]
 ): { modalites_accompagnement?: ModalitesAccompagnement } =>
   types == null || types.length === 0
     ? {}
     : {
-        modalites_accompagnement: ModalitesAccompagnement(
-          types
+        modalites_accompagnement: ModalitesAccompagnement([
+          ...types
             .map((type: string): ModaliteAccompagnement | undefined => TYPES_TO_MODALITES_ACCOMPAGNEMENT_MAP.get(type))
             .filter(
               (modalitesAccompagnement?: ModaliteAccompagnement): modalitesAccompagnement is ModaliteAccompagnement =>
                 modalitesAccompagnement != null
-            )
-        )
+            ),
+          ...(modesAccueil?.includes('a-distance') === true ? [ModaliteAccompagnement.ADistance] : [])
+        ])
       };
 
 export const presentationFromDataInclusion = (
@@ -287,6 +289,10 @@ export const mergeProfils = (profils?: string[], profilsToAdd?: string[]): { pro
 
 export const mergeTypes = (types?: string[], typesToAdd?: string[]): { types: string[] } => ({
   types: Array.from(new Set([...(types ?? []), ...(typesToAdd ?? [])]))
+});
+
+export const mergeModesAccueil = (modesAccueil?: string[], modesAccueilToAdd?: string[]): { modes_accueil: string[] } => ({
+  modes_accueil: Array.from(new Set([...(modesAccueil ?? []), ...(modesAccueilToAdd ?? [])]))
 });
 
 const fraisIfDefined = (frais?: string[]): { frais?: string[] } => (frais == null ? {} : { frais });

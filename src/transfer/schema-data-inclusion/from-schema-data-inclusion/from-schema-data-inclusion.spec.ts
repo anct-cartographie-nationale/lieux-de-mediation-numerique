@@ -117,6 +117,7 @@ describe('from schema data inclusion', (): void => {
       ],
       frais: ['gratuit-sous-conditions'],
       types: ['autonomie', 'delegation', 'accompagnement', 'atelier'],
+      modes_accueil: ['a-distance', 'en-presentiel'],
       prise_rdv: 'https://www.rdv-solidarites.fr/',
       profils: [
         'seniors-65',
@@ -199,10 +200,10 @@ describe('from schema data inclusion', (): void => {
       labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC]),
       labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
       modalites_accompagnement: ModalitesAccompagnement([
-        ModaliteAccompagnement.Seul,
-        ModaliteAccompagnement.AMaPlace,
-        ModaliteAccompagnement.AvecDeLAide,
-        ModaliteAccompagnement.DansUnAtelier
+        ModaliteAccompagnement.EnAutonomie,
+        ModaliteAccompagnement.AccompagnementIndividuel,
+        ModaliteAccompagnement.DansUnAtelier,
+        ModaliteAccompagnement.ADistance
       ]),
       accessibilite: Url(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
@@ -500,9 +501,8 @@ describe('from schema data inclusion', (): void => {
       ]),
       frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
       modalites_accompagnement: ModalitesAccompagnement([
-        ModaliteAccompagnement.AvecDeLAide,
-        ModaliteAccompagnement.DansUnAtelier,
-        ModaliteAccompagnement.AMaPlace
+        ModaliteAccompagnement.AccompagnementIndividuel,
+        ModaliteAccompagnement.DansUnAtelier
       ]),
       prise_rdv: Url('https://www.rdv-solidarites.fr/service2')
     });

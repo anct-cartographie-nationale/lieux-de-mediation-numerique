@@ -5,6 +5,7 @@ import {
   LabelNational,
   LieuMediationNumerique,
   ModaliteAccompagnement,
+  ModalitesAccompagnement,
   PublicAccueilli,
   Service
 } from '../../../models';
@@ -40,9 +41,8 @@ const SERVICES_TO_THEMATIQUES: Map<Service, string> = new Map<Service, string>([
 ]);
 
 const MODALITES_ACCOMPAGNEMENT_TO_TYPES_MAP: Map<ModaliteAccompagnement, string> = new Map<ModaliteAccompagnement, string>([
-  [ModaliteAccompagnement.Seul, 'autonomie'],
-  [ModaliteAccompagnement.AvecDeLAide, 'accompagnement'],
-  [ModaliteAccompagnement.AMaPlace, 'delegation'],
+  [ModaliteAccompagnement.EnAutonomie, 'autonomie'],
+  [ModaliteAccompagnement.AccompagnementIndividuel, 'accompagnement'],
   [ModaliteAccompagnement.DansUnAtelier, 'atelier']
 ]);
 
@@ -205,14 +205,34 @@ export const serviceGeneralFields = (
   ]
 });
 
-const typesFromModalitesAccompagnement = (lieuMediationNumerique: LieuMediationNumerique): { types: string[] } => ({
-  types: (lieuMediationNumerique.modalites_accompagnement ?? [])
+const typesFromModalitesAccompagnement = (lieuMediationNumerique: LieuMediationNumerique): { types?: string[] } => {
+  const types: string[] = (lieuMediationNumerique.modalites_accompagnement ?? [])
     .map(
       (modaliteAccompagnement: ModaliteAccompagnement): string | null =>
         MODALITES_ACCOMPAGNEMENT_TO_TYPES_MAP.get(modaliteAccompagnement) ?? null
     )
-    .filter((type: string | null): type is string => type != null)
-});
+    .filter((type: string | null): type is string => type != null);
+
+  return types.length === 0 ? {} : { types };
+};
+
+const isEnPresentiel = (modalitesAccompagnement: ModalitesAccompagnement): boolean =>
+  modalitesAccompagnement.filter(
+    (modaliteAccompagnement: ModaliteAccompagnement): boolean => modaliteAccompagnement !== ModaliteAccompagnement.ADistance
+  ).length > 0;
+
+const isADistance = (modalitesAccompagnement: ModalitesAccompagnement): boolean =>
+  modalitesAccompagnement.includes(ModaliteAccompagnement.ADistance);
+
+const modesAccueilFromModalitesAccompagnement = (lieuMediationNumerique: LieuMediationNumerique): { modes_accueil: string[] } =>
+  lieuMediationNumerique.modalites_accompagnement == null
+    ? { modes_accueil: [] }
+    : {
+        modes_accueil: [
+          ...(isADistance(lieuMediationNumerique.modalites_accompagnement) ? ['a-distance'] : []),
+          ...(isEnPresentiel(lieuMediationNumerique.modalites_accompagnement) ? ['en-presentiel'] : [])
+        ]
+      };
 
 const profilsFromPublicsAccueillis = (lieuMediationNumerique: LieuMediationNumerique): { profils: string[] } => ({
   profils: (lieuMediationNumerique.publics_accueillis ?? [])
@@ -222,6 +242,9 @@ const profilsFromPublicsAccueillis = (lieuMediationNumerique: LieuMediationNumer
 
 export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionAccesFields => ({
   ...(lieuMediationNumerique.modalites_accompagnement == null ? {} : typesFromModalitesAccompagnement(lieuMediationNumerique)),
+  ...(lieuMediationNumerique.modalites_accompagnement == null
+    ? {}
+    : modesAccueilFromModalitesAccompagnement(lieuMediationNumerique)),
   ...(lieuMediationNumerique.frais_a_charge == null
     ? {}
     : fraisFromConditionAcces(lieuMediationNumerique.frais_a_charge.at(0))),
