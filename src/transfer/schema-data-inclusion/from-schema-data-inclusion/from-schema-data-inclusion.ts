@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention, camelcase */
+/* eslint-disable @typescript-eslint/naming-convention, camelcase, max-lines-per-function */
 
 import { Id, LieuMediationNumerique, Nom, Pivot } from '../../../models';
 import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
@@ -11,10 +11,12 @@ import {
   labelsFromDataInclusion,
   localisationFromDataInclusion,
   mergeFrais,
+  mergeModesOrientation,
   mergePriseRdv,
   mergeProfils,
   mergeThematiques,
   mergeTypes,
+  modalitesAccesFromDataInclusion,
   modalitesAccompagnementFromDataInclusion,
   presentationFromDataInclusion,
   priseRdvFromDataInclusion,
@@ -36,7 +38,8 @@ const toSingleService = (
   ...mergeFrais(mergedService.frais, service.frais),
   ...mergeProfils(mergedService.profils, service.profils),
   ...mergeTypes(mergedService.types, service.types),
-  ...mergePriseRdv(mergedService.prise_rdv, service.prise_rdv)
+  ...mergePriseRdv(mergedService.prise_rdv, service.prise_rdv),
+  ...mergeModesOrientation(mergedService.modes_orientation, service.modes_orientation)
 });
 
 export const mergeServices = (
@@ -73,6 +76,7 @@ const fromSchemaDataInclusionItem = (
   ...horairesFromDataInclusion(structure.horaires_ouverture),
   ...labelsFromDataInclusion(structure.labels_nationaux, structure.labels_autres),
   ...modalitesAccompagnementFromDataInclusion(service.types),
+  ...modalitesAccesFromDataInclusion(service.modes_orientation, priseRdvFromDataInclusion(service.prise_rdv)),
   ...presentationFromDataInclusion(structure.presentation_detail, structure.presentation_resume),
   ...priseRdvFromDataInclusion(service.prise_rdv),
   ...publicsAccueillisFromDataInclusion(service.profils),

@@ -66,6 +66,7 @@ export type SchemaStructureDataInclusionCollecteFields = {
 export type SchemaStructureDataInclusionAccesFields = {
   profils?: string[];
   frais?: string[];
+  modes_orientation?: string[];
   types?: string[];
 };
 

@@ -4,6 +4,7 @@ import {
   ConditionAcces,
   LabelNational,
   LieuMediationNumerique,
+  ModaliteAcces,
   ModaliteAccompagnement,
   PublicAccueilli,
   Service
@@ -44,6 +45,12 @@ const MODALITES_ACCOMPAGNEMENT_TO_TYPES_MAP: Map<ModaliteAccompagnement, string>
   [ModaliteAccompagnement.AvecDeLAide, 'accompagnement'],
   [ModaliteAccompagnement.AMaPlace, 'delegation'],
   [ModaliteAccompagnement.DansUnAtelier, 'atelier']
+]);
+
+const MODALITES_ACCES_TO_MODES_ORIENTATION_MAP: Map<ModaliteAcces, string> = new Map<ModaliteAcces, string>([
+  [ModaliteAcces.SePresenter, 'se-presenter'],
+  [ModaliteAcces.Telephoner, 'telephoner'],
+  [ModaliteAcces.ContacterParMail, 'envoyer-un-mail']
 ]);
 
 const CONDITION_ACCES_TO_FRAIS: Map<ConditionAcces, string> = new Map<ConditionAcces, string>([
@@ -212,6 +219,14 @@ const typesFromModalitesAccompagnement = (lieuMediationNumerique: LieuMediationN
     .filter((type: string | null): type is string => type != null)
 });
 
+const modesOrientationFromModalitesAcces = (
+  lieuMediationNumerique: LieuMediationNumerique
+): { modes_orientation: string[] } => ({
+  modes_orientation: (lieuMediationNumerique.modalites_acces ?? [])
+    .map((modaliteAcces: ModaliteAcces): string | null => MODALITES_ACCES_TO_MODES_ORIENTATION_MAP.get(modaliteAcces) ?? null)
+    .filter((modaliteAccompagnement: string | null): modaliteAccompagnement is string => modaliteAccompagnement != null)
+});
+
 const profilsFromPublicsAccueillis = (lieuMediationNumerique: LieuMediationNumerique): { profils: string[] } => ({
   profils: (lieuMediationNumerique.publics_accueillis ?? [])
     .map((publicAccueilli: PublicAccueilli): string | null => PUBLICS_ACCUEILLIS_TO_PROFILS.get(publicAccueilli) ?? null)
@@ -223,5 +238,6 @@ export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): Sch
   ...(lieuMediationNumerique.conditions_acces == null
     ? {}
     : fraisFromConditionAcces(lieuMediationNumerique.conditions_acces.at(0))),
-  ...(lieuMediationNumerique.publics_accueillis == null ? {} : profilsFromPublicsAccueillis(lieuMediationNumerique))
+  ...(lieuMediationNumerique.publics_accueillis == null ? {} : profilsFromPublicsAccueillis(lieuMediationNumerique)),
+  ...(lieuMediationNumerique.modalites_acces == null ? {} : modesOrientationFromModalitesAcces(lieuMediationNumerique))
 });

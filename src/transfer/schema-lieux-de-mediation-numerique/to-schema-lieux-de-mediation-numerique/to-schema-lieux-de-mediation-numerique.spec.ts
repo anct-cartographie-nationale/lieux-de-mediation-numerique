@@ -11,7 +11,9 @@ import {
   LabelsNationaux,
   LieuMediationNumerique,
   Localisation,
+  ModaliteAcces,
   ModaliteAccompagnement,
+  ModalitesAcces,
   ModalitesAccompagnement,
   Nom,
   Pivot,
@@ -89,6 +91,12 @@ describe('to schema lieux de mediation numerique', (): void => {
         Service.AccederAUneConnexionInternet,
         Service.AccederADuMateriel
       ]),
+      modalites_acces: ModalitesAcces([
+        ModaliteAcces.SePresenter,
+        ModaliteAcces.Telephoner,
+        ModaliteAcces.ContacterParMail,
+        ModaliteAcces.PrescriptionParMail
+      ]),
       date_maj: new Date('2022-10-10'),
       localisation: Localisation({
         latitude: 43.52609,
@@ -151,6 +159,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         source: 'Hubik',
         structure_parente: 'Pôle emploi',
         publics_accueillis: 'Familles/enfants;Adultes;Déficience visuelle',
+        modalites_acces: 'Se présenter|Téléphoner|Contacter par mail|Envoyer un mail avec une fiche de prescription',
         conditions_acces:
           "Payant : L'accès au lieu et/ou à ses services est payant;Accepte le Pass numérique : Il est possible d'utiliser un Pass numérique pour accéder au lieu",
         labels_nationaux: 'France Services;APTIC;Point relais CAF',
@@ -165,7 +174,7 @@ describe('to schema lieux de mediation numerique', (): void => {
     ]);
   });
 
-  it('should convert lieu with sring date maj to schema lieux mediation numérique', (): void => {
+  it('should convert lieu with string date maj to schema lieux mediation numérique', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
       id: Id('structure-1'),
       nom: Nom('Anonymal'),

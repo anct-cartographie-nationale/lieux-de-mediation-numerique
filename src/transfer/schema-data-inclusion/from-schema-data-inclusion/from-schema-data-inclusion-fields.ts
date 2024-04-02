@@ -9,6 +9,8 @@ import {
   LabelNational,
   LabelsNationaux,
   Localisation,
+  ModaliteAcces,
+  ModalitesAcces,
   ModaliteAccompagnement,
   ModalitesAccompagnement,
   /* eslint-disable-next-line @typescript-eslint/no-shadow */
@@ -46,6 +48,13 @@ export const FRAIS_TO_CONDITION_ACCES: Map<string, ConditionAcces> = new Map<str
   ['payant', ConditionAcces.Payant],
   ['adhesion', ConditionAcces.Adhesion],
   ['pass-numerique', ConditionAcces.AccepteLePassNumerique]
+]);
+
+export const MODES_ORIENTATION_TO_MODALITE_ACCES: Map<string, ModaliteAcces> = new Map<string, ModaliteAcces>([
+  ['se-presenter', ModaliteAcces.SePresenter],
+  ['telephoner', ModaliteAcces.Telephoner],
+  ['envoyer-un-mail', ModaliteAcces.ContacterParMail],
+  ['prise-rdv', ModaliteAcces.PrendreRdvEnLigne]
 ]);
 
 const LABELS_NATIONAUX_MAP: Map<string, LabelNational> = new Map<string, LabelNational>([
@@ -228,11 +237,34 @@ export const modalitesAccompagnementFromDataInclusion = (
           types
             .map((type: string): ModaliteAccompagnement | undefined => TYPES_TO_MODALITES_ACCOMPAGNEMENT_MAP.get(type))
             .filter(
-              (modalitesAccompagnement?: ModaliteAccompagnement): modalitesAccompagnement is ModaliteAccompagnement =>
-                modalitesAccompagnement != null
+              (modaliteAccompagnement?: ModaliteAccompagnement): modaliteAccompagnement is ModaliteAccompagnement =>
+                modaliteAccompagnement != null
             )
         )
       };
+
+const defaultModalitesAcces = (priseRdv?: { prise_rdv?: Url }): ModaliteAcces[] =>
+  priseRdv?.prise_rdv == null ? [] : [ModaliteAcces.PrendreRdvEnLigne];
+
+const onlyDefined = <T>(nullable?: T): nullable is T => nullable != null;
+
+const toModaliteAccess = (modeOrientation: string): ModaliteAcces | undefined =>
+  MODES_ORIENTATION_TO_MODALITE_ACCES.get(modeOrientation);
+
+const hasModesOrientation = (modesOrientation?: string[]): modesOrientation is string[] =>
+  modesOrientation != null && modesOrientation.length > 0;
+
+export const modalitesAccesFromDataInclusion = (
+  modesOrientation?: string[],
+  priseRdv?: { prise_rdv?: Url }
+): { modalites_acces?: ModalitesAcces } => ({
+  modalites_acces: ModalitesAcces([
+    ...defaultModalitesAcces(priseRdv),
+    ...(hasModesOrientation(modesOrientation)
+      ? modesOrientation.map(toModaliteAccess).filter(onlyDefined)
+      : [ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail])
+  ])
+});
 
 export const presentationFromDataInclusion = (
   presentation_detail?: string,
@@ -295,3 +327,10 @@ export const mergeFrais = (frais?: string[], fraisToAdd?: string[]): { frais?: s
 
 export const mergePriseRdv = (priseRdv?: string, priseRdvToAdd?: string): { prise_rdv?: string } =>
   priseRdv == null && priseRdvToAdd == null ? {} : { prise_rdv: priseRdvToAdd ?? priseRdv ?? '' };
+
+export const mergeModesOrientation = (
+  modesOrientation?: string[],
+  modesOrientationToAdd?: string[]
+): { modes_orientation: string[] } => ({
+  modes_orientation: Array.from(new Set([...(modesOrientation ?? []), ...(modesOrientationToAdd ?? [])]))
+});

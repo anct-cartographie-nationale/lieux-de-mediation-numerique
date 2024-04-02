@@ -10,6 +10,7 @@ import { Services } from './service';
 import { PublicsAccueillis } from './public-accueilli';
 import { ConditionsAcces } from './condition-acces';
 import { ModalitesAccompagnement } from './modalite-accompagnement';
+import { ModalitesAcces } from './modalite-acces';
 import { Url } from './url';
 import { Pivot } from './pivot';
 import { CleBan } from './cle-ban';
@@ -34,6 +35,7 @@ export type LieuMediationNumerique = {
   services: Services;
   publics_accueillis?: PublicsAccueillis;
   conditions_acces?: ConditionsAcces;
+  modalites_acces?: ModalitesAcces;
   labels_nationaux?: LabelsNationaux;
   labels_autres?: string[];
   modalites_accompagnement?: ModalitesAccompagnement;

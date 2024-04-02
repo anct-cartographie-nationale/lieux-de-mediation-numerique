@@ -11,7 +11,9 @@ import {
   LabelsNationaux,
   LieuMediationNumerique,
   Localisation,
+  ModaliteAcces,
   ModaliteAccompagnement,
+  ModalitesAcces,
   ModalitesAccompagnement,
   Nom,
   Pivot,
@@ -63,6 +65,7 @@ describe('from schema lieux de mediation numerique', (): void => {
           Service.AccederAUneConnexionInternet,
           Service.AccederADuMateriel
         ]),
+        modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail]),
         date_maj: new Date('2022-10-10')
       }
     ]);
@@ -102,6 +105,7 @@ describe('from schema lieux de mediation numerique', (): void => {
         labels_autres: 'SudLabs;Nièvre médiation numérique',
         modalites_accompagnement:
           "Seul : j'ai accès à du matériel et une connexion;Avec de l'aide : je suis accompagné seul dans l'usage du numérique",
+        modalites_acces: 'Se présenter',
         accessibilite:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
         prise_rdv: 'https://www.rdv-solidarites.fr/',
@@ -132,6 +136,7 @@ describe('from schema lieux de mediation numerique', (): void => {
           Service.AccederAUneConnexionInternet,
           Service.AccederADuMateriel
         ]),
+        modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter]),
         date_maj: new Date('2022-10-10'),
         localisation: Localisation({
           latitude: 43.52609,

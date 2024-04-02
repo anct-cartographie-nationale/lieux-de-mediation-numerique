@@ -10,7 +10,9 @@ import {
   LabelsNationaux,
   LieuMediationNumerique,
   Localisation,
+  ModaliteAcces,
   ModaliteAccompagnement,
+  ModalitesAcces,
   ModalitesAccompagnement,
   Nom,
   Pivot,
@@ -59,6 +61,7 @@ describe('from schema data inclusion', (): void => {
         voie: '12 BIS RUE DE LECLERCQ'
       }),
       services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail]),
       date_maj: new Date('2022-10-10')
     });
   });
@@ -161,6 +164,12 @@ describe('from schema data inclusion', (): void => {
         Service.AccompagnerLesDemarchesDeSante,
         Service.PromouvoirLaCitoyenneteNumerique,
         Service.SoutenirLaParentalite
+      ]),
+      modalites_acces: ModalitesAcces([
+        ModaliteAcces.PrendreRdvEnLigne,
+        ModaliteAcces.SePresenter,
+        ModaliteAcces.Telephoner,
+        ModaliteAcces.ContacterParMail
       ]),
       date_maj: new Date('2022-10-10'),
       localisation: Localisation({
@@ -286,6 +295,7 @@ describe('from schema data inclusion', (): void => {
         voie: '12 BIS RUE DE LECLERCQ'
       }),
       services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail]),
       date_maj: new Date('2022-10-10')
     });
   });
@@ -323,6 +333,7 @@ describe('from schema data inclusion', (): void => {
         voie: '12 BIS RUE DE LECLERCQ'
       }),
       services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail]),
       date_maj: new Date('2022-10-10')
     });
   });
@@ -382,6 +393,7 @@ describe('from schema data inclusion', (): void => {
         voie: '12 BIS RUE DE LECLERCQ'
       }),
       services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives, Service.AccederAUneConnexionInternet]),
+      modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail]),
       date_maj: new Date('2022-10-10')
     });
   });
@@ -427,6 +439,7 @@ describe('from schema data inclusion', (): void => {
         voie: '12 BIS RUE DE LECLERCQ'
       }),
       services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives, Service.AccederAUneConnexionInternet]),
+      modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail]),
       date_maj: new Date('2022-10-10'),
       conditions_acces: ConditionsAcces([ConditionAcces.Payant, ConditionAcces.Gratuit])
     });
@@ -490,6 +503,12 @@ describe('from schema data inclusion', (): void => {
         Service.PrendreEnMainUnSmartphoneOuUneTablette,
         Service.PrendreEnMainUnOrdinateur
       ]),
+      modalites_acces: ModalitesAcces([
+        ModaliteAcces.PrendreRdvEnLigne,
+        ModaliteAcces.SePresenter,
+        ModaliteAcces.Telephoner,
+        ModaliteAcces.ContacterParMail
+      ]),
       date_maj: new Date('2022-10-10'),
       publics_accueillis: PublicsAccueillis([
         PublicAccueilli.Seniors,
@@ -504,6 +523,88 @@ describe('from schema data inclusion', (): void => {
         ModaliteAccompagnement.AMaPlace
       ]),
       prise_rdv: Url('https://www.rdv-solidarites.fr/service2')
+    });
+  });
+
+  it('should get modalite acces with prise rdv', (): void => {
+    const structure: SchemaStructureDataInclusion = {
+      adresse: '12 BIS RUE DE LECLERCQ',
+      code_postal: '51100',
+      commune: 'Reims',
+      date_maj: new Date('2022-10-10').toISOString(),
+      id: 'structure-1',
+      nom: 'Anonymal',
+      siret: '43493312300029'
+    };
+
+    const service: SchemaServiceDataInclusion = {
+      id: 'structure-1-mediation-numerique',
+      nom: 'Médiation numérique',
+      source: 'Hubik',
+      structure_id: 'structure-1',
+      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives'],
+      modes_orientation: ['se-presenter'],
+      prise_rdv: 'http://www.test.com'
+    };
+
+    const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
+
+    expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '51100',
+        commune: 'Reims',
+        voie: '12 BIS RUE DE LECLERCQ'
+      }),
+      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      date_maj: new Date('2022-10-10'),
+      modalites_acces: ModalitesAcces([ModaliteAcces.PrendreRdvEnLigne, ModaliteAcces.SePresenter]),
+      prise_rdv: Url('http://www.test.com')
+    });
+  });
+
+  it('should get defaut modalites when no modes orientation from data inclusion', (): void => {
+    const structure: SchemaStructureDataInclusion = {
+      adresse: '12 BIS RUE DE LECLERCQ',
+      code_postal: '51100',
+      commune: 'Reims',
+      date_maj: new Date('2022-10-10').toISOString(),
+      id: 'structure-1',
+      nom: 'Anonymal',
+      siret: '43493312300029'
+    };
+
+    const service: SchemaServiceDataInclusion = {
+      id: 'structure-1-mediation-numerique',
+      nom: 'Médiation numérique',
+      source: 'Hubik',
+      structure_id: 'structure-1',
+      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives'],
+      prise_rdv: 'http://www.test.com'
+    };
+
+    const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
+
+    expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '51100',
+        commune: 'Reims',
+        voie: '12 BIS RUE DE LECLERCQ'
+      }),
+      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      date_maj: new Date('2022-10-10'),
+      modalites_acces: ModalitesAcces([
+        ModaliteAcces.PrendreRdvEnLigne,
+        ModaliteAcces.SePresenter,
+        ModaliteAcces.Telephoner,
+        ModaliteAcces.ContacterParMail
+      ]),
+      prise_rdv: Url('http://www.test.com')
     });
   });
 });

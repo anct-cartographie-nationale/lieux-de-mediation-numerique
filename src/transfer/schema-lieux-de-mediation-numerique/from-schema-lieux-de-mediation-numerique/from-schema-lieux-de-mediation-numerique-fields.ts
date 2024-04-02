@@ -7,6 +7,8 @@ import {
   Contact,
   LabelsNationaux,
   Localisation,
+  ModaliteAcces,
+  ModalitesAcces,
   ModalitesAccompagnement,
   /* eslint-disable @typescript-eslint/no-shadow */
   Presentation,
@@ -90,6 +92,13 @@ export const publicsAccueillisIfAny = (publicsAccueillis?: string): { publics_ac
 
 export const conditionsAccesIfAny = (conditionsAcces?: string): { conditions_acces?: ConditionsAcces } =>
   conditionsAcces == null ? {} : { conditions_acces: ConditionsAcces(listFromString(conditionsAcces)) };
+
+export const modalitesAccesIfAny = (modalitesAcces?: string): { modalites_acces?: ModalitesAcces } =>
+  modalitesAcces == null
+    ? {
+        modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail])
+      }
+    : { modalites_acces: ModalitesAcces(listFromString(modalitesAcces)) };
 
 export const labelsNationauxIfAny = (labelsNationaux?: string): { labels_nationaux?: LabelsNationaux } =>
   labelsNationaux == null ? {} : { labels_nationaux: LabelsNationaux(listFromString(labelsNationaux)) };

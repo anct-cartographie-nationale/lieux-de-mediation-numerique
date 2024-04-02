@@ -66,6 +66,9 @@ export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): Sch
   ...(lieuMediationNumerique.conditions_acces == null
     ? {}
     : { conditions_acces: lieuMediationNumerique.conditions_acces.join(';') }),
+  ...(lieuMediationNumerique.modalites_acces == null
+    ? {}
+    : { modalites_acces: lieuMediationNumerique.modalites_acces.join('|') }),
   ...(lieuMediationNumerique.modalites_accompagnement == null
     ? {}
     : { modalites_accompagnement: lieuMediationNumerique.modalites_accompagnement.join(';') }),
