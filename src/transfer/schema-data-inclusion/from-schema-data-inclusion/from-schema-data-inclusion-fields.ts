@@ -183,8 +183,8 @@ export const localisationFromDataInclusion = (latitude?: number, longitude?: num
 
 export const labelsFromDataInclusion = (
   labels_nationaux?: string[],
-  labels_autres?: string[]
-): { labels_nationaux?: LabelsNationaux; labels_autres?: string[] } => ({
+  autres_formations_et_labels?: string[]
+): { labels_nationaux?: LabelsNationaux; autres_formations_et_labels?: string[] } => ({
   ...(labels_nationaux == null
     ? {}
     : {
@@ -194,7 +194,7 @@ export const labelsFromDataInclusion = (
             .filter((labelNational?: LabelNational | undefined): labelNational is LabelNational => labelNational != null)
         )
       }),
-  ...(labels_autres == null ? {} : { labels_autres })
+  ...(autres_formations_et_labels == null ? {} : { autres_formations_et_labels })
 });
 
 const hasCodeInsee = (structure: SchemaStructureDataInclusion): boolean =>

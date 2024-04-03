@@ -99,7 +99,7 @@ describe('from schema lieux de mediation numerique', (): void => {
         conditions_acces:
           "Payant : L'accès au lieu et/ou à ses services est payant;Accepte le Pass numérique : Il est possible d'utiliser un Pass numérique pour accéder au lieu",
         labels_nationaux: 'France Services;APTIC;Point relais CAF',
-        labels_autres: 'SudLabs;Nièvre médiation numérique',
+        autres_formations_et_labels: 'SudLabs;Nièvre médiation numérique',
         modalites_accompagnement:
           "Seul : j'ai accès à du matériel et une connexion;Avec de l'aide : je suis accompagné seul dans l'usage du numérique",
         accessibilite:
@@ -158,7 +158,7 @@ describe('from schema lieux de mediation numerique', (): void => {
         ]),
         conditions_acces: ConditionsAcces([ConditionAcces.Payant, ConditionAcces.AccepteLePassNumerique]),
         labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC, LabelNational.PointRelaisCAF]),
-        labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
+        autres_formations_et_labels: ['SudLabs', 'Nièvre médiation numérique'],
         modalites_accompagnement: ModalitesAccompagnement([ModaliteAccompagnement.Seul, ModaliteAccompagnement.AvecDeLAide]),
         accessibilite: Url(
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'

@@ -165,7 +165,9 @@ export const labelsFields = (lieuMediationNumerique: LieuMediationNumerique): Sc
           )
         )
       }),
-  ...(lieuMediationNumerique.labels_autres == null ? {} : { labels_autres: lieuMediationNumerique.labels_autres })
+  ...(lieuMediationNumerique.autres_formations_et_labels == null
+    ? {}
+    : { autres_formations_et_labels: lieuMediationNumerique.autres_formations_et_labels })
 });
 
 export const disponibiliteFields = (

@@ -43,7 +43,7 @@ export type SchemaLieuMediationNumeriqueAccesFields = {
 
 export type SchemaLieuMediationNumeriqueLabelsFields = {
   labels_nationaux?: string;
-  labels_autres?: string;
+  autres_formations_et_labels?: string;
 };
 
 export type SchemaLieuMediationNumeriqueDisponibiliteFields = {

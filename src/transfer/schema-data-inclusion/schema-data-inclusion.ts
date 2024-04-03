@@ -50,7 +50,7 @@ export type SchemaStructureDataInclusionPresentationFields = {
 
 export type SchemaStructureDataInclusionLabelsFields = {
   labels_nationaux?: string[];
-  labels_autres?: string[];
+  autres_formations_et_labels?: string[];
 };
 
 export type SchemaStructureDataInclusionDisponibiliteFields = {

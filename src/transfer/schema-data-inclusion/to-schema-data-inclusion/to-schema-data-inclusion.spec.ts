@@ -116,7 +116,7 @@ describe('to schema data.inclusion', (): void => {
         LabelNational.PointNumeriqueCAF,
         LabelNational.RelaisPoleEmploi
       ]),
-      labels_autres: ['Nièvre médiation numérique'],
+      autres_formations_et_labels: ['Nièvre médiation numérique'],
       source: 'solidagregateur',
       structure_parente: '7713e292-abd1-42fc-b1f0-071b7e7a2f61',
       typologies: Typologies([Typologie.ASSO])
@@ -149,7 +149,7 @@ describe('to schema data.inclusion', (): void => {
         accessibilite:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
         labels_nationaux: ['france-service', 'aptic', 'caf', 'pole-emploi'],
-        labels_autres: ['Nièvre médiation numérique'],
+        autres_formations_et_labels: ['Nièvre médiation numérique'],
         thematiques: [
           'numerique',
           'numerique--devenir-autonome-dans-les-demarches-administratives',

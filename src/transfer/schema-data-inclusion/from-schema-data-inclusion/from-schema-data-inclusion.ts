@@ -71,7 +71,7 @@ const fromSchemaDataInclusionItem = (
   ...accessibiliteFromDataInclusion(structure.accessibilite),
   ...conditionsAccesFromDataInclusion(service.frais),
   ...horairesFromDataInclusion(structure.horaires_ouverture),
-  ...labelsFromDataInclusion(structure.labels_nationaux, structure.labels_autres),
+  ...labelsFromDataInclusion(structure.labels_nationaux, structure.autres_formations_et_labels),
   ...modalitesAccompagnementFromDataInclusion(service.types),
   ...presentationFromDataInclusion(structure.presentation_detail, structure.presentation_resume),
   ...priseRdvFromDataInclusion(service.prise_rdv),

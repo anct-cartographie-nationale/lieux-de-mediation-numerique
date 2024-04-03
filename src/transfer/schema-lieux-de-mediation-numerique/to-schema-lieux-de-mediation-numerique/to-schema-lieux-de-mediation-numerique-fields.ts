@@ -76,7 +76,9 @@ export const labelsFields = (lieuMediationNumerique: LieuMediationNumerique): Sc
   ...(lieuMediationNumerique.labels_nationaux == null
     ? {}
     : { labels_nationaux: lieuMediationNumerique.labels_nationaux.join(';') }),
-  ...(lieuMediationNumerique.labels_autres == null ? {} : { labels_autres: lieuMediationNumerique.labels_autres.join(';') })
+  ...(lieuMediationNumerique.autres_formations_et_labels == null
+    ? {}
+    : { autres_formations_et_labels: lieuMediationNumerique.autres_formations_et_labels.join(';') })
 });
 
 export const disponibiliteFields = (

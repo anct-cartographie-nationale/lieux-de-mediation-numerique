@@ -81,7 +81,7 @@ describe('from schema data inclusion', (): void => {
       site_web: 'https://www.laquincaillerie.tl/;https://m.facebook.com/laquincaillerienumerique/',
       horaires_ouverture: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
       labels_nationaux: ['france-service', 'aptic'],
-      labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
+      autres_formations_et_labels: ['SudLabs', 'Nièvre médiation numérique'],
       latitude: 43.52609,
       longitude: 5.41423,
       presentation_detail:
@@ -196,7 +196,7 @@ describe('from schema data inclusion', (): void => {
       ]),
       conditions_acces: ConditionsAcces([ConditionAcces.GratuitSousCondition]),
       labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC]),
-      labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
+      autres_formations_et_labels: ['SudLabs', 'Nièvre médiation numérique'],
       modalites_accompagnement: ModalitesAccompagnement([
         ModaliteAccompagnement.Seul,
         ModaliteAccompagnement.AMaPlace,

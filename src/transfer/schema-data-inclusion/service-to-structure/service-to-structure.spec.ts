@@ -228,7 +228,7 @@ describe('service data inclusion to structure data inclusion', (): void => {
       site_web: 'https://www.laquincaillerie.tl/;https://m.facebook.com/laquincaillerienumerique/',
       horaires_ouverture: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
       labels_nationaux: ['france-service', 'aptic'],
-      labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
+      autres_formations_et_labels: ['SudLabs', 'Nièvre médiation numérique'],
       latitude: 43.52609,
       longitude: 5.41423,
       presentation_detail:
@@ -314,7 +314,7 @@ describe('service data inclusion to structure data inclusion', (): void => {
       courriel: 'julie@example.net',
       site_web: 'https://www.laquincaillerie.tl/;https://m.facebook.com/laquincaillerienumerique/',
       labels_nationaux: ['france-service', 'aptic'],
-      labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
+      autres_formations_et_labels: ['SudLabs', 'Nièvre médiation numérique'],
       accessibilite: 'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
       horaires_ouverture: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
       typologie: Typologie.TIERS_LIEUX
@@ -339,7 +339,7 @@ describe('service data inclusion to structure data inclusion', (): void => {
       site_web: 'https://www.laquincaillerie.tl/;https://m.facebook.com/laquincaillerienumerique/',
       horaires_ouverture: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
       labels_nationaux: ['france-service', 'aptic'],
-      labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
+      autres_formations_et_labels: ['SudLabs', 'Nièvre médiation numérique'],
       latitude: 43.52609,
       longitude: 5.41423,
       presentation_detail:
@@ -421,7 +421,7 @@ describe('service data inclusion to structure data inclusion', (): void => {
       telephone: '+33180059880',
       site_web: 'https://www.laquincaillerie.tl/;https://m.facebook.com/laquincaillerienumerique/',
       labels_nationaux: ['france-service', 'aptic'],
-      labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
+      autres_formations_et_labels: ['SudLabs', 'Nièvre médiation numérique'],
       accessibilite: 'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
       horaires_ouverture: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
       typologie: Typologie.TIERS_LIEUX

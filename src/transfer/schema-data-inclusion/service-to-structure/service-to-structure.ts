@@ -49,7 +49,9 @@ const contactFromServiceOrStructure = (
 
 const labelsFromStructure = (structure: SchemaStructureDataInclusion): SchemaStructureDataInclusionLabelsFields => ({
   ...(structure.labels_nationaux == null ? {} : { labels_nationaux: structure.labels_nationaux }),
-  ...(structure.labels_autres == null ? {} : { labels_autres: structure.labels_autres })
+  ...(structure.autres_formations_et_labels == null
+    ? {}
+    : { autres_formations_et_labels: structure.autres_formations_et_labels })
 });
 
 const generalFieldsFromServiceAndStructure = (

@@ -94,8 +94,8 @@ export const conditionsAccesIfAny = (conditionsAcces?: string): { conditions_acc
 export const labelsNationauxIfAny = (labelsNationaux?: string): { labels_nationaux?: LabelsNationaux } =>
   labelsNationaux == null ? {} : { labels_nationaux: LabelsNationaux(listFromString(labelsNationaux)) };
 
-export const labelsAutresIfAny = (labelsAutres?: string): { labels_autres?: string[] } =>
-  labelsAutres == null ? {} : { labels_autres: listFromString(labelsAutres) };
+export const autresFormationsEtLabelsIfAny = (autresFormationsEtLabels?: string): { autres_formations_et_labels?: string[] } =>
+  autresFormationsEtLabels == null ? {} : { autres_formations_et_labels: listFromString(autresFormationsEtLabels) };
 
 export const modalitesAccompagnementIfAny = (
   modalitesAccompagnement?: string

@@ -9,7 +9,7 @@ import {
   conditionsAccesIfAny,
   contactIfAny,
   horairesIfAny,
-  labelsAutresIfAny,
+  autresFormationsEtLabelsIfAny,
   labelsNationauxIfAny,
   listFromString,
   localisationIfAny,
@@ -34,7 +34,7 @@ const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNum
   ...publicsAccueillisIfAny(schemaLieuMediationNumeriqueItem.publics_accueillis),
   ...conditionsAccesIfAny(schemaLieuMediationNumeriqueItem.conditions_acces),
   ...labelsNationauxIfAny(schemaLieuMediationNumeriqueItem.labels_nationaux),
-  ...labelsAutresIfAny(schemaLieuMediationNumeriqueItem.labels_autres),
+  ...autresFormationsEtLabelsIfAny(schemaLieuMediationNumeriqueItem.autres_formations_et_labels),
   ...modalitesAccompagnementIfAny(schemaLieuMediationNumeriqueItem.modalites_accompagnement),
   ...accessibiliteIfAny(schemaLieuMediationNumeriqueItem.accessibilite),
   ...priseRdvIfAny(schemaLieuMediationNumeriqueItem.prise_rdv)
