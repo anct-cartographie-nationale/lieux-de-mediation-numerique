@@ -10,6 +10,7 @@ import { Services } from './service';
 import { PublicsAccueillis } from './public-accueilli';
 import { ConditionsAcces } from './condition-acces';
 import { ModalitesAccompagnement } from './modalite-accompagnement';
+import { FormationsLabels } from './formations-labels';
 import { Url } from './url';
 import { Pivot } from './pivot';
 import { CleBan } from './cle-ban';
@@ -36,6 +37,7 @@ export type LieuMediationNumerique = {
   conditions_acces?: ConditionsAcces;
   labels_nationaux?: LabelsNationaux;
   labels_autres?: string[];
+  formations_labels?: FormationsLabels;
   modalites_accompagnement?: ModalitesAccompagnement;
   accessibilite?: Url;
   prise_rdv?: Url;

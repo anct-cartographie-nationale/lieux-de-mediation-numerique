@@ -5,6 +5,7 @@ import {
   CleBan,
   ConditionsAcces,
   Contact,
+  FormationsLabels,
   LabelsNationaux,
   Localisation,
   ModalitesAccompagnement,
@@ -96,6 +97,9 @@ export const labelsNationauxIfAny = (labelsNationaux?: string): { labels_nationa
 
 export const labelsAutresIfAny = (labelsAutres?: string): { labels_autres?: string[] } =>
   labelsAutres == null ? {} : { labels_autres: listFromString(labelsAutres) };
+
+export const formationsLabelsIfAny = (formationsLabels?: string): { formations_labels?: FormationsLabels } =>
+  formationsLabels == null ? {} : { formations_labels: FormationsLabels(listFromString(formationsLabels)) };
 
 export const modalitesAccompagnementIfAny = (
   modalitesAccompagnement?: string

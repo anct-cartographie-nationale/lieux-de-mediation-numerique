@@ -76,7 +76,10 @@ export const labelsFields = (lieuMediationNumerique: LieuMediationNumerique): Sc
   ...(lieuMediationNumerique.labels_nationaux == null
     ? {}
     : { labels_nationaux: lieuMediationNumerique.labels_nationaux.join(';') }),
-  ...(lieuMediationNumerique.labels_autres == null ? {} : { labels_autres: lieuMediationNumerique.labels_autres.join(';') })
+  ...(lieuMediationNumerique.labels_autres == null ? {} : { labels_autres: lieuMediationNumerique.labels_autres.join(';') }),
+  ...(lieuMediationNumerique.formations_labels == null
+    ? {}
+    : { formations_labels: lieuMediationNumerique.formations_labels.join(';') })
 });
 
 export const disponibiliteFields = (

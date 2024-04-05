@@ -8,6 +8,7 @@ import {
   cleBanIfAny,
   conditionsAccesIfAny,
   contactIfAny,
+  formationsLabelsIfAny,
   horairesIfAny,
   labelsAutresIfAny,
   labelsNationauxIfAny,
@@ -37,7 +38,8 @@ const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNum
   ...labelsAutresIfAny(schemaLieuMediationNumeriqueItem.labels_autres),
   ...modalitesAccompagnementIfAny(schemaLieuMediationNumeriqueItem.modalites_accompagnement),
   ...accessibiliteIfAny(schemaLieuMediationNumeriqueItem.accessibilite),
-  ...priseRdvIfAny(schemaLieuMediationNumeriqueItem.prise_rdv)
+  ...priseRdvIfAny(schemaLieuMediationNumeriqueItem.prise_rdv),
+  ...formationsLabelsIfAny(schemaLieuMediationNumeriqueItem.formations_labels)
 });
 
 export const fromSchemaLieuDeMediationNumerique = (
