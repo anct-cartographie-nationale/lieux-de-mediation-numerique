@@ -49,7 +49,7 @@ export type SchemaStructureDataInclusionPresentationFields = {
 };
 
 export type SchemaStructureDataInclusionLabelsFields = {
-  labels_nationaux?: string[];
+  dispositifs_programmes_nationaux?: string[];
   labels_autres?: string[];
 };
 

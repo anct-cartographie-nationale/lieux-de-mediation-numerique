@@ -48,7 +48,9 @@ const contactFromServiceOrStructure = (
 });
 
 const labelsFromStructure = (structure: SchemaStructureDataInclusion): SchemaStructureDataInclusionLabelsFields => ({
-  ...(structure.labels_nationaux == null ? {} : { labels_nationaux: structure.labels_nationaux }),
+  ...(structure.dispositifs_programmes_nationaux == null
+    ? {}
+    : { dispositifs_programmes_nationaux: structure.dispositifs_programmes_nationaux }),
   ...(structure.labels_autres == null ? {} : { labels_autres: structure.labels_autres })
 });
 

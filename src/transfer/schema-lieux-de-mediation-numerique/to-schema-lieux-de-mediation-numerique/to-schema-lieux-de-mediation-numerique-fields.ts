@@ -73,9 +73,9 @@ export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): Sch
 });
 
 export const labelsFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueLabelsFields => ({
-  ...(lieuMediationNumerique.labels_nationaux == null
+  ...(lieuMediationNumerique.dispositifs_programmes_nationaux == null
     ? {}
-    : { labels_nationaux: lieuMediationNumerique.labels_nationaux.join(';') }),
+    : { dispositifs_programmes_nationaux: lieuMediationNumerique.dispositifs_programmes_nationaux.join(';') }),
   ...(lieuMediationNumerique.labels_autres == null ? {} : { labels_autres: lieuMediationNumerique.labels_autres.join(';') })
 });
 

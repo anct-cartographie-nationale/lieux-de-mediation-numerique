@@ -5,9 +5,9 @@ import {
   ConditionAcces,
   ConditionsAcces,
   Contact,
+  DispositifProgrammeNational,
+  DispositifsProgrammesNationaux,
   Id,
-  LabelNational,
-  LabelsNationaux,
   LieuMediationNumerique,
   Localisation,
   ModaliteAccompagnement,
@@ -109,12 +109,11 @@ describe('to schema data.inclusion', (): void => {
         detail:
           "connaissance de l'offre de transport du territoire / accès à un véhicule 2 ou 4 roues / transport solidaire / accès au permis"
       },
-      labels_nationaux: LabelsNationaux([
-        LabelNational.FranceServices,
-        LabelNational.APTIC,
-        LabelNational.PointRelaisCAF,
-        LabelNational.PointNumeriqueCAF,
-        LabelNational.RelaisPoleEmploi
+      dispositifs_programmes_nationaux: DispositifsProgrammesNationaux([
+        DispositifProgrammeNational.FranceServices,
+        DispositifProgrammeNational.AidantsConnect,
+        DispositifProgrammeNational.CertificationPix,
+        DispositifProgrammeNational.EmmausConnect
       ]),
       labels_autres: ['Nièvre médiation numérique'],
       source: 'solidagregateur',
@@ -148,7 +147,7 @@ describe('to schema data.inclusion', (): void => {
         horaires_ouverture: 'Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off',
         accessibilite:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
-        labels_nationaux: ['france-service', 'aptic', 'caf', 'pole-emploi'],
+        dispositifs_programmes_nationaux: ['france-service', 'aidants-connect', 'certification-pix', 'emmaus'],
         labels_autres: ['Nièvre médiation numérique'],
         thematiques: [
           'numerique',

@@ -6,9 +6,9 @@ import {
   ConditionAcces,
   ConditionsAcces,
   Contact,
+  DispositifProgrammeNational,
+  DispositifsProgrammesNationaux,
   Id,
-  LabelNational,
-  LabelsNationaux,
   LieuMediationNumerique,
   Localisation,
   ModaliteAccompagnement,
@@ -98,7 +98,7 @@ describe('from schema lieux de mediation numerique', (): void => {
         publics_accueillis: 'Familles/enfants;Adultes;Déficience visuelle',
         conditions_acces:
           "Payant : L'accès au lieu et/ou à ses services est payant;Accepte le Pass numérique : Il est possible d'utiliser un Pass numérique pour accéder au lieu",
-        labels_nationaux: 'France Services;APTIC;Point relais CAF',
+        dispositifs_programmes_nationaux: "France Services;Aidants Connect;Point d'accès numérique CAF",
         labels_autres: 'SudLabs;Nièvre médiation numérique',
         modalites_accompagnement:
           "Seul : j'ai accès à du matériel et une connexion;Avec de l'aide : je suis accompagné seul dans l'usage du numérique",
@@ -157,7 +157,11 @@ describe('from schema lieux de mediation numerique', (): void => {
           PublicAccueilli.DeficienceVisuelle
         ]),
         conditions_acces: ConditionsAcces([ConditionAcces.Payant, ConditionAcces.AccepteLePassNumerique]),
-        labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC, LabelNational.PointRelaisCAF]),
+        dispositifs_programmes_nationaux: DispositifsProgrammesNationaux([
+          DispositifProgrammeNational.FranceServices,
+          DispositifProgrammeNational.AidantsConnect,
+          DispositifProgrammeNational.PointAccesNumeriqueCAF
+        ]),
         labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
         modalites_accompagnement: ModalitesAccompagnement([ModaliteAccompagnement.Seul, ModaliteAccompagnement.AvecDeLAide]),
         accessibilite: Url(

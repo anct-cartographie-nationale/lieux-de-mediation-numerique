@@ -5,7 +5,7 @@ import {
   CleBan,
   ConditionsAcces,
   Contact,
-  LabelsNationaux,
+  DispositifsProgrammesNationaux,
   Localisation,
   ModalitesAccompagnement,
   /* eslint-disable @typescript-eslint/no-shadow */
@@ -91,8 +91,12 @@ export const publicsAccueillisIfAny = (publicsAccueillis?: string): { publics_ac
 export const conditionsAccesIfAny = (conditionsAcces?: string): { conditions_acces?: ConditionsAcces } =>
   conditionsAcces == null ? {} : { conditions_acces: ConditionsAcces(listFromString(conditionsAcces)) };
 
-export const labelsNationauxIfAny = (labelsNationaux?: string): { labels_nationaux?: LabelsNationaux } =>
-  labelsNationaux == null ? {} : { labels_nationaux: LabelsNationaux(listFromString(labelsNationaux)) };
+export const dispositifsProgrammesNationauxIfAny = (
+  dispositifsProgrammesNationaux?: string
+): { dispositifs_programmes_nationaux?: DispositifsProgrammesNationaux } =>
+  dispositifsProgrammesNationaux == null
+    ? {}
+    : { dispositifs_programmes_nationaux: DispositifsProgrammesNationaux(listFromString(dispositifsProgrammesNationaux)) };
 
 export const labelsAutresIfAny = (labelsAutres?: string): { labels_autres?: string[] } =>
   labelsAutres == null ? {} : { labels_autres: listFromString(labelsAutres) };

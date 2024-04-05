@@ -6,8 +6,8 @@ import {
   ConditionAcces,
   ConditionsAcces,
   Contact,
-  LabelNational,
-  LabelsNationaux,
+  DispositifProgrammeNational,
+  DispositifsProgrammesNationaux,
   Localisation,
   ModaliteAccompagnement,
   ModalitesAccompagnement,
@@ -48,17 +48,21 @@ export const FRAIS_TO_CONDITION_ACCES: Map<string, ConditionAcces> = new Map<str
   ['pass-numerique', ConditionAcces.AccepteLePassNumerique]
 ]);
 
-const LABELS_NATIONAUX_MAP: Map<string, LabelNational> = new Map<string, LabelNational>([
-  ['aidants-connect', LabelNational.AidantsConnect],
-  ['aptic', LabelNational.APTIC],
-  ['campus-connecte', LabelNational.CampusConnecte],
-  ['conseiller-numerique', LabelNational.CNFS], // todo: missing label in data.inclusion
-  ['fabrique-de-territoire', LabelNational.FabriquesDeTerritoire],
-  ['france-service', LabelNational.FranceServices],
-  ['french-tech', LabelNational.FrenchTech],
-  ['grandes-ecoles-du-numerique', LabelNational.GrandesEcolesDuNumerique],
-  ['caf', LabelNational.PointRelaisCAF],
-  ['pole-emploi', LabelNational.RelaisPoleEmploi]
+const DISPOSITIFS_PROGRAMMES_NATIONAUX_MAP: Map<string, DispositifProgrammeNational> = new Map<
+  string,
+  DispositifProgrammeNational
+>([
+  ['aidants-connect', DispositifProgrammeNational.AidantsConnect],
+  ['bibliotheque-de-reference', DispositifProgrammeNational.BibliothequesNumeriqueDeReference], // todo: missing label in data.inclusion
+  ['certification-pix', DispositifProgrammeNational.CertificationPix], // todo: missing label in data.inclusion
+  ['conseillers-numeriques', DispositifProgrammeNational.ConseillersNumeriques], // todo: missing label in data.inclusion
+  ['emmaus', DispositifProgrammeNational.EmmausConnect],
+  ['france-service', DispositifProgrammeNational.FranceServices],
+  ['grandes-ecoles-du-numerique', DispositifProgrammeNational.GrandesEcolesDuNumerique],
+  ['croix-rouge', DispositifProgrammeNational.LaCroixRouge],
+  ['caf', DispositifProgrammeNational.PointAccesNumeriqueCAF],
+  ['promeneurs-du-net', DispositifProgrammeNational.PromeneursDuNet], // todo: missing label in data.inclusion
+  ['emmaus', DispositifProgrammeNational.RelaisNumerique]
 ]);
 
 const TYPES_TO_MODALITES_ACCOMPAGNEMENT_MAP: Map<string, ModaliteAccompagnement> = new Map<string, ModaliteAccompagnement>([
@@ -182,16 +186,22 @@ export const localisationFromDataInclusion = (latitude?: number, longitude?: num
   latitude == null || longitude == null ? {} : { localisation: Localisation({ latitude, longitude }) };
 
 export const labelsFromDataInclusion = (
-  labels_nationaux?: string[],
+  dispositifs_programmes_nationaux?: string[],
   labels_autres?: string[]
-): { labels_nationaux?: LabelsNationaux; labels_autres?: string[] } => ({
-  ...(labels_nationaux == null
+): { dispositifs_programmes_nationaux?: DispositifsProgrammesNationaux; labels_autres?: string[] } => ({
+  ...(dispositifs_programmes_nationaux == null
     ? {}
     : {
-        labels_nationaux: LabelsNationaux(
-          labels_nationaux
-            .map((labelNational: string): LabelNational | undefined => LABELS_NATIONAUX_MAP.get(labelNational))
-            .filter((labelNational?: LabelNational | undefined): labelNational is LabelNational => labelNational != null)
+        dispositifs_programmes_nationaux: DispositifsProgrammesNationaux(
+          dispositifs_programmes_nationaux
+            .map((dispositifProgrammeNational: string): DispositifProgrammeNational | undefined =>
+              DISPOSITIFS_PROGRAMMES_NATIONAUX_MAP.get(dispositifProgrammeNational)
+            )
+            .filter(
+              (
+                dispositifProgrammeNational?: DispositifProgrammeNational | undefined
+              ): dispositifProgrammeNational is DispositifProgrammeNational => dispositifProgrammeNational != null
+            )
         )
       }),
   ...(labels_autres == null ? {} : { labels_autres })

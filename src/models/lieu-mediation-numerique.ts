@@ -13,7 +13,7 @@ import { ModalitesAccompagnement } from './modalite-accompagnement';
 import { Url } from './url';
 import { Pivot } from './pivot';
 import { CleBan } from './cle-ban';
-import { LabelsNationaux } from './label-national';
+import { DispositifsProgrammesNationaux } from './dispositifs-programmes-nationaux';
 import { Id } from './id';
 import { Nom } from './nom';
 
@@ -34,7 +34,7 @@ export type LieuMediationNumerique = {
   services: Services;
   publics_accueillis?: PublicsAccueillis;
   conditions_acces?: ConditionsAcces;
-  labels_nationaux?: LabelsNationaux;
+  dispositifs_programmes_nationaux?: DispositifsProgrammesNationaux;
   labels_autres?: string[];
   modalites_accompagnement?: ModalitesAccompagnement;
   accessibilite?: Url;

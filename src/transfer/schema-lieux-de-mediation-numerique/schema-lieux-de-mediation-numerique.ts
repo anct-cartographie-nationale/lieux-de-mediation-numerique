@@ -42,7 +42,7 @@ export type SchemaLieuMediationNumeriqueAccesFields = {
 };
 
 export type SchemaLieuMediationNumeriqueLabelsFields = {
-  labels_nationaux?: string;
+  dispositifs_programmes_nationaux?: string;
   labels_autres?: string;
 };
 

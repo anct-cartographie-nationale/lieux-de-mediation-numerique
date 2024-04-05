@@ -5,9 +5,9 @@ import {
   ConditionAcces,
   ConditionsAcces,
   Contact,
+  DispositifProgrammeNational,
+  DispositifsProgrammesNationaux,
   Id,
-  LabelNational,
-  LabelsNationaux,
   LieuMediationNumerique,
   Localisation,
   ModaliteAccompagnement,
@@ -80,7 +80,7 @@ describe('from schema data inclusion', (): void => {
       telephone: '+33180059880',
       site_web: 'https://www.laquincaillerie.tl/;https://m.facebook.com/laquincaillerienumerique/',
       horaires_ouverture: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
-      labels_nationaux: ['france-service', 'aptic'],
+      dispositifs_programmes_nationaux: ['france-service', 'aidants-connect'],
       labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
       latitude: 43.52609,
       longitude: 5.41423,
@@ -195,7 +195,10 @@ describe('from schema data inclusion', (): void => {
         PublicAccueilli.Illettrisme
       ]),
       conditions_acces: ConditionsAcces([ConditionAcces.GratuitSousCondition]),
-      labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC]),
+      dispositifs_programmes_nationaux: DispositifsProgrammesNationaux([
+        DispositifProgrammeNational.FranceServices,
+        DispositifProgrammeNational.AidantsConnect
+      ]),
       labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
       modalites_accompagnement: ModalitesAccompagnement([
         ModaliteAccompagnement.Seul,

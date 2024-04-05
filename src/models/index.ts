@@ -3,7 +3,7 @@ export * from './cle-ban';
 export * from './condition-acces';
 export * from './contact';
 export * from './id';
-export * from './label-national';
+export * from './dispositifs-programmes-nationaux';
 export * from './localisation';
 export * from './modalite-accompagnement';
 export * from './nom';

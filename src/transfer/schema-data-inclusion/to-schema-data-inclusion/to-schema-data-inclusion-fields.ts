@@ -2,7 +2,7 @@
 
 import {
   ConditionAcces,
-  LabelNational,
+  DispositifProgrammeNational,
   LieuMediationNumerique,
   ModaliteAccompagnement,
   PublicAccueilli,
@@ -68,18 +68,21 @@ const PUBLICS_ACCUEILLIS_TO_PROFILS: Map<PublicAccueilli, string> = new Map<Publ
   [PublicAccueilli.Illettrisme, 'personnes-en-situation-illettrisme']
 ]);
 
-const LABELS_NATIONAUX_MAP: Map<LabelNational, string> = new Map<LabelNational, string>([
-  [LabelNational.AidantsConnect, 'aidants-connect'],
-  [LabelNational.APTIC, 'aptic'],
-  [LabelNational.CampusConnecte, 'campus-connecte'],
-  [LabelNational.CNFS, 'conseiller-numerique'], // todo: missing label in data.inclusion
-  [LabelNational.FabriquesDeTerritoire, 'fabrique-de-territoire'],
-  [LabelNational.FranceServices, 'france-service'],
-  [LabelNational.FrenchTech, 'french-tech'],
-  [LabelNational.GrandesEcolesDuNumerique, 'grandes-ecoles-du-numerique'],
-  [LabelNational.PointNumeriqueCAF, 'caf'],
-  [LabelNational.PointRelaisCAF, 'caf'],
-  [LabelNational.RelaisPoleEmploi, 'pole-emploi']
+const DISPOSITIFS_PROGRAMMES_NATIONAUX_MAP: Map<DispositifProgrammeNational, string> = new Map<
+  DispositifProgrammeNational,
+  string
+>([
+  [DispositifProgrammeNational.AidantsConnect, 'aidants-connect'],
+  [DispositifProgrammeNational.BibliothequesNumeriqueDeReference, 'bibliotheque-de-reference'], // todo: missing label in data.inclusion
+  [DispositifProgrammeNational.CertificationPix, 'certification-pix'], // todo: missing label in data.inclusion
+  [DispositifProgrammeNational.ConseillersNumeriques, 'conseillers-numeriques'], // todo: missing label in data.inclusion
+  [DispositifProgrammeNational.EmmausConnect, 'emmaus'],
+  [DispositifProgrammeNational.FranceServices, 'france-service'],
+  [DispositifProgrammeNational.GrandesEcolesDuNumerique, 'grandes-ecoles-du-numerique'],
+  [DispositifProgrammeNational.LaCroixRouge, 'croix-rouge'],
+  [DispositifProgrammeNational.PointAccesNumeriqueCAF, 'caf'],
+  [DispositifProgrammeNational.PromeneursDuNet, 'promeneurs-du-net'], // todo: missing label in data.inclusion
+  [DispositifProgrammeNational.RelaisNumerique, 'emmaus']
 ]);
 
 const typologyIfExist = (typologie?: string): { typologie?: string } => (typologie == null ? {} : { typologie });
@@ -154,14 +157,20 @@ export const presentationFields = (
 });
 
 export const labelsFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionLabelsFields => ({
-  ...(lieuMediationNumerique.labels_nationaux == null
+  ...(lieuMediationNumerique.dispositifs_programmes_nationaux == null
     ? {}
     : {
-        labels_nationaux: Array.from(
+        dispositifs_programmes_nationaux: Array.from(
           new Set(
-            lieuMediationNumerique.labels_nationaux
-              .map((labelNational: LabelNational): string | null => LABELS_NATIONAUX_MAP.get(labelNational) ?? null)
-              .filter((labelNational: string | null): labelNational is string => labelNational != null)
+            lieuMediationNumerique.dispositifs_programmes_nationaux
+              .map(
+                (dispositifProgrammeNational: DispositifProgrammeNational): string | null =>
+                  DISPOSITIFS_PROGRAMMES_NATIONAUX_MAP.get(dispositifProgrammeNational) ?? null
+              )
+              .filter(
+                (dispositifProgrammeNational: string | null): dispositifProgrammeNational is string =>
+                  dispositifProgrammeNational != null
+              )
           )
         )
       }),
