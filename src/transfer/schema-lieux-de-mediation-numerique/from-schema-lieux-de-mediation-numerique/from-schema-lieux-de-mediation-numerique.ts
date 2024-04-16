@@ -5,7 +5,7 @@ import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numer
 import {
   accessibiliteIfAny,
   adresse,
-  conditionsAccesIfAny,
+  fraisAChargeIfAny,
   contactIfAny,
   horairesIfAny,
   labelsAutresIfAny,
@@ -18,7 +18,8 @@ import {
   publicsAccueillisIfAny,
   sourceIfAny,
   structureParenteIfAny,
-  typologiesIfAny
+  typologiesIfAny,
+  itinerancesIfAny
 } from './from-schema-lieux-de-mediation-numerique-fields';
 
 const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNumerique): Partial<LieuMediationNumerique> => ({
@@ -30,7 +31,8 @@ const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNum
   ...sourceIfAny(schemaLieuMediationNumeriqueItem.source),
   ...structureParenteIfAny(schemaLieuMediationNumeriqueItem.structure_parente),
   ...publicsAccueillisIfAny(schemaLieuMediationNumeriqueItem.publics_accueillis),
-  ...conditionsAccesIfAny(schemaLieuMediationNumeriqueItem.frais_a_charge),
+  ...fraisAChargeIfAny(schemaLieuMediationNumeriqueItem.frais_a_charge),
+  ...itinerancesIfAny(schemaLieuMediationNumeriqueItem.itinerance),
   ...labelsNationauxIfAny(schemaLieuMediationNumeriqueItem.labels_nationaux),
   ...labelsAutresIfAny(schemaLieuMediationNumeriqueItem.labels_autres),
   ...modalitesAccompagnementIfAny(schemaLieuMediationNumeriqueItem.modalites_accompagnement),

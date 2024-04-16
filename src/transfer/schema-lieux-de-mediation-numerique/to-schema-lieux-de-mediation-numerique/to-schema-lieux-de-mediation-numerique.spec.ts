@@ -3,10 +3,12 @@
 import {
   Adresse,
   Contact,
+  Courriel,
   Frais,
   FraisACharge,
-  Courriel,
   Id,
+  Itinerances,
+  Itinerance,
   LabelNational,
   LabelsNationaux,
   LieuMediationNumerique,
@@ -60,7 +62,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
-          'Devenir autonome dans les démarches administratives;Réaliser des démarches administratives avec un accompagnement;Prendre en main un smartphone ou une tablette;Prendre en main un ordinateur;Utiliser le numérique au quotidien;Approfondir ma culture numérique;Favoriser mon insertion professionnelle;Accéder à une connexion internet;Accéder à du matériel',
+          'Devenir autonome dans les démarches administratives|Réaliser des démarches administratives avec un accompagnement|Prendre en main un smartphone ou une tablette|Prendre en main un ordinateur|Utiliser le numérique au quotidien|Approfondir ma culture numérique|Favoriser mon insertion professionnelle|Accéder à une connexion internet|Accéder à du matériel',
         date_maj: '2022-10-10'
       }
     ]);
@@ -114,6 +116,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         PublicAccueilli.DeficienceVisuelle
       ]),
       frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
+      itinerance: Itinerances([Itinerance.Itinerant, Itinerance.Fixe]),
       labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC, LabelNational.PointRelaisCAF]),
       labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
       modalites_accompagnement: ModalitesAccompagnement([
@@ -137,7 +140,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
-          'Devenir autonome dans les démarches administratives;Réaliser des démarches administratives avec un accompagnement;Prendre en main un smartphone ou une tablette;Prendre en main un ordinateur;Utiliser le numérique au quotidien;Approfondir ma culture numérique;Favoriser mon insertion professionnelle;Accéder à une connexion internet;Accéder à du matériel',
+          'Devenir autonome dans les démarches administratives|Réaliser des démarches administratives avec un accompagnement|Prendre en main un smartphone ou une tablette|Prendre en main un ordinateur|Utiliser le numérique au quotidien|Approfondir ma culture numérique|Favoriser mon insertion professionnelle|Accéder à une connexion internet|Accéder à du matériel',
         date_maj: '2022-10-10',
         code_insee: '51454',
         complement_adresse: 'Le patio du bois de l’Aulne',
@@ -154,13 +157,14 @@ describe('to schema lieux de mediation numerique', (): void => {
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.',
         source: 'Hubik',
         structure_parente: 'Pôle emploi',
-        publics_accueillis: 'Familles/enfants;Adultes;Déficience visuelle',
+        publics_accueillis: 'Familles/enfants|Adultes|Déficience visuelle',
         frais_a_charge:
-          "Payant : L'accès au lieu et/ou à ses services est payant;Gratuit sous condition : La gratuité est conditionnée à des critères (situation familiale, convention avec un organisme social...)",
-        labels_nationaux: 'France Services;APTIC;Point relais CAF',
-        labels_autres: 'SudLabs;Nièvre médiation numérique',
+          "Payant : L'accès au lieu et/ou à ses services est payant|Gratuit sous condition : La gratuité est conditionnée à des critères (situation familiale, convention avec un organisme social...)",
+        itinerance: 'Itinérant|Fixe',
+        labels_nationaux: 'France Services|APTIC|Point relais CAF',
+        labels_autres: 'SudLabs|Nièvre médiation numérique',
         modalites_accompagnement:
-          "À distance (par téléphone ou en visioconférence);En autonomie;Accompagnement individuel;Dans un atelier collectif (j'apprends collectivement à utiliser le numérique)",
+          "À distance (par téléphone ou en visioconférence)|En autonomie|Accompagnement individuel|Dans un atelier collectif (j'apprends collectivement à utiliser le numérique)",
         accessibilite:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
         prise_rdv: 'https://www.rdv-solidarites.fr/'
@@ -201,7 +205,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
-          'Devenir autonome dans les démarches administratives;Réaliser des démarches administratives avec un accompagnement;Prendre en main un smartphone ou une tablette;Prendre en main un ordinateur;Utiliser le numérique au quotidien;Approfondir ma culture numérique;Favoriser mon insertion professionnelle;Accéder à une connexion internet;Accéder à du matériel',
+          'Devenir autonome dans les démarches administratives|Réaliser des démarches administratives avec un accompagnement|Prendre en main un smartphone ou une tablette|Prendre en main un ordinateur|Utiliser le numérique au quotidien|Approfondir ma culture numérique|Favoriser mon insertion professionnelle|Accéder à une connexion internet|Accéder à du matériel',
         date_maj: '2022-10-10'
       }
     ]);

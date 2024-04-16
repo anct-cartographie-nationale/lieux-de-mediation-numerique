@@ -9,6 +9,7 @@ import { Presentation } from './presentation';
 import { Services } from './service';
 import { PublicsAccueillis } from './public-accueilli';
 import { FraisACharge } from './frais-a-charge';
+import { Itinerances } from './itinerance';
 import { ModalitesAccompagnement } from './modalite-accompagnement';
 import { Url } from './url';
 import { Pivot } from './pivot';
@@ -32,6 +33,7 @@ export type LieuMediationNumerique = {
   services: Services;
   publics_accueillis?: PublicsAccueillis;
   frais_a_charge?: FraisACharge;
+  itinerance?: Itinerances;
   labels_nationaux?: LabelsNationaux;
   labels_autres?: string[];
   modalites_accompagnement?: ModalitesAccompagnement;

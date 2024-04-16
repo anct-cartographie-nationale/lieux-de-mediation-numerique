@@ -12,13 +12,14 @@ import {
   Presentation,
   PublicsAccueillis,
   Typologies,
-  Url
+  Url,
+  Itinerances
 } from '../../../models';
 import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 
 const toListOf = <T>(listItem: string): T => listItem as T;
 
-export const listFromString = <T>(stringList: string): T[] => stringList.split(';').map(toListOf<T>);
+export const listFromString = <T>(stringList: string): T[] => stringList.split('|').map(toListOf<T>);
 
 export const localisationIfAny = (latitude?: number, longitude?: number): { localisation?: Localisation } =>
   latitude == null || longitude == null ? {} : { localisation: Localisation({ latitude, longitude }) };
@@ -87,8 +88,11 @@ export const structureParenteIfAny = (structureParente?: string): { structure_pa
 export const publicsAccueillisIfAny = (publicsAccueillis?: string): { publics_accueillis?: PublicsAccueillis } =>
   publicsAccueillis == null ? {} : { publics_accueillis: PublicsAccueillis(listFromString(publicsAccueillis)) };
 
-export const conditionsAccesIfAny = (conditionsAcces?: string): { frais_a_charge?: FraisACharge } =>
+export const fraisAChargeIfAny = (conditionsAcces?: string): { frais_a_charge?: FraisACharge } =>
   conditionsAcces == null ? {} : { frais_a_charge: FraisACharge(listFromString(conditionsAcces)) };
+
+export const itinerancesIfAny = (itinerance?: string): { itinerance?: Itinerances } =>
+  itinerance == null ? {} : { itinerance: Itinerances(listFromString(itinerance)) };
 
 export const labelsNationauxIfAny = (labelsNationaux?: string): { labels_nationaux?: LabelsNationaux } =>
   labelsNationaux == null ? {} : { labels_nationaux: LabelsNationaux(listFromString(labelsNationaux)) };

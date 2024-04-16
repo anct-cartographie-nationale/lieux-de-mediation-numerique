@@ -21,7 +21,9 @@ import {
   Services,
   Typologie,
   Typologies,
-  Url
+  Url,
+  Itinerance,
+  Itinerances
 } from '../../../models';
 import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import { fromSchemaLieuxDeMediationNumerique } from './from-schema-lieux-de-mediation-numerique';
@@ -37,7 +39,7 @@ describe('from schema lieux de mediation numerique', (): void => {
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
-          'Devenir autonome dans les démarches administratives;Réaliser des démarches administratives avec un accompagnement;Prendre en main un smartphone ou une tablette;Prendre en main un ordinateur;Utiliser le numérique au quotidien;Approfondir ma culture numérique;Favoriser mon insertion professionnelle;Accéder à une connexion internet;Accéder à du matériel',
+          'Devenir autonome dans les démarches administratives|Réaliser des démarches administratives avec un accompagnement|Prendre en main un smartphone ou une tablette|Prendre en main un ordinateur|Utiliser le numérique au quotidien|Approfondir ma culture numérique|Favoriser mon insertion professionnelle|Accéder à une connexion internet|Accéder à du matériel',
         date_maj: '2022-10-10'
       }
     ];
@@ -78,7 +80,7 @@ describe('from schema lieux de mediation numerique', (): void => {
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
-          'Devenir autonome dans les démarches administratives;Réaliser des démarches administratives avec un accompagnement;Prendre en main un smartphone ou une tablette;Prendre en main un ordinateur;Utiliser le numérique au quotidien;Approfondir ma culture numérique;Favoriser mon insertion professionnelle;Accéder à une connexion internet;Accéder à du matériel',
+          'Devenir autonome dans les démarches administratives|Réaliser des démarches administratives avec un accompagnement|Prendre en main un smartphone ou une tablette|Prendre en main un ordinateur|Utiliser le numérique au quotidien|Approfondir ma culture numérique|Favoriser mon insertion professionnelle|Accéder à une connexion internet|Accéder à du matériel',
         date_maj: '2022-10-10',
         code_insee: '51454',
         complement_adresse: 'Le patio du bois de l’Aulne',
@@ -87,7 +89,7 @@ describe('from schema lieux de mediation numerique', (): void => {
         typologie: 'TIERS_LIEUX',
         telephone: '+33180059880',
         courriel: 'contact@laquincaillerie.tl',
-        site_web: 'https://www.laquincaillerie.tl/;https://m.facebook.com/laquincaillerienumerique/',
+        site_web: 'https://www.laquincaillerie.tl/|https://m.facebook.com/laquincaillerienumerique/',
         horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
         presentation_resume:
           'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
@@ -95,13 +97,14 @@ describe('from schema lieux de mediation numerique', (): void => {
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.',
         source: 'Hubik',
         structure_parente: 'Pôle emploi',
-        publics_accueillis: 'Familles/enfants;Adultes;Déficience visuelle',
+        publics_accueillis: 'Familles/enfants|Adultes|Déficience visuelle',
         frais_a_charge:
-          "Payant : L'accès au lieu et/ou à ses services est payant;Gratuit sous condition : La gratuité est conditionnée à des critères (situation familiale, convention avec un organisme social...)",
-        labels_nationaux: 'France Services;APTIC;Point relais CAF',
-        labels_autres: 'SudLabs;Nièvre médiation numérique',
+          "Payant : L'accès au lieu et/ou à ses services est payant|Gratuit sous condition : La gratuité est conditionnée à des critères (situation familiale, convention avec un organisme social...)",
+        itinerance: 'Fixe|Itinérant',
+        labels_nationaux: 'France Services|APTIC|Point relais CAF',
+        labels_autres: 'SudLabs|Nièvre médiation numérique',
         modalites_accompagnement: [ModaliteAccompagnement.AccompagnementIndividuel, ModaliteAccompagnement.EnAutonomie].join(
-          ';'
+          '|'
         ),
         accessibilite:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
@@ -157,6 +160,7 @@ describe('from schema lieux de mediation numerique', (): void => {
           PublicAccueilli.DeficienceVisuelle
         ]),
         frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
+        itinerance: Itinerances([Itinerance.Fixe, Itinerance.Itinerant]),
         labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC, LabelNational.PointRelaisCAF]),
         labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
         modalites_accompagnement: ModalitesAccompagnement([

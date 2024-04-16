@@ -2,6 +2,7 @@ export * from './adresse';
 export * from './frais-a-charge';
 export * from './contact';
 export * from './id';
+export * from './itinerance';
 export * from './label-national';
 export * from './localisation';
 export * from './modalite-accompagnement';

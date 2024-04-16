@@ -9,12 +9,12 @@ export enum Frais {
 
 export type FraisACharge = Model<'FraisACharge', Frais[]>;
 
-export type FraisAChargeIndefini = 'frais à charge indéfinie';
+export type FraisAChargeIndefini = 'frais à charge indéfini';
 
 const firstInvalidFraisACharge = (fraisACharge: Frais): boolean => !Object.values(Frais).includes(fraisACharge);
 
 const throwFraisAChargeError = (fraisACharge: Frais[]): FraisACharge => {
-  throw new FraisAChargeError(fraisACharge.find(firstInvalidFraisACharge) ?? 'frais à charge indéfinie');
+  throw new FraisAChargeError(fraisACharge.find(firstInvalidFraisACharge) ?? 'frais à charge indéfini');
 };
 
 const isFraisACharge = (fraisACharge: Frais[]): fraisACharge is FraisACharge =>

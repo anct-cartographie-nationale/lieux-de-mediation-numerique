@@ -16,7 +16,7 @@ import {
 export const generalFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueGeneralFields => ({
   id: lieuMediationNumerique.id,
   nom: lieuMediationNumerique.nom,
-  services: lieuMediationNumerique.services.join(';'),
+  services: lieuMediationNumerique.services.join('|'),
   pivot: lieuMediationNumerique.pivot,
   ...(lieuMediationNumerique.typologies == null ? {} : { typologie: lieuMediationNumerique.typologies.join('|') }),
   ...(lieuMediationNumerique.structure_parente == null ? {} : { structure_parente: lieuMediationNumerique.structure_parente })
@@ -61,19 +61,20 @@ export const presentationFields = (
 export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueAccesFields => ({
   ...(lieuMediationNumerique.publics_accueillis == null
     ? {}
-    : { publics_accueillis: lieuMediationNumerique.publics_accueillis.join(';') }),
-  ...(lieuMediationNumerique.frais_a_charge == null ? {} : { frais_a_charge: lieuMediationNumerique.frais_a_charge.join(';') }),
+    : { publics_accueillis: lieuMediationNumerique.publics_accueillis.join('|') }),
+  ...(lieuMediationNumerique.frais_a_charge == null ? {} : { frais_a_charge: lieuMediationNumerique.frais_a_charge.join('|') }),
+  ...(lieuMediationNumerique.itinerance == null ? {} : { itinerance: lieuMediationNumerique.itinerance.join('|') }),
   ...(lieuMediationNumerique.modalites_accompagnement == null
     ? {}
-    : { modalites_accompagnement: lieuMediationNumerique.modalites_accompagnement.join(';') }),
+    : { modalites_accompagnement: lieuMediationNumerique.modalites_accompagnement.join('|') }),
   ...(lieuMediationNumerique.accessibilite == null ? {} : { accessibilite: lieuMediationNumerique.accessibilite })
 });
 
 export const labelsFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueLabelsFields => ({
   ...(lieuMediationNumerique.labels_nationaux == null
     ? {}
-    : { labels_nationaux: lieuMediationNumerique.labels_nationaux.join(';') }),
-  ...(lieuMediationNumerique.labels_autres == null ? {} : { labels_autres: lieuMediationNumerique.labels_autres.join(';') })
+    : { labels_nationaux: lieuMediationNumerique.labels_nationaux.join('|') }),
+  ...(lieuMediationNumerique.labels_autres == null ? {} : { labels_autres: lieuMediationNumerique.labels_autres.join('|') })
 });
 
 export const disponibiliteFields = (
