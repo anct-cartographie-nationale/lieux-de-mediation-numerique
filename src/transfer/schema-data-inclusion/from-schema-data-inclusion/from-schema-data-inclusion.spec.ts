@@ -77,9 +77,9 @@ describe('from schema data inclusion', (): void => {
       siret: '43493312300029',
       source: 'Hubik',
       accessibilite: 'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
-      courriel: 'contact@laquincaillerie.tl',
+      courriel: 'contact@laquincaillerie.tl|bonjour@laquincaillerie.tl',
       telephone: '+33180059880',
-      site_web: 'https://www.laquincaillerie.tl/;https://m.facebook.com/laquincaillerienumerique/',
+      site_web: 'https://www.laquincaillerie.tl/|https://m.facebook.com/laquincaillerienumerique/',
       horaires_ouverture: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
       labels_nationaux: ['france-service', 'aptic'],
       labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
@@ -171,7 +171,7 @@ describe('from schema data inclusion', (): void => {
       typologies: Typologies([Typologie.TIERS_LIEUX]),
       contact: Contact({
         telephone: '+33180059880',
-        courriel: [Courriel('contact@laquincaillerie.tl')],
+        courriel: [Courriel('contact@laquincaillerie.tl'), Courriel('bonjour@laquincaillerie.tl')],
         site_web: [Url('https://www.laquincaillerie.tl/'), Url('https://m.facebook.com/laquincaillerienumerique/')]
       }),
       horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
