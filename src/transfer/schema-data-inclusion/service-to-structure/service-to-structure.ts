@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase */
 
+import { isValidTelephone, isValidCourriel } from '../../../models';
 import {
   SchemaServiceDataInclusion,
   SchemaServiceDataInclusionWithAdresse,
@@ -12,8 +13,6 @@ import {
   SchemaStructureDataInclusionPresentationFields,
   SchemaStructureDataInclusionStructureGeneralFields
 } from '../schema-data-inclusion';
-import { isValidTelephone } from '../../../models';
-import { isValidCourriel } from '../../../models/courriel';
 
 export const isServiceWithAdresse = (
   service: Partial<SchemaStructureDataInclusionAdresseFields> & SchemaServiceDataInclusion

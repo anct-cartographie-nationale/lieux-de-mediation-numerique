@@ -173,9 +173,9 @@ export const contactFromDataInclusion = (courriel?: string, telephone?: string, 
     ? {}
     : {
         contact: Contact({
-          ...(courriel == null ? {} : { courriel: courriel.split(';').map(Courriel) }),
+          ...(courriel == null ? {} : { courriel: courriel.split('|').map(Courriel) }),
           ...(telephone == null ? {} : { telephone }),
-          ...(site_web == null ? {} : { site_web: site_web.split(';').map(Url) })
+          ...(site_web == null ? {} : { site_web: site_web.split('|').map(Url) })
         })
       };
 
