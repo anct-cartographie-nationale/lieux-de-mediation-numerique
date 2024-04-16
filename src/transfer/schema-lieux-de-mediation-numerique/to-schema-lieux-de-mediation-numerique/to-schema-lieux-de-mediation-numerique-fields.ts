@@ -29,8 +29,7 @@ export const adresseFields = (lieuMediationNumerique: LieuMediationNumerique): S
   ...(lieuMediationNumerique.adresse.code_insee == null ? {} : { code_insee: lieuMediationNumerique.adresse.code_insee }),
   ...(lieuMediationNumerique.adresse.complement_adresse == null
     ? {}
-    : { complement_adresse: lieuMediationNumerique.adresse.complement_adresse }),
-  ...(lieuMediationNumerique.cle_ban == null ? {} : { cle_ban: lieuMediationNumerique.cle_ban })
+    : { complement_adresse: lieuMediationNumerique.adresse.complement_adresse })
 });
 
 export const localisationFields = (

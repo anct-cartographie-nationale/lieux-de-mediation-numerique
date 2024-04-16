@@ -15,7 +15,6 @@ export type SchemaLieuMediationNumeriqueAdresseFields = {
   adresse: string;
   code_insee?: string;
   complement_adresse?: string;
-  cle_ban?: string;
 };
 
 export type SchemaLieuMediationNumeriqueLocalisationFields = {

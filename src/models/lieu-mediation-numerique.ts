@@ -12,7 +12,6 @@ import { FraisACharge } from './frais-a-charge';
 import { ModalitesAccompagnement } from './modalite-accompagnement';
 import { Url } from './url';
 import { Pivot } from './pivot';
-import { CleBan } from './cle-ban';
 import { LabelsNationaux } from './label-national';
 import { Id } from './id';
 import { Nom } from './nom';
@@ -23,7 +22,6 @@ export type LieuMediationNumerique = {
   nom: Nom;
   adresse: Adresse;
   localisation?: Localisation;
-  cle_ban?: CleBan;
   typologies?: Typologies;
   contact?: Contact;
   horaires?: string;

@@ -5,7 +5,6 @@ import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numer
 import {
   accessibiliteIfAny,
   adresse,
-  cleBanIfAny,
   conditionsAccesIfAny,
   contactIfAny,
   horairesIfAny,
@@ -24,7 +23,6 @@ import {
 
 const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNumerique): Partial<LieuMediationNumerique> => ({
   ...localisationIfAny(schemaLieuMediationNumeriqueItem.latitude, schemaLieuMediationNumeriqueItem.longitude),
-  ...cleBanIfAny(schemaLieuMediationNumeriqueItem.cle_ban),
   ...typologiesIfAny(schemaLieuMediationNumeriqueItem.typologie),
   ...contactIfAny(schemaLieuMediationNumeriqueItem),
   ...horairesIfAny(schemaLieuMediationNumeriqueItem.horaires),

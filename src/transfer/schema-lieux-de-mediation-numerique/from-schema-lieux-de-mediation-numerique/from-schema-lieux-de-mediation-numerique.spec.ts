@@ -2,7 +2,6 @@
 
 import {
   Adresse,
-  CleBan,
   Frais,
   FraisACharge,
   Contact,
@@ -106,8 +105,7 @@ describe('from schema lieux de mediation numerique', (): void => {
         ),
         accessibilite:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
-        prise_rdv: 'https://www.rdv-solidarites.fr/',
-        cle_ban: '13001_3079_00001'
+        prise_rdv: 'https://www.rdv-solidarites.fr/'
       }
     ];
 
@@ -168,8 +166,7 @@ describe('from schema lieux de mediation numerique', (): void => {
         accessibilite: Url(
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
         ),
-        prise_rdv: Url('https://www.rdv-solidarites.fr/'),
-        cle_ban: CleBan('13001_3079_00001')
+        prise_rdv: Url('https://www.rdv-solidarites.fr/')
       }
     ]);
   });

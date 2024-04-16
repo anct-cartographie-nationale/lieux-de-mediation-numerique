@@ -2,7 +2,6 @@
 
 import {
   Adresse,
-  CleBan,
   FraisACharge,
   Contact,
   Courriel,
@@ -23,8 +22,6 @@ export const listFromString = <T>(stringList: string): T[] => stringList.split('
 
 export const localisationIfAny = (latitude?: number, longitude?: number): { localisation?: Localisation } =>
   latitude == null || longitude == null ? {} : { localisation: Localisation({ latitude, longitude }) };
-
-export const cleBanIfAny = (cleBan?: string): { cle_ban?: CleBan } => (cleBan == null ? {} : { cle_ban: CleBan(cleBan) });
 
 export const adresse = (schemaLieuMediationNumerique: SchemaLieuMediationNumerique): { adresse: Adresse } => ({
   adresse: Adresse({

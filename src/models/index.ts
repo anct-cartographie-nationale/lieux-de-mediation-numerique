@@ -1,5 +1,4 @@
 export * from './adresse';
-export * from './cle-ban';
 export * from './frais-a-charge';
 export * from './contact';
 export * from './id';

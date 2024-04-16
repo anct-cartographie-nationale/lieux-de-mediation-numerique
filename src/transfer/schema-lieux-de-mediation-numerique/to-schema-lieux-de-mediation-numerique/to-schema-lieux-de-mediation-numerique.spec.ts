@@ -2,7 +2,6 @@
 
 import {
   Adresse,
-  CleBan,
   Contact,
   Frais,
   FraisACharge,
@@ -126,8 +125,7 @@ describe('to schema lieux de mediation numerique', (): void => {
       accessibilite: Url(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       ),
-      prise_rdv: Url('https://www.rdv-solidarites.fr/'),
-      cle_ban: CleBan('13001_3079_00001')
+      prise_rdv: Url('https://www.rdv-solidarites.fr/')
     };
 
     expect(toSchemaLieuxDeMediationNumerique([lieuMediationNumerique])).toStrictEqual<SchemaLieuMediationNumerique[]>([
@@ -165,8 +163,7 @@ describe('to schema lieux de mediation numerique', (): void => {
           "À distance (par téléphone ou en visioconférence);En autonomie;Accompagnement individuel;Dans un atelier collectif (j'apprends collectivement à utiliser le numérique)",
         accessibilite:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
-        prise_rdv: 'https://www.rdv-solidarites.fr/',
-        cle_ban: '13001_3079_00001'
+        prise_rdv: 'https://www.rdv-solidarites.fr/'
       }
     ]);
   });
