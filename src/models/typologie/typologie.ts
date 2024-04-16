@@ -12,6 +12,7 @@ export enum Typologie {
   ASSO_CHOMEUR = 'ASSO_CHOMEUR',
   ASSO = 'ASSO',
   AUTRE = 'Autre',
+  AVIP = 'AVIP',
   BIB = 'BIB',
   CAARUD = 'CAARUD',
   CADA = 'CADA',

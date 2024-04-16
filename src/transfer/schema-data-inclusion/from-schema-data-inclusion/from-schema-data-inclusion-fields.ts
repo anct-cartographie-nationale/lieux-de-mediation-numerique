@@ -91,6 +91,7 @@ export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>
   ['ASE', Typologie.ASE],
   ['ASSO', Typologie.ASSO],
   ['ASSO_CHOMEUR', Typologie.ASSO_CHOMEUR],
+  ['AVIP', Typologie.AVIP],
   ['Autre', Typologie.AUTRE],
   ['BIB', Typologie.BIB],
   ['CAARUD', Typologie.CAARUD],

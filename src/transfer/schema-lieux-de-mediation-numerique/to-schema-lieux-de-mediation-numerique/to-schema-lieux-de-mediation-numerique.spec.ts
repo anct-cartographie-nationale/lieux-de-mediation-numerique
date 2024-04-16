@@ -95,7 +95,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         latitude: 43.52609,
         longitude: 5.41423
       }),
-      typologies: Typologies([Typologie.TIERS_LIEUX]),
+      typologies: Typologies([Typologie.TIERS_LIEUX, Typologie.ASSO]),
       contact: Contact({
         telephone: '+33180059880',
         courriel: [Courriel('contact@laquincaillerie.tl')],
@@ -145,7 +145,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         complement_adresse: 'Le patio du bois de l’Aulne',
         latitude: 43.52609,
         longitude: 5.41423,
-        typologie: 'TIERS_LIEUX',
+        typologie: 'TIERS_LIEUX|ASSO',
         telephone: '+33180059880',
         courriel: 'contact@laquincaillerie.tl',
         site_web: 'https://www.laquincaillerie.tl/|https://m.facebook.com/laquincaillerienumerique/',
