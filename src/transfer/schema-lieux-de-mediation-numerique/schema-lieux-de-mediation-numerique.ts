@@ -3,7 +3,7 @@
 export type SchemaLieuMediationNumeriqueGeneralFields = {
   id: string;
   nom: string;
-  services: string;
+  services?: string;
   pivot: string;
   typologie?: string;
   structure_parente?: string;

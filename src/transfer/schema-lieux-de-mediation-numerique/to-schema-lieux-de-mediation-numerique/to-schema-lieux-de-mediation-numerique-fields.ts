@@ -16,8 +16,8 @@ import {
 export const generalFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueGeneralFields => ({
   id: lieuMediationNumerique.id,
   nom: lieuMediationNumerique.nom,
-  services: lieuMediationNumerique.services.join('|'),
   pivot: lieuMediationNumerique.pivot,
+  ...(lieuMediationNumerique.services == null ? {} : { services: lieuMediationNumerique.services.join('|') }),
   ...(lieuMediationNumerique.typologies == null ? {} : { typologie: lieuMediationNumerique.typologies.join('|') }),
   ...(lieuMediationNumerique.structure_parente == null ? {} : { structure_parente: lieuMediationNumerique.structure_parente })
 });

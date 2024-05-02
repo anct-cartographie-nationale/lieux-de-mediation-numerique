@@ -38,8 +38,6 @@ describe('from schema lieux de mediation numerique', (): void => {
         commune: 'Reims',
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
-        services:
-          'Devenir autonome dans les démarches administratives|Réaliser des démarches administratives avec un accompagnement|Prendre en main un smartphone ou une tablette|Prendre en main un ordinateur|Utiliser le numérique au quotidien|Approfondir ma culture numérique|Favoriser mon insertion professionnelle|Accéder à une connexion internet|Accéder à du matériel',
         date_maj: '2022-10-10'
       }
     ];
@@ -54,17 +52,6 @@ describe('from schema lieux de mediation numerique', (): void => {
           commune: 'Reims',
           voie: '12 BIS RUE DE LECLERCQ'
         }),
-        services: Services([
-          Service.DevenirAutonomeDansLesDemarchesAdministratives,
-          Service.RealiserDesDemarchesAdministratives,
-          Service.PrendreEnMainUnSmartphoneOuUneTablette,
-          Service.PrendreEnMainUnOrdinateur,
-          Service.UtiliserLeNumerique,
-          Service.ApprofondirMaCultureNumerique,
-          Service.FavoriserMonInsertionProfessionnelle,
-          Service.AccederAUneConnexionInternet,
-          Service.AccederADuMateriel
-        ]),
         date_maj: new Date('2022-10-10')
       }
     ]);
@@ -80,7 +67,7 @@ describe('from schema lieux de mediation numerique', (): void => {
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
-          'Devenir autonome dans les démarches administratives|Réaliser des démarches administratives avec un accompagnement|Prendre en main un smartphone ou une tablette|Prendre en main un ordinateur|Utiliser le numérique au quotidien|Approfondir ma culture numérique|Favoriser mon insertion professionnelle|Accéder à une connexion internet|Accéder à du matériel',
+          'Aide aux démarches administratives|Maîtrise des outils numériques du quotidien|Compréhension du monde numérique|Insertion professionnelle via le numérique|Accès internet et matériel informatique',
         date_maj: '2022-10-10',
         code_insee: '51454',
         complement_adresse: 'Le patio du bois de l’Aulne',
@@ -125,15 +112,11 @@ describe('from schema lieux de mediation numerique', (): void => {
           complement_adresse: 'Le patio du bois de l’Aulne'
         }),
         services: Services([
-          Service.DevenirAutonomeDansLesDemarchesAdministratives,
-          Service.RealiserDesDemarchesAdministratives,
-          Service.PrendreEnMainUnSmartphoneOuUneTablette,
-          Service.PrendreEnMainUnOrdinateur,
-          Service.UtiliserLeNumerique,
-          Service.ApprofondirMaCultureNumerique,
-          Service.FavoriserMonInsertionProfessionnelle,
-          Service.AccederAUneConnexionInternet,
-          Service.AccederADuMateriel
+          Service.AideAuxDemarchesAdministratives,
+          Service.MaitriseDesOutilsNumeriquesDuQuotidien,
+          Service.ComprehensionDuMondeNumerique,
+          Service.InsertionProfessionnelleViaLeNumerique,
+          Service.AccesInternetEtMaterielInformatique
         ]),
         date_maj: new Date('2022-10-10'),
         localisation: Localisation({

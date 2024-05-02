@@ -7,8 +7,8 @@ import {
   Frais,
   FraisACharge,
   Id,
-  Itinerances,
   Itinerance,
+  Itinerances,
   LabelNational,
   LabelsNationaux,
   LieuMediationNumerique,
@@ -39,17 +39,6 @@ describe('to schema lieux de mediation numerique', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([
-        Service.DevenirAutonomeDansLesDemarchesAdministratives,
-        Service.RealiserDesDemarchesAdministratives,
-        Service.PrendreEnMainUnSmartphoneOuUneTablette,
-        Service.PrendreEnMainUnOrdinateur,
-        Service.UtiliserLeNumerique,
-        Service.ApprofondirMaCultureNumerique,
-        Service.FavoriserMonInsertionProfessionnelle,
-        Service.AccederAUneConnexionInternet,
-        Service.AccederADuMateriel
-      ]),
       date_maj: new Date('2022-10-10')
     };
 
@@ -61,8 +50,6 @@ describe('to schema lieux de mediation numerique', (): void => {
         commune: 'Reims',
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
-        services:
-          'Devenir autonome dans les démarches administratives|Réaliser des démarches administratives avec un accompagnement|Prendre en main un smartphone ou une tablette|Prendre en main un ordinateur|Utiliser le numérique au quotidien|Approfondir ma culture numérique|Favoriser mon insertion professionnelle|Accéder à une connexion internet|Accéder à du matériel',
         date_maj: '2022-10-10'
       }
     ]);
@@ -81,15 +68,15 @@ describe('to schema lieux de mediation numerique', (): void => {
         complement_adresse: 'Le patio du bois de l’Aulne'
       }),
       services: Services([
-        Service.DevenirAutonomeDansLesDemarchesAdministratives,
-        Service.RealiserDesDemarchesAdministratives,
-        Service.PrendreEnMainUnSmartphoneOuUneTablette,
-        Service.PrendreEnMainUnOrdinateur,
-        Service.UtiliserLeNumerique,
-        Service.ApprofondirMaCultureNumerique,
-        Service.FavoriserMonInsertionProfessionnelle,
-        Service.AccederAUneConnexionInternet,
-        Service.AccederADuMateriel
+        Service.MaterielInformatiqueAPrixSolidaire,
+        Service.AideAuxDemarchesAdministratives,
+        Service.MaitriseDesOutilsNumeriquesDuQuotidien,
+        Service.InsertionProfessionnelleViaLeNumerique,
+        Service.UtilisationSecuriseeDuNumerique,
+        Service.ParentaliteEtEducationAvecLeNumerique,
+        Service.LoisirsEtCreationsNumeriques,
+        Service.ComprehensionDuMondeNumerique,
+        Service.AccesInternetEtMaterielInformatique
       ]),
       date_maj: new Date('2022-10-10'),
       localisation: Localisation({
@@ -140,7 +127,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
-          'Devenir autonome dans les démarches administratives|Réaliser des démarches administratives avec un accompagnement|Prendre en main un smartphone ou une tablette|Prendre en main un ordinateur|Utiliser le numérique au quotidien|Approfondir ma culture numérique|Favoriser mon insertion professionnelle|Accéder à une connexion internet|Accéder à du matériel',
+          'Acquisition de matériel informatique à prix solidaire|Aide aux démarches administratives|Maîtrise des outils numériques du quotidien|Insertion professionnelle via le numérique|Utilisation sécurisée du numérique|Parentalité et éducation avec le numérique|Loisirs et créations numériques|Compréhension du monde numérique|Accès internet et matériel informatique',
         date_maj: '2022-10-10',
         code_insee: '51454',
         complement_adresse: 'Le patio du bois de l’Aulne',
@@ -183,15 +170,15 @@ describe('to schema lieux de mediation numerique', (): void => {
         voie: '12 BIS RUE DE LECLERCQ'
       }),
       services: Services([
-        Service.DevenirAutonomeDansLesDemarchesAdministratives,
-        Service.RealiserDesDemarchesAdministratives,
-        Service.PrendreEnMainUnSmartphoneOuUneTablette,
-        Service.PrendreEnMainUnOrdinateur,
-        Service.UtiliserLeNumerique,
-        Service.ApprofondirMaCultureNumerique,
-        Service.FavoriserMonInsertionProfessionnelle,
-        Service.AccederAUneConnexionInternet,
-        Service.AccederADuMateriel
+        Service.MaterielInformatiqueAPrixSolidaire,
+        Service.AideAuxDemarchesAdministratives,
+        Service.MaitriseDesOutilsNumeriquesDuQuotidien,
+        Service.InsertionProfessionnelleViaLeNumerique,
+        Service.UtilisationSecuriseeDuNumerique,
+        Service.ParentaliteEtEducationAvecLeNumerique,
+        Service.LoisirsEtCreationsNumeriques,
+        Service.ComprehensionDuMondeNumerique,
+        Service.AccesInternetEtMaterielInformatique
       ]),
       date_maj: '2022-10-10T00:00:00.000Z' as unknown as Date
     };
@@ -205,7 +192,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
-          'Devenir autonome dans les démarches administratives|Réaliser des démarches administratives avec un accompagnement|Prendre en main un smartphone ou une tablette|Prendre en main un ordinateur|Utiliser le numérique au quotidien|Approfondir ma culture numérique|Favoriser mon insertion professionnelle|Accéder à une connexion internet|Accéder à du matériel',
+          'Acquisition de matériel informatique à prix solidaire|Aide aux démarches administratives|Maîtrise des outils numériques du quotidien|Insertion professionnelle via le numérique|Utilisation sécurisée du numérique|Parentalité et éducation avec le numérique|Loisirs et créations numériques|Compréhension du monde numérique|Accès internet et matériel informatique',
         date_maj: '2022-10-10'
       }
     ]);
@@ -222,7 +209,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([Service.AccederADuMateriel]),
+      services: Services([Service.AccesInternetEtMaterielInformatique]),
       date_maj: new Date('2022-10-10')
     };
 
@@ -237,7 +224,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         code_postal: '51100',
         code_insee: '51454',
         adresse: '12 BIS RUE DE LECLERCQ',
-        services: Service.AccederADuMateriel,
+        services: 'Accès internet et matériel informatique',
         date_maj: '2022-10-10'
       }
     ]);
@@ -254,7 +241,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         commune: 'Lyon',
         voie: '23 place Bellecour'
       }),
-      services: Services([Service.AccederADuMateriel]),
+      services: Services([Service.AccesInternetEtMaterielInformatique]),
       date_maj: new Date('2022-10-10')
     };
 
@@ -269,7 +256,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         code_postal: '69002',
         code_insee: '69382',
         adresse: '23 place Bellecour',
-        services: Service.AccederADuMateriel,
+        services: 'Accès internet et matériel informatique',
         date_maj: '2022-10-10'
       }
     ]);
@@ -286,7 +273,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         commune: 'Lyon',
         voie: '3 place St Jean'
       }),
-      services: Services([Service.AccederADuMateriel]),
+      services: Services([Service.AccesInternetEtMaterielInformatique]),
       date_maj: new Date('2022-10-10')
     };
 
@@ -301,7 +288,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         code_postal: '69001',
         code_insee: '69381',
         adresse: '3 place St Jean',
-        services: Service.AccederADuMateriel,
+        services: 'Accès internet et matériel informatique',
         date_maj: '2022-10-10'
       }
     ]);
@@ -318,7 +305,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         commune: 'Paris',
         voie: '12 rue Beaudricourt'
       }),
-      services: Services([Service.AccederADuMateriel]),
+      services: Services([Service.AccesInternetEtMaterielInformatique]),
       date_maj: new Date('2022-10-10')
     };
 
@@ -333,7 +320,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         code_postal: '75013',
         code_insee: '75113',
         adresse: '12 rue Beaudricourt',
-        services: Service.AccederADuMateriel,
+        services: 'Accès internet et matériel informatique',
         date_maj: '2022-10-10'
       }
     ]);
@@ -350,7 +337,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         commune: 'Marseille',
         voie: '12 rue du vieux Port'
       }),
-      services: Services([Service.AccederADuMateriel]),
+      services: Services([Service.AccesInternetEtMaterielInformatique]),
       date_maj: new Date('2022-10-10')
     };
 
@@ -365,7 +352,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         code_postal: '13002',
         code_insee: '13202',
         adresse: '12 rue du vieux Port',
-        services: Service.AccederADuMateriel,
+        services: 'Accès internet et matériel informatique',
         date_maj: '2022-10-10'
       }
     ]);

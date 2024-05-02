@@ -13,13 +13,17 @@ import {
   PublicsAccueillis,
   Typologies,
   Url,
-  Itinerances
+  Itinerances,
+  Services
 } from '../../../models';
 import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 
 const toListOf = <T>(listItem: string): T => listItem as T;
 
 export const listFromString = <T>(stringList: string): T[] => stringList.split('|').map(toListOf<T>);
+
+export const servicesIfAny = (services?: string): { services?: Services } =>
+  services == null ? {} : { services: Services(listFromString(services)) };
 
 export const localisationIfAny = (latitude?: number, longitude?: number): { localisation?: Localisation } =>
   latitude == null || longitude == null ? {} : { localisation: Localisation({ latitude, longitude }) };

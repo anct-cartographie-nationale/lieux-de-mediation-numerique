@@ -30,7 +30,7 @@ export type LieuMediationNumerique = {
   source?: string;
   structure_parente?: string;
   date_maj: Date;
-  services: Services;
+  services?: Services;
   publics_accueillis?: PublicsAccueillis;
   frais_a_charge?: FraisACharge;
   itinerance?: Itinerances;

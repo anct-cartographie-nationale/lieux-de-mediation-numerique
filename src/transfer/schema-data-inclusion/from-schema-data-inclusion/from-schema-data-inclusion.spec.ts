@@ -59,7 +59,7 @@ describe('from schema data inclusion', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      services: Services([Service.AideAuxDemarchesAdministratives]),
       date_maj: new Date('2022-10-10')
     });
   });
@@ -148,21 +148,14 @@ describe('from schema data inclusion', (): void => {
         complement_adresse: 'Le patio du bois de l’Aulne'
       }),
       services: Services([
-        Service.DevenirAutonomeDansLesDemarchesAdministratives,
-        Service.RealiserDesDemarchesAdministratives,
-        Service.PrendreEnMainUnSmartphoneOuUneTablette,
-        Service.PrendreEnMainUnOrdinateur,
-        Service.UtiliserLeNumerique,
-        Service.ApprofondirMaCultureNumerique,
-        Service.FavoriserMonInsertionProfessionnelle,
-        Service.AccederAUneConnexionInternet,
-        Service.AccederADuMateriel,
-        Service.EquiperEnMaterielInformatique,
-        Service.CreerEtDevelopperMonEntreprise,
-        Service.CreerAvecLeNumerique,
-        Service.AccompagnerLesDemarchesDeSante,
-        Service.PromouvoirLaCitoyenneteNumerique,
-        Service.SoutenirLaParentalite
+        Service.AideAuxDemarchesAdministratives,
+        Service.MaitriseDesOutilsNumeriquesDuQuotidien,
+        Service.ComprehensionDuMondeNumerique,
+        Service.InsertionProfessionnelleViaLeNumerique,
+        Service.AccesInternetEtMaterielInformatique,
+        Service.MaterielInformatiqueAPrixSolidaire,
+        Service.LoisirsEtCreationsNumeriques,
+        Service.ParentaliteEtEducationAvecLeNumerique
       ]),
       date_maj: new Date('2022-10-10'),
       localisation: Localisation({
@@ -287,7 +280,7 @@ describe('from schema data inclusion', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      services: Services([Service.AideAuxDemarchesAdministratives]),
       date_maj: new Date('2022-10-10')
     });
   });
@@ -324,7 +317,7 @@ describe('from schema data inclusion', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      services: Services([Service.AideAuxDemarchesAdministratives]),
       date_maj: new Date('2022-10-10')
     });
   });
@@ -383,7 +376,7 @@ describe('from schema data inclusion', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives, Service.AccederAUneConnexionInternet]),
+      services: Services([Service.AideAuxDemarchesAdministratives, Service.AccesInternetEtMaterielInformatique]),
       date_maj: new Date('2022-10-10')
     });
   });
@@ -428,7 +421,7 @@ describe('from schema data inclusion', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives, Service.AccederAUneConnexionInternet]),
+      services: Services([Service.AideAuxDemarchesAdministratives, Service.AccesInternetEtMaterielInformatique]),
       date_maj: new Date('2022-10-10'),
       frais_a_charge: FraisACharge([Frais.Payant, Frais.Gratuit])
     });
@@ -486,12 +479,7 @@ describe('from schema data inclusion', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([
-        Service.DevenirAutonomeDansLesDemarchesAdministratives,
-        Service.RealiserDesDemarchesAdministratives,
-        Service.PrendreEnMainUnSmartphoneOuUneTablette,
-        Service.PrendreEnMainUnOrdinateur
-      ]),
+      services: Services([Service.AideAuxDemarchesAdministratives, Service.MaitriseDesOutilsNumeriquesDuQuotidien]),
       date_maj: new Date('2022-10-10'),
       publics_accueillis: PublicsAccueillis([
         PublicAccueilli.Seniors,

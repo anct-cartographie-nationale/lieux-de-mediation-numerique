@@ -37,7 +37,7 @@ describe('to schema data.inclusion', (): void => {
         commune: 'Robinboeuf',
         voie: '3 RUE DE LECLERCQ'
       }),
-      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      services: Services([Service.AideAuxDemarchesAdministratives]),
       date_maj: new Date('2022-04-28'),
       presentation: {
         resume:
@@ -54,7 +54,12 @@ describe('to schema data.inclusion', (): void => {
         code_postal: '09891',
         adresse: '3 RUE DE LECLERCQ',
         date_maj: '2022-04-28T00:00:00.000Z',
-        thematiques: ['numerique', 'numerique--devenir-autonome-dans-les-demarches-administratives'],
+        thematiques: [
+          'numerique',
+          'numerique--realiser-des-demarches-administratives-avec-un-accompagnement',
+          'numerique--devenir-autonome-dans-les-demarches-administratives',
+          'numerique--accompagner-les-demarches-de-sante'
+        ],
         presentation_resume:
           'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle'
       }
@@ -74,21 +79,15 @@ describe('to schema data.inclusion', (): void => {
         complement_adresse: 'HOTEL DE VILLE'
       }),
       services: Services([
-        Service.DevenirAutonomeDansLesDemarchesAdministratives,
-        Service.RealiserDesDemarchesAdministratives,
-        Service.PrendreEnMainUnSmartphoneOuUneTablette,
-        Service.PrendreEnMainUnOrdinateur,
-        Service.UtiliserLeNumerique,
-        Service.ApprofondirMaCultureNumerique,
-        Service.FavoriserMonInsertionProfessionnelle,
-        Service.AccederAUneConnexionInternet,
-        Service.AccederADuMateriel,
-        Service.EquiperEnMaterielInformatique,
-        Service.CreerEtDevelopperMonEntreprise,
-        Service.CreerAvecLeNumerique,
-        Service.AccompagnerLesDemarchesDeSante,
-        Service.PromouvoirLaCitoyenneteNumerique,
-        Service.SoutenirLaParentalite
+        Service.MaterielInformatiqueAPrixSolidaire,
+        Service.AideAuxDemarchesAdministratives,
+        Service.MaitriseDesOutilsNumeriquesDuQuotidien,
+        Service.InsertionProfessionnelleViaLeNumerique,
+        Service.UtilisationSecuriseeDuNumerique,
+        Service.ParentaliteEtEducationAvecLeNumerique,
+        Service.LoisirsEtCreationsNumeriques,
+        Service.ComprehensionDuMondeNumerique,
+        Service.AccesInternetEtMaterielInformatique
       ]),
       date_maj: new Date('2022-04-28'),
       localisation: Localisation({
@@ -153,21 +152,21 @@ describe('to schema data.inclusion', (): void => {
         labels_autres: ['Nièvre médiation numérique'],
         thematiques: [
           'numerique',
-          'numerique--devenir-autonome-dans-les-demarches-administratives',
+          'numerique--s-equiper-en-materiel-informatique',
           'numerique--realiser-des-demarches-administratives-avec-un-accompagnement',
+          'numerique--devenir-autonome-dans-les-demarches-administratives',
+          'numerique--accompagner-les-demarches-de-sante',
           'numerique--prendre-en-main-un-smartphone-ou-une-tablette',
           'numerique--prendre-en-main-un-ordinateur',
           'numerique--utiliser-le-numerique-au-quotidien',
-          'numerique--approfondir-ma-culture-numerique',
           'numerique--favoriser-mon-insertion-professionnelle',
-          'numerique--acceder-a-une-connexion-internet',
-          'numerique--acceder-a-du-materiel',
-          'numerique--s-equiper-en-materiel-informatique',
           'numerique--creer-et-developper-mon-entreprise',
+          'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique',
           'numerique--creer-avec-le-numerique',
-          'numerique--accompagner-les-demarches-de-sante',
+          'numerique--approfondir-ma-culture-numerique',
           'numerique--promouvoir-la-citoyennete-numerique',
-          'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique'
+          'numerique--acceder-a-une-connexion-internet',
+          'numerique--acceder-a-du-materiel'
         ]
       }
     ]);
@@ -183,7 +182,7 @@ describe('to schema data.inclusion', (): void => {
         commune: 'Robinboeuf',
         voie: '3 RUE DE LECLERCQ'
       }),
-      services: Services([Service.AccederAUneConnexionInternet, Service.AccederADuMateriel]),
+      services: Services([Service.AccesInternetEtMaterielInformatique]),
       date_maj: new Date('2022-04-28'),
       source: 'solidagregateur'
     };
@@ -210,21 +209,15 @@ describe('to schema data.inclusion', (): void => {
         voie: '3 RUE DE LECLERCQ'
       }),
       services: Services([
-        Service.DevenirAutonomeDansLesDemarchesAdministratives,
-        Service.RealiserDesDemarchesAdministratives,
-        Service.PrendreEnMainUnSmartphoneOuUneTablette,
-        Service.PrendreEnMainUnOrdinateur,
-        Service.UtiliserLeNumerique,
-        Service.ApprofondirMaCultureNumerique,
-        Service.FavoriserMonInsertionProfessionnelle,
-        Service.AccederAUneConnexionInternet,
-        Service.AccederADuMateriel,
-        Service.EquiperEnMaterielInformatique,
-        Service.CreerEtDevelopperMonEntreprise,
-        Service.CreerAvecLeNumerique,
-        Service.AccompagnerLesDemarchesDeSante,
-        Service.PromouvoirLaCitoyenneteNumerique,
-        Service.SoutenirLaParentalite
+        Service.MaterielInformatiqueAPrixSolidaire,
+        Service.AideAuxDemarchesAdministratives,
+        Service.MaitriseDesOutilsNumeriquesDuQuotidien,
+        Service.InsertionProfessionnelleViaLeNumerique,
+        Service.UtilisationSecuriseeDuNumerique,
+        Service.ParentaliteEtEducationAvecLeNumerique,
+        Service.LoisirsEtCreationsNumeriques,
+        Service.ComprehensionDuMondeNumerique,
+        Service.AccesInternetEtMaterielInformatique
       ]),
       date_maj: new Date('2022-04-28'),
       source: 'solidagregateur',
@@ -261,21 +254,21 @@ describe('to schema data.inclusion', (): void => {
         modes_accueil: ['a-distance', 'en-presentiel'],
         thematiques: [
           'numerique',
-          'numerique--devenir-autonome-dans-les-demarches-administratives',
+          'numerique--s-equiper-en-materiel-informatique',
           'numerique--realiser-des-demarches-administratives-avec-un-accompagnement',
+          'numerique--devenir-autonome-dans-les-demarches-administratives',
+          'numerique--accompagner-les-demarches-de-sante',
           'numerique--prendre-en-main-un-smartphone-ou-une-tablette',
           'numerique--prendre-en-main-un-ordinateur',
           'numerique--utiliser-le-numerique-au-quotidien',
-          'numerique--approfondir-ma-culture-numerique',
           'numerique--favoriser-mon-insertion-professionnelle',
-          'numerique--acceder-a-une-connexion-internet',
-          'numerique--acceder-a-du-materiel',
-          'numerique--s-equiper-en-materiel-informatique',
           'numerique--creer-et-developper-mon-entreprise',
+          'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique',
           'numerique--creer-avec-le-numerique',
-          'numerique--accompagner-les-demarches-de-sante',
+          'numerique--approfondir-ma-culture-numerique',
           'numerique--promouvoir-la-citoyennete-numerique',
-          'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique'
+          'numerique--acceder-a-une-connexion-internet',
+          'numerique--acceder-a-du-materiel'
         ],
         prise_rdv: 'https://www.rdv-solidarites.fr/',
         frais: ['payant'],
@@ -306,7 +299,7 @@ describe('to schema data.inclusion', (): void => {
         commune: 'Robinboeuf',
         voie: '3 RUE DE LECLERCQ'
       }),
-      services: Services([Service.AccederAUneConnexionInternet, Service.AccederADuMateriel]),
+      services: Services([Service.AccesInternetEtMaterielInformatique]),
       date_maj: new Date('2022-04-28'),
       source: 'solidagregateur',
       modalites_accompagnement: ModalitesAccompagnement([ModaliteAccompagnement.ADistance])
@@ -334,7 +327,7 @@ describe('to schema data.inclusion', (): void => {
         commune: 'Robinboeuf',
         voie: '3 RUE DE LECLERCQ'
       }),
-      services: Services([Service.AccederAUneConnexionInternet, Service.AccederADuMateriel]),
+      services: Services([Service.AccesInternetEtMaterielInformatique]),
       date_maj: new Date('2022-04-28'),
       source: 'solidagregateur',
       modalites_accompagnement: ModalitesAccompagnement([ModaliteAccompagnement.EnAutonomie])
