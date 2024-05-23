@@ -2,25 +2,30 @@
 
 import {
   Adresse,
-  FraisACharge,
   Contact,
   Courriel,
+  FraisACharge,
+  Itinerances,
   LabelsNationaux,
   Localisation,
+  ModaliteAcces,
+  ModalitesAcces,
   ModalitesAccompagnement,
-  /* eslint-disable @typescript-eslint/no-shadow */
+  /* eslint-disable-next-line @typescript-eslint/no-shadow */
   Presentation,
   PublicsAccueillis,
+  Services,
+  toAccessibleLieu,
   Typologies,
-  Url,
-  Itinerances,
-  Services
+  Url
 } from '../../../models';
 import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 
 const toListOf = <T>(listItem: string): T => listItem as T;
 
 export const listFromString = <T>(stringList: string): T[] => stringList.split('|').map(toListOf<T>);
+
+const hasServices = (services?: Services): boolean => services != null && services.length > 0;
 
 export const servicesIfAny = (services?: string): { services?: Services } =>
   services == null ? {} : { services: Services(listFromString(services)) };
@@ -89,14 +94,19 @@ export const sourceIfAny = (source?: string): { source?: string } => (source == 
 export const structureParenteIfAny = (structureParente?: string): { structure_parente?: string } =>
   structureParente == null ? {} : { structure_parente: structureParente };
 
-export const publicsAccueillisIfAny = (publicsAccueillis?: string): { publics_accueillis?: PublicsAccueillis } =>
-  publicsAccueillis == null ? {} : { publics_accueillis: PublicsAccueillis(listFromString(publicsAccueillis)) };
+export const publicsAccueillisIfAny = (
+  publicsAccueillis?: string,
+  services?: Services
+): { publics_accueillis?: PublicsAccueillis } =>
+  publicsAccueillis == null || !hasServices(services)
+    ? {}
+    : { publics_accueillis: PublicsAccueillis(listFromString(publicsAccueillis)) };
 
-export const fraisAChargeIfAny = (conditionsAcces?: string): { frais_a_charge?: FraisACharge } =>
-  conditionsAcces == null ? {} : { frais_a_charge: FraisACharge(listFromString(conditionsAcces)) };
+export const fraisAChargeIfAny = (conditionsAcces?: string, services?: Services): { frais_a_charge?: FraisACharge } =>
+  conditionsAcces == null || !hasServices(services) ? {} : { frais_a_charge: FraisACharge(listFromString(conditionsAcces)) };
 
-export const itinerancesIfAny = (itinerance?: string): { itinerance?: Itinerances } =>
-  itinerance == null ? {} : { itinerance: Itinerances(listFromString(itinerance)) };
+export const itinerancesIfAny = (itinerance?: string, services?: Services): { itinerance?: Itinerances } =>
+  itinerance == null || !hasServices(services) ? {} : { itinerance: Itinerances(listFromString(itinerance)) };
 
 export const labelsNationauxIfAny = (labelsNationaux?: string): { labels_nationaux?: LabelsNationaux } =>
   labelsNationaux == null ? {} : { labels_nationaux: LabelsNationaux(listFromString(labelsNationaux)) };
@@ -105,11 +115,25 @@ export const labelsAutresIfAny = (labelsAutres?: string): { labels_autres?: stri
   labelsAutres == null ? {} : { labels_autres: listFromString(labelsAutres) };
 
 export const modalitesAccompagnementIfAny = (
-  modalitesAccompagnement?: string
+  modalitesAccompagnement?: string,
+  services?: Services
 ): { modalites_accompagnement?: ModalitesAccompagnement } =>
-  modalitesAccompagnement == null
+  modalitesAccompagnement == null || !hasServices(services)
     ? {}
     : { modalites_accompagnement: ModalitesAccompagnement(listFromString(modalitesAccompagnement)) };
+
+const PublicAccess = (modalitesAcces?: string): { modalites_acces?: ModalitesAcces } =>
+  modalitesAcces == null
+    ? {}
+    : {
+        modalites_acces: ModalitesAcces(listFromString<ModaliteAcces>(modalitesAcces).filter(toAccessibleLieu))
+      };
+const noPublicAccess = (): { modalites_acces: ModalitesAcces } => ({
+  modalites_acces: ModalitesAcces([ModaliteAcces.PasDePublic])
+});
+
+export const modalitesAccessIfAny = (modalitesAcces?: string, services?: Services): { modalites_acces?: ModalitesAcces } =>
+  hasServices(services) ? PublicAccess(modalitesAcces) : noPublicAccess();
 
 export const accessibiliteIfAny = (accessibilite?: string): { accessibilite?: Url } =>
   accessibilite == null ? {} : { accessibilite: Url(accessibilite) };

@@ -27,3 +27,5 @@ const isModalitesAcces = (modalitesAcces: ModaliteAcces[]): modalitesAcces is Mo
 /* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const ModalitesAcces = (modalitesAcces: ModaliteAcces[]): ModalitesAcces =>
   isModalitesAcces(modalitesAcces) ? modalitesAcces : throwModalitesAccesError(modalitesAcces);
+
+export const toAccessibleLieu = (modalitesAcces: ModaliteAcces): boolean => modalitesAcces !== ModaliteAcces.PasDePublic;
