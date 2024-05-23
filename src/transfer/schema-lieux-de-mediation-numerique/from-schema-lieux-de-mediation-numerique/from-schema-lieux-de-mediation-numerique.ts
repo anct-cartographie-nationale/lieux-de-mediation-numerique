@@ -14,13 +14,14 @@ import {
   modalitesAccompagnementIfAny,
   presentationIfAny,
   priseRdvIfAny,
-  publicsAccueillisIfAny,
   sourceIfAny,
   structureParenteIfAny,
   typologiesIfAny,
   itinerancesIfAny,
   servicesIfAny,
-  modalitesAccessIfAny
+  modalitesAccessIfAny,
+  publicsSpecifiquementAdressesIfAny,
+  priseEnChargeSpecifiqueIfAny
 } from './from-schema-lieux-de-mediation-numerique-fields';
 
 const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNumerique): Partial<LieuMediationNumerique> => {
@@ -34,7 +35,11 @@ const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNum
     ...presentationIfAny(schemaLieuMediationNumeriqueItem),
     ...sourceIfAny(schemaLieuMediationNumeriqueItem.source),
     ...structureParenteIfAny(schemaLieuMediationNumeriqueItem.structure_parente),
-    ...publicsAccueillisIfAny(schemaLieuMediationNumeriqueItem.publics_accueillis, servicesFound.services),
+    ...publicsSpecifiquementAdressesIfAny(
+      schemaLieuMediationNumeriqueItem.publics_specifiquement_adresses,
+      servicesFound.services
+    ),
+    ...priseEnChargeSpecifiqueIfAny(schemaLieuMediationNumeriqueItem.prise_en_charge_specifique, servicesFound.services),
     ...fraisAChargeIfAny(schemaLieuMediationNumeriqueItem.frais_a_charge, servicesFound.services),
     ...itinerancesIfAny(schemaLieuMediationNumeriqueItem.itinerance, servicesFound.services),
     ...labelsNationauxIfAny(schemaLieuMediationNumeriqueItem.labels_nationaux),

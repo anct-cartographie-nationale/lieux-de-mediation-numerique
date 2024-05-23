@@ -17,8 +17,10 @@ import {
   ModalitesAccompagnement,
   Nom,
   Pivot,
-  PublicAccueilli,
-  PublicsAccueillis,
+  PriseEnChargeSpecifique,
+  PrisesEnChargeSpecifiques,
+  PublicSpecifiquementAdresse,
+  PublicsSpecifiquementAdresses,
   Service,
   Services,
   Typologie,
@@ -236,18 +238,21 @@ describe('to schema data.inclusion', (): void => {
       ]),
       frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
       prise_rdv: Url('https://www.rdv-solidarites.fr/'),
-      publics_accueillis: PublicsAccueillis([
-        PublicAccueilli.Seniors,
-        PublicAccueilli.FamillesEnfants,
-        PublicAccueilli.Adultes,
-        PublicAccueilli.Jeunes,
-        PublicAccueilli.LanguesEtrangeres,
-        PublicAccueilli.DeficienceVisuelle,
-        PublicAccueilli.Surdite,
-        PublicAccueilli.HandicapsPsychiques,
-        PublicAccueilli.HandicapsMentaux,
-        PublicAccueilli.UniquementFemmes,
-        PublicAccueilli.Illettrisme
+      publics_specifiquement_adresses: PublicsSpecifiquementAdresses([
+        PublicSpecifiquementAdresse.Jeunes,
+        PublicSpecifiquementAdresse.Etudiants,
+        PublicSpecifiquementAdresse.FamillesEnfants,
+        PublicSpecifiquementAdresse.Seniors,
+        PublicSpecifiquementAdresse.Femmes
+      ]),
+      prise_en_charge_specifique: PrisesEnChargeSpecifiques([
+        PriseEnChargeSpecifique.Surdite,
+        PriseEnChargeSpecifique.HandicapsMoteurs,
+        PriseEnChargeSpecifique.HandicapsMentaux,
+        PriseEnChargeSpecifique.Illettrisme,
+        PriseEnChargeSpecifique.LanguesEtrangeresAnglais,
+        PriseEnChargeSpecifique.LanguesEtrangeresAutre,
+        PriseEnChargeSpecifique.DeficienceVisuelle
       ]),
       modalites_acces: ModalitesAcces([
         ModaliteAcces.SePresenter,
@@ -287,17 +292,15 @@ describe('to schema data.inclusion', (): void => {
         prise_rdv: 'https://www.rdv-solidarites.fr/',
         frais: ['payant'],
         profils: [
-          'seniors-65',
-          'familles-enfants',
-          'adultes',
-          'jeunes-16-26',
+          'surdite',
+          'handicaps-mentaux',
+          'personnes-en-situation-illettrisme',
           'public-langues-etrangeres',
           'deficience-visuelle',
-          'surdite',
-          'handicaps-psychiques',
-          'handicaps-mentaux',
-          'femmes',
-          'personnes-en-situation-illettrisme'
+          'jeunes-16-26',
+          'familles-enfants',
+          'seniors-65',
+          'femmes'
         ],
         modes_orientation_accompagnateur: ['telephoner', 'envoyer-un-mail', 'envoyer-un-mail-avec-une-fiche-de-prescription'],
         modes_orientation_beneficiaire: ['se-presenter', 'telephoner', 'envoyer-un-mail']

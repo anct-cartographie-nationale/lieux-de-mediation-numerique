@@ -59,9 +59,12 @@ export const presentationFields = (
 });
 
 export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueAccesFields => ({
-  ...(lieuMediationNumerique.publics_accueillis == null
+  ...(lieuMediationNumerique.publics_specifiquement_adresses == null
     ? {}
-    : { publics_accueillis: lieuMediationNumerique.publics_accueillis.join('|') }),
+    : { publics_specifiquement_adresses: lieuMediationNumerique.publics_specifiquement_adresses.join('|') }),
+  ...(lieuMediationNumerique.prise_en_charge_specifique == null
+    ? {}
+    : { prise_en_charge_specifique: lieuMediationNumerique.prise_en_charge_specifique.join('|') }),
   ...(lieuMediationNumerique.frais_a_charge == null ? {} : { frais_a_charge: lieuMediationNumerique.frais_a_charge.join('|') }),
   ...(lieuMediationNumerique.itinerance == null ? {} : { itinerance: lieuMediationNumerique.itinerance.join('|') }),
   ...(lieuMediationNumerique.modalites_acces == null

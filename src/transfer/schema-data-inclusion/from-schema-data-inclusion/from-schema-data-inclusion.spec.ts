@@ -17,8 +17,10 @@ import {
   ModalitesAccompagnement,
   Nom,
   Pivot,
-  PublicAccueilli,
-  PublicsAccueillis,
+  PriseEnChargeSpecifique,
+  PrisesEnChargeSpecifiques,
+  PublicSpecifiquementAdresse,
+  PublicsSpecifiquementAdresses,
   Service,
   Services,
   ServicesError,
@@ -185,18 +187,18 @@ describe('from schema data inclusion', (): void => {
       },
       source: 'Hubik',
       structure_parente: 'Pôle emploi',
-      publics_accueillis: PublicsAccueillis([
-        PublicAccueilli.Seniors,
-        PublicAccueilli.FamillesEnfants,
-        PublicAccueilli.Adultes,
-        PublicAccueilli.Jeunes,
-        PublicAccueilli.LanguesEtrangeres,
-        PublicAccueilli.DeficienceVisuelle,
-        PublicAccueilli.Surdite,
-        PublicAccueilli.HandicapsPsychiques,
-        PublicAccueilli.HandicapsMentaux,
-        PublicAccueilli.UniquementFemmes,
-        PublicAccueilli.Illettrisme
+      publics_specifiquement_adresses: PublicsSpecifiquementAdresses([
+        PublicSpecifiquementAdresse.Seniors,
+        PublicSpecifiquementAdresse.FamillesEnfants,
+        PublicSpecifiquementAdresse.Jeunes,
+        PublicSpecifiquementAdresse.Femmes
+      ]),
+      prise_en_charge_specifique: PrisesEnChargeSpecifiques([
+        PriseEnChargeSpecifique.LanguesEtrangeresAutre,
+        PriseEnChargeSpecifique.DeficienceVisuelle,
+        PriseEnChargeSpecifique.Surdite,
+        PriseEnChargeSpecifique.HandicapsMentaux,
+        PriseEnChargeSpecifique.Illettrisme
       ]),
       frais_a_charge: FraisACharge([Frais.GratuitSousCondition]),
       labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC]),
@@ -500,11 +502,10 @@ describe('from schema data inclusion', (): void => {
         ModaliteAcces.ContacterParMail
       ]),
       date_maj: new Date('2022-10-10'),
-      publics_accueillis: PublicsAccueillis([
-        PublicAccueilli.Seniors,
-        PublicAccueilli.FamillesEnfants,
-        PublicAccueilli.Adultes,
-        PublicAccueilli.Jeunes
+      publics_specifiquement_adresses: PublicsSpecifiquementAdresses([
+        PublicSpecifiquementAdresse.Seniors,
+        PublicSpecifiquementAdresse.FamillesEnfants,
+        PublicSpecifiquementAdresse.Jeunes
       ]),
       frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
       modalites_accompagnement: ModalitesAccompagnement([

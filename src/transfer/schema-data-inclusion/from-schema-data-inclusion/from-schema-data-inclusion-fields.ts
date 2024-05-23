@@ -13,15 +13,17 @@ import {
   ModalitesAccompagnement,
   /* eslint-disable-next-line @typescript-eslint/no-shadow */
   Presentation,
-  PublicAccueilli,
-  PublicsAccueillis,
   Service,
   Services,
   Typologie,
   Typologies,
   Url,
   ModaliteAcces,
-  ModalitesAcces
+  ModalitesAcces,
+  PrisesEnChargeSpecifiques,
+  PublicsSpecifiquementAdresses,
+  PublicSpecifiquementAdresse,
+  PriseEnChargeSpecifique
 } from '../../../models';
 import {
   ModeOrientationAccompagnateur,
@@ -82,18 +84,22 @@ const TYPES_TO_MODALITES_ACCOMPAGNEMENT_MAP: Map<string, ModaliteAccompagnement>
   ['atelier', ModaliteAccompagnement.DansUnAtelier]
 ]);
 
-const PROFILS_TO_PUBLICS_ACCUEILLIS: Map<string, PublicAccueilli> = new Map<string, PublicAccueilli>([
-  ['seniors-65', PublicAccueilli.Seniors],
-  ['familles-enfants', PublicAccueilli.FamillesEnfants],
-  ['adultes', PublicAccueilli.Adultes],
-  ['jeunes-16-26', PublicAccueilli.Jeunes],
-  ['public-langues-etrangeres', PublicAccueilli.LanguesEtrangeres],
-  ['deficience-visuelle', PublicAccueilli.DeficienceVisuelle],
-  ['surdite', PublicAccueilli.Surdite],
-  ['handicaps-psychiques', PublicAccueilli.HandicapsPsychiques],
-  ['handicaps-mentaux', PublicAccueilli.HandicapsMentaux],
-  ['femmes', PublicAccueilli.UniquementFemmes],
-  ['personnes-en-situation-illettrisme', PublicAccueilli.Illettrisme]
+const PROFILS_TO_PRISES_EN_CHARGE_SPECIFIQUE: Map<string, PriseEnChargeSpecifique> = new Map<string, PriseEnChargeSpecifique>([
+  ['surdite', PriseEnChargeSpecifique.Surdite],
+  ['handicaps-mentaux', PriseEnChargeSpecifique.HandicapsMentaux],
+  ['personnes-en-situation-illettrisme', PriseEnChargeSpecifique.Illettrisme],
+  ['public-langues-etrangeres', PriseEnChargeSpecifique.LanguesEtrangeresAutre],
+  ['deficience-visuelle', PriseEnChargeSpecifique.DeficienceVisuelle]
+]);
+
+const PROFILS_TO_PUBLICS_SPECIFIQUEMENT_ADRESSES: Map<string, PublicSpecifiquementAdresse> = new Map<
+  string,
+  PublicSpecifiquementAdresse
+>([
+  ['jeunes-16-26', PublicSpecifiquementAdresse.Jeunes],
+  ['familles-enfants', PublicSpecifiquementAdresse.FamillesEnfants],
+  ['seniors-65', PublicSpecifiquementAdresse.Seniors],
+  ['femmes', PublicSpecifiquementAdresse.Femmes]
 ]);
 
 export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>([
@@ -266,14 +272,38 @@ export const presentationFromDataInclusion = (
         }
       };
 
-export const publicsAccueillisFromDataInclusion = (profils?: string[]): { publics_accueillis?: PublicsAccueillis } =>
+export const publicSpecifiquementAdresseFromDataInclusion = (
+  profils?: string[]
+): { publics_specifiquement_adresses?: PublicsSpecifiquementAdresses } =>
   profils == null || profils.length === 0
     ? {}
     : {
-        publics_accueillis: PublicsAccueillis(
+        publics_specifiquement_adresses: PublicsSpecifiquementAdresses(
           profils
-            .map((profil: string): PublicAccueilli | undefined => PROFILS_TO_PUBLICS_ACCUEILLIS.get(profil))
-            .filter((publicAccueilli?: PublicAccueilli): publicAccueilli is PublicAccueilli => publicAccueilli != null)
+            .map((profil: string): PublicSpecifiquementAdresse | undefined =>
+              PROFILS_TO_PUBLICS_SPECIFIQUEMENT_ADRESSES.get(profil)
+            )
+            .filter(
+              (
+                publicSpecifiquementAdresse?: PublicSpecifiquementAdresse
+              ): publicSpecifiquementAdresse is PublicSpecifiquementAdresse => publicSpecifiquementAdresse != null
+            )
+        )
+      };
+
+export const priseEnChargeSpecifiqueFromDataInclusion = (
+  profils?: string[]
+): { prise_en_charge_specifique?: PrisesEnChargeSpecifiques } =>
+  profils == null || profils.length === 0
+    ? {}
+    : {
+        prise_en_charge_specifique: PrisesEnChargeSpecifiques(
+          profils
+            .map((profil: string): PriseEnChargeSpecifique | undefined => PROFILS_TO_PRISES_EN_CHARGE_SPECIFIQUE.get(profil))
+            .filter(
+              (priseEnChargeSpecifique?: PriseEnChargeSpecifique): priseEnChargeSpecifique is PriseEnChargeSpecifique =>
+                priseEnChargeSpecifique != null
+            )
         )
       };
 

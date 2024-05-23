@@ -13,7 +13,8 @@ import {
   ModalitesAccompagnement,
   /* eslint-disable-next-line @typescript-eslint/no-shadow */
   Presentation,
-  PublicsAccueillis,
+  PrisesEnChargeSpecifiques,
+  PublicsSpecifiquementAdresses,
   Services,
   toAccessibleLieu,
   Typologies,
@@ -94,13 +95,21 @@ export const sourceIfAny = (source?: string): { source?: string } => (source == 
 export const structureParenteIfAny = (structureParente?: string): { structure_parente?: string } =>
   structureParente == null ? {} : { structure_parente: structureParente };
 
-export const publicsAccueillisIfAny = (
-  publicsAccueillis?: string,
+export const publicsSpecifiquementAdressesIfAny = (
+  publicsSpecifiquementAdresses?: string,
   services?: Services
-): { publics_accueillis?: PublicsAccueillis } =>
-  publicsAccueillis == null || !hasServices(services)
+): { publics_specifiquement_adresses?: PublicsSpecifiquementAdresses } =>
+  publicsSpecifiquementAdresses == null || !hasServices(services)
     ? {}
-    : { publics_accueillis: PublicsAccueillis(listFromString(publicsAccueillis)) };
+    : { publics_specifiquement_adresses: PublicsSpecifiquementAdresses(listFromString(publicsSpecifiquementAdresses)) };
+
+export const priseEnChargeSpecifiqueIfAny = (
+  priseEnChargeSpecifique?: string,
+  services?: Services
+): { prise_en_charge_specifique?: PrisesEnChargeSpecifiques } =>
+  priseEnChargeSpecifique == null || !hasServices(services)
+    ? {}
+    : { prise_en_charge_specifique: PrisesEnChargeSpecifiques(listFromString(priseEnChargeSpecifique)) };
 
 export const fraisAChargeIfAny = (conditionsAcces?: string, services?: Services): { frais_a_charge?: FraisACharge } =>
   conditionsAcces == null || !hasServices(services) ? {} : { frais_a_charge: FraisACharge(listFromString(conditionsAcces)) };

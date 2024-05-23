@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase */
 
-import { Id, LieuMediationNumerique, Nom, Pivot } from '../../../models';
+import {
+  Id,
+  LieuMediationNumerique,
+  Nom,
+  Pivot,
+  PrisesEnChargeSpecifiques,
+  PublicsSpecifiquementAdresses
+} from '../../../models';
 import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import { MandatorySiretOrRnaError } from './errors/mandatory-siret-or-rna.error';
 import {
@@ -22,8 +29,9 @@ import {
   modalitesAccesFromDataInclusion,
   modalitesAccompagnementFromDataInclusion,
   presentationFromDataInclusion,
+  priseEnChargeSpecifiqueFromDataInclusion,
   priseRdvFromDataInclusion,
-  publicsAccueillisFromDataInclusion,
+  publicSpecifiquementAdresseFromDataInclusion,
   servicesFromDataInclusion,
   sourceFromDataInclusion,
   structureParenteFromDataInclusion,
@@ -65,6 +73,18 @@ const throwMandatorySiretOrRnaError = (): Pivot => {
   throw new MandatorySiretOrRnaError();
 };
 
+const ifAnyPublicSpecifiquementAdresseInArray = (publicSpecifiquementAdresse: {
+  publics_specifiquement_adresses?: PublicsSpecifiquementAdresses;
+}): {
+  publics_specifiquement_adresses?: PublicsSpecifiquementAdresses;
+} => ((publicSpecifiquementAdresse.publics_specifiquement_adresses?.length ?? 0) > 0 ? publicSpecifiquementAdresse : {});
+
+const ifAnyPriseEnChargeSpecifiqueInArray = (priseEnChargeSpecifique: {
+  prise_en_charge_specifique?: PrisesEnChargeSpecifiques;
+}): {
+  prise_en_charge_specifique?: PrisesEnChargeSpecifiques;
+} => ((priseEnChargeSpecifique.prise_en_charge_specifique?.length ?? 0) > 0 ? priseEnChargeSpecifique : {});
+
 const fromSchemaDataInclusionItem = (
   structure: SchemaStructureDataInclusion,
   service: SchemaServiceDataInclusion
@@ -89,7 +109,8 @@ const fromSchemaDataInclusionItem = (
   ),
   ...presentationFromDataInclusion(structure.presentation_detail, structure.presentation_resume),
   ...priseRdvFromDataInclusion(service.prise_rdv),
-  ...publicsAccueillisFromDataInclusion(service.profils),
+  ...ifAnyPublicSpecifiquementAdresseInArray(publicSpecifiquementAdresseFromDataInclusion(service.profils)),
+  ...ifAnyPriseEnChargeSpecifiqueInArray(priseEnChargeSpecifiqueFromDataInclusion(service.profils)),
   ...structureParenteFromDataInclusion(structure.structure_parente),
   ...(structure.typologie == null ? {} : typologiesFromDataInclusion(TYPOLOGIES_MAP.get(structure.typologie)))
 });

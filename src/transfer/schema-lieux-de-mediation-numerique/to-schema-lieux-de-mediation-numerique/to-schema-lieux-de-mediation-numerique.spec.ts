@@ -19,13 +19,15 @@ import {
   ModalitesAccompagnement,
   Nom,
   Pivot,
-  PublicAccueilli,
-  PublicsAccueillis,
   Service,
   Services,
   Typologie,
   Typologies,
-  Url
+  Url,
+  PublicsSpecifiquementAdresses,
+  PublicSpecifiquementAdresse,
+  PrisesEnChargeSpecifiques,
+  PriseEnChargeSpecifique
 } from '../../../models';
 import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import { toSchemaLieuxDeMediationNumerique } from './to-schema-lieux-de-mediation-numerique';
@@ -105,10 +107,21 @@ describe('to schema lieux de mediation numerique', (): void => {
       },
       source: 'Hubik',
       structure_parente: 'Pôle emploi',
-      publics_accueillis: PublicsAccueillis([
-        PublicAccueilli.FamillesEnfants,
-        PublicAccueilli.Adultes,
-        PublicAccueilli.DeficienceVisuelle
+      publics_specifiquement_adresses: PublicsSpecifiquementAdresses([
+        PublicSpecifiquementAdresse.Jeunes,
+        PublicSpecifiquementAdresse.Etudiants,
+        PublicSpecifiquementAdresse.FamillesEnfants,
+        PublicSpecifiquementAdresse.Seniors,
+        PublicSpecifiquementAdresse.Femmes
+      ]),
+      prise_en_charge_specifique: PrisesEnChargeSpecifiques([
+        PriseEnChargeSpecifique.Surdite,
+        PriseEnChargeSpecifique.HandicapsMoteurs,
+        PriseEnChargeSpecifique.HandicapsMentaux,
+        PriseEnChargeSpecifique.Illettrisme,
+        PriseEnChargeSpecifique.LanguesEtrangeresAnglais,
+        PriseEnChargeSpecifique.LanguesEtrangeresAutre,
+        PriseEnChargeSpecifique.DeficienceVisuelle
       ]),
       frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
       itinerance: Itinerances([Itinerance.Itinerant, Itinerance.Fixe]),
@@ -152,7 +165,22 @@ describe('to schema lieux de mediation numerique', (): void => {
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.',
         source: 'Hubik',
         structure_parente: 'Pôle emploi',
-        publics_accueillis: 'Familles/enfants|Adultes|Déficience visuelle',
+        publics_specifiquement_adresses: [
+          PublicSpecifiquementAdresse.Jeunes,
+          PublicSpecifiquementAdresse.Etudiants,
+          PublicSpecifiquementAdresse.FamillesEnfants,
+          PublicSpecifiquementAdresse.Seniors,
+          PublicSpecifiquementAdresse.Femmes
+        ].join('|'),
+        prise_en_charge_specifique: [
+          PriseEnChargeSpecifique.Surdite,
+          PriseEnChargeSpecifique.HandicapsMoteurs,
+          PriseEnChargeSpecifique.HandicapsMentaux,
+          PriseEnChargeSpecifique.Illettrisme,
+          PriseEnChargeSpecifique.LanguesEtrangeresAnglais,
+          PriseEnChargeSpecifique.LanguesEtrangeresAutre,
+          PriseEnChargeSpecifique.DeficienceVisuelle
+        ].join('|'),
         modalites_acces: 'Se présenter|Téléphoner|Contacter par mail|Envoyer un mail avec une fiche de prescription',
         frais_a_charge:
           "Payant : L'accès au lieu et/ou à ses services est payant|Gratuit sous condition : La gratuité est conditionnée à des critères (situation familiale, convention avec un organisme social...)",

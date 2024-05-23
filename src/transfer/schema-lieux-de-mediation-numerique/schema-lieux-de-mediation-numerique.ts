@@ -34,7 +34,8 @@ export type SchemaLieuMediationNumeriquePresentationFields = {
 };
 
 export type SchemaLieuMediationNumeriqueAccesFields = {
-  publics_accueillis?: string;
+  publics_specifiquement_adresses?: string;
+  prise_en_charge_specifique?: string;
   frais_a_charge?: string;
   modalites_acces?: string;
   modalites_accompagnement?: string;

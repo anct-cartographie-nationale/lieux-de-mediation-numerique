@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { Adresse } from './adresse';
+import { PrisesEnChargeSpecifiques } from './prise-en-charge-specifique';
+import { PublicsSpecifiquementAdresses } from './publics-specifiquement-adresses';
 import { Typologies } from './typologie';
 import { Localisation } from './localisation';
 import { Contact } from './contact';
 /* eslint-disable-next-line @typescript-eslint/no-shadow */
 import { Presentation } from './presentation';
 import { Services } from './service';
-import { PublicsAccueillis } from './public-accueilli';
 import { FraisACharge } from './frais-a-charge';
 import { Itinerances } from './itinerance';
 import { ModalitesAccompagnement } from './modalite-accompagnement';
@@ -32,7 +33,8 @@ export type LieuMediationNumerique = {
   structure_parente?: string;
   date_maj: Date;
   services?: Services;
-  publics_accueillis?: PublicsAccueillis;
+  publics_specifiquement_adresses?: PublicsSpecifiquementAdresses;
+  prise_en_charge_specifique?: PrisesEnChargeSpecifiques;
   modalites_acces?: ModalitesAcces;
   frais_a_charge?: FraisACharge;
   itinerance?: Itinerances;

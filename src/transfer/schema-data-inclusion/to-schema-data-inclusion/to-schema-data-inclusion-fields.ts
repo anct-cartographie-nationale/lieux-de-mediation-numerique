@@ -7,7 +7,8 @@ import {
   ModaliteAcces,
   ModaliteAccompagnement,
   ModalitesAccompagnement,
-  PublicAccueilli,
+  PriseEnChargeSpecifique,
+  PublicSpecifiquementAdresse,
   Service
 } from '../../../models';
 import {
@@ -71,18 +72,20 @@ const CONDITION_ACCES_TO_FRAIS: Map<Frais, string> = new Map<Frais, string>([
   [Frais.Payant, 'payant']
 ]);
 
-const PUBLICS_ACCUEILLIS_TO_PROFILS: Map<PublicAccueilli, string> = new Map<PublicAccueilli, string>([
-  [PublicAccueilli.Seniors, 'seniors-65'],
-  [PublicAccueilli.FamillesEnfants, 'familles-enfants'],
-  [PublicAccueilli.Adultes, 'adultes'],
-  [PublicAccueilli.Jeunes, 'jeunes-16-26'],
-  [PublicAccueilli.LanguesEtrangeres, 'public-langues-etrangeres'],
-  [PublicAccueilli.DeficienceVisuelle, 'deficience-visuelle'],
-  [PublicAccueilli.Surdite, 'surdite'],
-  [PublicAccueilli.HandicapsPsychiques, 'handicaps-psychiques'],
-  [PublicAccueilli.HandicapsMentaux, 'handicaps-mentaux'],
-  [PublicAccueilli.UniquementFemmes, 'femmes'],
-  [PublicAccueilli.Illettrisme, 'personnes-en-situation-illettrisme']
+const PUBLICS_SPECIFIQUES: Map<PriseEnChargeSpecifique | PublicSpecifiquementAdresse, string> = new Map<
+  PriseEnChargeSpecifique | PublicSpecifiquementAdresse,
+  string
+>([
+  [PublicSpecifiquementAdresse.Seniors, 'seniors-65'],
+  [PublicSpecifiquementAdresse.FamillesEnfants, 'familles-enfants'],
+  [PublicSpecifiquementAdresse.Jeunes, 'jeunes-16-26'],
+  [PublicSpecifiquementAdresse.Femmes, 'femmes'],
+  [PriseEnChargeSpecifique.LanguesEtrangeresAnglais, 'public-langues-etrangeres'],
+  [PriseEnChargeSpecifique.LanguesEtrangeresAutre, 'public-langues-etrangeres'],
+  [PriseEnChargeSpecifique.DeficienceVisuelle, 'deficience-visuelle'],
+  [PriseEnChargeSpecifique.Surdite, 'surdite'],
+  [PriseEnChargeSpecifique.HandicapsMentaux, 'handicaps-mentaux'],
+  [PriseEnChargeSpecifique.Illettrisme, 'personnes-en-situation-illettrisme']
 ]);
 
 const MODALITE_ACCESS_TO_MODE_ORIENTATION_BENEFICIAIRE: Map<ModaliteAcces, ModeOrientationBeneficiaire> = new Map<
@@ -107,7 +110,7 @@ const LABELS_NATIONAUX_MAP: Map<LabelNational, string> = new Map<LabelNational, 
   [LabelNational.AidantsConnect, 'aidants-connect'],
   [LabelNational.APTIC, 'aptic'],
   [LabelNational.CampusConnecte, 'campus-connecte'],
-  [LabelNational.CNFS, 'conseiller-numerique'], // todo: missing label in data.inclusion
+  [LabelNational.CNFS, 'conseiller-numerique'],
   [LabelNational.FabriquesDeTerritoire, 'fabrique-de-territoire'],
   [LabelNational.FranceServices, 'france-service'],
   [LabelNational.FrenchTech, 'french-tech'],
@@ -271,10 +274,20 @@ const modesAccueilFromModalitesAccompagnement = (lieuMediationNumerique: LieuMed
         ]
       };
 
-const profilsFromPublicsAccueillis = (lieuMediationNumerique: LieuMediationNumerique): { profils: string[] } => ({
-  profils: (lieuMediationNumerique.publics_accueillis ?? [])
-    .map((publicAccueilli: PublicAccueilli): string | null => PUBLICS_ACCUEILLIS_TO_PROFILS.get(publicAccueilli) ?? null)
-    .filter((profil: string | null): profil is string => profil != null)
+const profilsFromPublicsSpecifiques = (lieuMediationNumerique: LieuMediationNumerique): { profils: string[] } => ({
+  profils: Array.from(
+    new Set(
+      [
+        ...(lieuMediationNumerique.prise_en_charge_specifique ?? []),
+        ...(lieuMediationNumerique.publics_specifiquement_adresses ?? [])
+      ]
+        .map(
+          (publiqueSpecifique: PriseEnChargeSpecifique | PublicSpecifiquementAdresse): string | null =>
+            PUBLICS_SPECIFIQUES.get(publiqueSpecifique) ?? null
+        )
+        .filter((profil: string | null): profil is string => profil != null)
+    )
+  )
 });
 
 const modeOrientationFromModalitesAcces = (
@@ -310,6 +323,9 @@ export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): Sch
   ...(lieuMediationNumerique.frais_a_charge == null
     ? {}
     : fraisFromConditionAcces(lieuMediationNumerique.frais_a_charge.at(0))),
-  ...(lieuMediationNumerique.publics_accueillis == null ? {} : profilsFromPublicsAccueillis(lieuMediationNumerique)),
+  ...(lieuMediationNumerique.publics_specifiquement_adresses == null &&
+  lieuMediationNumerique.prise_en_charge_specifique == null
+    ? {}
+    : profilsFromPublicsSpecifiques(lieuMediationNumerique)),
   ...(lieuMediationNumerique.modalites_acces == null ? {} : modeOrientationFromModalitesAcces(lieuMediationNumerique))
 });
