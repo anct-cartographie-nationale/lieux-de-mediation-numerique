@@ -3,15 +3,17 @@
 import {
   Adresse,
   Contact,
+  Courriel,
   Frais,
   FraisACharge,
-  Courriel,
   Id,
   LabelNational,
   LabelsNationaux,
   LieuMediationNumerique,
   Localisation,
+  ModaliteAcces,
   ModaliteAccompagnement,
+  ModalitesAcces,
   ModalitesAccompagnement,
   Nom,
   Pivot,
@@ -69,8 +71,8 @@ describe('to schema data.inclusion', (): void => {
   it('should convert full lieux de mediation numerique model to data.inclusion structure schema', (): void => {
     const lieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
-      nom: Nom('MOBILETTE'),
       pivot: Pivot('60487647500499'),
+      nom: Nom('MOBILETTE'),
       adresse: Adresse({
         code_postal: '09891',
         commune: 'Robinboeuf',
@@ -78,25 +80,11 @@ describe('to schema data.inclusion', (): void => {
         code_insee: '09890',
         complement_adresse: 'HOTEL DE VILLE'
       }),
-      services: Services([
-        Service.MaterielInformatiqueAPrixSolidaire,
-        Service.AideAuxDemarchesAdministratives,
-        Service.MaitriseDesOutilsNumeriquesDuQuotidien,
-        Service.InsertionProfessionnelleViaLeNumerique,
-        Service.UtilisationSecuriseeDuNumerique,
-        Service.ParentaliteEtEducationAvecLeNumerique,
-        Service.LoisirsEtCreationsNumeriques,
-        Service.ComprehensionDuMondeNumerique,
-        Service.AccesInternetEtMaterielInformatique
-      ]),
-      date_maj: new Date('2022-04-28'),
       localisation: Localisation({
         latitude: 48.7703,
         longitude: 7.848133
       }),
-      accessibilite: Url(
-        'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
-      ),
+      typologies: Typologies([Typologie.ASSO]),
       contact: Contact({
         site_web: [Url('https://www.asso-gonzalez.net/'), Url('https://www.facebook.com/asso-gonzalez.net/')],
         telephone: '0102030405',
@@ -109,6 +97,20 @@ describe('to schema data.inclusion', (): void => {
         detail:
           "connaissance de l'offre de transport du territoire / accès à un véhicule 2 ou 4 roues / transport solidaire / accès au permis"
       },
+      source: 'solidagregateur',
+      structure_parente: '7713e292-abd1-42fc-b1f0-071b7e7a2f61',
+      date_maj: new Date('2022-04-28'),
+      services: Services([
+        Service.MaterielInformatiqueAPrixSolidaire,
+        Service.AideAuxDemarchesAdministratives,
+        Service.MaitriseDesOutilsNumeriquesDuQuotidien,
+        Service.InsertionProfessionnelleViaLeNumerique,
+        Service.UtilisationSecuriseeDuNumerique,
+        Service.ParentaliteEtEducationAvecLeNumerique,
+        Service.LoisirsEtCreationsNumeriques,
+        Service.ComprehensionDuMondeNumerique,
+        Service.AccesInternetEtMaterielInformatique
+      ]),
       labels_nationaux: LabelsNationaux([
         LabelNational.FranceServices,
         LabelNational.APTIC,
@@ -117,9 +119,9 @@ describe('to schema data.inclusion', (): void => {
         LabelNational.RelaisPoleEmploi
       ]),
       labels_autres: ['Nièvre médiation numérique'],
-      source: 'solidagregateur',
-      structure_parente: '7713e292-abd1-42fc-b1f0-071b7e7a2f61',
-      typologies: Typologies([Typologie.ASSO])
+      accessibilite: Url(
+        'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
+      )
     };
 
     expect(toSchemaStructuresDataInclusion([lieuMediationNumerique])).toStrictEqual<SchemaStructureDataInclusion[]>([
@@ -201,13 +203,18 @@ describe('to schema data.inclusion', (): void => {
   it('should convert full lieux de mediation numerique model to data.inclusion service schema', (): void => {
     const lieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
-      nom: Nom('MOBILETTE'),
       pivot: Pivot('60487647500499'),
+      nom: Nom('MOBILETTE'),
       adresse: Adresse({
         code_postal: '09891',
         commune: 'Robinboeuf',
         voie: '3 RUE DE LECLERCQ'
       }),
+      localisation: Localisation({
+        latitude: 48.7703,
+        longitude: 7.848133
+      }),
+      // typologies: Typologies([Typologie.ASSO]),
       services: Services([
         Service.MaterielInformatiqueAPrixSolidaire,
         Service.AideAuxDemarchesAdministratives,
@@ -241,6 +248,13 @@ describe('to schema data.inclusion', (): void => {
         PublicAccueilli.HandicapsMentaux,
         PublicAccueilli.UniquementFemmes,
         PublicAccueilli.Illettrisme
+      ]),
+      modalites_acces: ModalitesAcces([
+        ModaliteAcces.SePresenter,
+        ModaliteAcces.Telephoner,
+        ModaliteAcces.ContacterParMail,
+        ModaliteAcces.PrescriptionParMail,
+        ModaliteAcces.PrendreRdvEnLigne
       ])
     };
 
@@ -284,7 +298,9 @@ describe('to schema data.inclusion', (): void => {
           'handicaps-mentaux',
           'femmes',
           'personnes-en-situation-illettrisme'
-        ]
+        ],
+        modes_orientation_accompagnateur: ['telephoner', 'envoyer-un-mail', 'envoyer-un-mail-avec-une-fiche-de-prescription'],
+        modes_orientation_beneficiaire: ['se-presenter', 'telephoner', 'envoyer-un-mail']
       }
     ]);
   });

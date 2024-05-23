@@ -17,4 +17,5 @@ export * from './url';
 export * from './lieu-mediation-numerique';
 export * from './model';
 export * from './presentation';
+export * from './modalite-acces';
 export * from './courriel';

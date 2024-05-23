@@ -13,10 +13,13 @@ import {
   localisationFromDataInclusion,
   mergeFrais,
   mergeModesAccueil,
+  mergeModesOrientationAccompagnateur,
+  mergeModesOrientationBeneficiaire,
   mergePriseRdv,
   mergeProfils,
   mergeThematiques,
   mergeTypes,
+  modalitesAccesFromDataInclusion,
   modalitesAccompagnementFromDataInclusion,
   presentationFromDataInclusion,
   priseRdvFromDataInclusion,
@@ -38,7 +41,12 @@ const toSingleService = (
   ...mergeProfils(mergedService.profils, service.profils),
   ...mergeTypes(mergedService.types, service.types),
   ...mergeModesAccueil(mergedService.modes_accueil, service.modes_accueil),
-  ...mergePriseRdv(mergedService.prise_rdv, service.prise_rdv)
+  ...mergePriseRdv(mergedService.prise_rdv, service.prise_rdv),
+  ...mergeModesOrientationBeneficiaire(mergedService.modes_orientation_beneficiaire, service.modes_orientation_beneficiaire),
+  ...mergeModesOrientationAccompagnateur(
+    mergedService.modes_orientation_accompagnateur,
+    service.modes_orientation_accompagnateur
+  )
 });
 
 export const mergeServices = (
@@ -75,6 +83,10 @@ const fromSchemaDataInclusionItem = (
   ...horairesFromDataInclusion(structure.horaires_ouverture),
   ...labelsFromDataInclusion(structure.labels_nationaux, structure.labels_autres),
   ...modalitesAccompagnementFromDataInclusion(service.types, service.modes_accueil),
+  ...modalitesAccesFromDataInclusion(
+    [...(service.modes_orientation_beneficiaire ?? []), ...(service.modes_orientation_accompagnateur ?? [])],
+    priseRdvFromDataInclusion(service.prise_rdv)
+  ),
   ...presentationFromDataInclusion(structure.presentation_detail, structure.presentation_resume),
   ...priseRdvFromDataInclusion(service.prise_rdv),
   ...publicsAccueillisFromDataInclusion(service.profils),

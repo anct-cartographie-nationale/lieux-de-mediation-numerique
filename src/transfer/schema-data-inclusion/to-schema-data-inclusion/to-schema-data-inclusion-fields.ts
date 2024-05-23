@@ -4,12 +4,15 @@ import {
   Frais,
   LabelNational,
   LieuMediationNumerique,
+  ModaliteAcces,
   ModaliteAccompagnement,
   ModalitesAccompagnement,
   PublicAccueilli,
   Service
 } from '../../../models';
 import {
+  ModeOrientationAccompagnateur,
+  ModeOrientationBeneficiaire,
   SchemaStructureDataInclusionAccesFields,
   SchemaStructureDataInclusionAdresseFields,
   SchemaStructureDataInclusionCollecteFields,
@@ -80,6 +83,24 @@ const PUBLICS_ACCUEILLIS_TO_PROFILS: Map<PublicAccueilli, string> = new Map<Publ
   [PublicAccueilli.HandicapsMentaux, 'handicaps-mentaux'],
   [PublicAccueilli.UniquementFemmes, 'femmes'],
   [PublicAccueilli.Illettrisme, 'personnes-en-situation-illettrisme']
+]);
+
+const MODALITE_ACCESS_TO_MODE_ORIENTATION_BENEFICIAIRE: Map<ModaliteAcces, ModeOrientationBeneficiaire> = new Map<
+  ModaliteAcces,
+  ModeOrientationBeneficiaire
+>([
+  [ModaliteAcces.ContacterParMail, 'envoyer-un-mail'],
+  [ModaliteAcces.SePresenter, 'se-presenter'],
+  [ModaliteAcces.Telephoner, 'telephoner']
+]);
+
+const MODALITE_ACCESS_TO_MODE_ORIENTATION_ACCOMPAGNATEUR: Map<ModaliteAcces, ModeOrientationAccompagnateur> = new Map<
+  ModaliteAcces,
+  ModeOrientationAccompagnateur
+>([
+  [ModaliteAcces.ContacterParMail, 'envoyer-un-mail'],
+  [ModaliteAcces.PrescriptionParMail, 'envoyer-un-mail-avec-une-fiche-de-prescription'],
+  [ModaliteAcces.Telephoner, 'telephoner']
 ]);
 
 const LABELS_NATIONAUX_MAP: Map<LabelNational, string> = new Map<LabelNational, string>([
@@ -256,6 +277,31 @@ const profilsFromPublicsAccueillis = (lieuMediationNumerique: LieuMediationNumer
     .filter((profil: string | null): profil is string => profil != null)
 });
 
+const modeOrientationFromModalitesAcces = (
+  lieuMediationNumerique: LieuMediationNumerique
+): {
+  modes_orientation_accompagnateur: ModeOrientationAccompagnateur[];
+  modes_orientation_beneficiaire: ModeOrientationBeneficiaire[];
+} => ({
+  modes_orientation_accompagnateur: (lieuMediationNumerique.modalites_acces ?? [])
+    .map(
+      (modaliteAcces: ModaliteAcces): ModeOrientationAccompagnateur | null =>
+        MODALITE_ACCESS_TO_MODE_ORIENTATION_ACCOMPAGNATEUR.get(modaliteAcces) ?? null
+    )
+    .filter(
+      (modaliteAcces: ModeOrientationAccompagnateur | null): modaliteAcces is ModeOrientationAccompagnateur =>
+        modaliteAcces != null
+    ),
+  modes_orientation_beneficiaire: (lieuMediationNumerique.modalites_acces ?? [])
+    .map(
+      (modaliteAcces: ModaliteAcces): ModeOrientationBeneficiaire | null =>
+        MODALITE_ACCESS_TO_MODE_ORIENTATION_BENEFICIAIRE.get(modaliteAcces) ?? null
+    )
+    .filter(
+      (modaliteAcces: ModeOrientationBeneficiaire | null): modaliteAcces is ModeOrientationBeneficiaire => modaliteAcces != null
+    )
+});
+
 export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionAccesFields => ({
   ...(lieuMediationNumerique.modalites_accompagnement == null ? {} : typesFromModalitesAccompagnement(lieuMediationNumerique)),
   ...(lieuMediationNumerique.modalites_accompagnement == null
@@ -264,5 +310,6 @@ export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): Sch
   ...(lieuMediationNumerique.frais_a_charge == null
     ? {}
     : fraisFromConditionAcces(lieuMediationNumerique.frais_a_charge.at(0))),
-  ...(lieuMediationNumerique.publics_accueillis == null ? {} : profilsFromPublicsAccueillis(lieuMediationNumerique))
+  ...(lieuMediationNumerique.publics_accueillis == null ? {} : profilsFromPublicsAccueillis(lieuMediationNumerique)),
+  ...(lieuMediationNumerique.modalites_acces == null ? {} : modeOrientationFromModalitesAcces(lieuMediationNumerique))
 });

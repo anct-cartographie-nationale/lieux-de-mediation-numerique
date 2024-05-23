@@ -1,5 +1,20 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase */
 
+export type ModeOrientationAccompagnateur =
+  | 'autre'
+  | 'completer-le-formulaire-dadhesion'
+  | 'envoyer-un-mail-avec-des-documents-a-completer'
+  | 'envoyer-un-mail-avec-une-fiche-de-prescription'
+  | 'envoyer-un-mail'
+  | 'telephoner';
+
+export type ModeOrientationBeneficiaire =
+  | 'autre'
+  | 'completer-le-formulaire-dadhesion'
+  | 'envoyer-un-mail'
+  | 'se-presenter'
+  | 'telephoner';
+
 export type SchemaStructureDataInclusionStructureGeneralFields = {
   id: string;
   nom: string;
@@ -66,6 +81,8 @@ export type SchemaStructureDataInclusionCollecteFields = {
 export type SchemaStructureDataInclusionAccesFields = {
   profils?: string[];
   frais?: string[];
+  modes_orientation_accompagnateur?: ModeOrientationAccompagnateur[];
+  modes_orientation_beneficiaire?: ModeOrientationBeneficiaire[];
   types?: string[];
   modes_accueil?: string[];
 };

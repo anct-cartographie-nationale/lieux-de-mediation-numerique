@@ -64,6 +64,9 @@ export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): Sch
     : { publics_accueillis: lieuMediationNumerique.publics_accueillis.join('|') }),
   ...(lieuMediationNumerique.frais_a_charge == null ? {} : { frais_a_charge: lieuMediationNumerique.frais_a_charge.join('|') }),
   ...(lieuMediationNumerique.itinerance == null ? {} : { itinerance: lieuMediationNumerique.itinerance.join('|') }),
+  ...(lieuMediationNumerique.modalites_acces == null
+    ? {}
+    : { modalites_acces: lieuMediationNumerique.modalites_acces.join('|') }),
   ...(lieuMediationNumerique.modalites_accompagnement == null
     ? {}
     : { modalites_accompagnement: lieuMediationNumerique.modalites_accompagnement.join('|') }),

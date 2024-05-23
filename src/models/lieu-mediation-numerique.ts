@@ -11,6 +11,7 @@ import { PublicsAccueillis } from './public-accueilli';
 import { FraisACharge } from './frais-a-charge';
 import { Itinerances } from './itinerance';
 import { ModalitesAccompagnement } from './modalite-accompagnement';
+import { ModalitesAcces } from './modalite-acces';
 import { Url } from './url';
 import { Pivot } from './pivot';
 import { LabelsNationaux } from './label-national';
@@ -32,6 +33,7 @@ export type LieuMediationNumerique = {
   date_maj: Date;
   services?: Services;
   publics_accueillis?: PublicsAccueillis;
+  modalites_acces?: ModalitesAcces;
   frais_a_charge?: FraisACharge;
   itinerance?: Itinerances;
   labels_nationaux?: LabelsNationaux;

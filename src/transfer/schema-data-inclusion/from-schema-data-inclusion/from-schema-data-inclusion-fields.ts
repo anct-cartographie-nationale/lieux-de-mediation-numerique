@@ -19,9 +19,15 @@ import {
   Services,
   Typologie,
   Typologies,
-  Url
+  Url,
+  ModaliteAcces,
+  ModalitesAcces
 } from '../../../models';
-import { SchemaStructureDataInclusion } from '../schema-data-inclusion';
+import {
+  ModeOrientationAccompagnateur,
+  ModeOrientationBeneficiaire,
+  SchemaStructureDataInclusion
+} from '../schema-data-inclusion';
 
 const THEMATIQUES_TO_SERVICES: Map<string, Service> = new Map<string, Service>([
   ['numerique--devenir-autonome-dans-les-demarches-administratives', Service.AideAuxDemarchesAdministratives],
@@ -47,6 +53,13 @@ export const FRAIS_TO_CONDITION_ACCES: Map<string, Frais> = new Map<string, Frai
   ['payant', Frais.Payant],
   ['adhesion', Frais.Payant],
   ['pass-numerique', Frais.GratuitSousCondition]
+]);
+
+export const MODES_ORIENTATION_TO_MODALITE_ACCES: Map<string, ModaliteAcces> = new Map<string, ModaliteAcces>([
+  ['envoyer-un-mail', ModaliteAcces.ContacterParMail],
+  ['envoyer-un-mail-avec-une-fiche-de-prescription', ModaliteAcces.PrescriptionParMail],
+  ['telephoner', ModaliteAcces.Telephoner],
+  ['se-presenter', ModaliteAcces.SePresenter]
 ]);
 
 const LABELS_NATIONAUX_MAP: Map<string, LabelNational> = new Map<string, LabelNational>([
@@ -303,3 +316,44 @@ export const mergeFrais = (frais?: string[], fraisToAdd?: string[]): { frais?: s
 
 export const mergePriseRdv = (priseRdv?: string, priseRdvToAdd?: string): { prise_rdv?: string } =>
   priseRdv == null && priseRdvToAdd == null ? {} : { prise_rdv: priseRdvToAdd ?? priseRdv ?? '' };
+
+const defaultModalitesAcces = (priseRdv?: { prise_rdv?: Url }): ModaliteAcces[] =>
+  priseRdv?.prise_rdv == null ? [] : [ModaliteAcces.PrendreRdvEnLigne];
+
+const onlyDefined = <T>(nullable?: T): nullable is T => nullable != null;
+
+const toModaliteAccess = (modeOrientation: string): ModaliteAcces | undefined =>
+  MODES_ORIENTATION_TO_MODALITE_ACCES.get(modeOrientation);
+
+const hasModesOrientation = (modesOrientation?: string[]): modesOrientation is string[] =>
+  modesOrientation != null && modesOrientation.length > 0;
+
+export const modalitesAccesFromDataInclusion = (
+  modesOrientation: string[],
+  priseRdv?: { prise_rdv?: Url }
+): { modalites_acces?: ModalitesAcces } => ({
+  modalites_acces: ModalitesAcces([
+    ...defaultModalitesAcces(priseRdv),
+    ...(hasModesOrientation(modesOrientation)
+      ? Array.from(new Set(modesOrientation)).map(toModaliteAccess).filter(onlyDefined)
+      : [ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail])
+  ])
+});
+
+export const mergeModesOrientationBeneficiaire = (
+  modesOrientationBeneficiaire?: ModeOrientationBeneficiaire[],
+  modesOrientationBeneficiaireToAdd?: ModeOrientationBeneficiaire[]
+): { modes_orientation_beneficiaire: ModeOrientationBeneficiaire[] } => ({
+  modes_orientation_beneficiaire: Array.from(
+    new Set([...(modesOrientationBeneficiaire ?? []), ...(modesOrientationBeneficiaireToAdd ?? [])])
+  )
+});
+
+export const mergeModesOrientationAccompagnateur = (
+  modesOrientationAccompagnateur?: ModeOrientationAccompagnateur[],
+  modesOrientationAccompagnateurToAdd?: ModeOrientationAccompagnateur[]
+): { modes_orientation_accompagnateur: ModeOrientationAccompagnateur[] } => ({
+  modes_orientation_accompagnateur: Array.from(
+    new Set([...(modesOrientationAccompagnateur ?? []), ...(modesOrientationAccompagnateurToAdd ?? [])])
+  )
+});

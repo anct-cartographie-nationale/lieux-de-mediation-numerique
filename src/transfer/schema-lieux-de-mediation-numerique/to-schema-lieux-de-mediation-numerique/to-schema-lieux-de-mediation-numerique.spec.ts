@@ -13,6 +13,8 @@ import {
   LabelsNationaux,
   LieuMediationNumerique,
   Localisation,
+  ModaliteAcces,
+  ModalitesAcces,
   ModaliteAccompagnement,
   ModalitesAccompagnement,
   Nom,
@@ -77,6 +79,12 @@ describe('to schema lieux de mediation numerique', (): void => {
         Service.LoisirsEtCreationsNumeriques,
         Service.ComprehensionDuMondeNumerique,
         Service.AccesInternetEtMaterielInformatique
+      ]),
+      modalites_acces: ModalitesAcces([
+        ModaliteAcces.SePresenter,
+        ModaliteAcces.Telephoner,
+        ModaliteAcces.ContacterParMail,
+        ModaliteAcces.PrescriptionParMail
       ]),
       date_maj: new Date('2022-10-10'),
       localisation: Localisation({
@@ -145,6 +153,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         source: 'Hubik',
         structure_parente: 'Pôle emploi',
         publics_accueillis: 'Familles/enfants|Adultes|Déficience visuelle',
+        modalites_acces: 'Se présenter|Téléphoner|Contacter par mail|Envoyer un mail avec une fiche de prescription',
         frais_a_charge:
           "Payant : L'accès au lieu et/ou à ses services est payant|Gratuit sous condition : La gratuité est conditionnée à des critères (situation familiale, convention avec un organisme social...)",
         itinerance: 'Itinérant|Fixe',
