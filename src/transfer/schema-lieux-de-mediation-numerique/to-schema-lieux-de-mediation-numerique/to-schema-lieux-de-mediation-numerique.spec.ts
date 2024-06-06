@@ -9,8 +9,8 @@ import {
   Id,
   Itinerance,
   Itinerances,
-  LabelNational,
-  LabelsNationaux,
+  DispositifProgrammeNational,
+  DispositifProgrammesNationaux,
   LieuMediationNumerique,
   Localisation,
   ModaliteAcces,
@@ -27,7 +27,9 @@ import {
   PublicsSpecifiquementAdresses,
   PublicSpecifiquementAdresse,
   PrisesEnChargeSpecifiques,
-  PriseEnChargeSpecifique
+  PriseEnChargeSpecifique,
+  FormationLabel,
+  FormationsLabels
 } from '../../../models';
 import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import { toSchemaLieuxDeMediationNumerique } from './to-schema-lieux-de-mediation-numerique';
@@ -125,8 +127,13 @@ describe('to schema lieux de mediation numerique', (): void => {
       ]),
       frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
       itinerance: Itinerances([Itinerance.Itinerant, Itinerance.Fixe]),
-      labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC, LabelNational.PointRelaisCAF]),
-      labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
+      dispositif_programmes_nationaux: DispositifProgrammesNationaux([
+        DispositifProgrammeNational.FranceServices,
+        DispositifProgrammeNational.AidantsConnect,
+        DispositifProgrammeNational.ConseillersNumeriques
+      ]),
+      formations_labels: FormationsLabels([FormationLabel.SudLabs, FormationLabel.Ordi3, FormationLabel.MesPapiers]),
+      autres_formations_labels: ['Numi formations', 'Nièvre médiation numérique'],
       modalites_accompagnement: ModalitesAccompagnement([
         ModaliteAccompagnement.ADistance,
         ModaliteAccompagnement.EnAutonomie,
@@ -185,8 +192,13 @@ describe('to schema lieux de mediation numerique', (): void => {
         frais_a_charge:
           "Payant : L'accès au lieu et/ou à ses services est payant|Gratuit sous condition : La gratuité est conditionnée à des critères (situation familiale, convention avec un organisme social...)",
         itinerance: 'Itinérant|Fixe',
-        labels_nationaux: 'France Services|APTIC|Point relais CAF',
-        labels_autres: 'SudLabs|Nièvre médiation numérique',
+        dispositif_programmes_nationaux: [
+          DispositifProgrammeNational.FranceServices,
+          DispositifProgrammeNational.AidantsConnect,
+          DispositifProgrammeNational.ConseillersNumeriques
+        ].join('|'),
+        formations_labels: [FormationLabel.SudLabs, FormationLabel.Ordi3, FormationLabel.MesPapiers].join('|'),
+        autres_formations_labels: ['Numi formations', 'Nièvre médiation numérique'].join('|'),
         modalites_accompagnement:
           "À distance (par téléphone ou en visioconférence)|En autonomie|Accompagnement individuel|Dans un atelier collectif (j'apprends collectivement à utiliser le numérique)",
         accessibilite:

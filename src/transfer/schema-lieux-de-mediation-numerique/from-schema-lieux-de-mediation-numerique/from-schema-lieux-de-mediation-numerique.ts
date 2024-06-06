@@ -8,8 +8,8 @@ import {
   fraisAChargeIfAny,
   contactIfAny,
   horairesIfAny,
-  labelsAutresIfAny,
-  labelsNationauxIfAny,
+  autresFormationsLabelsIfAny,
+  dispositifProgrammesNationauxIfAny,
   localisationIfAny,
   modalitesAccompagnementIfAny,
   presentationIfAny,
@@ -21,7 +21,8 @@ import {
   servicesIfAny,
   modalitesAccessIfAny,
   publicsSpecifiquementAdressesIfAny,
-  priseEnChargeSpecifiqueIfAny
+  priseEnChargeSpecifiqueIfAny,
+  formationsLabelsIfAny
 } from './from-schema-lieux-de-mediation-numerique-fields';
 
 const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNumerique): Partial<LieuMediationNumerique> => {
@@ -42,8 +43,9 @@ const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNum
     ...priseEnChargeSpecifiqueIfAny(schemaLieuMediationNumeriqueItem.prise_en_charge_specifique, servicesFound.services),
     ...fraisAChargeIfAny(schemaLieuMediationNumeriqueItem.frais_a_charge, servicesFound.services),
     ...itinerancesIfAny(schemaLieuMediationNumeriqueItem.itinerance, servicesFound.services),
-    ...labelsNationauxIfAny(schemaLieuMediationNumeriqueItem.labels_nationaux),
-    ...labelsAutresIfAny(schemaLieuMediationNumeriqueItem.labels_autres),
+    ...dispositifProgrammesNationauxIfAny(schemaLieuMediationNumeriqueItem.dispositif_programmes_nationaux),
+    ...formationsLabelsIfAny(schemaLieuMediationNumeriqueItem.formations_labels),
+    ...autresFormationsLabelsIfAny(schemaLieuMediationNumeriqueItem.autres_formations_labels),
     ...modalitesAccompagnementIfAny(schemaLieuMediationNumeriqueItem.modalites_accompagnement, servicesFound.services),
     ...modalitesAccessIfAny(schemaLieuMediationNumeriqueItem.modalites_acces, servicesFound.services),
     ...accessibiliteIfAny(schemaLieuMediationNumeriqueItem.accessibilite),

@@ -77,10 +77,15 @@ export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): Sch
 });
 
 export const labelsFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueLabelsFields => ({
-  ...(lieuMediationNumerique.labels_nationaux == null
+  ...(lieuMediationNumerique.dispositif_programmes_nationaux == null
     ? {}
-    : { labels_nationaux: lieuMediationNumerique.labels_nationaux.join('|') }),
-  ...(lieuMediationNumerique.labels_autres == null ? {} : { labels_autres: lieuMediationNumerique.labels_autres.join('|') })
+    : { dispositif_programmes_nationaux: lieuMediationNumerique.dispositif_programmes_nationaux.join('|') }),
+  ...(lieuMediationNumerique.formations_labels == null
+    ? {}
+    : { formations_labels: lieuMediationNumerique.formations_labels.join('|') }),
+  ...(lieuMediationNumerique.autres_formations_labels == null
+    ? {}
+    : { autres_formations_labels: lieuMediationNumerique.autres_formations_labels.join('|') })
 });
 
 export const disponibiliteFields = (

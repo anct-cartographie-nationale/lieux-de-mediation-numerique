@@ -2,14 +2,15 @@
 
 import {
   Frais,
-  LabelNational,
+  DispositifProgrammeNational,
   LieuMediationNumerique,
   ModaliteAcces,
   ModaliteAccompagnement,
   ModalitesAccompagnement,
   PriseEnChargeSpecifique,
   PublicSpecifiquementAdresse,
-  Service
+  Service,
+  FormationLabel
 } from '../../../models';
 import {
   ModeOrientationAccompagnateur,
@@ -106,18 +107,24 @@ const MODALITE_ACCESS_TO_MODE_ORIENTATION_ACCOMPAGNATEUR: Map<ModaliteAcces, Mod
   [ModaliteAcces.Telephoner, 'telephoner']
 ]);
 
-const LABELS_NATIONAUX_MAP: Map<LabelNational, string> = new Map<LabelNational, string>([
-  [LabelNational.AidantsConnect, 'aidants-connect'],
-  [LabelNational.APTIC, 'aptic'],
-  [LabelNational.CampusConnecte, 'campus-connecte'],
-  [LabelNational.CNFS, 'conseiller-numerique'],
-  [LabelNational.FabriquesDeTerritoire, 'fabrique-de-territoire'],
-  [LabelNational.FranceServices, 'france-service'],
-  [LabelNational.FrenchTech, 'french-tech'],
-  [LabelNational.GrandesEcolesDuNumerique, 'grandes-ecoles-du-numerique'],
-  [LabelNational.PointNumeriqueCAF, 'caf'],
-  [LabelNational.PointRelaisCAF, 'caf'],
-  [LabelNational.RelaisPoleEmploi, 'pole-emploi']
+const LABELS_NATIONAUX_MAP: Map<DispositifProgrammeNational | FormationLabel, string> = new Map<
+  DispositifProgrammeNational | FormationLabel,
+  string
+>([
+  [DispositifProgrammeNational.AidantsConnect, 'aidants-connect'],
+  [DispositifProgrammeNational.ConseillersNumeriques, 'conseiller-numerique'],
+  [DispositifProgrammeNational.FranceServices, 'france-service'],
+  [DispositifProgrammeNational.GrandeEcoleDuNumerique, 'grandes-ecoles-du-numerique'],
+  [DispositifProgrammeNational.PointNumeriqueCAF, 'caf'],
+  [FormationLabel.FormeAMonEspaceSante, 'mon-espace-sante'],
+  [FormationLabel.FormeADuplex, 'duplex'],
+  [FormationLabel.ArniaMednum, 'arnia'],
+  [FormationLabel.CollectifRessourcesEtActeursReemploi, 'ressources-reemploi'],
+  [FormationLabel.FabriquesDeTerritoire, 'fabrique-de-territoire'],
+  [FormationLabel.LesEclaireurs, 'les-eclaireurs'],
+  [FormationLabel.MesPapiers, 'mes-papiers'],
+  [FormationLabel.Ordi3, 'ordi-3'],
+  [FormationLabel.SudLabs, 'sud-labs']
 ]);
 
 const typologyIfExist = (typologie?: string): { typologie?: string } => (typologie == null ? {} : { typologie });
@@ -196,18 +203,26 @@ export const presentationFields = (
 });
 
 export const labelsFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionLabelsFields => ({
-  ...(lieuMediationNumerique.labels_nationaux == null
+  ...(lieuMediationNumerique.dispositif_programmes_nationaux == null
     ? {}
     : {
         labels_nationaux: Array.from(
           new Set(
-            lieuMediationNumerique.labels_nationaux
-              .map((labelNational: LabelNational): string | null => LABELS_NATIONAUX_MAP.get(labelNational) ?? null)
-              .filter((labelNational: string | null): labelNational is string => labelNational != null)
+            [...lieuMediationNumerique.dispositif_programmes_nationaux, ...(lieuMediationNumerique.formations_labels ?? [])]
+              .map(
+                (dispositifProgrammeNational: DispositifProgrammeNational | FormationLabel): string | null =>
+                  LABELS_NATIONAUX_MAP.get(dispositifProgrammeNational) ?? null
+              )
+              .filter(
+                (dispositifProgrammeNational: string | null): dispositifProgrammeNational is string =>
+                  dispositifProgrammeNational != null
+              )
           )
         )
       }),
-  ...(lieuMediationNumerique.labels_autres == null ? {} : { labels_autres: lieuMediationNumerique.labels_autres })
+  ...(lieuMediationNumerique.autres_formations_labels == null
+    ? {}
+    : { labels_autres: lieuMediationNumerique.autres_formations_labels })
 });
 
 export const disponibiliteFields = (

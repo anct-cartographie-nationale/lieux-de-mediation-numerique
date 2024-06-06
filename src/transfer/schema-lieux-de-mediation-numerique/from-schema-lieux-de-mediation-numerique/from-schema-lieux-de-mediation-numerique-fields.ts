@@ -4,9 +4,10 @@ import {
   Adresse,
   Contact,
   Courriel,
+  FormationsLabels,
   FraisACharge,
   Itinerances,
-  LabelsNationaux,
+  DispositifProgrammesNationaux,
   Localisation,
   ModaliteAcces,
   ModalitesAcces,
@@ -117,11 +118,18 @@ export const fraisAChargeIfAny = (conditionsAcces?: string, services?: Services)
 export const itinerancesIfAny = (itinerance?: string, services?: Services): { itinerance?: Itinerances } =>
   itinerance == null || !hasServices(services) ? {} : { itinerance: Itinerances(listFromString(itinerance)) };
 
-export const labelsNationauxIfAny = (labelsNationaux?: string): { labels_nationaux?: LabelsNationaux } =>
-  labelsNationaux == null ? {} : { labels_nationaux: LabelsNationaux(listFromString(labelsNationaux)) };
+export const dispositifProgrammesNationauxIfAny = (
+  dispositifProgrammesNationaux?: string
+): { dispositif_programmes_nationaux?: DispositifProgrammesNationaux } =>
+  dispositifProgrammesNationaux == null
+    ? {}
+    : { dispositif_programmes_nationaux: DispositifProgrammesNationaux(listFromString(dispositifProgrammesNationaux)) };
 
-export const labelsAutresIfAny = (labelsAutres?: string): { labels_autres?: string[] } =>
-  labelsAutres == null ? {} : { labels_autres: listFromString(labelsAutres) };
+export const formationsLabelsIfAny = (formationsLabels?: string): { formations_labels?: FormationsLabels } =>
+  formationsLabels == null ? {} : { formations_labels: FormationsLabels(listFromString(formationsLabels)) };
+
+export const autresFormationsLabelsIfAny = (autresFormationsLabels?: string): { autres_formations_labels?: string[] } =>
+  autresFormationsLabels == null ? {} : { autres_formations_labels: listFromString(autresFormationsLabels) };
 
 export const modalitesAccompagnementIfAny = (
   modalitesAccompagnement?: string,

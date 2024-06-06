@@ -6,8 +6,8 @@ import {
   Frais,
   FraisACharge,
   Courriel,
-  LabelNational,
-  LabelsNationaux,
+  DispositifProgrammeNational,
+  DispositifProgrammesNationaux,
   Localisation,
   ModaliteAccompagnement,
   ModalitesAccompagnement,
@@ -23,7 +23,9 @@ import {
   PrisesEnChargeSpecifiques,
   PublicsSpecifiquementAdresses,
   PublicSpecifiquementAdresse,
-  PriseEnChargeSpecifique
+  PriseEnChargeSpecifique,
+  FormationsLabels,
+  FormationLabel
 } from '../../../models';
 import {
   ModeOrientationAccompagnateur,
@@ -64,17 +66,27 @@ export const MODES_ORIENTATION_TO_MODALITE_ACCES: Map<string, ModaliteAcces> = n
   ['se-presenter', ModaliteAcces.SePresenter]
 ]);
 
-const LABELS_NATIONAUX_MAP: Map<string, LabelNational> = new Map<string, LabelNational>([
-  ['aidants-connect', LabelNational.AidantsConnect],
-  ['aptic', LabelNational.APTIC],
-  ['campus-connecte', LabelNational.CampusConnecte],
-  ['conseiller-numerique', LabelNational.CNFS], // todo: missing label in data.inclusion
-  ['fabrique-de-territoire', LabelNational.FabriquesDeTerritoire],
-  ['france-service', LabelNational.FranceServices],
-  ['french-tech', LabelNational.FrenchTech],
-  ['grandes-ecoles-du-numerique', LabelNational.GrandesEcolesDuNumerique],
-  ['caf', LabelNational.PointRelaisCAF],
-  ['pole-emploi', LabelNational.RelaisPoleEmploi]
+const DISPOSITIF_PROGRAMMES_NATIONAUX_MAP: Map<string, DispositifProgrammeNational> = new Map<
+  string,
+  DispositifProgrammeNational
+>([
+  ['aidants-connect', DispositifProgrammeNational.AidantsConnect],
+  ['conseiller-numerique', DispositifProgrammeNational.ConseillersNumeriques],
+  ['france-service', DispositifProgrammeNational.FranceServices],
+  ['grandes-ecoles-du-numerique', DispositifProgrammeNational.GrandeEcoleDuNumerique],
+  ['caf', DispositifProgrammeNational.PointNumeriqueCAF]
+]);
+
+const FORMATIONS_LABELS_MAP: Map<string, FormationLabel> = new Map<string, FormationLabel>([
+  ['mon-espace-sante', FormationLabel.FormeAMonEspaceSante],
+  ['duplex', FormationLabel.FormeADuplex],
+  ['arnia', FormationLabel.ArniaMednum],
+  ['ressources-reemploi', FormationLabel.CollectifRessourcesEtActeursReemploi],
+  ['fabrique-de-territoire', FormationLabel.FabriquesDeTerritoire],
+  ['les-eclaireurs', FormationLabel.LesEclaireurs],
+  ['mes-papiers', FormationLabel.MesPapiers],
+  ['ordi-3', FormationLabel.Ordi3],
+  ['sud-labs', FormationLabel.SudLabs]
 ]);
 
 const TYPES_TO_MODALITES_ACCOMPAGNEMENT_MAP: Map<string, ModaliteAccompagnement> = new Map<string, ModaliteAccompagnement>([
@@ -219,20 +231,44 @@ export const contactFromDataInclusion = (courriel?: string, telephone?: string, 
 export const localisationFromDataInclusion = (latitude?: number, longitude?: number): { localisation?: Localisation } =>
   latitude == null || longitude == null ? {} : { localisation: Localisation({ latitude, longitude }) };
 
+const formationsLabelsFromLabelsNationaux = (labelsNationaux: string[]): { formations_labels?: FormationsLabels } => {
+  const formationsLabels: FormationsLabels = FormationsLabels(
+    labelsNationaux
+      .map((formationLabel: string): FormationLabel | undefined => FORMATIONS_LABELS_MAP.get(formationLabel))
+      .filter((formationLabel?: FormationLabel | undefined): formationLabel is FormationLabel => formationLabel != null)
+  );
+
+  return formationsLabels.length === 0 ? {} : { formations_labels: formationsLabels };
+};
+
+const dispositifProgrammesNationauxFromLabelsNationaux = (
+  labelsNationaux: string[]
+): { dispositif_programmes_nationaux?: DispositifProgrammesNationaux } => {
+  const dispositifProgrammesNationaux: DispositifProgrammesNationaux = DispositifProgrammesNationaux(
+    labelsNationaux
+      .map((labelNational: string): DispositifProgrammeNational | undefined =>
+        DISPOSITIF_PROGRAMMES_NATIONAUX_MAP.get(labelNational)
+      )
+      .filter(
+        (labelNational?: DispositifProgrammeNational | undefined): labelNational is DispositifProgrammeNational =>
+          labelNational != null
+      )
+  );
+
+  return dispositifProgrammesNationaux.length === 0 ? {} : { dispositif_programmes_nationaux: dispositifProgrammesNationaux };
+};
+
 export const labelsFromDataInclusion = (
-  labels_nationaux?: string[],
-  labels_autres?: string[]
-): { labels_nationaux?: LabelsNationaux; labels_autres?: string[] } => ({
-  ...(labels_nationaux == null
-    ? {}
-    : {
-        labels_nationaux: LabelsNationaux(
-          labels_nationaux
-            .map((labelNational: string): LabelNational | undefined => LABELS_NATIONAUX_MAP.get(labelNational))
-            .filter((labelNational?: LabelNational | undefined): labelNational is LabelNational => labelNational != null)
-        )
-      }),
-  ...(labels_autres == null ? {} : { labels_autres })
+  labelsNationaux?: string[],
+  labelsAutres?: string[]
+): {
+  dispositif_programmes_nationaux?: DispositifProgrammesNationaux;
+  formations_labels?: FormationsLabels;
+  autres_formations_labels?: string[];
+} => ({
+  ...(labelsNationaux == null ? {} : dispositifProgrammesNationauxFromLabelsNationaux(labelsNationaux)),
+  ...(labelsNationaux == null ? {} : formationsLabelsFromLabelsNationaux(labelsNationaux)),
+  ...(labelsAutres == null ? {} : { autres_formations_labels: labelsAutres })
 });
 
 const hasCodeInsee = (structure: SchemaStructureDataInclusion): boolean =>

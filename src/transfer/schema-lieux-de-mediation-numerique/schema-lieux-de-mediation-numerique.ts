@@ -44,8 +44,9 @@ export type SchemaLieuMediationNumeriqueAccesFields = {
 };
 
 export type SchemaLieuMediationNumeriqueLabelsFields = {
-  labels_nationaux?: string;
-  labels_autres?: string;
+  dispositif_programmes_nationaux?: string;
+  formations_labels?: string;
+  autres_formations_labels?: string;
 };
 
 export type SchemaLieuMediationNumeriqueDisponibiliteFields = {

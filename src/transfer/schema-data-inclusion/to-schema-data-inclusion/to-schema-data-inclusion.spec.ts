@@ -4,11 +4,13 @@ import {
   Adresse,
   Contact,
   Courriel,
+  DispositifProgrammeNational,
+  DispositifProgrammesNationaux,
+  FormationLabel,
+  FormationsLabels,
   Frais,
   FraisACharge,
   Id,
-  LabelNational,
-  LabelsNationaux,
   LieuMediationNumerique,
   Localisation,
   ModaliteAcces,
@@ -113,14 +115,15 @@ describe('to schema data.inclusion', (): void => {
         Service.ComprehensionDuMondeNumerique,
         Service.AccesInternetEtMaterielInformatique
       ]),
-      labels_nationaux: LabelsNationaux([
-        LabelNational.FranceServices,
-        LabelNational.APTIC,
-        LabelNational.PointRelaisCAF,
-        LabelNational.PointNumeriqueCAF,
-        LabelNational.RelaisPoleEmploi
+      dispositif_programmes_nationaux: DispositifProgrammesNationaux([
+        DispositifProgrammeNational.AidantsConnect,
+        DispositifProgrammeNational.BibliothequesNumeriqueDeReference,
+        DispositifProgrammeNational.CertificationPIX,
+        DispositifProgrammeNational.ConseillersNumeriques,
+        DispositifProgrammeNational.EmmausConnect
       ]),
-      labels_autres: ['Nièvre médiation numérique'],
+      formations_labels: FormationsLabels([FormationLabel.ArniaMednum, FormationLabel.Ordi3]),
+      autres_formations_labels: ['Nièvre médiation numérique'],
       accessibilite: Url(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       )
@@ -152,7 +155,7 @@ describe('to schema data.inclusion', (): void => {
         horaires_ouverture: 'Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off',
         accessibilite:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
-        labels_nationaux: ['france-service', 'aptic', 'caf', 'pole-emploi'],
+        labels_nationaux: ['aidants-connect', 'conseiller-numerique', 'arnia', 'ordi-3'],
         labels_autres: ['Nièvre médiation numérique'],
         thematiques: [
           'numerique',

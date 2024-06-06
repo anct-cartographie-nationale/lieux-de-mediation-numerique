@@ -2,32 +2,34 @@
 
 import {
   Adresse,
-  Frais,
-  FraisACharge,
   Contact,
   Courriel,
+  DispositifProgrammeNational,
+  DispositifProgrammesNationaux,
+  FormationLabel,
+  FormationsLabels,
+  Frais,
+  FraisACharge,
   Id,
-  LabelNational,
-  LabelsNationaux,
+  Itinerance,
+  Itinerances,
   LieuMediationNumerique,
   Localisation,
+  ModaliteAcces,
   ModaliteAccompagnement,
+  ModalitesAcces,
   ModalitesAccompagnement,
   Nom,
   Pivot,
+  PriseEnChargeSpecifique,
+  PrisesEnChargeSpecifiques,
+  PublicSpecifiquementAdresse,
+  PublicsSpecifiquementAdresses,
   Service,
   Services,
   Typologie,
   Typologies,
-  Url,
-  Itinerance,
-  Itinerances,
-  ModaliteAcces,
-  ModalitesAcces,
-  PublicsSpecifiquementAdresses,
-  PrisesEnChargeSpecifiques,
-  PriseEnChargeSpecifique,
-  PublicSpecifiquementAdresse
+  Url
 } from '../../../models';
 import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import { fromSchemaLieuxDeMediationNumerique } from './from-schema-lieux-de-mediation-numerique';
@@ -140,8 +142,13 @@ describe('from schema lieux de mediation numerique', (): void => {
         frais_a_charge:
           "Payant : L'accès au lieu et/ou à ses services est payant|Gratuit sous condition : La gratuité est conditionnée à des critères (situation familiale, convention avec un organisme social...)",
         itinerance: 'Fixe|Itinérant',
-        labels_nationaux: 'France Services|APTIC|Point relais CAF',
-        labels_autres: 'SudLabs|Nièvre médiation numérique',
+        dispositif_programmes_nationaux: [
+          DispositifProgrammeNational.FranceServices,
+          DispositifProgrammeNational.AidantsConnect,
+          DispositifProgrammeNational.ConseillersNumeriques
+        ].join('|'),
+        formations_labels: [FormationLabel.LesEclaireurs, FormationLabel.SudLabs].join('|'),
+        autres_formations_labels: ['Numi formations', 'Nièvre médiation numérique'].join('|'),
         modalites_accompagnement: [ModaliteAccompagnement.AccompagnementIndividuel, ModaliteAccompagnement.EnAutonomie].join(
           '|'
         ),
@@ -214,8 +221,13 @@ describe('from schema lieux de mediation numerique', (): void => {
         ]),
         frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
         itinerance: Itinerances([Itinerance.Fixe, Itinerance.Itinerant]),
-        labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC, LabelNational.PointRelaisCAF]),
-        labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
+        dispositif_programmes_nationaux: DispositifProgrammesNationaux([
+          DispositifProgrammeNational.FranceServices,
+          DispositifProgrammeNational.AidantsConnect,
+          DispositifProgrammeNational.ConseillersNumeriques
+        ]),
+        formations_labels: FormationsLabels([FormationLabel.LesEclaireurs, FormationLabel.SudLabs]),
+        autres_formations_labels: ['Numi formations', 'Nièvre médiation numérique'],
         modalites_accompagnement: ModalitesAccompagnement([
           ModaliteAccompagnement.AccompagnementIndividuel,
           ModaliteAccompagnement.EnAutonomie
@@ -279,8 +291,13 @@ describe('from schema lieux de mediation numerique', (): void => {
         frais_a_charge:
           "Payant : L'accès au lieu et/ou à ses services est payant|Gratuit sous condition : La gratuité est conditionnée à des critères (situation familiale, convention avec un organisme social...)",
         itinerance: 'Fixe|Itinérant',
-        labels_nationaux: 'France Services|APTIC|Point relais CAF',
-        labels_autres: 'SudLabs|Nièvre médiation numérique',
+        dispositif_programmes_nationaux: [
+          DispositifProgrammeNational.FranceServices,
+          DispositifProgrammeNational.AidantsConnect,
+          DispositifProgrammeNational.ConseillersNumeriques
+        ].join('|'),
+        formations_labels: [FormationLabel.SudLabs, FormationLabel.MesPapiers].join('|'),
+        autres_formations_labels: ['Numi formations', 'Nièvre médiation numérique'].join('|'),
         modalites_accompagnement: [ModaliteAccompagnement.AccompagnementIndividuel, ModaliteAccompagnement.EnAutonomie].join(
           '|'
         ),
@@ -328,8 +345,13 @@ describe('from schema lieux de mediation numerique', (): void => {
         },
         source: 'Hubik',
         structure_parente: 'Pôle emploi',
-        labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC, LabelNational.PointRelaisCAF]),
-        labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
+        dispositif_programmes_nationaux: DispositifProgrammesNationaux([
+          DispositifProgrammeNational.FranceServices,
+          DispositifProgrammeNational.AidantsConnect,
+          DispositifProgrammeNational.ConseillersNumeriques
+        ]),
+        formations_labels: FormationsLabels([FormationLabel.SudLabs, FormationLabel.MesPapiers]),
+        autres_formations_labels: ['Numi formations', 'Nièvre médiation numérique'],
         modalites_acces: ModalitesAcces([ModaliteAcces.PasDePublic]),
         accessibilite: Url(
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
