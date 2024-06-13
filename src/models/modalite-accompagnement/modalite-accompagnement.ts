@@ -4,8 +4,8 @@ import { Model } from '../model';
 export enum ModaliteAccompagnement {
   EnAutonomie = 'En autonomie',
   AccompagnementIndividuel = 'Accompagnement individuel',
-  DansUnAtelier = "Dans un atelier collectif (j'apprends collectivement à utiliser le numérique)",
-  ADistance = 'À distance (par téléphone ou en visioconférence)'
+  DansUnAtelier = 'Dans un atelier collectif',
+  ADistance = 'À distance'
 }
 
 export type ModalitesAccompagnement = Model<'ModalitesAccompagnement', ModaliteAccompagnement[]>;
