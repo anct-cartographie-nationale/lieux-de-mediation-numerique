@@ -3,20 +3,22 @@ import { ModalitesAccompagnementError } from './errors';
 
 describe('modalite accompagnement model', (): void => {
   it('should create valid modalites accompagnement', (): void => {
-    const modalitesAccompagnement: ModalitesAccompagnement = ModalitesAccompagnement([ModaliteAccompagnement.AMaPlace]);
+    const modalitesAccompagnement: ModalitesAccompagnement = ModalitesAccompagnement([
+      ModaliteAccompagnement.AccompagnementIndividuel
+    ]);
 
-    expect(modalitesAccompagnement).toStrictEqual([ModaliteAccompagnement.AMaPlace]);
+    expect(modalitesAccompagnement).toStrictEqual([ModaliteAccompagnement.AccompagnementIndividuel]);
   });
 
   it('should not create invalid modalites accompagnement', (): void => {
     expect((): void => {
-      ModalitesAccompagnement(['En autonomie' as ModaliteAccompagnement]);
-    }).toThrow(new ModalitesAccompagnementError('En autonomie' as ModaliteAccompagnement));
+      ModalitesAccompagnement(['Délégation' as ModaliteAccompagnement]);
+    }).toThrow(new ModalitesAccompagnementError('Délégation' as ModaliteAccompagnement));
   });
 
   it('should not create invalid modalite accompagnement containing a valid and an invalid value', (): void => {
     expect((): void => {
-      ModalitesAccompagnement([ModaliteAccompagnement.AMaPlace, 'En autonomie' as ModaliteAccompagnement]);
-    }).toThrow(new ModalitesAccompagnementError('En autonomie' as ModaliteAccompagnement));
+      ModalitesAccompagnement([ModaliteAccompagnement.AccompagnementIndividuel, 'Délégation' as ModaliteAccompagnement]);
+    }).toThrow(new ModalitesAccompagnementError('Délégation' as ModaliteAccompagnement));
   });
 });

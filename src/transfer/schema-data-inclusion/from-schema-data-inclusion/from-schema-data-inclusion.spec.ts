@@ -2,20 +2,27 @@
 
 import {
   Adresse,
-  ConditionAcces,
-  ConditionsAcces,
   Contact,
+  Courriel,
+  DispositifProgrammeNational,
+  DispositifProgrammesNationaux,
+  FormationLabel,
+  FormationsLabels,
+  Frais,
+  FraisACharge,
   Id,
-  LabelNational,
-  LabelsNationaux,
   LieuMediationNumerique,
   Localisation,
+  ModaliteAcces,
   ModaliteAccompagnement,
+  ModalitesAcces,
   ModalitesAccompagnement,
   Nom,
   Pivot,
-  PublicAccueilli,
-  PublicsAccueillis,
+  PriseEnChargeSpecifique,
+  PrisesEnChargeSpecifiques,
+  PublicSpecifiquementAdresse,
+  PublicsSpecifiquementAdresses,
   Service,
   Services,
   ServicesError,
@@ -24,8 +31,8 @@ import {
   Url
 } from '../../../models';
 import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
-import { fromSchemaDataInclusion } from './from-schema-data-inclusion';
 import { MandatorySiretOrRnaError } from './errors/mandatory-siret-or-rna.error';
+import { fromSchemaDataInclusion } from './from-schema-data-inclusion';
 
 describe('from schema data inclusion', (): void => {
   it("should get a minimal lieu de mediation numerique form a minimal structure d'inclusion and a minimal service d'inclusion", (): void => {
@@ -58,7 +65,8 @@ describe('from schema data inclusion', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      services: Services([Service.AideAuxDemarchesAdministratives]),
+      modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail]),
       date_maj: new Date('2022-10-10')
     });
   });
@@ -76,12 +84,12 @@ describe('from schema data inclusion', (): void => {
       siret: '43493312300029',
       source: 'Hubik',
       accessibilite: 'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
-      courriel: 'contact@laquincaillerie.tl',
+      courriel: 'contact@laquincaillerie.tl|bonjour@laquincaillerie.tl',
       telephone: '+33180059880',
-      site_web: 'https://www.laquincaillerie.tl/;https://m.facebook.com/laquincaillerienumerique/',
+      site_web: 'https://www.laquincaillerie.tl/|https://m.facebook.com/laquincaillerienumerique/',
       horaires_ouverture: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
-      labels_nationaux: ['france-service', 'aptic'],
-      labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
+      labels_nationaux: ['france-service', 'aidants-connect', 'mon-espace-sante'],
+      labels_autres: ['Numi formations', 'Nièvre médiation numérique'],
       latitude: 43.52609,
       longitude: 5.41423,
       presentation_detail:
@@ -116,6 +124,7 @@ describe('from schema data inclusion', (): void => {
       ],
       frais: ['gratuit-sous-conditions'],
       types: ['autonomie', 'delegation', 'accompagnement', 'atelier'],
+      modes_accueil: ['a-distance', 'en-presentiel'],
       prise_rdv: 'https://www.rdv-solidarites.fr/',
       profils: [
         'seniors-65',
@@ -146,21 +155,20 @@ describe('from schema data inclusion', (): void => {
         complement_adresse: 'Le patio du bois de l’Aulne'
       }),
       services: Services([
-        Service.DevenirAutonomeDansLesDemarchesAdministratives,
-        Service.RealiserDesDemarchesAdministratives,
-        Service.PrendreEnMainUnSmartphoneOuUneTablette,
-        Service.PrendreEnMainUnOrdinateur,
-        Service.UtiliserLeNumerique,
-        Service.ApprofondirMaCultureNumerique,
-        Service.FavoriserMonInsertionProfessionnelle,
-        Service.AccederAUneConnexionInternet,
-        Service.AccederADuMateriel,
-        Service.EquiperEnMaterielInformatique,
-        Service.CreerEtDevelopperMonEntreprise,
-        Service.CreerAvecLeNumerique,
-        Service.AccompagnerLesDemarchesDeSante,
-        Service.PromouvoirLaCitoyenneteNumerique,
-        Service.SoutenirLaParentalite
+        Service.AideAuxDemarchesAdministratives,
+        Service.MaitriseDesOutilsNumeriquesDuQuotidien,
+        Service.ComprehensionDuMondeNumerique,
+        Service.InsertionProfessionnelleViaLeNumerique,
+        Service.AccesInternetEtMaterielInformatique,
+        Service.MaterielInformatiqueAPrixSolidaire,
+        Service.LoisirsEtCreationsNumeriques,
+        Service.ParentaliteEtEducationAvecLeNumerique
+      ]),
+      modalites_acces: ModalitesAcces([
+        ModaliteAcces.PrendreRdvEnLigne,
+        ModaliteAcces.SePresenter,
+        ModaliteAcces.Telephoner,
+        ModaliteAcces.ContacterParMail
       ]),
       date_maj: new Date('2022-10-10'),
       localisation: Localisation({
@@ -170,7 +178,7 @@ describe('from schema data inclusion', (): void => {
       typologies: Typologies([Typologie.TIERS_LIEUX]),
       contact: Contact({
         telephone: '+33180059880',
-        courriel: 'contact@laquincaillerie.tl',
+        courriel: [Courriel('contact@laquincaillerie.tl'), Courriel('bonjour@laquincaillerie.tl')],
         site_web: [Url('https://www.laquincaillerie.tl/'), Url('https://m.facebook.com/laquincaillerienumerique/')]
       }),
       horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
@@ -181,32 +189,123 @@ describe('from schema data inclusion', (): void => {
       },
       source: 'Hubik',
       structure_parente: 'Pôle emploi',
-      publics_accueillis: PublicsAccueillis([
-        PublicAccueilli.Seniors,
-        PublicAccueilli.FamillesEnfants,
-        PublicAccueilli.Adultes,
-        PublicAccueilli.Jeunes,
-        PublicAccueilli.LanguesEtrangeres,
-        PublicAccueilli.DeficienceVisuelle,
-        PublicAccueilli.Surdite,
-        PublicAccueilli.HandicapsPsychiques,
-        PublicAccueilli.HandicapsMentaux,
-        PublicAccueilli.UniquementFemmes,
-        PublicAccueilli.Illettrisme
+      publics_specifiquement_adresses: PublicsSpecifiquementAdresses([
+        PublicSpecifiquementAdresse.Seniors,
+        PublicSpecifiquementAdresse.FamillesEnfants,
+        PublicSpecifiquementAdresse.Jeunes,
+        PublicSpecifiquementAdresse.Femmes
       ]),
-      conditions_acces: ConditionsAcces([ConditionAcces.GratuitSousCondition]),
-      labels_nationaux: LabelsNationaux([LabelNational.FranceServices, LabelNational.APTIC]),
-      labels_autres: ['SudLabs', 'Nièvre médiation numérique'],
+      prise_en_charge_specifique: PrisesEnChargeSpecifiques([
+        PriseEnChargeSpecifique.LanguesEtrangeresAutre,
+        PriseEnChargeSpecifique.DeficienceVisuelle,
+        PriseEnChargeSpecifique.Surdite,
+        PriseEnChargeSpecifique.HandicapsMentaux,
+        PriseEnChargeSpecifique.Illettrisme
+      ]),
+      frais_a_charge: FraisACharge([Frais.GratuitSousCondition]),
+      dispositif_programmes_nationaux: DispositifProgrammesNationaux([
+        DispositifProgrammeNational.FranceServices,
+        DispositifProgrammeNational.AidantsConnect
+      ]),
+      formations_labels: FormationsLabels([FormationLabel.FormeAMonEspaceSante]),
+      autres_formations_labels: ['Numi formations', 'Nièvre médiation numérique'],
       modalites_accompagnement: ModalitesAccompagnement([
-        ModaliteAccompagnement.Seul,
-        ModaliteAccompagnement.AMaPlace,
-        ModaliteAccompagnement.AvecDeLAide,
-        ModaliteAccompagnement.DansUnAtelier
+        ModaliteAccompagnement.EnAutonomie,
+        ModaliteAccompagnement.AccompagnementIndividuel,
+        ModaliteAccompagnement.DansUnAtelier,
+        ModaliteAccompagnement.ADistance
       ]),
-      accessibilite: Url(
+      fiche_acces_libre: Url(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       ),
       prise_rdv: Url('https://www.rdv-solidarites.fr/')
+    });
+  });
+
+  it('should get a lieu de mediation numerique with labels but no formation label', (): void => {
+    const structure: SchemaStructureDataInclusion = {
+      adresse: '12 BIS RUE DE LECLERCQ',
+      code_postal: '51100',
+      code_insee: '51454',
+      commune: 'Reims',
+      date_maj: new Date('2022-10-10').toISOString(),
+      id: 'structure-1',
+      nom: 'Anonymal',
+      siret: '43493312300029',
+      source: 'Hubik',
+      labels_nationaux: ['france-service', 'aidants-connect']
+    };
+
+    const service: SchemaServiceDataInclusion = {
+      id: 'structure-1-mediation-numerique',
+      nom: 'Médiation numérique',
+      source: 'Hubik',
+      structure_id: 'structure-1',
+      thematiques: ['numerique', 'numerique--creer-avec-le-numerique']
+    };
+
+    const lieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
+
+    expect(lieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '51100',
+        code_insee: '51454',
+        commune: 'Reims',
+        voie: '12 BIS RUE DE LECLERCQ'
+      }),
+      services: Services([Service.LoisirsEtCreationsNumeriques]),
+      modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail]),
+      date_maj: new Date('2022-10-10'),
+      source: 'Hubik',
+      dispositif_programmes_nationaux: DispositifProgrammesNationaux([
+        DispositifProgrammeNational.FranceServices,
+        DispositifProgrammeNational.AidantsConnect
+      ])
+    });
+  });
+
+  it('should get a lieu de mediation numerique with labels but only formation label', (): void => {
+    const structure: SchemaStructureDataInclusion = {
+      adresse: '12 BIS RUE DE LECLERCQ',
+      code_postal: '51100',
+      code_insee: '51454',
+      commune: 'Reims',
+      date_maj: new Date('2022-10-10').toISOString(),
+      id: 'structure-1',
+      nom: 'Anonymal',
+      siret: '43493312300029',
+      source: 'Hubik',
+      labels_nationaux: ['duplex', 'arnia']
+    };
+
+    const service: SchemaServiceDataInclusion = {
+      id: 'structure-1-mediation-numerique',
+      nom: 'Médiation numérique',
+      source: 'Hubik',
+      structure_id: 'structure-1',
+      thematiques: ['numerique', 'numerique--creer-avec-le-numerique']
+    };
+
+    const lieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
+
+    expect(lieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '51100',
+        code_insee: '51454',
+        commune: 'Reims',
+        voie: '12 BIS RUE DE LECLERCQ'
+      }),
+      services: Services([Service.LoisirsEtCreationsNumeriques]),
+      modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail]),
+      date_maj: new Date('2022-10-10'),
+      source: 'Hubik',
+      formations_labels: FormationsLabels([FormationLabel.FormeADuplex, FormationLabel.ArniaMednum])
     });
   });
 
@@ -274,9 +373,9 @@ describe('from schema data inclusion', (): void => {
       thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives']
     };
 
-    const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
+    const lieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
 
-    expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
+    expect(lieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
       id: Id('structure-1'),
       nom: Nom('Anonymal'),
       pivot: Pivot('W9R2003255'),
@@ -285,7 +384,8 @@ describe('from schema data inclusion', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      services: Services([Service.AideAuxDemarchesAdministratives]),
+      modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail]),
       date_maj: new Date('2022-10-10')
     });
   });
@@ -310,9 +410,9 @@ describe('from schema data inclusion', (): void => {
       thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives']
     };
 
-    const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
+    const lieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
 
-    expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
+    expect(lieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
       id: Id('structure-1'),
       nom: Nom('Anonymal'),
       pivot: Pivot('43493312300029'),
@@ -322,7 +422,8 @@ describe('from schema data inclusion', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives]),
+      services: Services([Service.AideAuxDemarchesAdministratives]),
+      modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail]),
       date_maj: new Date('2022-10-10')
     });
   });
@@ -381,7 +482,8 @@ describe('from schema data inclusion', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives, Service.AccederAUneConnexionInternet]),
+      services: Services([Service.AideAuxDemarchesAdministratives, Service.AccesInternetEtMaterielInformatique]),
+      modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail]),
       date_maj: new Date('2022-10-10')
     });
   });
@@ -415,9 +517,9 @@ describe('from schema data inclusion', (): void => {
       frais: ['gratuit']
     };
 
-    const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service1, service2], structure);
+    const lieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service1, service2], structure);
 
-    expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
+    expect(lieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
       id: Id('structure-1'),
       nom: Nom('Anonymal'),
       pivot: Pivot('W9R2003255'),
@@ -426,9 +528,10 @@ describe('from schema data inclusion', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([Service.DevenirAutonomeDansLesDemarchesAdministratives, Service.AccederAUneConnexionInternet]),
+      services: Services([Service.AideAuxDemarchesAdministratives, Service.AccesInternetEtMaterielInformatique]),
+      modalites_acces: ModalitesAcces([ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail]),
       date_maj: new Date('2022-10-10'),
-      conditions_acces: ConditionsAcces([ConditionAcces.Payant, ConditionAcces.Gratuit])
+      frais_a_charge: FraisACharge([Frais.Payant, Frais.Gratuit])
     });
   });
 
@@ -473,9 +576,9 @@ describe('from schema data inclusion', (): void => {
       profils: ['seniors-65', 'adultes', 'jeunes-16-26']
     };
 
-    const minimalLieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service1, service2], structure);
+    const lieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service1, service2], structure);
 
-    expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
+    expect(lieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
       id: Id('structure-1'),
       nom: Nom('Anonymal'),
       pivot: Pivot('43493312300029'),
@@ -484,26 +587,127 @@ describe('from schema data inclusion', (): void => {
         commune: 'Reims',
         voie: '12 BIS RUE DE LECLERCQ'
       }),
-      services: Services([
-        Service.DevenirAutonomeDansLesDemarchesAdministratives,
-        Service.RealiserDesDemarchesAdministratives,
-        Service.PrendreEnMainUnSmartphoneOuUneTablette,
-        Service.PrendreEnMainUnOrdinateur
+      services: Services([Service.AideAuxDemarchesAdministratives, Service.MaitriseDesOutilsNumeriquesDuQuotidien]),
+      modalites_acces: ModalitesAcces([
+        ModaliteAcces.PrendreRdvEnLigne,
+        ModaliteAcces.SePresenter,
+        ModaliteAcces.Telephoner,
+        ModaliteAcces.ContacterParMail
       ]),
       date_maj: new Date('2022-10-10'),
-      publics_accueillis: PublicsAccueillis([
-        PublicAccueilli.Seniors,
-        PublicAccueilli.FamillesEnfants,
-        PublicAccueilli.Adultes,
-        PublicAccueilli.Jeunes
+      publics_specifiquement_adresses: PublicsSpecifiquementAdresses([
+        PublicSpecifiquementAdresse.Seniors,
+        PublicSpecifiquementAdresse.FamillesEnfants,
+        PublicSpecifiquementAdresse.Jeunes
       ]),
-      conditions_acces: ConditionsAcces([ConditionAcces.Adhesion, ConditionAcces.AccepteLePassNumerique]),
+      frais_a_charge: FraisACharge([Frais.Payant, Frais.GratuitSousCondition]),
       modalites_accompagnement: ModalitesAccompagnement([
-        ModaliteAccompagnement.AvecDeLAide,
-        ModaliteAccompagnement.DansUnAtelier,
-        ModaliteAccompagnement.AMaPlace
+        ModaliteAccompagnement.AccompagnementIndividuel,
+        ModaliteAccompagnement.DansUnAtelier
       ]),
       prise_rdv: Url('https://www.rdv-solidarites.fr/service2')
+    });
+  });
+
+  it('should get modalite acces with prise rdv', (): void => {
+    const structure: SchemaStructureDataInclusion = {
+      adresse: '12 BIS RUE DE LECLERCQ',
+      code_postal: '51100',
+      commune: 'Reims',
+      date_maj: new Date('2022-10-10').toISOString(),
+      id: 'structure-1',
+      nom: 'Anonymal',
+      siret: '43493312300029'
+    };
+
+    const service: SchemaServiceDataInclusion = {
+      id: 'structure-1-mediation-numerique',
+      nom: 'Médiation numérique',
+      source: 'Hubik',
+      structure_id: 'structure-1',
+      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives'],
+      modes_orientation_beneficiaire: [
+        'se-presenter',
+        'completer-le-formulaire-dadhesion',
+        'envoyer-un-mail',
+        'telephoner',
+        'autre'
+      ],
+      modes_orientation_accompagnateur: [
+        'completer-le-formulaire-dadhesion',
+        'envoyer-un-mail',
+        'envoyer-un-mail-avec-des-documents-a-completer',
+        'envoyer-un-mail-avec-une-fiche-de-prescription',
+        'telephoner',
+        'autre'
+      ],
+      prise_rdv: 'http://www.test.com'
+    };
+
+    const lieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
+
+    expect(lieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '51100',
+        commune: 'Reims',
+        voie: '12 BIS RUE DE LECLERCQ'
+      }),
+      services: Services([Service.AideAuxDemarchesAdministratives]),
+      date_maj: new Date('2022-10-10'),
+      modalites_acces: ModalitesAcces([
+        ModaliteAcces.PrendreRdvEnLigne,
+        ModaliteAcces.SePresenter,
+        ModaliteAcces.ContacterParMail,
+        ModaliteAcces.Telephoner,
+        ModaliteAcces.PrescriptionParMail
+      ]),
+      prise_rdv: Url('http://www.test.com')
+    });
+  });
+
+  it('should get defaut modalites when no modes orientation from data inclusion', (): void => {
+    const structure: SchemaStructureDataInclusion = {
+      adresse: '12 BIS RUE DE LECLERCQ',
+      code_postal: '51100',
+      commune: 'Reims',
+      date_maj: new Date('2022-10-10').toISOString(),
+      id: 'structure-1',
+      nom: 'Anonymal',
+      siret: '43493312300029'
+    };
+
+    const service: SchemaServiceDataInclusion = {
+      id: 'structure-1-mediation-numerique',
+      nom: 'Médiation numérique',
+      source: 'Hubik',
+      structure_id: 'structure-1',
+      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives'],
+      prise_rdv: 'http://www.test.com'
+    };
+
+    const lieuMediationNumerique: LieuMediationNumerique = fromSchemaDataInclusion([service], structure);
+
+    expect(lieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
+      id: Id('structure-1'),
+      nom: Nom('Anonymal'),
+      pivot: Pivot('43493312300029'),
+      adresse: Adresse({
+        code_postal: '51100',
+        commune: 'Reims',
+        voie: '12 BIS RUE DE LECLERCQ'
+      }),
+      services: Services([Service.AideAuxDemarchesAdministratives]),
+      date_maj: new Date('2022-10-10'),
+      modalites_acces: ModalitesAcces([
+        ModaliteAcces.PrendreRdvEnLigne,
+        ModaliteAcces.SePresenter,
+        ModaliteAcces.Telephoner,
+        ModaliteAcces.ContacterParMail
+      ]),
+      prise_rdv: Url('http://www.test.com')
     });
   });
 });

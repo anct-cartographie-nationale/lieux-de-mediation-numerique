@@ -2,15 +2,22 @@
 
 import {
   Adresse,
-  CleBan,
-  ConditionsAcces,
   Contact,
-  LabelsNationaux,
+  Courriel,
+  FormationsLabels,
+  FraisACharge,
+  Itinerances,
+  DispositifProgrammesNationaux,
   Localisation,
+  ModaliteAcces,
+  ModalitesAcces,
   ModalitesAccompagnement,
-  /* eslint-disable @typescript-eslint/no-shadow */
+  /* eslint-disable-next-line @typescript-eslint/no-shadow */
   Presentation,
-  PublicsAccueillis,
+  PrisesEnChargeSpecifiques,
+  PublicsSpecifiquementAdresses,
+  Services,
+  toAccessibleLieu,
   Typologies,
   Url
 } from '../../../models';
@@ -18,12 +25,15 @@ import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numer
 
 const toListOf = <T>(listItem: string): T => listItem as T;
 
-export const listFromString = <T>(stringList: string): T[] => stringList.split(';').map(toListOf<T>);
+export const listFromString = <T>(stringList: string): T[] => stringList.split('|').map(toListOf<T>);
+
+const hasServices = (services?: Services): boolean => services != null && services.length > 0;
+
+export const servicesIfAny = (services?: string): { services?: Services } =>
+  services == null ? {} : { services: Services(listFromString(services)) };
 
 export const localisationIfAny = (latitude?: number, longitude?: number): { localisation?: Localisation } =>
   latitude == null || longitude == null ? {} : { localisation: Localisation({ latitude, longitude }) };
-
-export const cleBanIfAny = (cleBan?: string): { cle_ban?: CleBan } => (cleBan == null ? {} : { cle_ban: CleBan(cleBan) });
 
 export const adresse = (schemaLieuMediationNumerique: SchemaLieuMediationNumerique): { adresse: Adresse } => ({
   adresse: Adresse({
@@ -45,7 +55,8 @@ export const typologiesIfAny = (typologies?: string): { typologies?: Typologies 
 
 const telephoneIfAny = (telephone?: string): { telephone?: string } => (telephone == null ? {} : { telephone });
 
-const courrielIfAny = (courriel?: string): { courriel?: string } => (courriel == null ? {} : { courriel });
+const courrielIfAny = (courriel?: string): { courriel?: Courriel[] } =>
+  courriel == null ? {} : { courriel: listFromString(courriel) };
 
 const siteWebIfAny = (siteWeb?: string): { site_web?: Url[] } => (siteWeb == null ? {} : { site_web: listFromString(siteWeb) });
 
@@ -85,26 +96,63 @@ export const sourceIfAny = (source?: string): { source?: string } => (source == 
 export const structureParenteIfAny = (structureParente?: string): { structure_parente?: string } =>
   structureParente == null ? {} : { structure_parente: structureParente };
 
-export const publicsAccueillisIfAny = (publicsAccueillis?: string): { publics_accueillis?: PublicsAccueillis } =>
-  publicsAccueillis == null ? {} : { publics_accueillis: PublicsAccueillis(listFromString(publicsAccueillis)) };
+export const publicsSpecifiquementAdressesIfAny = (
+  publicsSpecifiquementAdresses?: string,
+  services?: Services
+): { publics_specifiquement_adresses?: PublicsSpecifiquementAdresses } =>
+  publicsSpecifiquementAdresses == null || !hasServices(services)
+    ? {}
+    : { publics_specifiquement_adresses: PublicsSpecifiquementAdresses(listFromString(publicsSpecifiquementAdresses)) };
 
-export const conditionsAccesIfAny = (conditionsAcces?: string): { conditions_acces?: ConditionsAcces } =>
-  conditionsAcces == null ? {} : { conditions_acces: ConditionsAcces(listFromString(conditionsAcces)) };
+export const priseEnChargeSpecifiqueIfAny = (
+  priseEnChargeSpecifique?: string,
+  services?: Services
+): { prise_en_charge_specifique?: PrisesEnChargeSpecifiques } =>
+  priseEnChargeSpecifique == null || !hasServices(services)
+    ? {}
+    : { prise_en_charge_specifique: PrisesEnChargeSpecifiques(listFromString(priseEnChargeSpecifique)) };
 
-export const labelsNationauxIfAny = (labelsNationaux?: string): { labels_nationaux?: LabelsNationaux } =>
-  labelsNationaux == null ? {} : { labels_nationaux: LabelsNationaux(listFromString(labelsNationaux)) };
+export const fraisAChargeIfAny = (conditionsAcces?: string, services?: Services): { frais_a_charge?: FraisACharge } =>
+  conditionsAcces == null || !hasServices(services) ? {} : { frais_a_charge: FraisACharge(listFromString(conditionsAcces)) };
 
-export const labelsAutresIfAny = (labelsAutres?: string): { labels_autres?: string[] } =>
-  labelsAutres == null ? {} : { labels_autres: listFromString(labelsAutres) };
+export const itinerancesIfAny = (itinerance?: string, services?: Services): { itinerance?: Itinerances } =>
+  itinerance == null || !hasServices(services) ? {} : { itinerance: Itinerances(listFromString(itinerance)) };
+
+export const dispositifProgrammesNationauxIfAny = (
+  dispositifProgrammesNationaux?: string
+): { dispositif_programmes_nationaux?: DispositifProgrammesNationaux } =>
+  dispositifProgrammesNationaux == null
+    ? {}
+    : { dispositif_programmes_nationaux: DispositifProgrammesNationaux(listFromString(dispositifProgrammesNationaux)) };
+
+export const formationsLabelsIfAny = (formationsLabels?: string): { formations_labels?: FormationsLabels } =>
+  formationsLabels == null ? {} : { formations_labels: FormationsLabels(listFromString(formationsLabels)) };
+
+export const autresFormationsLabelsIfAny = (autresFormationsLabels?: string): { autres_formations_labels?: string[] } =>
+  autresFormationsLabels == null ? {} : { autres_formations_labels: listFromString(autresFormationsLabels) };
 
 export const modalitesAccompagnementIfAny = (
-  modalitesAccompagnement?: string
+  modalitesAccompagnement?: string,
+  services?: Services
 ): { modalites_accompagnement?: ModalitesAccompagnement } =>
-  modalitesAccompagnement == null
+  modalitesAccompagnement == null || !hasServices(services)
     ? {}
     : { modalites_accompagnement: ModalitesAccompagnement(listFromString(modalitesAccompagnement)) };
 
-export const accessibiliteIfAny = (accessibilite?: string): { accessibilite?: Url } =>
-  accessibilite == null ? {} : { accessibilite: Url(accessibilite) };
+const PublicAccess = (modalitesAcces?: string): { modalites_acces?: ModalitesAcces } =>
+  modalitesAcces == null
+    ? {}
+    : {
+        modalites_acces: ModalitesAcces(listFromString<ModaliteAcces>(modalitesAcces).filter(toAccessibleLieu))
+      };
+const noPublicAccess = (): { modalites_acces: ModalitesAcces } => ({
+  modalites_acces: ModalitesAcces([ModaliteAcces.PasDePublic])
+});
+
+export const modalitesAccessIfAny = (modalitesAcces?: string, services?: Services): { modalites_acces?: ModalitesAcces } =>
+  hasServices(services) ? PublicAccess(modalitesAcces) : noPublicAccess();
+
+export const ficheAccedLibreIfAny = (ficheAccesLibre?: string): { fiche_acces_libre?: Url } =>
+  ficheAccesLibre == null ? {} : { fiche_acces_libre: Url(ficheAccesLibre) };
 
 export const priseRdvIfAny = (priseRdv?: string): { prise_rdv?: Url } => (priseRdv == null ? {} : { prise_rdv: Url(priseRdv) });

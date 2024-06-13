@@ -16,9 +16,9 @@ import {
 export const generalFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueGeneralFields => ({
   id: lieuMediationNumerique.id,
   nom: lieuMediationNumerique.nom,
-  services: lieuMediationNumerique.services.join(';'),
   pivot: lieuMediationNumerique.pivot,
-  ...(lieuMediationNumerique.typologies == null ? {} : { typologie: lieuMediationNumerique.typologies.join(';') }),
+  ...(lieuMediationNumerique.services == null ? {} : { services: lieuMediationNumerique.services.join('|') }),
+  ...(lieuMediationNumerique.typologies == null ? {} : { typologie: lieuMediationNumerique.typologies.join('|') }),
   ...(lieuMediationNumerique.structure_parente == null ? {} : { structure_parente: lieuMediationNumerique.structure_parente })
 });
 
@@ -29,8 +29,7 @@ export const adresseFields = (lieuMediationNumerique: LieuMediationNumerique): S
   ...(lieuMediationNumerique.adresse.code_insee == null ? {} : { code_insee: lieuMediationNumerique.adresse.code_insee }),
   ...(lieuMediationNumerique.adresse.complement_adresse == null
     ? {}
-    : { complement_adresse: lieuMediationNumerique.adresse.complement_adresse }),
-  ...(lieuMediationNumerique.cle_ban == null ? {} : { cle_ban: lieuMediationNumerique.cle_ban })
+    : { complement_adresse: lieuMediationNumerique.adresse.complement_adresse })
 });
 
 export const localisationFields = (
@@ -44,8 +43,8 @@ export const localisationFields = (
 
 export const contactFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueContactFields => ({
   ...(lieuMediationNumerique.contact?.telephone == null ? {} : { telephone: lieuMediationNumerique.contact.telephone }),
-  ...(lieuMediationNumerique.contact?.courriel == null ? {} : { courriel: lieuMediationNumerique.contact.courriel }),
-  ...(lieuMediationNumerique.contact?.site_web == null ? {} : { site_web: lieuMediationNumerique.contact.site_web.join(';') })
+  ...(lieuMediationNumerique.contact?.courriel == null ? {} : { courriel: lieuMediationNumerique.contact.courriel.join('|') }),
+  ...(lieuMediationNumerique.contact?.site_web == null ? {} : { site_web: lieuMediationNumerique.contact.site_web.join('|') })
 });
 
 export const presentationFields = (
@@ -60,23 +59,33 @@ export const presentationFields = (
 });
 
 export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueAccesFields => ({
-  ...(lieuMediationNumerique.publics_accueillis == null
+  ...(lieuMediationNumerique.publics_specifiquement_adresses == null
     ? {}
-    : { publics_accueillis: lieuMediationNumerique.publics_accueillis.join(';') }),
-  ...(lieuMediationNumerique.conditions_acces == null
+    : { publics_specifiquement_adresses: lieuMediationNumerique.publics_specifiquement_adresses.join('|') }),
+  ...(lieuMediationNumerique.prise_en_charge_specifique == null
     ? {}
-    : { conditions_acces: lieuMediationNumerique.conditions_acces.join(';') }),
+    : { prise_en_charge_specifique: lieuMediationNumerique.prise_en_charge_specifique.join('|') }),
+  ...(lieuMediationNumerique.frais_a_charge == null ? {} : { frais_a_charge: lieuMediationNumerique.frais_a_charge.join('|') }),
+  ...(lieuMediationNumerique.itinerance == null ? {} : { itinerance: lieuMediationNumerique.itinerance.join('|') }),
+  ...(lieuMediationNumerique.modalites_acces == null
+    ? {}
+    : { modalites_acces: lieuMediationNumerique.modalites_acces.join('|') }),
   ...(lieuMediationNumerique.modalites_accompagnement == null
     ? {}
-    : { modalites_accompagnement: lieuMediationNumerique.modalites_accompagnement.join(';') }),
-  ...(lieuMediationNumerique.accessibilite == null ? {} : { accessibilite: lieuMediationNumerique.accessibilite })
+    : { modalites_accompagnement: lieuMediationNumerique.modalites_accompagnement.join('|') }),
+  ...(lieuMediationNumerique.fiche_acces_libre == null ? {} : { fiche_acces_libre: lieuMediationNumerique.fiche_acces_libre })
 });
 
 export const labelsFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueLabelsFields => ({
-  ...(lieuMediationNumerique.labels_nationaux == null
+  ...(lieuMediationNumerique.dispositif_programmes_nationaux == null
     ? {}
-    : { labels_nationaux: lieuMediationNumerique.labels_nationaux.join(';') }),
-  ...(lieuMediationNumerique.labels_autres == null ? {} : { labels_autres: lieuMediationNumerique.labels_autres.join(';') })
+    : { dispositif_programmes_nationaux: lieuMediationNumerique.dispositif_programmes_nationaux.join('|') }),
+  ...(lieuMediationNumerique.formations_labels == null
+    ? {}
+    : { formations_labels: lieuMediationNumerique.formations_labels.join('|') }),
+  ...(lieuMediationNumerique.autres_formations_labels == null
+    ? {}
+    : { autres_formations_labels: lieuMediationNumerique.autres_formations_labels.join('|') })
 });
 
 export const disponibiliteFields = (
