@@ -1,85 +1,117 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase, max-lines */
 
-import { SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import {
   Adresse,
-  ConditionAcces,
-  ConditionsAcces,
   Contact,
-  LabelNational,
-  LabelsNationaux,
+  Frais,
+  FraisACharge,
+  Courriel,
+  DispositifProgrammeNational,
+  DispositifProgrammesNationaux,
   Localisation,
   ModaliteAccompagnement,
   ModalitesAccompagnement,
   /* eslint-disable-next-line @typescript-eslint/no-shadow */
   Presentation,
-  PublicAccueilli,
-  PublicsAccueillis,
   Service,
   Services,
   Typologie,
   Typologies,
-  Url
+  Url,
+  ModaliteAcces,
+  ModalitesAcces,
+  PrisesEnChargeSpecifiques,
+  PublicsSpecifiquementAdresses,
+  PublicSpecifiquementAdresse,
+  PriseEnChargeSpecifique,
+  FormationsLabels,
+  FormationLabel
 } from '../../../models';
+import {
+  ModeOrientationAccompagnateur,
+  ModeOrientationBeneficiaire,
+  SchemaStructureDataInclusion
+} from '../schema-data-inclusion';
 
 const THEMATIQUES_TO_SERVICES: Map<string, Service> = new Map<string, Service>([
-  ['numerique--devenir-autonome-dans-les-demarches-administratives', Service.DevenirAutonomeDansLesDemarchesAdministratives],
-  ['numerique--realiser-des-demarches-administratives-avec-un-accompagnement', Service.RealiserDesDemarchesAdministratives],
-  ['numerique--prendre-en-main-un-smartphone-ou-une-tablette', Service.PrendreEnMainUnSmartphoneOuUneTablette],
-  ['numerique--prendre-en-main-un-ordinateur', Service.PrendreEnMainUnOrdinateur],
-  ['numerique--utiliser-le-numerique-au-quotidien', Service.UtiliserLeNumerique],
-  ['numerique--approfondir-ma-culture-numerique', Service.ApprofondirMaCultureNumerique],
-  ['numerique--favoriser-mon-insertion-professionnelle', Service.FavoriserMonInsertionProfessionnelle],
-  ['numerique--acceder-a-une-connexion-internet', Service.AccederAUneConnexionInternet],
-  ['numerique--acceder-a-du-materiel', Service.AccederADuMateriel],
-  ['numerique--s-equiper-en-materiel-informatique', Service.EquiperEnMaterielInformatique],
-  ['numerique--creer-et-developper-mon-entreprise', Service.CreerEtDevelopperMonEntreprise],
-  ['numerique--creer-avec-le-numerique', Service.CreerAvecLeNumerique],
-  ['numerique--accompagner-les-demarches-de-sante', Service.AccompagnerLesDemarchesDeSante],
-  ['numerique--promouvoir-la-citoyennete-numerique', Service.PromouvoirLaCitoyenneteNumerique],
-  ['numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique', Service.SoutenirLaParentalite]
+  ['numerique--devenir-autonome-dans-les-demarches-administratives', Service.AideAuxDemarchesAdministratives],
+  ['numerique--realiser-des-demarches-administratives-avec-un-accompagnement', Service.AideAuxDemarchesAdministratives],
+  ['numerique--accompagner-les-demarches-de-sante', Service.AideAuxDemarchesAdministratives],
+  ['numerique--prendre-en-main-un-smartphone-ou-une-tablette', Service.MaitriseDesOutilsNumeriquesDuQuotidien],
+  ['numerique--prendre-en-main-un-ordinateur', Service.MaitriseDesOutilsNumeriquesDuQuotidien],
+  ['numerique--utiliser-le-numerique-au-quotidien', Service.MaitriseDesOutilsNumeriquesDuQuotidien],
+  ['numerique--approfondir-ma-culture-numerique', Service.ComprehensionDuMondeNumerique],
+  ['numerique--favoriser-mon-insertion-professionnelle', Service.InsertionProfessionnelleViaLeNumerique],
+  ['numerique--acceder-a-une-connexion-internet', Service.AccesInternetEtMaterielInformatique],
+  ['numerique--acceder-a-du-materiel', Service.AccesInternetEtMaterielInformatique],
+  ['numerique--s-equiper-en-materiel-informatique', Service.MaterielInformatiqueAPrixSolidaire],
+  ['numerique--creer-et-developper-mon-entreprise', Service.InsertionProfessionnelleViaLeNumerique],
+  ['numerique--creer-avec-le-numerique', Service.LoisirsEtCreationsNumeriques],
+  ['numerique--promouvoir-la-citoyennete-numerique', Service.ComprehensionDuMondeNumerique],
+  ['numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique', Service.ParentaliteEtEducationAvecLeNumerique]
 ]);
 
-export const FRAIS_TO_CONDITION_ACCES: Map<string, ConditionAcces> = new Map<string, ConditionAcces>([
-  ['gratuit', ConditionAcces.Gratuit],
-  ['gratuit-sous-conditions', ConditionAcces.GratuitSousCondition],
-  ['payant', ConditionAcces.Payant],
-  ['adhesion', ConditionAcces.Adhesion],
-  ['pass-numerique', ConditionAcces.AccepteLePassNumerique]
+export const FRAIS_TO_CONDITION_ACCES: Map<string, Frais> = new Map<string, Frais>([
+  ['gratuit', Frais.Gratuit],
+  ['gratuit-sous-conditions', Frais.GratuitSousCondition],
+  ['payant', Frais.Payant],
+  ['adhesion', Frais.Payant],
+  ['pass-numerique', Frais.GratuitSousCondition]
 ]);
 
-const LABELS_NATIONAUX_MAP: Map<string, LabelNational> = new Map<string, LabelNational>([
-  ['aidants-connect', LabelNational.AidantsConnect],
-  ['aptic', LabelNational.APTIC],
-  ['campus-connecte', LabelNational.CampusConnecte],
-  ['conseiller-numerique', LabelNational.CNFS], // todo: missing label in data.inclusion
-  ['fabrique-de-territoire', LabelNational.FabriquesDeTerritoire],
-  ['france-service', LabelNational.FranceServices],
-  ['french-tech', LabelNational.FrenchTech],
-  ['grandes-ecoles-du-numerique', LabelNational.GrandesEcolesDuNumerique],
-  ['caf', LabelNational.PointRelaisCAF],
-  ['pole-emploi', LabelNational.RelaisPoleEmploi]
+export const MODES_ORIENTATION_TO_MODALITE_ACCES: Map<string, ModaliteAcces> = new Map<string, ModaliteAcces>([
+  ['envoyer-un-mail', ModaliteAcces.ContacterParMail],
+  ['envoyer-un-mail-avec-une-fiche-de-prescription', ModaliteAcces.PrescriptionParMail],
+  ['telephoner', ModaliteAcces.Telephoner],
+  ['se-presenter', ModaliteAcces.SePresenter]
+]);
+
+const DISPOSITIF_PROGRAMMES_NATIONAUX_MAP: Map<string, DispositifProgrammeNational> = new Map<
+  string,
+  DispositifProgrammeNational
+>([
+  ['aidants-connect', DispositifProgrammeNational.AidantsConnect],
+  ['conseiller-numerique', DispositifProgrammeNational.ConseillersNumeriques],
+  ['france-service', DispositifProgrammeNational.FranceServices],
+  ['grandes-ecoles-du-numerique', DispositifProgrammeNational.GrandeEcoleDuNumerique],
+  ['caf', DispositifProgrammeNational.PointNumeriqueCAF]
+]);
+
+const FORMATIONS_LABELS_MAP: Map<string, FormationLabel> = new Map<string, FormationLabel>([
+  ['mon-espace-sante', FormationLabel.FormeAMonEspaceSante],
+  ['duplex', FormationLabel.FormeADuplex],
+  ['arnia', FormationLabel.ArniaMednum],
+  ['ressources-reemploi', FormationLabel.CollectifRessourcesEtActeursReemploi],
+  ['fabrique-de-territoire', FormationLabel.FabriquesDeTerritoire],
+  ['les-eclaireurs', FormationLabel.LesEclaireurs],
+  ['mes-papiers', FormationLabel.MesPapiers],
+  ['ordi-3', FormationLabel.Ordi3],
+  ['sud-labs', FormationLabel.SudLabs]
 ]);
 
 const TYPES_TO_MODALITES_ACCOMPAGNEMENT_MAP: Map<string, ModaliteAccompagnement> = new Map<string, ModaliteAccompagnement>([
-  ['autonomie', ModaliteAccompagnement.Seul],
-  ['accompagnement', ModaliteAccompagnement.AvecDeLAide],
-  ['delegation', ModaliteAccompagnement.AMaPlace],
+  ['autonomie', ModaliteAccompagnement.EnAutonomie],
+  ['accompagnement', ModaliteAccompagnement.AccompagnementIndividuel],
+  ['delegation', ModaliteAccompagnement.AccompagnementIndividuel],
   ['atelier', ModaliteAccompagnement.DansUnAtelier]
 ]);
 
-const PROFILS_TO_PUBLICS_ACCUEILLIS: Map<string, PublicAccueilli> = new Map<string, PublicAccueilli>([
-  ['seniors-65', PublicAccueilli.Seniors],
-  ['familles-enfants', PublicAccueilli.FamillesEnfants],
-  ['adultes', PublicAccueilli.Adultes],
-  ['jeunes-16-26', PublicAccueilli.Jeunes],
-  ['public-langues-etrangeres', PublicAccueilli.LanguesEtrangeres],
-  ['deficience-visuelle', PublicAccueilli.DeficienceVisuelle],
-  ['surdite', PublicAccueilli.Surdite],
-  ['handicaps-psychiques', PublicAccueilli.HandicapsPsychiques],
-  ['handicaps-mentaux', PublicAccueilli.HandicapsMentaux],
-  ['femmes', PublicAccueilli.UniquementFemmes],
-  ['personnes-en-situation-illettrisme', PublicAccueilli.Illettrisme]
+const PROFILS_TO_PRISES_EN_CHARGE_SPECIFIQUE: Map<string, PriseEnChargeSpecifique> = new Map<string, PriseEnChargeSpecifique>([
+  ['surdite', PriseEnChargeSpecifique.Surdite],
+  ['handicaps-mentaux', PriseEnChargeSpecifique.HandicapsMentaux],
+  ['personnes-en-situation-illettrisme', PriseEnChargeSpecifique.Illettrisme],
+  ['public-langues-etrangeres', PriseEnChargeSpecifique.LanguesEtrangeresAutre],
+  ['deficience-visuelle', PriseEnChargeSpecifique.DeficienceVisuelle]
+]);
+
+const PROFILS_TO_PUBLICS_SPECIFIQUEMENT_ADRESSES: Map<string, PublicSpecifiquementAdresse> = new Map<
+  string,
+  PublicSpecifiquementAdresse
+>([
+  ['jeunes-16-26', PublicSpecifiquementAdresse.Jeunes],
+  ['familles-enfants', PublicSpecifiquementAdresse.FamillesEnfants],
+  ['seniors-65', PublicSpecifiquementAdresse.Seniors],
+  ['femmes', PublicSpecifiquementAdresse.Femmes]
 ]);
 
 export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>([
@@ -91,6 +123,7 @@ export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>
   ['ASSO', Typologie.ASSO],
   ['ASSO_CHOMEUR', Typologie.ASSO_CHOMEUR],
   ['Autre', Typologie.AUTRE],
+  ['AVIP', Typologie.AVIP],
   ['BIB', Typologie.BIB],
   ['CAARUD', Typologie.CAARUD],
   ['CADA', Typologie.CADA],
@@ -101,14 +134,20 @@ export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>
   ['CCAS', Typologie.CCAS],
   ['CCONS', Typologie.CCONS],
   ['CD', Typologie.CD],
+  ['CDAS', Typologie.CDAS],
+  ['CFP', Typologie.CFP],
   ['CHRS', Typologie.CHRS],
   ['CHU', Typologie.CHU],
   ['CIAS', Typologie.CIAS],
   ['CIDFF', Typologie.CIDFF],
   ['CITMET', Typologie.CITMET],
+  ['CMP', Typologie.CMP],
+  ['CMS', Typologie.CMS],
+  ['CPAM', Typologie.CPAM],
   ['CPH', Typologie.CPH],
   ['CS', Typologie.CS],
   ['CSAPA', Typologie.CSAPA],
+  ['CSC', Typologie.CSC],
   ['DEETS', Typologie.DEETS],
   ['DEPT', Typologie.DEPT],
   ['DIPLP', Typologie.DIPLP],
@@ -117,13 +156,21 @@ export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>
   ['EATT', Typologie.EATT],
   ['EI', Typologie.EI],
   ['EITI', Typologie.EITI],
+  ['ENM', Typologie.ENM],
   ['EPCI', Typologie.EPCI],
+  ['EPI', Typologie.EPI],
   ['EPIDE', Typologie.EPIDE],
+  ['EPN', Typologie.EPN],
+  ['ES', Typologie.ES],
   ['ESS', Typologie.ESS],
   ['ETTI', Typologie.ETTI],
+  ['EVS', Typologie.EVS],
+  ['FABLAB', Typologie.FABLAB],
   ['FAIS', Typologie.FAIS],
+  ['FT', Typologie.FT],
   ['GEIQ', Typologie.GEIQ],
   ['HUDA', Typologie.HUDA],
+  ['LA_POSTE', Typologie.LA_POSTE],
   ['MDE', Typologie.MDE],
   ['MDEF', Typologie.MDEF],
   ['MDPH', Typologie.MDPH],
@@ -132,6 +179,7 @@ export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>
   ['ML', Typologie.ML],
   ['MQ', Typologie.MQ],
   ['MSA', Typologie.MSA],
+  ['MSAP', Typologie.MSAP],
   ['MUNI', Typologie.MUNI],
   ['OACAS', Typologie.OACAS],
   ['ODC', Typologie.ODC],
@@ -141,6 +189,7 @@ export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>
   ['PAD', Typologie.PAD],
   ['PE', Typologie.PE],
   ['PENSION', Typologie.PENSION],
+  ['PI', Typologie.PI],
   ['PIJ_BIJ', Typologie.PIJ_BIJ],
   ['PIMMS', Typologie.PIMMS],
   ['PJJ', Typologie.PJJ],
@@ -148,6 +197,7 @@ export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>
   ['PREF', Typologie.PREF],
   ['PREVENTION', Typologie.PREVENTION],
   ['REG', Typologie.REG],
+  ['RESSOURCERIE', Typologie.RESSOURCERIE],
   ['RFS', Typologie.RFS],
   ['RS_FJT', Typologie.RS_FJT],
   ['SCP', Typologie.SCP],
@@ -156,14 +206,14 @@ export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>
   ['UDAF', Typologie.UDAF]
 ]);
 
-export const conditionsAccesFromDataInclusion = (conditionsAcces?: string[]): { conditions_acces?: ConditionsAcces } =>
+export const conditionsAccesFromDataInclusion = (conditionsAcces?: string[]): { frais_a_charge?: FraisACharge } =>
   conditionsAcces == null || conditionsAcces.length === 0
     ? {}
     : {
-        conditions_acces: ConditionsAcces(
+        frais_a_charge: FraisACharge(
           conditionsAcces
-            .map((conditionAcces: string): ConditionAcces | undefined => FRAIS_TO_CONDITION_ACCES.get(conditionAcces))
-            .filter((conditionAcces?: ConditionAcces): conditionAcces is ConditionAcces => conditionAcces != null)
+            .map((conditionAcces: string): Frais | undefined => FRAIS_TO_CONDITION_ACCES.get(conditionAcces))
+            .filter((conditionAcces?: Frais): conditionAcces is Frais => conditionAcces != null)
         )
       };
 
@@ -172,29 +222,53 @@ export const contactFromDataInclusion = (courriel?: string, telephone?: string, 
     ? {}
     : {
         contact: Contact({
-          ...(courriel == null ? {} : { courriel }),
+          ...(courriel == null ? {} : { courriel: courriel.split('|').map(Courriel) }),
           ...(telephone == null ? {} : { telephone }),
-          ...(site_web == null ? {} : { site_web: site_web.split(';').map(Url) })
+          ...(site_web == null ? {} : { site_web: site_web.split('|').map(Url) })
         })
       };
 
 export const localisationFromDataInclusion = (latitude?: number, longitude?: number): { localisation?: Localisation } =>
   latitude == null || longitude == null ? {} : { localisation: Localisation({ latitude, longitude }) };
 
+const formationsLabelsFromLabelsNationaux = (labelsNationaux: string[]): { formations_labels?: FormationsLabels } => {
+  const formationsLabels: FormationsLabels = FormationsLabels(
+    labelsNationaux
+      .map((formationLabel: string): FormationLabel | undefined => FORMATIONS_LABELS_MAP.get(formationLabel))
+      .filter((formationLabel?: FormationLabel | undefined): formationLabel is FormationLabel => formationLabel != null)
+  );
+
+  return formationsLabels.length === 0 ? {} : { formations_labels: formationsLabels };
+};
+
+const dispositifProgrammesNationauxFromLabelsNationaux = (
+  labelsNationaux: string[]
+): { dispositif_programmes_nationaux?: DispositifProgrammesNationaux } => {
+  const dispositifProgrammesNationaux: DispositifProgrammesNationaux = DispositifProgrammesNationaux(
+    labelsNationaux
+      .map((labelNational: string): DispositifProgrammeNational | undefined =>
+        DISPOSITIF_PROGRAMMES_NATIONAUX_MAP.get(labelNational)
+      )
+      .filter(
+        (labelNational?: DispositifProgrammeNational | undefined): labelNational is DispositifProgrammeNational =>
+          labelNational != null
+      )
+  );
+
+  return dispositifProgrammesNationaux.length === 0 ? {} : { dispositif_programmes_nationaux: dispositifProgrammesNationaux };
+};
+
 export const labelsFromDataInclusion = (
-  labels_nationaux?: string[],
-  labels_autres?: string[]
-): { labels_nationaux?: LabelsNationaux; labels_autres?: string[] } => ({
-  ...(labels_nationaux == null
-    ? {}
-    : {
-        labels_nationaux: LabelsNationaux(
-          labels_nationaux
-            .map((labelNational: string): LabelNational | undefined => LABELS_NATIONAUX_MAP.get(labelNational))
-            .filter((labelNational?: LabelNational | undefined): labelNational is LabelNational => labelNational != null)
-        )
-      }),
-  ...(labels_autres == null ? {} : { labels_autres })
+  labelsNationaux?: string[],
+  labelsAutres?: string[]
+): {
+  dispositif_programmes_nationaux?: DispositifProgrammesNationaux;
+  formations_labels?: FormationsLabels;
+  autres_formations_labels?: string[];
+} => ({
+  ...(labelsNationaux == null ? {} : dispositifProgrammesNationauxFromLabelsNationaux(labelsNationaux)),
+  ...(labelsNationaux == null ? {} : formationsLabelsFromLabelsNationaux(labelsNationaux)),
+  ...(labelsAutres == null ? {} : { autres_formations_labels: labelsAutres })
 });
 
 const hasCodeInsee = (structure: SchemaStructureDataInclusion): boolean =>
@@ -219,19 +293,21 @@ export const servicesFromDataInclusion = (thematiques?: string[]): { services: S
 });
 
 export const modalitesAccompagnementFromDataInclusion = (
-  types?: string[]
+  types?: string[],
+  modesAccueil?: string[]
 ): { modalites_accompagnement?: ModalitesAccompagnement } =>
   types == null || types.length === 0
     ? {}
     : {
-        modalites_accompagnement: ModalitesAccompagnement(
-          types
+        modalites_accompagnement: ModalitesAccompagnement([
+          ...types
             .map((type: string): ModaliteAccompagnement | undefined => TYPES_TO_MODALITES_ACCOMPAGNEMENT_MAP.get(type))
             .filter(
               (modalitesAccompagnement?: ModaliteAccompagnement): modalitesAccompagnement is ModaliteAccompagnement =>
                 modalitesAccompagnement != null
-            )
-        )
+            ),
+          ...(modesAccueil?.includes('a-distance') === true ? [ModaliteAccompagnement.ADistance] : [])
+        ])
       };
 
 export const presentationFromDataInclusion = (
@@ -249,14 +325,38 @@ export const presentationFromDataInclusion = (
         }
       };
 
-export const publicsAccueillisFromDataInclusion = (profils?: string[]): { publics_accueillis?: PublicsAccueillis } =>
+export const publicSpecifiquementAdresseFromDataInclusion = (
+  profils?: string[]
+): { publics_specifiquement_adresses?: PublicsSpecifiquementAdresses } =>
   profils == null || profils.length === 0
     ? {}
     : {
-        publics_accueillis: PublicsAccueillis(
+        publics_specifiquement_adresses: PublicsSpecifiquementAdresses(
           profils
-            .map((profil: string): PublicAccueilli | undefined => PROFILS_TO_PUBLICS_ACCUEILLIS.get(profil))
-            .filter((publicAccueilli?: PublicAccueilli): publicAccueilli is PublicAccueilli => publicAccueilli != null)
+            .map((profil: string): PublicSpecifiquementAdresse | undefined =>
+              PROFILS_TO_PUBLICS_SPECIFIQUEMENT_ADRESSES.get(profil)
+            )
+            .filter(
+              (
+                publicSpecifiquementAdresse?: PublicSpecifiquementAdresse
+              ): publicSpecifiquementAdresse is PublicSpecifiquementAdresse => publicSpecifiquementAdresse != null
+            )
+        )
+      };
+
+export const priseEnChargeSpecifiqueFromDataInclusion = (
+  profils?: string[]
+): { prise_en_charge_specifique?: PrisesEnChargeSpecifiques } =>
+  profils == null || profils.length === 0
+    ? {}
+    : {
+        prise_en_charge_specifique: PrisesEnChargeSpecifiques(
+          profils
+            .map((profil: string): PriseEnChargeSpecifique | undefined => PROFILS_TO_PRISES_EN_CHARGE_SPECIFIQUE.get(profil))
+            .filter(
+              (priseEnChargeSpecifique?: PriseEnChargeSpecifique): priseEnChargeSpecifique is PriseEnChargeSpecifique =>
+                priseEnChargeSpecifique != null
+            )
         )
       };
 
@@ -265,8 +365,8 @@ export const typologiesFromDataInclusion = (typologie?: Typologie): { typologies
 
 export const sourceFromDataInclusion = (source?: string): { source?: string } => (source == null ? {} : { source });
 
-export const accessibiliteFromDataInclusion = (accessibilite?: string): { accessibilite?: Url } =>
-  accessibilite == null ? {} : { accessibilite: Url(accessibilite) };
+export const accessibiliteFromDataInclusion = (accessibilite?: string): { fiche_acces_libre?: Url } =>
+  accessibilite == null ? {} : { fiche_acces_libre: Url(accessibilite) };
 
 export const horairesFromDataInclusion = (horaires?: string): { horaires?: string } => (horaires == null ? {} : { horaires });
 
@@ -288,6 +388,10 @@ export const mergeTypes = (types?: string[], typesToAdd?: string[]): { types: st
   types: Array.from(new Set([...(types ?? []), ...(typesToAdd ?? [])]))
 });
 
+export const mergeModesAccueil = (modesAccueil?: string[], modesAccueilToAdd?: string[]): { modes_accueil: string[] } => ({
+  modes_accueil: Array.from(new Set([...(modesAccueil ?? []), ...(modesAccueilToAdd ?? [])]))
+});
+
 const fraisIfDefined = (frais?: string[]): { frais?: string[] } => (frais == null ? {} : { frais });
 
 export const mergeFrais = (frais?: string[], fraisToAdd?: string[]): { frais?: string[] } =>
@@ -295,3 +399,44 @@ export const mergeFrais = (frais?: string[], fraisToAdd?: string[]): { frais?: s
 
 export const mergePriseRdv = (priseRdv?: string, priseRdvToAdd?: string): { prise_rdv?: string } =>
   priseRdv == null && priseRdvToAdd == null ? {} : { prise_rdv: priseRdvToAdd ?? priseRdv ?? '' };
+
+const defaultModalitesAcces = (priseRdv?: { prise_rdv?: Url }): ModaliteAcces[] =>
+  priseRdv?.prise_rdv == null ? [] : [ModaliteAcces.PrendreRdvEnLigne];
+
+const onlyDefined = <T>(nullable?: T): nullable is T => nullable != null;
+
+const toModaliteAccess = (modeOrientation: string): ModaliteAcces | undefined =>
+  MODES_ORIENTATION_TO_MODALITE_ACCES.get(modeOrientation);
+
+const hasModesOrientation = (modesOrientation?: string[]): modesOrientation is string[] =>
+  modesOrientation != null && modesOrientation.length > 0;
+
+export const modalitesAccesFromDataInclusion = (
+  modesOrientation: string[],
+  priseRdv?: { prise_rdv?: Url }
+): { modalites_acces?: ModalitesAcces } => ({
+  modalites_acces: ModalitesAcces([
+    ...defaultModalitesAcces(priseRdv),
+    ...(hasModesOrientation(modesOrientation)
+      ? Array.from(new Set(modesOrientation)).map(toModaliteAccess).filter(onlyDefined)
+      : [ModaliteAcces.SePresenter, ModaliteAcces.Telephoner, ModaliteAcces.ContacterParMail])
+  ])
+});
+
+export const mergeModesOrientationBeneficiaire = (
+  modesOrientationBeneficiaire?: ModeOrientationBeneficiaire[],
+  modesOrientationBeneficiaireToAdd?: ModeOrientationBeneficiaire[]
+): { modes_orientation_beneficiaire: ModeOrientationBeneficiaire[] } => ({
+  modes_orientation_beneficiaire: Array.from(
+    new Set([...(modesOrientationBeneficiaire ?? []), ...(modesOrientationBeneficiaireToAdd ?? [])])
+  )
+});
+
+export const mergeModesOrientationAccompagnateur = (
+  modesOrientationAccompagnateur?: ModeOrientationAccompagnateur[],
+  modesOrientationAccompagnateurToAdd?: ModeOrientationAccompagnateur[]
+): { modes_orientation_accompagnateur: ModeOrientationAccompagnateur[] } => ({
+  modes_orientation_accompagnateur: Array.from(
+    new Set([...(modesOrientationAccompagnateur ?? []), ...(modesOrientationAccompagnateurToAdd ?? [])])
+  )
+});

@@ -3,7 +3,7 @@
 export type SchemaLieuMediationNumeriqueGeneralFields = {
   id: string;
   nom: string;
-  services: string;
+  services?: string;
   pivot: string;
   typologie?: string;
   structure_parente?: string;
@@ -15,7 +15,6 @@ export type SchemaLieuMediationNumeriqueAdresseFields = {
   adresse: string;
   code_insee?: string;
   complement_adresse?: string;
-  cle_ban?: string;
 };
 
 export type SchemaLieuMediationNumeriqueLocalisationFields = {
@@ -35,15 +34,19 @@ export type SchemaLieuMediationNumeriquePresentationFields = {
 };
 
 export type SchemaLieuMediationNumeriqueAccesFields = {
-  publics_accueillis?: string;
-  conditions_acces?: string;
+  publics_specifiquement_adresses?: string;
+  prise_en_charge_specifique?: string;
+  frais_a_charge?: string;
+  modalites_acces?: string;
   modalites_accompagnement?: string;
-  accessibilite?: string;
+  fiche_acces_libre?: string;
+  itinerance?: string;
 };
 
 export type SchemaLieuMediationNumeriqueLabelsFields = {
-  labels_nationaux?: string;
-  labels_autres?: string;
+  dispositif_programmes_nationaux?: string;
+  formations_labels?: string;
+  autres_formations_labels?: string;
 };
 
 export type SchemaLieuMediationNumeriqueDisponibiliteFields = {

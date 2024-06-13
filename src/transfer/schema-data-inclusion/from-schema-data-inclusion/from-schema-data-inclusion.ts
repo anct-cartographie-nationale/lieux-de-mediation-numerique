@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention, camelcase */
 
-import { Id, LieuMediationNumerique, Nom, Pivot } from '../../../models';
+import {
+  Id,
+  LieuMediationNumerique,
+  Nom,
+  Pivot,
+  PrisesEnChargeSpecifiques,
+  PublicsSpecifiquementAdresses
+} from '../../../models';
 import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
+import { MandatorySiretOrRnaError } from './errors/mandatory-siret-or-rna.error';
 import {
   accessibiliteFromDataInclusion,
   adresseFromDataInclusion,
@@ -11,21 +19,25 @@ import {
   labelsFromDataInclusion,
   localisationFromDataInclusion,
   mergeFrais,
+  mergeModesAccueil,
+  mergeModesOrientationAccompagnateur,
+  mergeModesOrientationBeneficiaire,
   mergePriseRdv,
   mergeProfils,
   mergeThematiques,
   mergeTypes,
+  modalitesAccesFromDataInclusion,
   modalitesAccompagnementFromDataInclusion,
   presentationFromDataInclusion,
+  priseEnChargeSpecifiqueFromDataInclusion,
   priseRdvFromDataInclusion,
-  publicsAccueillisFromDataInclusion,
+  publicSpecifiquementAdresseFromDataInclusion,
   servicesFromDataInclusion,
   sourceFromDataInclusion,
   structureParenteFromDataInclusion,
   TYPOLOGIES_MAP,
   typologiesFromDataInclusion
 } from './from-schema-data-inclusion-fields';
-import { MandatorySiretOrRnaError } from './errors/mandatory-siret-or-rna.error';
 
 const toSingleService = (
   mergedService: SchemaServiceDataInclusion,
@@ -36,7 +48,13 @@ const toSingleService = (
   ...mergeFrais(mergedService.frais, service.frais),
   ...mergeProfils(mergedService.profils, service.profils),
   ...mergeTypes(mergedService.types, service.types),
-  ...mergePriseRdv(mergedService.prise_rdv, service.prise_rdv)
+  ...mergeModesAccueil(mergedService.modes_accueil, service.modes_accueil),
+  ...mergePriseRdv(mergedService.prise_rdv, service.prise_rdv),
+  ...mergeModesOrientationBeneficiaire(mergedService.modes_orientation_beneficiaire, service.modes_orientation_beneficiaire),
+  ...mergeModesOrientationAccompagnateur(
+    mergedService.modes_orientation_accompagnateur,
+    service.modes_orientation_accompagnateur
+  )
 });
 
 export const mergeServices = (
@@ -55,6 +73,18 @@ const throwMandatorySiretOrRnaError = (): Pivot => {
   throw new MandatorySiretOrRnaError();
 };
 
+const ifAnyPublicSpecifiquementAdresseInArray = (publicSpecifiquementAdresse: {
+  publics_specifiquement_adresses?: PublicsSpecifiquementAdresses;
+}): {
+  publics_specifiquement_adresses?: PublicsSpecifiquementAdresses;
+} => ((publicSpecifiquementAdresse.publics_specifiquement_adresses?.length ?? 0) > 0 ? publicSpecifiquementAdresse : {});
+
+const ifAnyPriseEnChargeSpecifiqueInArray = (priseEnChargeSpecifique: {
+  prise_en_charge_specifique?: PrisesEnChargeSpecifiques;
+}): {
+  prise_en_charge_specifique?: PrisesEnChargeSpecifiques;
+} => ((priseEnChargeSpecifique.prise_en_charge_specifique?.length ?? 0) > 0 ? priseEnChargeSpecifique : {});
+
 const fromSchemaDataInclusionItem = (
   structure: SchemaStructureDataInclusion,
   service: SchemaServiceDataInclusion
@@ -72,10 +102,15 @@ const fromSchemaDataInclusionItem = (
   ...conditionsAccesFromDataInclusion(service.frais),
   ...horairesFromDataInclusion(structure.horaires_ouverture),
   ...labelsFromDataInclusion(structure.labels_nationaux, structure.labels_autres),
-  ...modalitesAccompagnementFromDataInclusion(service.types),
+  ...modalitesAccompagnementFromDataInclusion(service.types, service.modes_accueil),
+  ...modalitesAccesFromDataInclusion(
+    [...(service.modes_orientation_beneficiaire ?? []), ...(service.modes_orientation_accompagnateur ?? [])],
+    priseRdvFromDataInclusion(service.prise_rdv)
+  ),
   ...presentationFromDataInclusion(structure.presentation_detail, structure.presentation_resume),
   ...priseRdvFromDataInclusion(service.prise_rdv),
-  ...publicsAccueillisFromDataInclusion(service.profils),
+  ...ifAnyPublicSpecifiquementAdresseInArray(publicSpecifiquementAdresseFromDataInclusion(service.profils)),
+  ...ifAnyPriseEnChargeSpecifiqueInArray(priseEnChargeSpecifiqueFromDataInclusion(service.profils)),
   ...structureParenteFromDataInclusion(structure.structure_parente),
   ...(structure.typologie == null ? {} : typologiesFromDataInclusion(TYPOLOGIES_MAP.get(structure.typologie)))
 });
