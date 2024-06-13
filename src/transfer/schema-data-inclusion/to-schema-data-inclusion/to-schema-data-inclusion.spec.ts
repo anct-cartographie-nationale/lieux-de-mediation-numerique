@@ -124,7 +124,7 @@ describe('to schema data.inclusion', (): void => {
       ]),
       formations_labels: FormationsLabels([FormationLabel.ArniaMednum, FormationLabel.Ordi3]),
       autres_formations_labels: ['Nièvre médiation numérique'],
-      accessibilite: Url(
+      fiche_acces_libre: Url(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       )
     };

@@ -158,7 +158,7 @@ describe('from schema lieux de mediation numerique', (): void => {
           ModaliteAcces.PrescriptionParMail,
           ModaliteAcces.PrendreRdvEnLigne
         ].join('|'),
-        accessibilite:
+        fiche_acces_libre:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
         prise_rdv: 'https://www.rdv-solidarites.fr/'
       }
@@ -238,7 +238,7 @@ describe('from schema lieux de mediation numerique', (): void => {
           ModaliteAcces.PrescriptionParMail,
           ModaliteAcces.PrendreRdvEnLigne
         ]),
-        accessibilite: Url(
+        fiche_acces_libre: Url(
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
         ),
         prise_rdv: Url('https://www.rdv-solidarites.fr/')
@@ -307,7 +307,7 @@ describe('from schema lieux de mediation numerique', (): void => {
           ModaliteAcces.PrescriptionParMail,
           ModaliteAcces.PrendreRdvEnLigne
         ].join('|'),
-        accessibilite:
+        fiche_acces_libre:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
         prise_rdv: 'https://www.rdv-solidarites.fr/'
       }
@@ -352,7 +352,7 @@ describe('from schema lieux de mediation numerique', (): void => {
         formations_labels: FormationsLabels([FormationLabel.SudLabs, FormationLabel.MesPapiers]),
         autres_formations_labels: ['Numi formations', 'Nièvre médiation numérique'],
         modalites_acces: ModalitesAcces([ModaliteAcces.PasDePublic]),
-        accessibilite: Url(
+        fiche_acces_libre: Url(
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
         ),
         prise_rdv: Url('https://www.rdv-solidarites.fr/')

@@ -43,6 +43,6 @@ export type LieuMediationNumerique = {
   formations_labels?: FormationsLabels;
   autres_formations_labels?: string[];
   modalites_accompagnement?: ModalitesAccompagnement;
-  accessibilite?: Url;
+  fiche_acces_libre?: Url;
   prise_rdv?: Url;
 };

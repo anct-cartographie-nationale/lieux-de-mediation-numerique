@@ -152,7 +152,7 @@ const noPublicAccess = (): { modalites_acces: ModalitesAcces } => ({
 export const modalitesAccessIfAny = (modalitesAcces?: string, services?: Services): { modalites_acces?: ModalitesAcces } =>
   hasServices(services) ? PublicAccess(modalitesAcces) : noPublicAccess();
 
-export const accessibiliteIfAny = (accessibilite?: string): { accessibilite?: Url } =>
-  accessibilite == null ? {} : { accessibilite: Url(accessibilite) };
+export const ficheAccedLibreIfAny = (ficheAccesLibre?: string): { fiche_acces_libre?: Url } =>
+  ficheAccesLibre == null ? {} : { fiche_acces_libre: Url(ficheAccesLibre) };
 
 export const priseRdvIfAny = (priseRdv?: string): { prise_rdv?: Url } => (priseRdv == null ? {} : { prise_rdv: Url(priseRdv) });

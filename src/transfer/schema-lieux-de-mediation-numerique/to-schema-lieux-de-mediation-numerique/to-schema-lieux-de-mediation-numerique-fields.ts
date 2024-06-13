@@ -73,7 +73,7 @@ export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): Sch
   ...(lieuMediationNumerique.modalites_accompagnement == null
     ? {}
     : { modalites_accompagnement: lieuMediationNumerique.modalites_accompagnement.join('|') }),
-  ...(lieuMediationNumerique.accessibilite == null ? {} : { accessibilite: lieuMediationNumerique.accessibilite })
+  ...(lieuMediationNumerique.fiche_acces_libre == null ? {} : { fiche_acces_libre: lieuMediationNumerique.fiche_acces_libre })
 });
 
 export const labelsFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueLabelsFields => ({

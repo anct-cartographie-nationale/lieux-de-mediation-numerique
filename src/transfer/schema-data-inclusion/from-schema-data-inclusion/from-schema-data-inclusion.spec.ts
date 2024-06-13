@@ -215,7 +215,7 @@ describe('from schema data inclusion', (): void => {
         ModaliteAccompagnement.DansUnAtelier,
         ModaliteAccompagnement.ADistance
       ]),
-      accessibilite: Url(
+      fiche_acces_libre: Url(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       ),
       prise_rdv: Url('https://www.rdv-solidarites.fr/')

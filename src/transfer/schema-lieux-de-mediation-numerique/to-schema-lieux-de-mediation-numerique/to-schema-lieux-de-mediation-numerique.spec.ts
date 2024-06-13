@@ -140,7 +140,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         ModaliteAccompagnement.AccompagnementIndividuel,
         ModaliteAccompagnement.DansUnAtelier
       ]),
-      accessibilite: Url(
+      fiche_acces_libre: Url(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       ),
       prise_rdv: Url('https://www.rdv-solidarites.fr/')
@@ -199,7 +199,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         formations_labels: [FormationLabel.SudLabs, FormationLabel.Ordi3, FormationLabel.MesPapiers].join('|'),
         autres_formations_labels: ['Numi formations', 'Nièvre médiation numérique'].join('|'),
         modalites_accompagnement: 'À distance|En autonomie|Accompagnement individuel|Dans un atelier collectif',
-        accessibilite:
+        fiche_acces_libre:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
         prise_rdv: 'https://www.rdv-solidarites.fr/'
       }

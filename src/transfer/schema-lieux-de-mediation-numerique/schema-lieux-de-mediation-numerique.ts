@@ -39,7 +39,7 @@ export type SchemaLieuMediationNumeriqueAccesFields = {
   frais_a_charge?: string;
   modalites_acces?: string;
   modalites_accompagnement?: string;
-  accessibilite?: string;
+  fiche_acces_libre?: string;
   itinerance?: string;
 };
 
