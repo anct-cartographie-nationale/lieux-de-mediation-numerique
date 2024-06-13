@@ -2,9 +2,9 @@ import { Model } from '../model';
 import { FraisAChargeError } from './errors';
 
 export enum Frais {
-  Gratuit = 'Gratuit : Je peux accéder gratuitement au lieu et à ses services',
-  GratuitSousCondition = 'Gratuit sous condition : La gratuité est conditionnée à des critères (situation familiale, convention avec un organisme social...)',
-  Payant = "Payant : L'accès au lieu et/ou à ses services est payant"
+  Gratuit = 'Gratuit',
+  GratuitSousCondition = 'Gratuit sous condition',
+  Payant = 'Payant'
 }
 
 export type FraisACharge = Model<'FraisACharge', Frais[]>;

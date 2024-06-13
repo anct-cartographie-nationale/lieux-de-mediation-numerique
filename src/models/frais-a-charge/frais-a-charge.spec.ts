@@ -5,7 +5,7 @@ describe('condition acces model', (): void => {
   it('should create valid conditions acces', (): void => {
     const conditionAcces: FraisACharge = FraisACharge([Frais.Gratuit]);
 
-    expect(conditionAcces).toStrictEqual(['Gratuit : Je peux accéder gratuitement au lieu et à ses services']);
+    expect(conditionAcces).toStrictEqual(['Gratuit']);
   });
 
   it('should not create invalid conditions acces', (): void => {

@@ -189,8 +189,7 @@ describe('to schema lieux de mediation numerique', (): void => {
           PriseEnChargeSpecifique.DeficienceVisuelle
         ].join('|'),
         modalites_acces: 'Se présenter|Téléphoner|Contacter par mail|Envoyer un mail avec une fiche de prescription',
-        frais_a_charge:
-          "Payant : L'accès au lieu et/ou à ses services est payant|Gratuit sous condition : La gratuité est conditionnée à des critères (situation familiale, convention avec un organisme social...)",
+        frais_a_charge: 'Payant|Gratuit sous condition',
         itinerance: 'Itinérant|Fixe',
         dispositif_programmes_nationaux: [
           DispositifProgrammeNational.FranceServices,
