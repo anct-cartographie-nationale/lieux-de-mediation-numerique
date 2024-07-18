@@ -120,6 +120,7 @@ const LABELS_NATIONAUX_MAP: Map<DispositifProgrammeNational | FormationLabel, st
   [FormationLabel.FormeADuplex, 'duplex'],
   [FormationLabel.ArniaMednum, 'arnia'],
   [FormationLabel.CollectifRessourcesEtActeursReemploi, 'ressources-reemploi'],
+  [FormationLabel.EtapesNumeriques, 'etapes-numeriques'],
   [FormationLabel.FabriquesDeTerritoire, 'fabrique-de-territoire'],
   [FormationLabel.LesEclaireurs, 'les-eclaireurs'],
   [FormationLabel.MesPapiers, 'mes-papiers'],
@@ -178,8 +179,8 @@ export const localisationFields = (
 
 export const contactFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionContactFields => ({
   ...(lieuMediationNumerique.contact?.telephone == null ? {} : { telephone: lieuMediationNumerique.contact.telephone }),
-  ...(lieuMediationNumerique.contact?.courriel != null && lieuMediationNumerique.contact.courriel.length > 0
-    ? courrielIfExist(lieuMediationNumerique.contact.courriel.at(0)?.toString())
+  ...(lieuMediationNumerique.contact?.courriels != null && lieuMediationNumerique.contact.courriels.length > 0
+    ? courrielIfExist(lieuMediationNumerique.contact.courriels.at(0)?.toString())
     : {}),
   ...(lieuMediationNumerique.contact?.site_web != null && lieuMediationNumerique.contact.site_web.length > 0
     ? siteWebIfExist(lieuMediationNumerique.contact.site_web.at(0)?.toString())

@@ -178,7 +178,7 @@ describe('from schema data inclusion', (): void => {
       typologies: Typologies([Typologie.TIERS_LIEUX]),
       contact: Contact({
         telephone: '+33180059880',
-        courriel: [Courriel('contact@laquincaillerie.tl'), Courriel('bonjour@laquincaillerie.tl')],
+        courriels: [Courriel('contact@laquincaillerie.tl'), Courriel('bonjour@laquincaillerie.tl')],
         site_web: [Url('https://www.laquincaillerie.tl/'), Url('https://m.facebook.com/laquincaillerienumerique/')]
       }),
       horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',

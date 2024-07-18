@@ -9,7 +9,7 @@ describe('contact model', (): void => {
   it('should create a valid contact', (): void => {
     const contactData: ContactToValidate = {
       telephone: '+33145896378',
-      courriel: [Courriel('contact@cartographienationale.fr')],
+      courriels: [Courriel('contact@cartographienationale.fr')],
       site_web: [Url('http://www.cartographienationale.fr')]
     };
 
@@ -30,7 +30,7 @@ describe('contact model', (): void => {
 
   it('should create a valid contact with only courriel property', (): void => {
     const contactData: ContactToValidate = {
-      courriel: [Courriel('contact@cartographienationale.fr')]
+      courriels: [Courriel('contact@cartographienationale.fr')]
     };
 
     const contact: Contact = Contact(contactData);
@@ -41,7 +41,7 @@ describe('contact model', (): void => {
   it('should create a valid contact with a phone from French Guiana', (): void => {
     const contactData: ContactToValidate = {
       telephone: '+594694020905',
-      courriel: [Courriel('direction.yenkumu.lutu@gmail.com')],
+      courriels: [Courriel('direction.yenkumu.lutu@gmail.com')],
       site_web: [Url('https://www.facebook.com/YenkumuLutuPapaichton/')]
     };
 

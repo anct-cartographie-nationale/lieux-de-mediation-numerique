@@ -8,7 +8,7 @@ export type Contact = Model<
   {
     telephone?: string;
     /* eslint-disable-next-line @typescript-eslint/naming-convention */
-    courriel?: Courriel[];
+    courriels?: Courriel[];
     /* eslint-disable-next-line @typescript-eslint/naming-convention */
     site_web?: Url[];
   }

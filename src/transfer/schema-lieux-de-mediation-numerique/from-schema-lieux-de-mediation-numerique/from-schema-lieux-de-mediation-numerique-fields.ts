@@ -55,20 +55,20 @@ export const typologiesIfAny = (typologies?: string): { typologies?: Typologies 
 
 const telephoneIfAny = (telephone?: string): { telephone?: string } => (telephone == null ? {} : { telephone });
 
-const courrielIfAny = (courriel?: string): { courriel?: Courriel[] } =>
-  courriel == null ? {} : { courriel: listFromString(courriel) };
+const courrielsIfAny = (courriels?: string): { courriels?: Courriel[] } =>
+  courriels == null ? {} : { courriels: listFromString(courriels) };
 
 const siteWebIfAny = (siteWeb?: string): { site_web?: Url[] } => (siteWeb == null ? {} : { site_web: listFromString(siteWeb) });
 
 export const contactIfAny = (schemaLieuMediationNumerique: SchemaLieuMediationNumerique): { contact?: Contact } =>
   schemaLieuMediationNumerique.telephone == null &&
-  schemaLieuMediationNumerique.courriel == null &&
+  schemaLieuMediationNumerique.courriels == null &&
   schemaLieuMediationNumerique.site_web == null
     ? {}
     : {
         contact: Contact({
           ...telephoneIfAny(schemaLieuMediationNumerique.telephone),
-          ...courrielIfAny(schemaLieuMediationNumerique.courriel),
+          ...courrielsIfAny(schemaLieuMediationNumerique.courriels),
           ...siteWebIfAny(schemaLieuMediationNumerique.site_web)
         })
       };
