@@ -24,7 +24,7 @@ export type SchemaLieuMediationNumeriqueLocalisationFields = {
 
 export type SchemaLieuMediationNumeriqueContactFields = {
   telephone?: string;
-  courriel?: string;
+  courriels?: string;
   site_web?: string;
 };
 

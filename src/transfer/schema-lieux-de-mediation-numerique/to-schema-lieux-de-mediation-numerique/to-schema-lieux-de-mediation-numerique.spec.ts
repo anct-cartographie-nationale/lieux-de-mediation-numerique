@@ -98,7 +98,7 @@ describe('to schema lieux de mediation numerique', (): void => {
       typologies: Typologies([Typologie.TIERS_LIEUX, Typologie.ASSO]),
       contact: Contact({
         telephone: '+33180059880',
-        courriel: [Courriel('contact@laquincaillerie.tl')],
+        courriels: [Courriel('contact@laquincaillerie.tl'), Courriel('hello@laquincaillerie.tl')],
         site_web: [Url('https://www.laquincaillerie.tl/'), Url('https://m.facebook.com/laquincaillerienumerique/')]
       }),
       horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
@@ -163,7 +163,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         longitude: 5.41423,
         typologie: 'TIERS_LIEUX|ASSO',
         telephone: '+33180059880',
-        courriel: 'contact@laquincaillerie.tl',
+        courriels: 'contact@laquincaillerie.tl|hello@laquincaillerie.tl',
         site_web: 'https://www.laquincaillerie.tl/|https://m.facebook.com/laquincaillerienumerique/',
         horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
         presentation_resume:

@@ -43,7 +43,9 @@ export const localisationFields = (
 
 export const contactFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueContactFields => ({
   ...(lieuMediationNumerique.contact?.telephone == null ? {} : { telephone: lieuMediationNumerique.contact.telephone }),
-  ...(lieuMediationNumerique.contact?.courriel == null ? {} : { courriel: lieuMediationNumerique.contact.courriel.join('|') }),
+  ...(lieuMediationNumerique.contact?.courriels == null
+    ? {}
+    : { courriels: lieuMediationNumerique.contact.courriels.join('|') }),
   ...(lieuMediationNumerique.contact?.site_web == null ? {} : { site_web: lieuMediationNumerique.contact.site_web.join('|') })
 });
 

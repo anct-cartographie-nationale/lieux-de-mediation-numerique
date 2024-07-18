@@ -92,7 +92,7 @@ describe('to schema data.inclusion', (): void => {
       contact: Contact({
         site_web: [Url('https://www.asso-gonzalez.net/'), Url('https://www.facebook.com/asso-gonzalez.net/')],
         telephone: '0102030405',
-        courriel: [Courriel('julie@example.net'), Courriel('paul@example.net')]
+        courriels: [Courriel('julie@example.net'), Courriel('paul@example.net')]
       }),
       horaires: 'Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off',
       presentation: {

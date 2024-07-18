@@ -82,6 +82,7 @@ const FORMATIONS_LABELS_MAP: Map<string, FormationLabel> = new Map<string, Forma
   ['duplex', FormationLabel.FormeADuplex],
   ['arnia', FormationLabel.ArniaMednum],
   ['ressources-reemploi', FormationLabel.CollectifRessourcesEtActeursReemploi],
+  ['etapes-numeriques', FormationLabel.EtapesNumeriques],
   ['fabrique-de-territoire', FormationLabel.FabriquesDeTerritoire],
   ['les-eclaireurs', FormationLabel.LesEclaireurs],
   ['mes-papiers', FormationLabel.MesPapiers],
@@ -222,7 +223,7 @@ export const contactFromDataInclusion = (courriel?: string, telephone?: string, 
     ? {}
     : {
         contact: Contact({
-          ...(courriel == null ? {} : { courriel: courriel.split('|').map(Courriel) }),
+          ...(courriel == null ? {} : { courriels: courriel.split('|').map(Courriel) }),
           ...(telephone == null ? {} : { telephone }),
           ...(site_web == null ? {} : { site_web: site_web.split('|').map(Url) })
         })
