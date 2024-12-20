@@ -188,7 +188,7 @@ export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>
   ['OIL', Typologie.OIL],
   ['OPCS', Typologie.OPCS],
   ['PAD', Typologie.PAD],
-  ['PE', Typologie.PE],
+  ['PE', Typologie.FT],
   ['PENSION', Typologie.PENSION],
   ['PI', Typologie.PI],
   ['PIJ_BIJ', Typologie.PIJ_BIJ],
