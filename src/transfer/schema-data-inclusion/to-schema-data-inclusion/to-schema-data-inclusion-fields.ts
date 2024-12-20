@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention, camelcase, max-lines */
-
 import {
   Frais,
   DispositifProgrammeNational,
@@ -280,7 +278,9 @@ const isEnPresentiel = (modalitesAccompagnement: ModalitesAccompagnement): boole
 const isADistance = (modalitesAccompagnement: ModalitesAccompagnement): boolean =>
   modalitesAccompagnement.includes(ModaliteAccompagnement.ADistance);
 
-const modesAccueilFromModalitesAccompagnement = (lieuMediationNumerique: LieuMediationNumerique): { modes_accueil: string[] } =>
+const modesAccueilFromModalitesAccompagnement = (
+  lieuMediationNumerique: LieuMediationNumerique
+): { modes_accueil: string[] } =>
   lieuMediationNumerique.modalites_accompagnement == null
     ? { modes_accueil: [] }
     : {

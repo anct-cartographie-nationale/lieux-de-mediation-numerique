@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention, camelcase */
-
 export type ModeOrientationAccompagnateur =
   | 'autre'
   | 'completer-le-formulaire-dadhesion'

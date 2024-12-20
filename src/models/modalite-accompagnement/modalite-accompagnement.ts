@@ -26,7 +26,6 @@ const isModalitesAccompagnement = (
 ): modalitesAccompagnement is ModalitesAccompagnement =>
   modalitesAccompagnement.find(firstInvalidModaliteAccompagnement) == null;
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const ModalitesAccompagnement = (modalitesAccompagnement: ModaliteAccompagnement[]): ModalitesAccompagnement => {
   const modalitesAccompagnementWithoutDuplicates: ModaliteAccompagnement[] = Array.from(new Set(modalitesAccompagnement));
   return isModalitesAccompagnement(modalitesAccompagnementWithoutDuplicates)

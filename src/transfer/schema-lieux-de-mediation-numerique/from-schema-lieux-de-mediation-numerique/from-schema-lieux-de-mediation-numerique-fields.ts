@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention, camelcase */
-
 import {
   Adresse,
   Contact,
@@ -12,7 +10,6 @@ import {
   ModaliteAcces,
   ModalitesAcces,
   ModalitesAccompagnement,
-  /* eslint-disable-next-line @typescript-eslint/no-shadow */
   Presentation,
   PrisesEnChargeSpecifiques,
   PublicsSpecifiquementAdresses,

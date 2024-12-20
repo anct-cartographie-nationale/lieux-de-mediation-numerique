@@ -24,7 +24,6 @@ const throwModalitesAccesError = (modalitesAcces: ModaliteAcces[]): ModalitesAcc
 const isModalitesAcces = (modalitesAcces: ModaliteAcces[]): modalitesAcces is ModalitesAcces =>
   modalitesAcces.find(firstInvalidModaliteAcces) == null;
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const ModalitesAcces = (modalitesAcces: ModaliteAcces[]): ModalitesAcces =>
   isModalitesAcces(modalitesAcces) ? modalitesAcces : throwModalitesAccesError(modalitesAcces);
 

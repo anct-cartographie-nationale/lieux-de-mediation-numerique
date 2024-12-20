@@ -35,7 +35,6 @@ const isDispositifProgrammesNationaux = (
 ): dispositifProgrammesNationaux is DispositifProgrammesNationaux =>
   dispositifProgrammesNationaux.find(firstInvalidDispositifProgrammeNational) == null;
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const DispositifProgrammesNationaux = (
   dispositifProgrammesNationaux: DispositifProgrammeNational[]
 ): DispositifProgrammesNationaux =>

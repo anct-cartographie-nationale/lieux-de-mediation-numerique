@@ -12,5 +12,4 @@ const throwUrlError = (url: string): Url => {
 
 export const isValidUrl = (url: string): url is Url => URL_REGEXP.test(url);
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const Url = (url: string): Url => (isValidUrl(url) ? url : throwUrlError(url));

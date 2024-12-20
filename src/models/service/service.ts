@@ -26,6 +26,5 @@ const throwServicesError = (services: Service[]): Services => {
 const isServices = (services: Service[]): services is Services =>
   services.length > 0 && services.find(firstInvalidService) == null;
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const Services = (services: Service[]): Services =>
   isServices(services) ? (Array.from(new Set(services)) as Services) : throwServicesError(services);

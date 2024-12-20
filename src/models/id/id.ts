@@ -15,5 +15,4 @@ const throwIdError = (idData: IdToValidate): Id => {
   throw new Error();
 };
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const Id = (id: IdToValidate): Id => (isValidId(id) ? id : throwIdError(id));

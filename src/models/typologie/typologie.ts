@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import { Model } from '../model';
 import { TypologiesError } from './errors';
 

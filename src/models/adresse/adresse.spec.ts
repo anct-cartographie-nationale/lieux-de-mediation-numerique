@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention, camelcase */
-
 import { Adresse, AdresseToValidate } from './adresse';
 import { CodeInseeError, CodePostalError, CommuneError, VoieError } from './errors';
 

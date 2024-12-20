@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention, camelcase, max-lines */
-
 import {
   Adresse,
   Contact,
@@ -11,7 +9,6 @@ import {
   Localisation,
   ModaliteAccompagnement,
   ModalitesAccompagnement,
-  /* eslint-disable-next-line @typescript-eslint/no-shadow */
   Presentation,
   Service,
   Services,

@@ -31,7 +31,6 @@ const isPrisesEnChargeSpecifiques = (
 ): prisesEnChargeSpecifiques is PrisesEnChargeSpecifiques =>
   prisesEnChargeSpecifiques.find(firstInvalidPriseEnChargeSpecifique) == null;
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const PrisesEnChargeSpecifiques = (prisesEnChargeSpecifiques: PriseEnChargeSpecifique[]): PrisesEnChargeSpecifiques =>
   isPrisesEnChargeSpecifiques(prisesEnChargeSpecifiques)
     ? (prisesEnChargeSpecifiques as PrisesEnChargeSpecifiques)

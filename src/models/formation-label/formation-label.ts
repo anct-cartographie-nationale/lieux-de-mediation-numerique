@@ -28,6 +28,5 @@ const throwFormationsLabelsError = (formationsLabels: FormationLabel[]): Formati
 const isFormationsLabels = (formationsLabels: FormationLabel[]): formationsLabels is FormationsLabels =>
   formationsLabels.find(firstInvalidFormationLabel) == null;
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const FormationsLabels = (formationsLabels: FormationLabel[]): FormationsLabels =>
   isFormationsLabels(formationsLabels) ? formationsLabels : throwFormationsLabelsError(formationsLabels);

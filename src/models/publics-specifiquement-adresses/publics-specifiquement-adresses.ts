@@ -29,7 +29,6 @@ const isPublicsSpecifiquementAdresses = (
 ): publicsSpecifiquementAdresses is PublicsSpecifiquementAdresses =>
   publicsSpecifiquementAdresses.find(firstInvalidPublicSpecifiquementAdresse) == null;
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const PublicsSpecifiquementAdresses = (
   publicsSpecifiquementAdresses: PublicSpecifiquementAdresse[]
 ): PublicsSpecifiquementAdresses =>
