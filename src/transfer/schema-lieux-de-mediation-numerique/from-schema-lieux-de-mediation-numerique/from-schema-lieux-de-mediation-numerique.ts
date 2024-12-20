@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention, camelcase */
-
 import { Id, LieuMediationNumerique, Nom, Pivot, Services } from '../../../models';
 import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import {

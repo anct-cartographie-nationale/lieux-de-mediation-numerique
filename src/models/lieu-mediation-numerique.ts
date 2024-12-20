@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 import { Adresse } from './adresse';
 import { FormationsLabels } from './formation-label';
 import { PrisesEnChargeSpecifiques } from './prise-en-charge-specifique';
@@ -7,7 +5,6 @@ import { PublicsSpecifiquementAdresses } from './publics-specifiquement-adresses
 import { Typologies } from './typologie';
 import { Localisation } from './localisation';
 import { Contact } from './contact';
-/* eslint-disable-next-line @typescript-eslint/no-shadow */
 import { Presentation } from './presentation';
 import { Services } from './service';
 import { FraisACharge } from './frais-a-charge';

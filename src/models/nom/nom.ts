@@ -15,5 +15,4 @@ const throwNomError = (nomData: NomToValidate): Nom => {
   throw new Error();
 };
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const Nom = (nom: NomToValidate): Nom => (isValidNom(nom) ? nom : throwNomError(nom));

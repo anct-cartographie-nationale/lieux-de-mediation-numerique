@@ -20,5 +20,4 @@ const throwFraisAChargeError = (fraisACharge: Frais[]): FraisACharge => {
 const isFraisACharge = (fraisACharge: Frais[]): fraisACharge is FraisACharge =>
   fraisACharge.find(firstInvalidFraisACharge) == null;
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const FraisACharge = (frais: Frais[]): FraisACharge => (isFraisACharge(frais) ? frais : throwFraisAChargeError(frais));

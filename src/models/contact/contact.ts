@@ -7,9 +7,7 @@ export type Contact = Model<
   'Contact',
   {
     telephone?: string;
-    /* eslint-disable-next-line @typescript-eslint/naming-convention */
     courriels?: Courriel[];
-    /* eslint-disable-next-line @typescript-eslint/naming-convention */
     site_web?: Url[];
   }
 >;
@@ -32,6 +30,5 @@ const throwContactError = (contact: Omit<Contact, 'isContact'>): Contact => {
   throw new Error();
 };
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const Contact = (contact: ContactToValidate): Contact =>
   isValidContact(contact) ? { ...contact } : throwContactError(contact);

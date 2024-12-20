@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention, camelcase, max-lines */
-
 import {
   Adresse,
   Contact,
@@ -11,7 +9,6 @@ import {
   Localisation,
   ModaliteAccompagnement,
   ModalitesAccompagnement,
-  /* eslint-disable-next-line @typescript-eslint/no-shadow */
   Presentation,
   Service,
   Services,
@@ -188,7 +185,7 @@ export const TYPOLOGIES_MAP: Map<string, Typologie> = new Map<string, Typologie>
   ['OIL', Typologie.OIL],
   ['OPCS', Typologie.OPCS],
   ['PAD', Typologie.PAD],
-  ['PE', Typologie.PE],
+  ['PE', Typologie.FT],
   ['PENSION', Typologie.PENSION],
   ['PI', Typologie.PI],
   ['PIJ_BIJ', Typologie.PIJ_BIJ],

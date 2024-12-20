@@ -19,6 +19,5 @@ const throwItineranceError = (itinerances: Itinerance[]): Itinerances => {
 const isItinerance = (itinerances: Itinerance[]): itinerances is Itinerances =>
   itinerances.find(firstInvalidItinerance) == null;
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const Itinerances = (itinerances: Itinerance[]): Itinerances =>
   isItinerance(itinerances) ? itinerances : throwItineranceError(itinerances);

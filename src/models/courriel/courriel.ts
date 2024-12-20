@@ -12,5 +12,4 @@ const throwCourrielError = (courriel: string): Courriel => {
 
 export const isValidCourriel = (courriel: string): courriel is Courriel => COURRIEL_REG_EXP.test(courriel);
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const Courriel = (courriel: string): Courriel => (isValidCourriel(courriel) ? courriel : throwCourrielError(courriel));

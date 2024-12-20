@@ -9,6 +9,5 @@ const throwPivotError = (pivot: string): Pivot => {
   throw new PivotError(pivot);
 };
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const Pivot = (pivot: string): Pivot =>
   isSiret(pivot) || isRna(pivot) || isRidet(pivot) ? pivot : throwPivotError(pivot);

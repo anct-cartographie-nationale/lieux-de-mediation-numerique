@@ -5,11 +5,8 @@ export type Adresse = Model<
   'Adresse',
   {
     voie: string;
-    /* eslint-disable-next-line @typescript-eslint/naming-convention */
     complement_adresse?: string;
-    /* eslint-disable-next-line @typescript-eslint/naming-convention */
     code_postal: string;
-    /* eslint-disable-next-line @typescript-eslint/naming-convention */
     code_insee?: string;
     commune: string;
   }
@@ -48,6 +45,5 @@ const throwAdresseError = (adresse: Omit<Adresse, 'isAdresse'>): Adresse => {
   throw new Error();
 };
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
 export const Adresse = (adresse: AdresseToValidate): Adresse =>
   isValidAddress(adresse) ? { ...adresse } : throwAdresseError(adresse);
