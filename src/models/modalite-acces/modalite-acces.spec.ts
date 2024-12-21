@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { ModalitesAccesError } from './errors';
 import { ModaliteAcces, ModalitesAcces } from './modalite-acces';
 

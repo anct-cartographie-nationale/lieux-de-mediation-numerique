@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { Courriel } from '../courriel';
 import { Url } from '../url';
 import { Contact, ContactToValidate } from './contact';

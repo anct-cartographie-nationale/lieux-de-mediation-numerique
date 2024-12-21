@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { Ridet } from './ridet';
 import { RidetError } from './errors';
 

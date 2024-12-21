@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { Id, IdToValidate } from './id';
 import { IdError } from './errors';
 

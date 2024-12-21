@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { PriseEnChargeSpecifique, PrisesEnChargeSpecifiques } from './prise-en-charge-specifique';
 import { PrisesEnChargeSpecifiquesError } from './errors';
 

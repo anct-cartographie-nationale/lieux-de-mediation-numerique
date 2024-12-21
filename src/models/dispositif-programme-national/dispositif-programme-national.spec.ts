@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { DispositifProgrammeNational, DispositifProgrammesNationaux } from './dispositif-programme-national';
 import { DispositifProgrammeNationalError } from './errors';
 

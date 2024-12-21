@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { Service, Services } from './service';
 import { ServicesError } from './errors';
 
