@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { Rna } from './rna';
 import { RnaError } from './errors';
 

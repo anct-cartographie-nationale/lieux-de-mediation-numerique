@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { Itinerance, Itinerances } from './itinerances';
 import { ItineranceError } from './errors';
 

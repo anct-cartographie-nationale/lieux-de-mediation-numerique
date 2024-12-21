@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { Adresse, AdresseToValidate } from './adresse';
 import { CodeInseeError, CodePostalError, CommuneError, VoieError } from './errors';
 

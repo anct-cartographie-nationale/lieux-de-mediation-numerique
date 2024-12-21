@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { PublicSpecifiquementAdresse, PublicsSpecifiquementAdresses } from './publics-specifiquement-adresses';
 import { PublicsSpecifiquementAdressesError } from './errors';
 

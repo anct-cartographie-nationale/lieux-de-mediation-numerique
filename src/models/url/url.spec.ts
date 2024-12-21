@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { Url } from './url';
 import { UrlError } from './errors';
 

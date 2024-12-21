@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { Courriel } from './courriel';
 import { CourrielError } from './errors';
 

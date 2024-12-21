@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { Typologie, Typologies } from './typologie';
 import { TypologiesError } from './errors';
 

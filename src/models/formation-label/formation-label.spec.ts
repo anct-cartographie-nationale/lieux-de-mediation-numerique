@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { FormationLabel, FormationsLabels } from './formation-label';
 import { FormationLabelError } from './errors';
 

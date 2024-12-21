@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { ModaliteAccompagnement, ModalitesAccompagnement } from './modalite-accompagnement';
 import { ModalitesAccompagnementError } from './errors';
 

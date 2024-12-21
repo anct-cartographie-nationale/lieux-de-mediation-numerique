@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { Frais, FraisACharge } from './frais-a-charge';
 import { FraisAChargeError } from './errors';
 
