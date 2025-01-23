@@ -54,6 +54,7 @@ export enum Typologie {
   ETTI = 'ETTI', // Entreprises de travail temporaire d’insertion
   EVS = 'EVS', // Espace de vie sociale
   FABLAB = 'FABLAB', // Fablab
+  FABRIQUE = 'FABRIQUE', // Fabrique
   FAIS = 'FAIS', // Fédérations d’acteurs de l’insertion et de la solidarité
   FT = 'FT', // France travail
   GEIQ = 'GEIQ', // Groupements d’employeurs pour l’insertion et la qualification
@@ -85,6 +86,7 @@ export enum Typologie {
   PREF = 'PREF', // Préfecture, Sous-Préfecture
   PREVENTION = 'PREVENTION', // Service ou club de prévention
   REG = 'REG', // Région
+  RELAIS_LECTURE = 'RELAIS_LECTURE', // Relais lecture
   RESSOURCERIE = 'RESSOURCERIE', // Ressourcerie
   RFS = 'RFS', // Réseau France Services
   RS_FJT = 'RS_FJT', // Résidence sociale - Foyer de Jeunes Travailleurs
