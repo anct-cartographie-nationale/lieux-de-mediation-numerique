@@ -26,4 +26,12 @@ describe('url model', (): void => {
       Url(urlData);
     }).toThrow(new UrlError(urlData));
   });
+
+  it('should throw accept url containing @', (): void => {
+    const urlData: string = 'https://outlook.office365.com/book/HoudinDidier@laposte.onmicrosoft.com/?ismsaljsauthenabled=true';
+
+    const url: Url = Url(urlData);
+
+    expect(url).toStrictEqual(urlData as Url);
+  });
 });
