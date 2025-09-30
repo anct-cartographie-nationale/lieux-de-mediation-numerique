@@ -13,7 +13,6 @@ export * from './nom';
 export * from './pivot';
 export * from './prise-en-charge-specifique';
 export * from './publics-specifiquement-adresses';
-export * from './ridet';
 export * from './rna';
 export * from './service';
 export * from './siret';
