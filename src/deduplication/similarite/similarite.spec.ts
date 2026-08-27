@@ -36,3 +36,34 @@ describe('similarite', (): void => {
     expect(proche).toBeGreaterThan(lointain);
   });
 });
+
+describe('similarite — bornée par l’écart absolu', (): void => {
+  // 175 lieux de la Coop suivent ce gabarit, où seule la commune distingue deux
+  // fiches sans rapport. Le ratio proportionnel seul leur accordait 79 %.
+  const unGabarit: string = 'moselle fibre ateliers organises a la mairie de launstroff';
+  const leMemeGabarit: string = 'moselle fibre ateliers ponctuels organises a la mairie de montenach';
+
+  it('should not let a shared boilerplate carry two unrelated names', (): void => {
+    expect(similarite(unGabarit, leMemeGabarit)).toBeLessThan(50);
+  });
+
+  it('should still bring together two long names that differ by little', (): void => {
+    expect(similarite('communaute de communes du pays sabolien', 'communaute de communes pays sabolien')).toBeGreaterThan(90);
+  });
+
+  it('should leave short strings to the proportional measure', (): void => {
+    // Sur trois caractères, la mesure absolue serait bien trop indulgente : c'est
+    // la retenue du minimum entre les deux qui protège cette extrémité.
+    expect(similarite('abc', 'xyz')).toBe(0);
+  });
+
+  it('should leave identical strings untouched whatever their length', (): void => {
+    expect(similarite(unGabarit, unGabarit)).toBe(100);
+  });
+
+  it('should cap two texts by their edit distance, not by their length', (): void => {
+    // Le gabarit partagé s'écarte de vingt-quatre caractères, la coquille d'un
+    // seul : c'est l'écart qui décide, et non la part qu'il représente.
+    expect(similarite(unGabarit, leMemeGabarit)).toBeLessThan(similarite('mediatheque', 'mediathque'));
+  });
+});
