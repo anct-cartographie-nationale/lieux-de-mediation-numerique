@@ -157,6 +157,48 @@ describe('comparer', (): void => {
       expect(comparer(mediatheque, aDeuxCentsMetres).score).toBeLessThan(comparer(mediatheque, mediatheque).score);
     });
 
+    it('should not let a shared address carry a pair whose names diverge', (): void => {
+      // À parts égales, l'adresse et la distance partaient de 66 % à elles
+      // seules — un nom sans rapport ne pouvait plus séparer deux lieux déclarés
+      // à la même adresse bien géocodée. Elles mesurent pourtant la même chose.
+      const alpha: LieuAComparer = { ...mediatheque, nom: 'Alpha' };
+      const bravo: LieuAComparer = { ...mediatheque, nom: 'Zoulou Kilo Bravo' };
+      const comparaison: Comparaison = comparer(alpha, bravo);
+
+      expect(comparaison.adresse).toBe(100);
+      expect(comparaison.distance).toBe(0);
+      expect(comparaison.nom).toBeLessThan(25);
+      expect(comparaison.score).toBeLessThan(60);
+    });
+
+    it('should balance the name against the whole location', (): void => {
+      // Le nom pèse autant que l'emplacement entier — ni plus, ni moins. Un nom
+      // parfait à un autre endroit et un endroit parfait sous un autre nom
+      // aboutissent donc au même ordre de grandeur, et ni l'un ni l'autre
+      // n'atteint le niveau d'un vrai doublon.
+      const memeNomAilleurs: Comparaison = comparer(mediatheque, {
+        ...mediatheque,
+        adresse: '99 avenue Ailleurs',
+        localisation: { latitude: 48.9, longitude: 2.4 }
+      });
+      const memeEndroitAutreNom: Comparaison = comparer(mediatheque, { ...mediatheque, nom: 'Zoulou Kilo Bravo' });
+
+      expect(Math.abs(memeNomAilleurs.score - memeEndroitAutreNom.score)).toBeLessThan(10);
+      expect(memeNomAilleurs.score).toBeLessThan(70);
+      expect(memeEndroitAutreNom.score).toBeLessThan(70);
+    });
+
+    it('should spread the weights over what could be measured', (): void => {
+      // Sans coordonnées, le nom pèse deux tiers et l'adresse un tiers : les
+      // poids se ramènent aux composantes disponibles plutôt que de disparaître.
+      const sansCoordonnees: LieuAComparer = { ...mediatheque, localisation: null, nom: 'Alpha' };
+      const autre: LieuAComparer = { ...sansCoordonnees, nom: 'Zoulou Kilo Bravo' };
+      const comparaison: Comparaison = comparer(sansCoordonnees, autre);
+
+      expect(comparaison).not.toHaveProperty('distance');
+      expect(comparaison.score).toBe(Math.round((2 * comparaison.nom + 100) / 3));
+    });
+
     it('should keep scoring a pair that a veto has refused', (): void => {
       // Le score reste informatif — c'est ce qui permet de présenter une paire
       // écartée à un humain, avec la raison de son rejet.

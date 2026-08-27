@@ -23,7 +23,14 @@ import { typologiesDepuisNom } from '../typologies-depuis-nom';
  * Une composante indisponible — coordonnées manquantes, adresse non diffusible —
  * est ABSENTE du résultat, et non ramenée à zéro ni à cent : ne rien savoir n'est
  * ni une ressemblance ni une différence. La moyenne ne porte donc que sur ce
- * qu'on a pu mesurer.
+ * qu'on a pu mesurer, et les poids sont ramenés à ce qui reste.
+ *
+ * Cette moyenne est PONDÉRÉE, et pas également : l'adresse et la distance
+ * mesurent la même chose — l'endroit — et les compter à parts égales revient à
+ * prendre deux fois le même témoignage. À trois tiers, deux lieux déclarés à la
+ * même adresse bien géocodée partaient déjà de 66 %, si bien qu'un nom
+ * franchement différent ne pouvait plus les séparer. Le nom pèse donc la moitié,
+ * l'emplacement l'autre moitié, partagée entre ses deux mesures.
  *
  * Encore faut-il qu'il reste quelque chose. Un lieu est un ENDROIT : si ni
  * l'adresse ni la distance ne sont comparables, plus rien ne le situe, et la
@@ -131,13 +138,25 @@ const scoreAdresse = (un: LieuAComparer, autre: LieuAComparer): number | undefin
     ? undefined
     : similarite(normaliserAdresse(un.adresse), normaliserAdresse(autre.adresse));
 
-const moyenne = (composantes: (number | undefined)[]): number =>
-  ((mesurees: number[]): number =>
+/**
+ * Le nom porte l'identité ; l'adresse et la distance disent l'endroit, et se
+ * répètent l'une l'autre. D'où une moitié pour le premier, un quart pour
+ * chacune des secondes.
+ */
+type Composante = { readonly valeur: number | undefined; readonly poids: number };
+
+type ComposanteMesuree = { readonly valeur: number; readonly poids: number };
+
+const estMesuree = (composante: Composante): composante is ComposanteMesuree => composante.valeur != null;
+
+const moyennePonderee = (composantes: readonly Composante[]): number =>
+  ((mesurees: readonly ComposanteMesuree[]): number =>
     mesurees.length === 0
       ? 0
-      : Math.round(mesurees.reduce((total: number, composante: number): number => total + composante, 0) / mesurees.length))(
-    composantes.filter((composante: number | undefined): composante is number => composante != null)
-  );
+      : Math.round(
+          mesurees.reduce((total: number, { valeur, poids }: ComposanteMesuree): number => total + valeur * poids, 0) /
+            mesurees.reduce((total: number, { poids }: ComposanteMesuree): number => total + poids, 0)
+        ))(composantes.filter(estMesuree));
 
 export const comparer = (
   un: LieuAComparer,
@@ -149,5 +168,9 @@ export const comparer = (
     nom: scoreNom,
     ...(adresse == null ? {} : { adresse }),
     ...(distance == null ? {} : { distance }),
-    score: moyenne([scoreNom, adresse, distance == null ? undefined : scoreDistance(distance)])
+    score: moyennePonderee([
+      { valeur: scoreNom, poids: 2 },
+      { valeur: adresse, poids: 1 },
+      { valeur: distance == null ? undefined : scoreDistance(distance), poids: 1 }
+    ])
   }))(similarite(normaliserNom(un.nom), normaliserNom(autre.nom)), scoreAdresse(un, autre), distanceDe(un, autre));
