@@ -100,14 +100,10 @@ describe('comparer', (): void => {
       };
       const sansLocalisation: LieuAComparer = { ...loin, localisation: null };
 
-      // Sans coordonnées, la moyenne ne porte que sur le nom et l'adresse : elle
-      // ne bénéficie d'aucun point de proximité gratuit.
       expect(comparer(mediatheque, sansLocalisation).score).toBeLessThan(100);
     });
 
     it('should refuse a pair that nothing situates', (): void => {
-      // Ni adresse comparable, ni coordonnées : la dénomination seule ne suffit
-      // pas, une commune compte plusieurs « Association Trait d'Union ».
       const nonDiffusible: LieuAComparer = {
         nom: 'Association Trait d’Union',
         adresse: '[Non diffusible]',
@@ -158,9 +154,6 @@ describe('comparer', (): void => {
     });
 
     it('should not let a shared address carry a pair whose names diverge', (): void => {
-      // À parts égales, l'adresse et la distance partaient de 66 % à elles
-      // seules — un nom sans rapport ne pouvait plus séparer deux lieux déclarés
-      // à la même adresse bien géocodée. Elles mesurent pourtant la même chose.
       const alpha: LieuAComparer = { ...mediatheque, nom: 'Alpha' };
       const bravo: LieuAComparer = { ...mediatheque, nom: 'Zoulou Kilo Bravo' };
       const comparaison: Comparaison = comparer(alpha, bravo);
@@ -172,10 +165,6 @@ describe('comparer', (): void => {
     });
 
     it('should balance the name against the whole location', (): void => {
-      // Le nom pèse autant que l'emplacement entier — ni plus, ni moins. Un nom
-      // parfait à un autre endroit et un endroit parfait sous un autre nom
-      // aboutissent donc au même ordre de grandeur, et ni l'un ni l'autre
-      // n'atteint le niveau d'un vrai doublon.
       const memeNomAilleurs: Comparaison = comparer(mediatheque, {
         ...mediatheque,
         adresse: '99 avenue Ailleurs',
@@ -189,8 +178,6 @@ describe('comparer', (): void => {
     });
 
     it('should spread the weights over what could be measured', (): void => {
-      // Sans coordonnées, le nom pèse deux tiers et l'adresse un tiers : les
-      // poids se ramènent aux composantes disponibles plutôt que de disparaître.
       const sansCoordonnees: LieuAComparer = { ...mediatheque, localisation: null, nom: 'Alpha' };
       const autre: LieuAComparer = { ...sansCoordonnees, nom: 'Zoulou Kilo Bravo' };
       const comparaison: Comparaison = comparer(sansCoordonnees, autre);
@@ -200,8 +187,6 @@ describe('comparer', (): void => {
     });
 
     it('should keep scoring a pair that a veto has refused', (): void => {
-      // Le score reste informatif — c'est ce qui permet de présenter une paire
-      // écartée à un humain, avec la raison de son rejet.
       const mairie: LieuAComparer = { ...mediatheque, nom: 'Mairie de Fleury' };
       const comparaison: Comparaison = comparer(mediatheque, mairie);
 

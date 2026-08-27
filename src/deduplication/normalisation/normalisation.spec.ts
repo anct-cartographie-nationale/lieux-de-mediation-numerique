@@ -75,7 +75,6 @@ describe('normaliserNom — désinflexion', (): void => {
   });
 
   it('should leave a short term untouched', (): void => {
-    // Retirer le « s » de « pays » ou de « bois » en ferait un autre mot.
     expect(normaliserNom('pays')).toBe('pays');
     expect(normaliserNom('bois')).toBe('bois');
   });
@@ -85,17 +84,11 @@ describe('normaliserNom — désinflexion', (): void => {
   });
 
   it('should also trim proper nouns, which costs nothing', (): void => {
-    // « Denis » devient « deni », comme « Paris » devient « pari ». La règle ne
-    // sait pas distinguer un nom propre d'un pluriel, et n'a pas à le savoir :
-    // elle s'applique des deux côtés de la comparaison, donc deux « Saint-Denis »
-    // se rejoignent toujours. Seule la lisibilité de la forme normalisée en pâtit.
     expect(normaliserNom('Saint-Denis')).toBe(normaliserNom('St Denis'));
     expect(normaliserNom('Paris')).toBe('pari');
   });
 
   it('should keep distinct words apart', (): void => {
-    // « communal » et « commune » ne sont pas le même mot : la désinflexion est
-    // volontairement conservatrice, elle ne tronque pas la voyelle finale.
     expect(normaliserNom('communal')).not.toBe(normaliserNom('commune'));
   });
 

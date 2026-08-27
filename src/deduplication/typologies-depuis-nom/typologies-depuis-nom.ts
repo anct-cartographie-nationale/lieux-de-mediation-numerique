@@ -1,20 +1,5 @@
 import { Typologie } from '../../models';
 
-/**
- * Typologies déduites de la dénomination d'un lieu.
- *
- * Reprise de l'étape de transformation de mednum-cli, où elle servait à remplir
- * la typologie des sources qui ne la déclarent pas. Elle vaut bien au-delà :
- * c'est aussi ce qui permet de reconnaître que deux lieux d'une même adresse
- * sont deux choses différentes — « EPN de Fleury » n'est pas « Commune de
- * Fleury », et leurs typologies le disent là où leurs noms se ressemblent.
- *
- * La déduction est une PRÉSOMPTION, pas un fait : une expression trop large
- * attribuera une typologie à tort. La conséquence se limite à un rapprochement
- * refusé, donc à un doublon conservé — ce qui se détecte et se répare, à la
- * différence d'une fusion abusive.
- */
-
 export type TypologieMatcher = {
   typologie: Typologie;
   matchers: RegExp[];
@@ -418,9 +403,5 @@ const typologieCorrespondante =
   (typologies: Typologie[], { typologie, matchers }: TypologieMatcher): Typologie[] =>
     matchers.reduce(correspond(nom), false) ? [...typologies, typologie] : typologies;
 
-/**
- * Typologies que la dénomination laisse reconnaître, sans doublon. Vide quand le
- * nom ne dit rien — ce qui est une réponse, et non une erreur.
- */
 export const typologiesDepuisNom = (nom: string): Typologie[] =>
   Array.from(new Set(TYPOLOGIE_MATCHERS.reduce(typologieCorrespondante(nom), [])));

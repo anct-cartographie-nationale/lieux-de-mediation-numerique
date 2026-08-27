@@ -25,7 +25,6 @@ describe('similarite', (): void => {
   });
 
   it('should tolerate a missing character', (): void => {
-    // 'mediatheque' contre 'mediathque' : 10 caractères communs sur 21.
     expect(similarite('mediatheque', 'mediathque')).toBe(95);
   });
 
@@ -38,8 +37,6 @@ describe('similarite', (): void => {
 });
 
 describe('similarite — bornée par l’écart absolu', (): void => {
-  // 175 lieux de la Coop suivent ce gabarit, où seule la commune distingue deux
-  // fiches sans rapport. Le ratio proportionnel seul leur accordait 79 %.
   const unGabarit: string = 'moselle fibre ateliers organises a la mairie de launstroff';
   const leMemeGabarit: string = 'moselle fibre ateliers ponctuels organises a la mairie de montenach';
 
@@ -52,8 +49,6 @@ describe('similarite — bornée par l’écart absolu', (): void => {
   });
 
   it('should leave short strings to the proportional measure', (): void => {
-    // Sur trois caractères, la mesure absolue serait bien trop indulgente : c'est
-    // la retenue du minimum entre les deux qui protège cette extrémité.
     expect(similarite('abc', 'xyz')).toBe(0);
   });
 
@@ -62,8 +57,6 @@ describe('similarite — bornée par l’écart absolu', (): void => {
   });
 
   it('should cap two texts by their edit distance, not by their length', (): void => {
-    // Le gabarit partagé s'écarte de vingt-quatre caractères, la coquille d'un
-    // seul : c'est l'écart qui décide, et non la part qu'il représente.
     expect(similarite(unGabarit, leMemeGabarit)).toBeLessThan(similarite('mediatheque', 'mediathque'));
   });
 });

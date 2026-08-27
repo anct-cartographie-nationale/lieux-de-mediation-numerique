@@ -7,7 +7,6 @@ describe('distanceEnMetres', (): void => {
   });
 
   it('should measure a short distance in Paris', (): void => {
-    // 0,0002° de latitude ≈ 22 m.
     const distance: number = distanceEnMetres({ latitude: 48.869, longitude: 2.331 }, { latitude: 48.8692, longitude: 2.331 });
 
     expect(distance).toBeGreaterThan(20);
@@ -27,14 +26,11 @@ describe('distanceEnMetres', (): void => {
       { latitude: 45.764, longitude: 4.8357 }
     );
 
-    // ~392 km à vol d'oiseau.
     expect(distance / 1000).toBeGreaterThan(390);
     expect(distance / 1000).toBeLessThan(394);
   });
 
   it('should not let the threshold drift with latitude', (): void => {
-    // Le même écart de longitude couvre une distance bien moindre au nord qu'aux
-    // Antilles : c'est ce qu'une distance en degrés bruts ignore.
     const enMetropole: number = distanceEnMetres({ latitude: 50.63, longitude: 3.06 }, { latitude: 50.63, longitude: 3.061 });
     const auxAntilles: number = distanceEnMetres({ latitude: 14.6, longitude: -61.08 }, { latitude: 14.6, longitude: -61.079 });
 

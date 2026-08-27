@@ -33,7 +33,6 @@ describe('typologiesDepuisNom', (): void => {
   });
 
   it('should separate a service from the entity that hosts it', (): void => {
-    // Le cas qui motive tout : même commune, même adresse, deux lieux distincts.
     expect(typologiesDepuisNom('EPN de Fleury')).not.toEqual(typologiesDepuisNom('Commune de Fleury'));
   });
 });
