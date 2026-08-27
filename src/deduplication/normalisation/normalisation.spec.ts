@@ -40,3 +40,67 @@ describe('libelleSansIdentite', (): void => {
     expect(libelleSansIdentite('Médiathèque de Fleury')).toBe(false);
   });
 });
+
+describe('normaliserNom — abréviations', (): void => {
+  it.each([
+    ['St Denis', 'saint deni'],
+    ['Ste Marie', 'sainte marie'],
+    ['Ctre social des Sablons', 'centre social des sablon'],
+    ['Asso Trait d’Union', 'association trait d union'],
+    ['ASS Les Amis', 'association les amis']
+  ])('should expand abbreviations in %s', (nom: string, attendu: string): void => {
+    expect(normaliserNom(nom)).toBe(attendu);
+  });
+
+  it('should bring an abbreviated and a spelled out denomination together', (): void => {
+    expect(normaliserNom('St Denis')).toBe(normaliserNom('Saint Denis'));
+  });
+});
+
+describe('normaliserNom — désinflexion', (): void => {
+  it.each([
+    [['social', 'sociale', 'sociales'], 'social'],
+    [['atelier', 'ateliers'], 'atelier'],
+    [['service', 'services'], 'service'],
+    [['commune', 'communes'], 'commune'],
+    [['culturel', 'culturels', 'culturelle', 'culturelles'], 'culturel'],
+    [['municipal', 'municipale', 'municipales'], 'municipal'],
+    [['rurale', 'rurales'], 'rural'],
+    [['solidarite', 'solidarites'], 'solidarite'],
+    [['maison', 'maisons'], 'maison']
+  ])('should bring %s to a single form', (formes: string[], attendue: string): void => {
+    formes.forEach((forme: string): void => {
+      expect(normaliserNom(forme)).toBe(attendue);
+    });
+  });
+
+  it('should leave a short term untouched', (): void => {
+    // Retirer le « s » de « pays » ou de « bois » en ferait un autre mot.
+    expect(normaliserNom('pays')).toBe('pays');
+    expect(normaliserNom('bois')).toBe('bois');
+  });
+
+  it('should not strip a double s', (): void => {
+    expect(normaliserNom('progress')).toBe('progress');
+  });
+
+  it('should also trim proper nouns, which costs nothing', (): void => {
+    // « Denis » devient « deni », comme « Paris » devient « pari ». La règle ne
+    // sait pas distinguer un nom propre d'un pluriel, et n'a pas à le savoir :
+    // elle s'applique des deux côtés de la comparaison, donc deux « Saint-Denis »
+    // se rejoignent toujours. Seule la lisibilité de la forme normalisée en pâtit.
+    expect(normaliserNom('Saint-Denis')).toBe(normaliserNom('St Denis'));
+    expect(normaliserNom('Paris')).toBe('pari');
+  });
+
+  it('should keep distinct words apart', (): void => {
+    // « communal » et « commune » ne sont pas le même mot : la désinflexion est
+    // volontairement conservatrice, elle ne tronque pas la voyelle finale.
+    expect(normaliserNom('communal')).not.toBe(normaliserNom('commune'));
+  });
+
+  it('should preserve the canonical prefixes it is applied after', (): void => {
+    expect(normaliserNom('Commune de Fleury')).toBe('ville fleury');
+    expect(normaliserNom('Communauté de communes du Pays Sabolien')).toBe('cc du pays sabolien');
+  });
+});

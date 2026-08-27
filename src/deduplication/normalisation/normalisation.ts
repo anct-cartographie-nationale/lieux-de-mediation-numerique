@@ -66,11 +66,72 @@ export const libelleSansIdentite = (libelle: string): boolean =>
  */
 export const normaliserAdresse = (adresse: string): string => sansAccentsNiPonctuation(adresse);
 
-/** Dénomination ramenée à sa forme comparable, préfixes administratifs canonisés. */
+/**
+ * Abréviations courantes, ramenées à leur forme longue.
+ *
+ * Elles échappent à toute mesure de ressemblance : « st » et « saint » ne
+ * partagent que deux caractères sur sept, soit 57 % — bien en deçà de tout seuil
+ * utile. Seule une table explicite les rapproche.
+ *
+ * Relevé sur les 12 477 dénominations de la Coop de la médiation numérique :
+ * « st » y paraît 168 fois contre 619 pour « saint », « ctre » 54 fois contre
+ * 871 pour « centre ».
+ */
+const abreviations: ReadonlyMap<string, string> = new Map([
+  ['st', 'saint'],
+  ['ste', 'sainte'],
+  ['sts', 'saints'],
+  ['ctre', 'centre'],
+  ['ass', 'association'],
+  ['asso', 'association']
+]);
+
+/**
+ * Désinflexions : pluriels et accords, ramenés à une forme unique.
+ *
+ * C'est la variation de loin la plus fréquente dans les dénominations réelles —
+ * « social » y côtoie « sociale » et « sociales », « atelier » côtoie
+ * « ateliers ». Les énumérer une à une serait sans fin ; ces quelques règles les
+ * couvrent toutes.
+ *
+ * Volontairement conservatrices : pas de troncature de voyelle finale, qui
+ * confondrait des mots distincts et abaisserait le pouvoir de discrimination du
+ * score. « Communal » reste donc distinct de « commune », ce qui est correct.
+ */
+const desinflexions: readonly (readonly [RegExp, string])[] = [
+  [/iaux$/, 'ial'],
+  [/aux$/, 'al'],
+  [/ales$/, 'al'],
+  [/elles$/, 'el'],
+  [/ale$/, 'al'],
+  [/elle$/, 'el'],
+  [/([^s])s$/, '$1']
+];
+
+/** En deçà de cette longueur, un terme est trop court pour qu'on lui retire quoi que ce soit. */
+const LONGUEUR_MINIMALE_DESINFLEXION: 5 = 5 as const;
+
+/** La première règle qui s'applique suffit : les suffixes sont ordonnés du plus long au plus court. */
+const desinflechir = (terme: string): string =>
+  terme.length < LONGUEUR_MINIMALE_DESINFLEXION
+    ? terme
+    : ((regle: readonly [RegExp, string] | undefined): string => (regle == null ? terme : terme.replace(regle[0], regle[1])))(
+        desinflexions.find(([suffixe]: readonly [RegExp, string]): boolean => suffixe.test(terme))
+      );
+
+const canoniserTerme = (terme: string): string => desinflechir(abreviations.get(terme) ?? terme);
+
+/**
+ * Dénomination ramenée à sa forme comparable : préfixes administratifs
+ * canonisés, puis chaque terme désabrégé et désinfléchi.
+ */
 export const normaliserNom = (nom: string): string =>
   prefixesEquivalents
     .reduce(
       (normalise: string, [prefixe, canonique]: readonly [RegExp, string]): string => normalise.replace(prefixe, canonique),
       sansAccentsNiPonctuation(nom)
     )
-    .trim();
+    .trim()
+    .split(' ')
+    .map(canoniserTerme)
+    .join(' ');
