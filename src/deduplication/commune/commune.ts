@@ -13,7 +13,7 @@ const arrondissementsMunicipaux: readonly ArrondissementsMunicipaux[] = [
 const contient = (codeInsee: string) => (arrondissements: ArrondissementsMunicipaux) =>
   Number(codeInsee) >= arrondissements.premier && Number(codeInsee) <= arrondissements.dernier;
 
-export const normaliserCodeInsee = (codeInsee: string): string =>
+const normaliserCodeInsee = (codeInsee: string): string =>
   arrondissementsMunicipaux.find(contient(codeInsee))?.commune ?? codeInsee;
 
 export const memeCommune = (unCodeInsee: string | null | undefined, autreCodeInsee: string | null | undefined): boolean =>
