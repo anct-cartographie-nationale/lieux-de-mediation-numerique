@@ -43,6 +43,9 @@
     "build.esm": "tsc -p ./.tsconfig/tsconfig.esm.json",
     "build": "pnpm build.commonjs && pnpm build.esm"
   },
+  "dependencies": {
+    "fuzzball": "^2.2.3"
+  },
   "devDependencies": {
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
