@@ -24,6 +24,12 @@ import { typologiesDepuisNom } from '../typologies-depuis-nom';
  * est ABSENTE du résultat, et non ramenée à zéro ni à cent : ne rien savoir n'est
  * ni une ressemblance ni une différence. La moyenne ne porte donc que sur ce
  * qu'on a pu mesurer.
+ *
+ * Encore faut-il qu'il reste quelque chose. Un lieu est un ENDROIT : si ni
+ * l'adresse ni la distance ne sont comparables, plus rien ne le situe, et la
+ * dénomination seule ne suffit pas — une commune compte plusieurs « Association
+ * Trait d'Union ». D'où le veto `sans-emplacement`, sans lequel deux fiches non
+ * diffusibles et dépourvues de coordonnées obtiendraient un score parfait.
  */
 
 /** Distance en deçà de laquelle deux points sont le même endroit : la largeur d'une parcelle. */
@@ -38,7 +44,7 @@ export type LieuAComparer = {
   source?: string | null;
 };
 
-export type Veto = 'sans-identite' | 'commune-differente' | 'typologies-incompatibles' | 'meme-source';
+export type Veto = 'sans-identite' | 'sans-emplacement' | 'commune-differente' | 'typologies-incompatibles' | 'meme-source';
 
 export type Comparaison = {
   vetos: Veto[];
@@ -94,8 +100,19 @@ const sansIdentite = (un: LieuAComparer, autre: LieuAComparer): boolean =>
 const memeSource = (un: LieuAComparer, autre: LieuAComparer, allowInternalMerge: boolean): boolean =>
   !allowInternalMerge && un.source != null && un.source === autre.source;
 
-const vetosDe = (un: LieuAComparer, autre: LieuAComparer, allowInternalMerge: boolean): Veto[] => [
+/** Rien ne situe la paire : ni adresse comparable, ni distance mesurable. */
+const sansEmplacement = (adresse: number | undefined, distance: number | undefined): boolean =>
+  adresse == null && distance == null;
+
+const vetosDe = (
+  un: LieuAComparer,
+  autre: LieuAComparer,
+  allowInternalMerge: boolean,
+  adresse: number | undefined,
+  distance: number | undefined
+): Veto[] => [
   ...(sansIdentite(un, autre) ? (['sans-identite'] as const) : []),
+  ...(sansEmplacement(adresse, distance) ? (['sans-emplacement'] as const) : []),
   ...(memeCommune(un.codeInsee, autre.codeInsee) ? [] : (['commune-differente'] as const)),
   ...(typologiesIncompatibles(un, autre) ? (['typologies-incompatibles'] as const) : []),
   ...(memeSource(un, autre, allowInternalMerge) ? (['meme-source'] as const) : [])
@@ -128,7 +145,7 @@ export const comparer = (
   { allowInternalMerge = false }: OptionsComparaison = {}
 ): Comparaison =>
   ((scoreNom: number, adresse: number | undefined, distance: number | undefined): Comparaison => ({
-    vetos: vetosDe(un, autre, allowInternalMerge),
+    vetos: vetosDe(un, autre, allowInternalMerge, adresse, distance),
     nom: scoreNom,
     ...(adresse == null ? {} : { adresse }),
     ...(distance == null ? {} : { distance }),

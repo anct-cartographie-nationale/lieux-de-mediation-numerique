@@ -105,6 +105,36 @@ describe('comparer', (): void => {
       expect(comparer(mediatheque, sansLocalisation).score).toBeLessThan(100);
     });
 
+    it('should refuse a pair that nothing situates', (): void => {
+      // Ni adresse comparable, ni coordonnées : la dénomination seule ne suffit
+      // pas, une commune compte plusieurs « Association Trait d'Union ».
+      const nonDiffusible: LieuAComparer = {
+        nom: 'Association Trait d’Union',
+        adresse: '[Non diffusible]',
+        codeInsee: '75101'
+      };
+
+      expect(comparer(nonDiffusible, { ...nonDiffusible }).vetos).toContain('sans-emplacement');
+    });
+
+    it('should refuse a pair where only one address is known and nothing else situates it', (): void => {
+      const connue: LieuAComparer = { nom: 'Association Trait d’Union', adresse: '1 rue de la Paix', codeInsee: '75101' };
+      const inconnue: LieuAComparer = { ...connue, adresse: '[Non diffusible]' };
+
+      expect(comparer(connue, inconnue).vetos).toContain('sans-emplacement');
+    });
+
+    it('should accept a pair without a comparable address when coordinates still situate it', (): void => {
+      const nonDiffusible: LieuAComparer = {
+        nom: 'Association Trait d’Union',
+        adresse: '[Non diffusible]',
+        codeInsee: '75101',
+        localisation: { latitude: 48.869, longitude: 2.331 }
+      };
+
+      expect(comparer(nonDiffusible, { ...nonDiffusible }).vetos).toEqual([]);
+    });
+
     it('should omit the address when it designates nothing on either side', (): void => {
       const nonDiffusible: LieuAComparer = { ...mediatheque, adresse: '[Non diffusible]' };
 
