@@ -1,6 +1,6 @@
 import { Typologie } from '../../models';
 
-export type TypologieMatcher = {
+type TypologieMatcher = {
   typologie: Typologie;
   matchers: RegExp[];
 };
