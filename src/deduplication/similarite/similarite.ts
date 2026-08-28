@@ -1,6 +1,6 @@
 import { ratio } from 'fuzzball';
 
-const ECART_DECISIF_EN_CARACTERES: 20 = 20 as const;
+const ECART_DECISIF_EN_CARACTERES: 30 = 30 as const;
 
 const ecart = (proportionnel: number, longueurCumulee: number): number =>
   Math.round(((100 - proportionnel) * longueurCumulee) / 100);

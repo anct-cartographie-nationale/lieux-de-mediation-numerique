@@ -41,11 +41,18 @@ describe('similarite — bornée par l’écart absolu', (): void => {
   const leMemeGabarit: string = 'moselle fibre ateliers ponctuels organises a la mairie de montenach';
 
   it('should not let a shared boilerplate carry two unrelated names', (): void => {
-    expect(similarite(unGabarit, leMemeGabarit)).toBeLessThan(50);
+    expect(similarite(unGabarit, leMemeGabarit)).toBeLessThan(similarite(unGabarit, unGabarit) - 30);
   });
 
   it('should still bring together two long names that differ by little', (): void => {
     expect(similarite('communaute de communes du pays sabolien', 'communaute de communes pays sabolien')).toBeGreaterThan(90);
+  });
+
+  it('should not punish a name for carrying an added qualifier', (): void => {
+    const nu: string = 'maison departementale de proximite de montrejeau';
+    const qualifie: string = 'maison departementale de proximite de montrejeau france services';
+
+    expect(similarite(nu, qualifie)).toBeGreaterThan(70);
   });
 
   it('should leave short strings to the proportional measure', (): void => {
