@@ -74,7 +74,6 @@ export const toSchemaLieuxDeMediationNumerique = (
   lieuxMediationNumerique: LieuMediationNumerique[],
   withArrondissement: boolean = false
 ): SchemaLieuMediationNumerique[] =>
-  lieuxMediationNumerique.map(
-    (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumerique =>
-      toSchemaLieuMediationNumerique(lieuMediationNumerique, withArrondissement)
+  lieuxMediationNumerique.map((lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumerique =>
+    toSchemaLieuMediationNumerique(lieuMediationNumerique, withArrondissement)
   );
