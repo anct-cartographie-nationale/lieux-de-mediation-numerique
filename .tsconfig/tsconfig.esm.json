@@ -6,7 +6,8 @@
   "exclude": ["../src/**/*.spec.ts", "../src/**/*.test.ts"],
   "compilerOptions": {
     "outDir": "../lib/esm",
-    "lib": ["es2021"],
+    "rootDir": "../src",
+    "lib": ["es2022"],
     "module": "es2022",
     "target": "es2021"
   }
