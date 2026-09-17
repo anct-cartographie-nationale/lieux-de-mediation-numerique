@@ -51,13 +51,13 @@ const ZERO_APRES_LE_PLUS: RegleDeNettoyage = {
 
 const NUMERO_COURT_CAF: RegleDeNettoyage = {
   nom: 'numéro court de la CAF',
-  selecteur: /3230/u,
+  selecteur: /^3230$/u,
   corriger: (): string => '+33969322121'
 };
 
 const NUMERO_COURT_ASSURANCE_RETRAITE: RegleDeNettoyage = {
   nom: 'numéro court de l Assurance retraite',
-  selecteur: /3960/u,
+  selecteur: /^3960$/u,
   corriger: (): string => '+33971103960'
 };
 

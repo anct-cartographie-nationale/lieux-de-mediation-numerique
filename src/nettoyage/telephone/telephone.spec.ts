@@ -64,4 +64,13 @@ describe('telephoneCanonique', (): void => {
   ])('reconnaît le numéro court %s, espaces compris', (brut: string, attendu: string): void => {
     expect(telephoneCanonique(nettoyerTelephone()(brut))).toBe(attendu);
   });
+
+  it.each([
+    ['03 23 06 24 70', '+33323062470'],
+    ['03 23 08 81 81', '+33323088181'],
+    ['04 28 67 32 30', '+33428673230'],
+    ['03 96 01 02 03', '+33396010203']
+  ])('laisse %s intact, un numéro court ne vaut que seul', (brut: string, attendu: string): void => {
+    expect(telephoneCanonique(nettoyerTelephone()(brut))).toBe(attendu);
+  });
 });
