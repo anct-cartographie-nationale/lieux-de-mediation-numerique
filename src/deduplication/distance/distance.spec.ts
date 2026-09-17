@@ -36,4 +36,14 @@ describe('distanceEnMetres', (): void => {
 
     expect(auxAntilles).toBeGreaterThan(enMetropole * 1.5);
   });
+  it.each([
+    ['Paris à La Réunion', { latitude: 48.8566, longitude: 2.3522 }, { latitude: -20.8823, longitude: 55.4504 }, 9365],
+    ['Paris à la Martinique', { latitude: 48.8566, longitude: 2.3522 }, { latitude: 14.6161, longitude: -61.0588 }, 6854],
+    ['Paris à Marseille', { latitude: 48.8566, longitude: 2.3522 }, { latitude: 43.2965, longitude: 5.3698 }, 660]
+  ])(
+    'mesure %s à l’orthodromie, et non à l’approximation plane qui s’en écartait de près de trois pour cent',
+    (_: string, une, autre, kilometresAttendus: number): void => {
+      expect(Math.round(distanceEnMetres(une, autre) / 1000)).toBe(kilometresAttendus);
+    }
+  );
 });
