@@ -1,6 +1,5 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { PublicSpecifiquementAdresse, PublicsSpecifiquementAdresses } from './publics-specifiquement-adresses';
-import { PublicsSpecifiquementAdressesError } from './errors';
 
 describe('public specifiquement adresses model', (): void => {
   it('should create valid publics accueillis', (): void => {
@@ -12,14 +11,12 @@ describe('public specifiquement adresses model', (): void => {
   });
 
   it('should not create invalid publics specifiquement adresses', (): void => {
-    expect((): void => {
-      PublicsSpecifiquementAdresses(['Adultes' as PublicSpecifiquementAdresse]);
-    }).toThrow(new PublicsSpecifiquementAdressesError('Adultes' as PublicSpecifiquementAdresse));
+    expect(PublicsSpecifiquementAdresses.safe(['Adultes' as PublicSpecifiquementAdresse])).toBeNull();
   });
 
   it('should not create invalid publics specifiquement adresses containing a valid and an invalid value', (): void => {
-    expect((): void => {
-      PublicsSpecifiquementAdresses([PublicSpecifiquementAdresse.Etudiants, 'Adultes' as PublicSpecifiquementAdresse]);
-    }).toThrow(new PublicsSpecifiquementAdressesError('Adultes' as PublicSpecifiquementAdresse));
+    expect(
+      PublicsSpecifiquementAdresses.safe([PublicSpecifiquementAdresse.Etudiants, 'Adultes' as PublicSpecifiquementAdresse])
+    ).toBeNull();
   });
 });

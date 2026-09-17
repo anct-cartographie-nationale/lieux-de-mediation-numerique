@@ -1,15 +1,38 @@
-import { Model } from '../model';
-import { SiretError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
 
-export type Siret = Model<'Siret', string>;
+const cleDeLuhnValide = (chiffres: string): boolean =>
+  [...chiffres]
+    .reverse()
+    .map((chiffre: string, rang: number): number => {
+      const double: number = Number.parseInt(chiffre, 10) * (rang % 2 === 1 ? 2 : 1);
+      return double > 9 ? double - 9 : double;
+    })
+    .reduce((somme: number, chiffre: number): number => somme + chiffre, 0) %
+    10 ===
+  0;
 
-const throwSiretError = (siretNumber: string): Siret => {
-  throw new SiretError(siretNumber);
-};
+const SIREN_LA_POSTE = '356000000';
 
-export const isSiret = (siret: string): siret is Siret => siret.length === 14;
+const SENTINELLE_HISTORIQUE = '00000000000000';
 
-export const Siret = (siret: string): Siret => {
-  const siretWithoutSpaces: string = siret.replace(/\s/gu, '');
-  return isSiret(siretWithoutSpaces) ? siretWithoutSpaces : throwSiretError(siretWithoutSpaces);
-};
+const QUATORZE_CHIFFRES: RegExp = /^\d{14}$/u;
+
+const ESPACES: RegExp = /\s/gu;
+
+export const Siret = defineModel(
+  z
+    .string()
+
+    .transform((siret: string): string => siret.replace(ESPACES, ''))
+    .refine(
+      (siret: string): boolean =>
+        QUATORZE_CHIFFRES.test(siret) &&
+        siret !== SENTINELLE_HISTORIQUE &&
+        (siret.startsWith(SIREN_LA_POSTE) || cleDeLuhnValide(siret)),
+      { error: 'Le SIRET doit être composé de 14 chiffres et respecter sa clé de contrôle' }
+    )
+    .brand('Siret')
+);
+
+export type Siret = Model.TypeOf<typeof Siret>;

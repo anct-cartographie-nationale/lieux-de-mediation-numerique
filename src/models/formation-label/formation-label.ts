@@ -1,5 +1,6 @@
-import { Model } from '../model';
-import { FormationLabelError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum FormationLabel {
   FormeAMonEspaceSante = 'Formé à « Mon Espace Santé »',
@@ -14,19 +15,6 @@ export enum FormationLabel {
   SudLabs = 'SUD LABS (PACA)'
 }
 
-export type FormationsLabels = Model<'FormationsLabels', FormationLabel[]>;
+export const FormationsLabels = defineModel(z.array(z.enum(FormationLabel)).transform(sansDoublons).brand('FormationsLabels'));
 
-export type FormationLabelIndefini = 'Label de formation indéfini';
-
-const firstInvalidFormationLabel = (formationLabel: FormationLabel): boolean =>
-  !Object.values(FormationLabel).includes(formationLabel);
-
-const throwFormationsLabelsError = (formationsLabels: FormationLabel[]): FormationsLabels => {
-  throw new FormationLabelError(formationsLabels.find(firstInvalidFormationLabel) ?? 'Label de formation indéfini');
-};
-
-const isFormationsLabels = (formationsLabels: FormationLabel[]): formationsLabels is FormationsLabels =>
-  formationsLabels.find(firstInvalidFormationLabel) == null;
-
-export const FormationsLabels = (formationsLabels: FormationLabel[]): FormationsLabels =>
-  isFormationsLabels(formationsLabels) ? formationsLabels : throwFormationsLabelsError(formationsLabels);
+export type FormationsLabels = Model.TypeOf<typeof FormationsLabels>;

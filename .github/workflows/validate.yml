@@ -22,8 +22,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  prettier:
-    name: Prettier
+  biome:
+    name: Biome
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -31,7 +31,6 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11
           run_install: false
       - name: Install Node.js
         uses: actions/setup-node@v7
@@ -39,12 +38,12 @@ jobs:
           node-version: 24
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install
-      - name: Run Prettier check
-        run: pnpm prettier.ci
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Check formatting and lint rules
+        run: pnpm lint
 
-  eslint:
-    name: ESLint
+  architecture:
+    name: Architecture
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -52,7 +51,6 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11
           run_install: false
       - name: Install Node.js
         uses: actions/setup-node@v7
@@ -60,9 +58,29 @@ jobs:
           node-version: 24
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install
-      - name: Run ESLint
-        run: pnpm lint.es
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Check module boundaries
+        run: pnpm lint.architecture
+
+  types:
+    name: Types
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          run_install: false
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Check types, tests included
+        run: pnpm ts.check
 
   commitlint:
     name: CommitLint
@@ -75,7 +93,6 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11
           run_install: false
       - name: Install Node.js
         uses: actions/setup-node@v7
@@ -83,28 +100,31 @@ jobs:
           node-version: 24
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile --ignore-scripts
       - name: Run Commitlint
         run: pnpm lint.commit
 
   tests:
-    name: Tests
+    name: Tests (Node ${{ matrix.node }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22, 24]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11
           run_install: false
       - name: Install Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: ${{ matrix.node }}
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile --ignore-scripts
       - name: Run Tests
         run: pnpm test
 
@@ -117,7 +137,6 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11
           run_install: false
       - name: Install Node.js
         uses: actions/setup-node@v7
@@ -125,6 +144,28 @@ jobs:
           node-version: 24
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile --ignore-scripts
       - name: Build
         run: pnpm build
+
+  paquet:
+    name: Check the published package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          run_install: false
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Build
+        run: pnpm build
+      - name: Lint the package as npm would receive it
+        run: pnpm lint.publish

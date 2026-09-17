@@ -1,5 +1,6 @@
-import { Model } from '../model';
-import { PrisesEnChargeSpecifiquesError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum PriseEnChargeSpecifique {
   Surdite = 'Surdité',
@@ -11,27 +12,8 @@ export enum PriseEnChargeSpecifique {
   DeficienceVisuelle = 'Déficience visuelle'
 }
 
-export type PrisesEnChargeSpecifiques = Model<'PrisesEnChargeSpecifiques', PriseEnChargeSpecifique[]>;
+export const PrisesEnChargeSpecifiques = defineModel(
+  z.array(z.enum(PriseEnChargeSpecifique)).transform(sansDoublons).brand('PrisesEnChargeSpecifiques')
+);
 
-export type PriseEnChargeSpecifiqueIndefini = 'public pris en charge spécifiquement indéfini';
-
-const firstInvalidPriseEnChargeSpecifique = (priseEnChargeSpecifique: PriseEnChargeSpecifique): boolean =>
-  !Object.values(PriseEnChargeSpecifique).includes(priseEnChargeSpecifique);
-
-const throwPrisesEnChargeSpecifiquesError = (
-  prisesEnChargeSpecifiques: PriseEnChargeSpecifique[]
-): PrisesEnChargeSpecifiques => {
-  throw new PrisesEnChargeSpecifiquesError(
-    prisesEnChargeSpecifiques.find(firstInvalidPriseEnChargeSpecifique) ?? 'public pris en charge spécifiquement indéfini'
-  );
-};
-
-const isPrisesEnChargeSpecifiques = (
-  prisesEnChargeSpecifiques: PriseEnChargeSpecifique[]
-): prisesEnChargeSpecifiques is PrisesEnChargeSpecifiques =>
-  prisesEnChargeSpecifiques.find(firstInvalidPriseEnChargeSpecifique) == null;
-
-export const PrisesEnChargeSpecifiques = (prisesEnChargeSpecifiques: PriseEnChargeSpecifique[]): PrisesEnChargeSpecifiques =>
-  isPrisesEnChargeSpecifiques(prisesEnChargeSpecifiques)
-    ? (prisesEnChargeSpecifiques as PrisesEnChargeSpecifiques)
-    : throwPrisesEnChargeSpecifiquesError(prisesEnChargeSpecifiques);
+export type PrisesEnChargeSpecifiques = Model.TypeOf<typeof PrisesEnChargeSpecifiques>;

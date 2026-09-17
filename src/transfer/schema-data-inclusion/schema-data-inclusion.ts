@@ -7,7 +7,11 @@ export type ModeOrientationAccompagnateur =
   | 'telephoner';
 
 export type ModeOrientationBeneficiaire =
-  'autre' | 'completer-le-formulaire-dadhesion' | 'envoyer-un-mail' | 'se-presenter' | 'telephoner';
+  | 'autre'
+  | 'completer-le-formulaire-dadhesion'
+  | 'envoyer-un-mail'
+  | 'se-presenter'
+  | 'telephoner';
 
 export type SchemaStructureDataInclusionStructureGeneralFields = {
   id: string;
@@ -67,7 +71,7 @@ export type SchemaStructureDataInclusionDisponibiliteFields = {
 };
 
 export type SchemaStructureDataInclusionCollecteFields = {
-  date_maj: string;
+  date_maj?: string;
   source?: string;
   lien_source?: string;
 };

@@ -1,5 +1,6 @@
-import { Model } from '../model';
-import { TypologiesError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum Typologie {
   ACI = 'ACI', // Structures porteuses d’ateliers et chantiers d’insertion
@@ -96,17 +97,6 @@ export enum Typologie {
   UDAF = 'UDAF' // Union Départementale d’Aide aux Familles
 }
 
-export type Typologies = Model<'Typologies', Typologie[]>;
+export const Typologies = defineModel(z.array(z.enum(Typologie)).transform(sansDoublons).brand('Typologies'));
 
-export type TypologiesIndefinie = 'typologie indéfinie';
-
-const firstInvalidTypology = (typologie: Typologie): boolean => !Object.values(Typologie).includes(typologie);
-
-const throwTypologiesError = (typologies: Typologie[]): Typologies => {
-  throw new TypologiesError(typologies.find(firstInvalidTypology) ?? 'typologie indéfinie');
-};
-
-const isTypologies = (typologies: Typologie[]): typologies is Typologies => typologies.find(firstInvalidTypology) == null;
-
-export const Typologies = (typologies: Typologie[]): Typologies =>
-  isTypologies(typologies) ? typologies : throwTypologiesError(typologies);
+export type Typologies = Model.TypeOf<typeof Typologies>;

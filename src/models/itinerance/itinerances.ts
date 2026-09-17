@@ -1,23 +1,12 @@
-import { Model } from '../model';
-import { ItineranceError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum Itinerance {
   Itinerant = 'Itinérant',
   Fixe = 'Fixe'
 }
 
-export type Itinerances = Model<'Itinerances', Itinerance[]>;
+export const Itinerances = defineModel(z.array(z.enum(Itinerance)).transform(sansDoublons).brand('Itinerances'));
 
-export type ItineranceIndefinie = 'itinerance indéfinie';
-
-const firstInvalidItinerance = (itinerance: Itinerance): boolean => !Object.values(Itinerance).includes(itinerance);
-
-const throwItineranceError = (itinerances: Itinerance[]): Itinerances => {
-  throw new ItineranceError(itinerances.find(firstInvalidItinerance) ?? 'itinerance indéfinie');
-};
-
-const isItinerance = (itinerances: Itinerance[]): itinerances is Itinerances =>
-  itinerances.find(firstInvalidItinerance) == null;
-
-export const Itinerances = (itinerances: Itinerance[]): Itinerances =>
-  isItinerance(itinerances) ? itinerances : throwItineranceError(itinerances);
+export type Itinerances = Model.TypeOf<typeof Itinerances>;

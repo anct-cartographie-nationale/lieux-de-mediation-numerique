@@ -1,5 +1,6 @@
-import { Model } from '../model';
-import { ModalitesAccesError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum ModaliteAcces {
   SePresenter = 'Se présenter',
@@ -10,21 +11,8 @@ export enum ModaliteAcces {
   PasDePublic = "Ce lieu n'accueille pas de public"
 }
 
-export type ModalitesAcces = Model<'ModalitesAcces', ModaliteAcces[]>;
+export const ModalitesAcces = defineModel(z.array(z.enum(ModaliteAcces)).transform(sansDoublons).brand('ModalitesAcces'));
 
-export type ModalitesAccesIndefinie = "modalité d'accès indéfinie";
-
-const firstInvalidModaliteAcces = (modaliteAcces: ModaliteAcces): boolean =>
-  !Object.values(ModaliteAcces).includes(modaliteAcces);
-
-const throwModalitesAccesError = (modalitesAcces: ModaliteAcces[]): ModalitesAcces => {
-  throw new ModalitesAccesError(modalitesAcces.find(firstInvalidModaliteAcces) ?? "modalité d'accès indéfinie");
-};
-
-const isModalitesAcces = (modalitesAcces: ModaliteAcces[]): modalitesAcces is ModalitesAcces =>
-  modalitesAcces.find(firstInvalidModaliteAcces) == null;
-
-export const ModalitesAcces = (modalitesAcces: ModaliteAcces[]): ModalitesAcces =>
-  isModalitesAcces(modalitesAcces) ? modalitesAcces : throwModalitesAccesError(modalitesAcces);
+export type ModalitesAcces = Model.TypeOf<typeof ModalitesAcces>;
 
 export const toAccessibleLieu = (modalitesAcces: ModaliteAcces): boolean => modalitesAcces !== ModaliteAcces.PasDePublic;

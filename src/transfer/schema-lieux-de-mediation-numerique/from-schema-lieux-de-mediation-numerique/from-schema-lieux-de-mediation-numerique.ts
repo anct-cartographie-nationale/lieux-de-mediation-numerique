@@ -1,5 +1,5 @@
-import { Id, LieuMediationNumerique, Nom, Pivot, Services } from '../../../models';
-import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
+import { dateMajSiLisible, Id, type LieuMediationNumerique, Nom, type Services } from '../../../models';
+import type { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import {
   ficheAccedLibreIfAny,
   adresse,
@@ -13,7 +13,7 @@ import {
   presentationIfAny,
   priseRdvIfAny,
   sourceIfAny,
-  structureParenteIfAny,
+  pivotIfAny,
   typologiesIfAny,
   itinerancesIfAny,
   servicesIfAny,
@@ -33,7 +33,6 @@ const optionalFields = (schemaLieuMediationNumeriqueItem: SchemaLieuMediationNum
     ...horairesIfAny(schemaLieuMediationNumeriqueItem.horaires),
     ...presentationIfAny(schemaLieuMediationNumeriqueItem),
     ...sourceIfAny(schemaLieuMediationNumeriqueItem.source),
-    ...structureParenteIfAny(schemaLieuMediationNumeriqueItem.structure_parente),
     ...publicsSpecifiquementAdressesIfAny(
       schemaLieuMediationNumeriqueItem.publics_specifiquement_adresses,
       servicesFound.services
@@ -55,10 +54,11 @@ export const fromSchemaLieuDeMediationNumerique = (
   schemaLieuMediationNumeriqueItem: SchemaLieuMediationNumerique
 ): LieuMediationNumerique => ({
   id: Id(schemaLieuMediationNumeriqueItem.id),
-  pivot: Pivot(schemaLieuMediationNumeriqueItem.pivot),
+  ...pivotIfAny(schemaLieuMediationNumeriqueItem.pivot),
   nom: Nom(schemaLieuMediationNumeriqueItem.nom),
   ...adresse(schemaLieuMediationNumeriqueItem),
-  date_maj: new Date(schemaLieuMediationNumeriqueItem.date_maj),
+
+  ...dateMajSiLisible(schemaLieuMediationNumeriqueItem.date_maj),
   ...optionalFields(schemaLieuMediationNumeriqueItem)
 });
 

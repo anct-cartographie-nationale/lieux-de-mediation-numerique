@@ -1,16 +1,16 @@
 import {
   Frais,
   DispositifProgrammeNational,
-  LieuMediationNumerique,
+  type LieuMediationNumerique,
   ModaliteAcces,
   ModaliteAccompagnement,
-  ModalitesAccompagnement,
+  type ModalitesAccompagnement,
   PriseEnChargeSpecifique,
   PublicSpecifiquementAdresse,
   Service,
   FormationLabel
 } from '../../../models';
-import {
+import type {
   ModeOrientationAccompagnateur,
   ModeOrientationBeneficiaire,
   SchemaStructureDataInclusionAccesFields,
@@ -142,11 +142,10 @@ export const structureGeneralFields = (
 ): SchemaStructureDataInclusionStructureGeneralFields => ({
   id: lieuMediationNumerique.id,
   nom: lieuMediationNumerique.nom,
-  siret: lieuMediationNumerique.pivot,
+  ...(lieuMediationNumerique.pivot == null ? {} : { siret: lieuMediationNumerique.pivot }),
   ...(lieuMediationNumerique.typologies != null && lieuMediationNumerique.typologies.length > 0
     ? typologyIfExist(lieuMediationNumerique.typologies.at(0)?.toString())
     : {}),
-  ...(lieuMediationNumerique.structure_parente == null ? {} : { structure_parente: lieuMediationNumerique.structure_parente }),
   ...(lieuMediationNumerique.fiche_acces_libre == null ? {} : { accessibilite: lieuMediationNumerique.fiche_acces_libre }),
   thematiques: [
     'numerique',
@@ -190,12 +189,7 @@ export const presentationFields = (
 ): SchemaStructureDataInclusionPresentationFields => ({
   ...(lieuMediationNumerique.presentation?.resume == null
     ? {}
-    : {
-        presentation_resume:
-          lieuMediationNumerique.presentation.resume.length > 280
-            ? `${lieuMediationNumerique.presentation.resume.slice(0, 277)}...`
-            : lieuMediationNumerique.presentation.resume
-      }),
+    : { presentation_resume: lieuMediationNumerique.presentation.resume }),
   ...(lieuMediationNumerique.presentation?.detail == null
     ? {}
     : { presentation_detail: lieuMediationNumerique.presentation.detail })
@@ -232,7 +226,7 @@ export const disponibiliteFields = (
 
 export const collecteFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionCollecteFields => ({
   ...(lieuMediationNumerique.source == null ? {} : { source: lieuMediationNumerique.source }),
-  date_maj: new Date(lieuMediationNumerique.date_maj).toISOString()
+  ...(lieuMediationNumerique.date_maj == null ? {} : { date_maj: lieuMediationNumerique.date_maj.toISOString() })
 });
 
 const throwNoSourceError = (): string => {

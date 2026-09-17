@@ -1,5 +1,4 @@
-import { describe, it, expect } from 'vitest';
-import { ModalitesAccesError } from './errors';
+import { describe, expect, it } from 'vitest';
 import { ModaliteAcces, ModalitesAcces } from './modalite-acces';
 
 describe('modalite acces model', (): void => {
@@ -10,14 +9,10 @@ describe('modalite acces model', (): void => {
   });
 
   it('should not create invalid modalites acces', (): void => {
-    expect((): void => {
-      ModalitesAcces(['Venir sur place' as ModaliteAcces]);
-    }).toThrow(new ModalitesAccesError('Venir sur place' as ModaliteAcces));
+    expect(ModalitesAcces.safe(['Venir sur place' as ModaliteAcces])).toBeNull();
   });
 
   it('should not create invalid modalite acces containing a valid and an invalid value', (): void => {
-    expect((): void => {
-      ModalitesAcces([ModaliteAcces.SePresenter, 'Venir sur place' as ModaliteAcces]);
-    }).toThrow(new ModalitesAccesError('Venir sur place' as ModaliteAcces));
+    expect(ModalitesAcces.safe([ModaliteAcces.SePresenter, 'Venir sur place' as ModaliteAcces])).toBeNull();
   });
 });

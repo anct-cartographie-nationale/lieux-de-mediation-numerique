@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
+  Horaires,
   Adresse,
   Contact,
   Courriel,
@@ -10,7 +11,7 @@ import {
   Frais,
   FraisACharge,
   Id,
-  LieuMediationNumerique,
+  type LieuMediationNumerique,
   Localisation,
   ModaliteAcces,
   ModaliteAccompagnement,
@@ -26,9 +27,11 @@ import {
   Services,
   Typologie,
   Typologies,
-  Url
+  Url,
+  Presentation,
+  FicheAccesLibre
 } from '../../../models';
-import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
+import type { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import { toSchemaServicesDataInclusion, toSchemaStructuresDataInclusion } from './to-schema-data-inclusion';
 
 describe('to schema data.inclusion', (): void => {
@@ -36,7 +39,7 @@ describe('to schema data.inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
       nom: Nom('MOBILETTE'),
-      pivot: Pivot('60487647500499'),
+      pivot: Pivot('60487647500491'),
       adresse: Adresse({
         code_postal: '09891',
         commune: 'Robinboeuf',
@@ -44,16 +47,16 @@ describe('to schema data.inclusion', (): void => {
       }),
       services: Services([Service.AideAuxDemarchesAdministratives]),
       date_maj: new Date('2022-04-28'),
-      presentation: {
+      presentation: Presentation({
         resume:
           'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle'
-      }
+      })
     };
 
     expect(toSchemaStructuresDataInclusion([minimalLieuMediationNumerique])).toStrictEqual<SchemaStructureDataInclusion[]>([
       {
         id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
-        siret: '60487647500499',
+        siret: '60487647500491',
         nom: 'MOBILETTE',
         commune: 'Robinboeuf',
         code_postal: '09891',
@@ -74,7 +77,7 @@ describe('to schema data.inclusion', (): void => {
   it('should convert full lieux de mediation numerique model to data.inclusion structure schema', (): void => {
     const lieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
-      pivot: Pivot('60487647500499'),
+      pivot: Pivot('60487647500491'),
       nom: Nom('MOBILETTE'),
       adresse: Adresse({
         code_postal: '09891',
@@ -90,18 +93,17 @@ describe('to schema data.inclusion', (): void => {
       typologies: Typologies([Typologie.ASSO]),
       contact: Contact({
         site_web: [Url('https://www.asso-gonzalez.net/'), Url('https://www.facebook.com/asso-gonzalez.net/')],
-        telephone: '0102030405',
+        telephone: '+33102030405',
         courriels: [Courriel('julie@example.net'), Courriel('paul@example.net')]
       }),
-      horaires: 'Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off',
-      presentation: {
+      horaires: Horaires('Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off'),
+      presentation: Presentation({
         resume:
-          'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle, nous sommes spécialisés dans la mobilité en milieu rurale, mais nous pouvons également proposer un accompagnement pour la mobilité en milieu urbain.',
+          'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle, nous sommes spécialisés dans la mobilité en milieu rurale, mais nous accompagnons aussi la mobilité en milieu urbain.',
         detail:
           "connaissance de l'offre de transport du territoire / accès à un véhicule 2 ou 4 roues / transport solidaire / accès au permis"
-      },
+      }),
       source: 'solidagregateur',
-      structure_parente: '7713e292-abd1-42fc-b1f0-071b7e7a2f61',
       date_maj: new Date('2022-04-28'),
       services: Services([
         Service.MaterielInformatiqueAPrixSolidaire,
@@ -123,7 +125,7 @@ describe('to schema data.inclusion', (): void => {
       ]),
       formations_labels: FormationsLabels([FormationLabel.ArniaMednum, FormationLabel.Ordi3]),
       autres_formations_labels: ['Nièvre médiation numérique'],
-      fiche_acces_libre: Url(
+      fiche_acces_libre: FicheAccesLibre(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       )
     };
@@ -131,7 +133,7 @@ describe('to schema data.inclusion', (): void => {
     expect(toSchemaStructuresDataInclusion([lieuMediationNumerique])).toStrictEqual<SchemaStructureDataInclusion[]>([
       {
         id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
-        siret: '60487647500499',
+        siret: '60487647500491',
         nom: 'MOBILETTE',
         commune: 'Robinboeuf',
         code_postal: '09891',
@@ -142,15 +144,14 @@ describe('to schema data.inclusion', (): void => {
         longitude: 7.848133,
         latitude: 48.7703,
         typologie: Typologie.ASSO,
-        telephone: '0102030405',
+        telephone: '+33102030405',
         courriel: 'julie@example.net',
         site_web: 'https://www.asso-gonzalez.net/',
         presentation_resume:
-          'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle, nous sommes spécialisés dans la mobilité en milieu rurale, mais nous pouvons également proposer un accompagnement pour la mobilité en...',
+          'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle, nous sommes spécialisés dans la mobilité en milieu rurale, mais nous accompagnons aussi la mobilité en milieu urbain.',
         presentation_detail:
           "connaissance de l'offre de transport du territoire / accès à un véhicule 2 ou 4 roues / transport solidaire / accès au permis",
         source: 'solidagregateur',
-        structure_parente: '7713e292-abd1-42fc-b1f0-071b7e7a2f61',
         horaires_ouverture: 'Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off',
         accessibilite:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
@@ -182,7 +183,7 @@ describe('to schema data.inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
       nom: Nom('MOBILETTE'),
-      pivot: Pivot('60487647500499'),
+      pivot: Pivot('60487647500491'),
       adresse: Adresse({
         code_postal: '09891',
         commune: 'Robinboeuf',
@@ -207,7 +208,7 @@ describe('to schema data.inclusion', (): void => {
   it('should convert full lieux de mediation numerique model to data.inclusion service schema', (): void => {
     const lieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
-      pivot: Pivot('60487647500499'),
+      pivot: Pivot('60487647500491'),
       nom: Nom('MOBILETTE'),
       adresse: Adresse({
         code_postal: '09891',
@@ -218,7 +219,7 @@ describe('to schema data.inclusion', (): void => {
         latitude: 48.7703,
         longitude: 7.848133
       }),
-      // typologies: Typologies([Typologie.ASSO]),
+
       services: Services([
         Service.MaterielInformatiqueAPrixSolidaire,
         Service.AideAuxDemarchesAdministratives,
@@ -314,7 +315,7 @@ describe('to schema data.inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
       nom: Nom('MOBILETTE'),
-      pivot: Pivot('60487647500499'),
+      pivot: Pivot('60487647500491'),
       adresse: Adresse({
         code_postal: '09891',
         commune: 'Robinboeuf',
@@ -342,7 +343,7 @@ describe('to schema data.inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
       nom: Nom('MOBILETTE'),
-      pivot: Pivot('60487647500499'),
+      pivot: Pivot('60487647500491'),
       adresse: Adresse({
         code_postal: '09891',
         commune: 'Robinboeuf',
@@ -365,5 +366,17 @@ describe('to schema data.inclusion', (): void => {
         modes_accueil: ['en-presentiel']
       }
     ]);
+  });
+
+  it('should omit date_maj rather than date the structure from 1970', (): void => {
+    const sansDate: LieuMediationNumerique = {
+      id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
+      nom: Nom('MOBILETTE'),
+      adresse: Adresse({ code_postal: '09891', commune: 'Robinboeuf', voie: '3 RUE DE LECLERCQ' }),
+      services: Services([Service.AccesInternetEtMaterielInformatique]),
+      source: 'solidagregateur'
+    };
+
+    expect('date_maj' in (toSchemaStructuresDataInclusion([sansDate])[0] ?? {})).toBe(false);
   });
 });

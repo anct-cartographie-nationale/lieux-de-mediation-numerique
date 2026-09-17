@@ -1,5 +1,6 @@
-import { Model } from '../model';
-import { PublicsSpecifiquementAdressesError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum PublicSpecifiquementAdresse {
   Jeunes = 'Jeunes',
@@ -9,29 +10,8 @@ export enum PublicSpecifiquementAdresse {
   Femmes = 'Femmes'
 }
 
-export type PublicsSpecifiquementAdresses = Model<'PublicsSpecifiquementAdresses', PublicSpecifiquementAdresse[]>;
+export const PublicsSpecifiquementAdresses = defineModel(
+  z.array(z.enum(PublicSpecifiquementAdresse)).transform(sansDoublons).brand('PublicsSpecifiquementAdresses')
+);
 
-export type PublicSpecifiquementAdresseIndefini = 'public spécifiquement adressé indéfini';
-
-const firstInvalidPublicSpecifiquementAdresse = (publicSpecifiquementAdresse: PublicSpecifiquementAdresse): boolean =>
-  !Object.values(PublicSpecifiquementAdresse).includes(publicSpecifiquementAdresse);
-
-const throwPublicsSpecifiquementAdressesError = (
-  publicsSpecifiquementAdresses: PublicSpecifiquementAdresse[]
-): PublicsSpecifiquementAdresses => {
-  throw new PublicsSpecifiquementAdressesError(
-    publicsSpecifiquementAdresses.find(firstInvalidPublicSpecifiquementAdresse) ?? 'public spécifiquement adressé indéfini'
-  );
-};
-
-const isPublicsSpecifiquementAdresses = (
-  publicsSpecifiquementAdresses: PublicSpecifiquementAdresse[]
-): publicsSpecifiquementAdresses is PublicsSpecifiquementAdresses =>
-  publicsSpecifiquementAdresses.find(firstInvalidPublicSpecifiquementAdresse) == null;
-
-export const PublicsSpecifiquementAdresses = (
-  publicsSpecifiquementAdresses: PublicSpecifiquementAdresse[]
-): PublicsSpecifiquementAdresses =>
-  isPublicsSpecifiquementAdresses(publicsSpecifiquementAdresses)
-    ? (publicsSpecifiquementAdresses as PublicsSpecifiquementAdresses)
-    : throwPublicsSpecifiquementAdressesError(publicsSpecifiquementAdresses);
+export type PublicsSpecifiquementAdresses = Model.TypeOf<typeof PublicsSpecifiquementAdresses>;

@@ -1,5 +1,6 @@
-import { Model } from '../model';
-import { DispositifProgrammeNationalError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum DispositifProgrammeNational {
   AidantsConnect = 'Aidants Connect',
@@ -15,29 +16,8 @@ export enum DispositifProgrammeNational {
   RelaisNumeriqueEmmausConnect = 'Relais numérique (Emmaüs Connect)'
 }
 
-export type DispositifProgrammesNationaux = Model<'DispositifProgrammesNationaux', DispositifProgrammeNational[]>;
+export const DispositifProgrammesNationaux = defineModel(
+  z.array(z.enum(DispositifProgrammeNational)).transform(sansDoublons).brand('DispositifProgrammesNationaux')
+);
 
-export type DispositifProgrammeNationalIndefini = 'dispositif ou programme national indéfini';
-
-const firstInvalidDispositifProgrammeNational = (dispositifProgrammeNational: DispositifProgrammeNational): boolean =>
-  !Object.values(DispositifProgrammeNational).includes(dispositifProgrammeNational);
-
-const throwDispositifProgrammesNationauxError = (
-  dispositifProgrammesNationaux: DispositifProgrammeNational[]
-): DispositifProgrammesNationaux => {
-  throw new DispositifProgrammeNationalError(
-    dispositifProgrammesNationaux.find(firstInvalidDispositifProgrammeNational) ?? 'dispositif ou programme national indéfini'
-  );
-};
-
-const isDispositifProgrammesNationaux = (
-  dispositifProgrammesNationaux: DispositifProgrammeNational[]
-): dispositifProgrammesNationaux is DispositifProgrammesNationaux =>
-  dispositifProgrammesNationaux.find(firstInvalidDispositifProgrammeNational) == null;
-
-export const DispositifProgrammesNationaux = (
-  dispositifProgrammesNationaux: DispositifProgrammeNational[]
-): DispositifProgrammesNationaux =>
-  isDispositifProgrammesNationaux(dispositifProgrammesNationaux)
-    ? dispositifProgrammesNationaux
-    : throwDispositifProgrammesNationauxError(dispositifProgrammesNationaux);
+export type DispositifProgrammesNationaux = Model.TypeOf<typeof DispositifProgrammesNationaux>;

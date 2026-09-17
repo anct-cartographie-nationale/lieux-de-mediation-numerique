@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { Typologie } from '../../models';
-import { comparer, Comparaison, ComparaisonMesuree, LieuAComparer, OptionsComparaison, preparer } from './comparer';
+import {
+  comparer,
+  type Comparaison,
+  type ComparaisonMesuree,
+  type LieuAComparer,
+  type OptionsComparaison,
+  preparer
+} from './comparer';
 
 const mediatheque: LieuAComparer = {
   nom: 'Médiathèque de Fleury',
@@ -23,7 +30,7 @@ describe('comparer', (): void => {
     const comparaison: Comparaison = comparerLieux(mediatheque, mediatheque);
 
     expect(comparaison.vetos).toEqual([]);
-    expect(comparaison.score).toBe(100);
+    expect('score' in comparaison ? comparaison.score : undefined).toBe(100);
   });
 
   it('should raise the name score for equivalent administrative denominations', (): void => {

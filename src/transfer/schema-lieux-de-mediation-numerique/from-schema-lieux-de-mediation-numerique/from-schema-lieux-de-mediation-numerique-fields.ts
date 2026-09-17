@@ -1,24 +1,29 @@
 import {
   Adresse,
   Contact,
-  Courriel,
+  type Courriel,
+  DispositifProgrammesNationaux,
   FormationsLabels,
   FraisACharge,
+  type Horaires,
+  FicheAccesLibre,
+  Horaires as HorairesModel,
   Itinerances,
-  DispositifProgrammesNationaux,
   Localisation,
   ModaliteAcces,
   ModalitesAcces,
   ModalitesAccompagnement,
+  Pivot,
   Presentation,
   PrisesEnChargeSpecifiques,
   PublicsSpecifiquementAdresses,
   Services,
   toAccessibleLieu,
   Typologies,
-  Url
+  Url,
+  type Model
 } from '../../../models';
-import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
+import type { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 
 const toListOf = <T>(listItem: string): T => listItem as T;
 
@@ -70,28 +75,35 @@ export const contactIfAny = (schemaLieuMediationNumerique: SchemaLieuMediationNu
         })
       };
 
-export const horairesIfAny = (horaires?: string): { horaires?: string } => (horaires == null ? {} : { horaires });
+export const horairesIfAny = (horaires?: string): { horaires?: Horaires } => {
+  const horairesValides: Horaires | null = horaires == null ? null : HorairesModel.safe(horaires);
+
+  return horairesValides == null ? {} : { horaires: horairesValides };
+};
 
 const resumeIfAny = (resume?: string): { resume?: string } => (resume == null ? {} : { resume });
 
 const detailIfAny = (detail?: string): { detail?: string } => (detail == null ? {} : { detail });
+
+const presentationOuRien = (presentation: Model.InputOf<typeof Presentation>): { presentation?: Presentation } => {
+  const presentationValide: Presentation | null = Presentation.safe(presentation);
+
+  return presentationValide == null ? {} : { presentation: presentationValide };
+};
 
 export const presentationIfAny = (
   schemaLieuMediationNumerique: SchemaLieuMediationNumerique
 ): { presentation?: Presentation } =>
   schemaLieuMediationNumerique.presentation_resume == null && schemaLieuMediationNumerique.presentation_detail == null
     ? {}
-    : {
-        presentation: {
-          ...resumeIfAny(schemaLieuMediationNumerique.presentation_resume),
-          ...detailIfAny(schemaLieuMediationNumerique.presentation_detail)
-        }
-      };
+    : presentationOuRien({
+        ...resumeIfAny(schemaLieuMediationNumerique.presentation_resume),
+        ...detailIfAny(schemaLieuMediationNumerique.presentation_detail)
+      });
 
 export const sourceIfAny = (source?: string): { source?: string } => (source == null ? {} : { source });
 
-export const structureParenteIfAny = (structureParente?: string): { structure_parente?: string } =>
-  structureParente == null ? {} : { structure_parente: structureParente };
+export const pivotIfAny = (pivot?: string): { pivot?: Pivot } => (pivot == null || pivot === '' ? {} : { pivot: Pivot(pivot) });
 
 export const publicsSpecifiquementAdressesIfAny = (
   publicsSpecifiquementAdresses?: string,
@@ -149,7 +161,7 @@ const noPublicAccess = (): { modalites_acces: ModalitesAcces } => ({
 export const modalitesAccessIfAny = (modalitesAcces?: string, services?: Services): { modalites_acces?: ModalitesAcces } =>
   hasServices(services) ? PublicAccess(modalitesAcces) : noPublicAccess();
 
-export const ficheAccedLibreIfAny = (ficheAccesLibre?: string): { fiche_acces_libre?: Url } =>
-  ficheAccesLibre == null ? {} : { fiche_acces_libre: Url(ficheAccesLibre) };
+export const ficheAccedLibreIfAny = (ficheAccesLibre?: string): { fiche_acces_libre?: FicheAccesLibre } =>
+  ficheAccesLibre == null ? {} : { fiche_acces_libre: FicheAccesLibre(ficheAccesLibre) };
 
 export const priseRdvIfAny = (priseRdv?: string): { prise_rdv?: Url } => (priseRdv == null ? {} : { prise_rdv: Url(priseRdv) });

@@ -1,5 +1,5 @@
-import { isValidTelephone, isValidCourriel } from '../../../models';
-import {
+import { Courriel, Telephone } from '../../../models';
+import type {
   SchemaServiceDataInclusion,
   SchemaServiceDataInclusionWithAdresse,
   SchemaStructureDataInclusion,
@@ -41,8 +41,8 @@ const contactFromServiceOrStructure = (
 ): SchemaStructureDataInclusionContactFields => ({
   ...(structure.telephone == null ? {} : { telephone: structure.telephone }),
   ...(structure.courriel == null ? {} : { courriel: structure.courriel }),
-  ...(isValidTelephone(service.telephone ?? '') ? { telephone: service.telephone } : {}),
-  ...(isValidCourriel(service.courriel ?? '') ? { courriel: service.courriel } : {})
+  ...(Telephone.safe(service.telephone ?? '') == null ? {} : { telephone: service.telephone }),
+  ...(Courriel.safe(service.courriel ?? '') == null ? {} : { courriel: service.courriel })
 });
 
 const labelsFromStructure = (structure: SchemaStructureDataInclusion): SchemaStructureDataInclusionLabelsFields => ({
@@ -63,11 +63,13 @@ const generalFieldsFromServiceAndStructure = (
   ...(structure.site_web == null ? {} : { site_web: structure.site_web })
 });
 
+const dateMajSiConnue = (dateMaj?: string): { date_maj?: string } => (dateMaj == null ? {} : { date_maj: dateMaj });
+
 const collecteFieldsFromServiceAndStructure = (
   service: SchemaServiceDataInclusionWithAdresse,
   structure: SchemaStructureDataInclusion
 ): SchemaStructureDataInclusionCollecteFields => ({
-  date_maj: service.date_maj ?? structure.date_maj,
+  ...dateMajSiConnue(service.date_maj ?? structure.date_maj),
   source: service.source
 });
 

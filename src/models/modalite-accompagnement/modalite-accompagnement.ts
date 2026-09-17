@@ -1,5 +1,6 @@
-import { ModalitesAccompagnementError } from './errors';
-import { Model } from '../model';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum ModaliteAccompagnement {
   EnAutonomie = 'En autonomie',
@@ -8,27 +9,8 @@ export enum ModaliteAccompagnement {
   ADistance = 'À distance'
 }
 
-export type ModalitesAccompagnement = Model<'ModalitesAccompagnement', ModaliteAccompagnement[]>;
+export const ModalitesAccompagnement = defineModel(
+  z.array(z.enum(ModaliteAccompagnement)).transform(sansDoublons).brand('ModalitesAccompagnement')
+);
 
-export type ModaliteAccompagnementIndefinie = "modalité d'accompagnement indéfinie";
-
-const firstInvalidModaliteAccompagnement = (modaliteAccompagnement: ModaliteAccompagnement): boolean =>
-  !Object.values(ModaliteAccompagnement).includes(modaliteAccompagnement);
-
-const throwModalitesAccompagnementError = (modaliteAccompagnement: ModaliteAccompagnement[]): ModalitesAccompagnement => {
-  throw new ModalitesAccompagnementError(
-    modaliteAccompagnement.find(firstInvalidModaliteAccompagnement) ?? "modalité d'accompagnement indéfinie"
-  );
-};
-
-const isModalitesAccompagnement = (
-  modalitesAccompagnement: ModaliteAccompagnement[]
-): modalitesAccompagnement is ModalitesAccompagnement =>
-  modalitesAccompagnement.find(firstInvalidModaliteAccompagnement) == null;
-
-export const ModalitesAccompagnement = (modalitesAccompagnement: ModaliteAccompagnement[]): ModalitesAccompagnement => {
-  const modalitesAccompagnementWithoutDuplicates: ModaliteAccompagnement[] = Array.from(new Set(modalitesAccompagnement));
-  return isModalitesAccompagnement(modalitesAccompagnementWithoutDuplicates)
-    ? modalitesAccompagnementWithoutDuplicates
-    : throwModalitesAccompagnementError(modalitesAccompagnement);
-};
+export type ModalitesAccompagnement = Model.TypeOf<typeof ModalitesAccompagnement>;

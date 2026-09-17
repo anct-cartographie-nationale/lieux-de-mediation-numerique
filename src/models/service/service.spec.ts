@@ -1,6 +1,5 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { Service, Services } from './service';
-import { ServicesError } from './errors';
 
 describe('service model', (): void => {
   it('should create valid services', (): void => {
@@ -10,20 +9,16 @@ describe('service model', (): void => {
   });
 
   it('should not create invalid services', (): void => {
-    expect((): void => {
-      Services(['Sécuriser son ordinateur ou son téléphone' as Service]);
-    }).toThrow(new ServicesError('Sécuriser son ordinateur ou son téléphone' as Service));
+    expect(Services.safe(['Sécuriser son ordinateur ou son téléphone' as Service])).toBeNull();
   });
 
   it('should not create invalid services containing a valid and an invalid value', (): void => {
-    expect((): void => {
-      Services([Service.AccesInternetEtMaterielInformatique, 'Sécuriser son ordinateur ou son téléphone' as Service]);
-    }).toThrow(new ServicesError('Sécuriser son ordinateur ou son téléphone' as Service));
+    expect(
+      Services.safe([Service.AccesInternetEtMaterielInformatique, 'Sécuriser son ordinateur ou son téléphone' as Service])
+    ).toBeNull();
   });
 
-  it('should have at least one value to be valid services', (): void => {
-    expect((): void => {
-      Services([]);
-    }).toThrow(new ServicesError('service indéfini'));
+  it('should accept an empty list, which the cartography assembly refuses on its own', (): void => {
+    expect(Services([])).toStrictEqual([]);
   });
 });

@@ -9,9 +9,56 @@
     "mediation-numerique"
   ],
   "homepage": "https://npmjs.com/package/@gouvfr-anct/lieux-de-mediation-numerique",
+  "bugs": {
+    "url": "https://github.com/anct-cartographie-nationale/lieux-de-mediation-numerique/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/anct-cartographie-nationale/lieux-de-mediation-numerique.git"
+    "url": "git+https://github.com/anct-cartographie-nationale/lieux-de-mediation-numerique.git"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": "Agence nationale de la cohésion des territoires",
+  "version": "0.0.0-development",
+  "packageManager": "pnpm@12.3.2",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "sideEffects": false,
+  "type": "commonjs",
+  "main": "./lib/index.js",
+  "module": "./lib/index.mjs",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.mts",
+        "default": "./lib/index.mjs"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./lib/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "lint": "biome check .",
+    "lint.fix": "biome check --write .",
+    "lint.architecture": "node scripts/lint-architecture.mjs",
+    "lint.commit": "commitlint --from origin/main",
+    "lint.publish": "publint && attw --pack .",
+    "lint-staged": "lint-staged",
+    "ts.check": "tsc --noEmit",
+    "test": "vitest",
+    "build": "tsdown",
+    "prepare": "husky"
   },
   "contributors": [
     {
@@ -25,46 +72,24 @@
       "url": "https://www.linkedin.com/in/marc-gavanier/"
     }
   ],
-  "license": "SEE LICENSE IN LICENSE.md",
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
-  "main": "lib/cjs/index.js",
-  "module": "lib/esm/index.js",
-  "scripts": {
-    "lint.es": "eslint ./src/",
-    "lint.commit": "npx commitlint --from origin/main --config ./.tooling/.commitlint/commitlint.config.cjs",
-    "lint-staged": "lint-staged --config=./.tooling/.lintstaged/.lintstagedrc",
-    "prettier": "prettier --write ./src/",
-    "prettier.ci": "prettier --check ./src/",
-    "test": "vitest",
-    "build.commonjs": "tsc -p ./.tsconfig/tsconfig.cjs.json",
-    "build.esm": "tsc -p ./.tsconfig/tsconfig.esm.json",
-    "build": "pnpm build.commonjs && pnpm build.esm"
-  },
   "dependencies": {
-    "fuzzball": "^2.2.3"
+    "fuzzball": "^2.2.3",
+    "libphonenumber-js": "^1.13.12",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@biomejs/biome": "2.5.12",
     "@commitlint/cli": "^21.2.2",
     "@commitlint/config-conventional": "^21.2.2",
-    "@eslint/js": "^10.0.1",
-    "@types/node": "^26.4.0",
-    "@typescript-eslint/eslint-plugin": "^8.68.0",
-    "@typescript-eslint/parser": "^8.68.0",
-    "concurrently": "^10.0.5",
-    "eslint": "^10.9.1",
-    "eslint-config-prettier": "^10.1.8",
-    "globals": "^17.11.0",
+    "@swc/core": "^1.16.2",
+    "@types/node": "^26.4.1",
+    "dependency-cruiser": "^18.2.0",
     "husky": "^9.1.7",
-    "lint-staged": "^17.3.0",
-    "prettier": "3.9.6",
-    "ts-node": "^10.9.1",
-    "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "@typescript/native": "npm:typescript@^7.0.2",
-    "typescript-eslint": "^8.68.0",
-    "vite": "^8.2.2",
-    "vitest": "^4.1.11"
+    "lint-staged": "^17.4.1",
+    "publint": "^0.3.24",
+    "tsdown": "0.23.0",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.0"
   }
 }

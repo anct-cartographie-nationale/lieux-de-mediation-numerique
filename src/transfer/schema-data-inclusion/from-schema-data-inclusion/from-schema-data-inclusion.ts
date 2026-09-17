@@ -1,13 +1,13 @@
 import {
+  dateMajSiLisible,
   Id,
-  LieuMediationNumerique,
+  type LieuMediationNumerique,
   Nom,
   Pivot,
-  PrisesEnChargeSpecifiques,
-  PublicsSpecifiquementAdresses
+  type PrisesEnChargeSpecifiques,
+  type PublicsSpecifiquementAdresses
 } from '../../../models';
-import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
-import { MandatorySiretOrRnaError } from './errors/mandatory-siret-or-rna.error';
+import type { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import {
   accessibiliteFromDataInclusion,
   adresseFromDataInclusion,
@@ -32,7 +32,6 @@ import {
   publicSpecifiquementAdresseFromDataInclusion,
   servicesFromDataInclusion,
   sourceFromDataInclusion,
-  structureParenteFromDataInclusion,
   TYPOLOGIES_MAP,
   typologiesFromDataInclusion
 } from './from-schema-data-inclusion-fields';
@@ -67,10 +66,6 @@ export const mergeServices = (
     thematiques: []
   });
 
-const throwMandatorySiretOrRnaError = (): Pivot => {
-  throw new MandatorySiretOrRnaError();
-};
-
 const ifAnyPublicSpecifiquementAdresseInArray = (publicSpecifiquementAdresse: {
   publics_specifiquement_adresses?: PublicsSpecifiquementAdresses;
 }): {
@@ -89,11 +84,12 @@ const fromSchemaDataInclusionItem = (
 ): LieuMediationNumerique => ({
   id: Id(structure.id),
   nom: Nom(structure.nom),
-  pivot: Pivot(structure.siret ?? structure.rna ?? throwMandatorySiretOrRnaError()),
+
+  ...(structure.siret == null ? {} : { pivot: Pivot(structure.siret) }),
   ...adresseFromDataInclusion(structure),
   ...localisationFromDataInclusion(structure.latitude, structure.longitude),
   ...servicesFromDataInclusion(service.thematiques),
-  date_maj: new Date(structure.date_maj),
+  ...dateMajSiLisible(structure.date_maj),
   ...contactFromDataInclusion(structure.courriel, structure.telephone, structure.site_web),
   ...sourceFromDataInclusion(structure.source),
   ...accessibiliteFromDataInclusion(structure.accessibilite),
@@ -109,7 +105,6 @@ const fromSchemaDataInclusionItem = (
   ...priseRdvFromDataInclusion(service.prise_rdv),
   ...ifAnyPublicSpecifiquementAdresseInArray(publicSpecifiquementAdresseFromDataInclusion(service.profils)),
   ...ifAnyPriseEnChargeSpecifiqueInArray(priseEnChargeSpecifiqueFromDataInclusion(service.profils)),
-  ...structureParenteFromDataInclusion(structure.structure_parente),
   ...(structure.typologie == null ? {} : typologiesFromDataInclusion(TYPOLOGIES_MAP.get(structure.typologie)))
 });
 

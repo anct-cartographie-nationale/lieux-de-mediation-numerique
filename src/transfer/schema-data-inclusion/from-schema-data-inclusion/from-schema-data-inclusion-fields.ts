@@ -1,30 +1,34 @@
 import {
   Adresse,
   Contact,
-  Frais,
-  FraisACharge,
   Courriel,
   DispositifProgrammeNational,
   DispositifProgrammesNationaux,
+  FormationLabel,
+  FormationsLabels,
+  Frais,
+  FraisACharge,
+  FicheAccesLibre,
+  type Horaires,
+  Horaires as HorairesModel,
   Localisation,
+  ModaliteAcces,
   ModaliteAccompagnement,
+  ModalitesAcces,
   ModalitesAccompagnement,
   Presentation,
+  PriseEnChargeSpecifique,
+  PrisesEnChargeSpecifiques,
+  PublicSpecifiquementAdresse,
+  PublicsSpecifiquementAdresses,
   Service,
   Services,
   Typologie,
   Typologies,
   Url,
-  ModaliteAcces,
-  ModalitesAcces,
-  PrisesEnChargeSpecifiques,
-  PublicsSpecifiquementAdresses,
-  PublicSpecifiquementAdresse,
-  PriseEnChargeSpecifique,
-  FormationsLabels,
-  FormationLabel
+  type Model
 } from '../../../models';
-import {
+import type {
   ModeOrientationAccompagnateur,
   ModeOrientationBeneficiaire,
   SchemaStructureDataInclusion
@@ -308,6 +312,12 @@ export const modalitesAccompagnementFromDataInclusion = (
         ])
       };
 
+const presentationOuRien = (presentation: Model.InputOf<typeof Presentation>): { presentation?: Presentation } => {
+  const presentationValide: Presentation | null = Presentation.safe(presentation);
+
+  return presentationValide == null ? {} : { presentation: presentationValide };
+};
+
 export const presentationFromDataInclusion = (
   presentation_detail?: string,
   presentation_resume?: string
@@ -316,12 +326,10 @@ export const presentationFromDataInclusion = (
 } =>
   presentation_detail == null && presentation_resume == null
     ? {}
-    : {
-        presentation: {
-          ...(presentation_detail == null ? {} : { detail: presentation_detail }),
-          ...(presentation_resume == null ? {} : { resume: presentation_resume })
-        }
-      };
+    : presentationOuRien({
+        ...(presentation_detail == null ? {} : { detail: presentation_detail }),
+        ...(presentation_resume == null ? {} : { resume: presentation_resume })
+      });
 
 export const publicSpecifiquementAdresseFromDataInclusion = (
   profils?: string[]
@@ -363,16 +371,17 @@ export const typologiesFromDataInclusion = (typologie?: Typologie): { typologies
 
 export const sourceFromDataInclusion = (source?: string): { source?: string } => (source == null ? {} : { source });
 
-export const accessibiliteFromDataInclusion = (accessibilite?: string): { fiche_acces_libre?: Url } =>
-  accessibilite == null ? {} : { fiche_acces_libre: Url(accessibilite) };
+export const accessibiliteFromDataInclusion = (accessibilite?: string): { fiche_acces_libre?: FicheAccesLibre } =>
+  accessibilite == null ? {} : { fiche_acces_libre: FicheAccesLibre(accessibilite) };
 
-export const horairesFromDataInclusion = (horaires?: string): { horaires?: string } => (horaires == null ? {} : { horaires });
+export const horairesFromDataInclusion = (horaires?: string): { horaires?: Horaires } => {
+  const horairesValides: Horaires | null = horaires == null ? null : HorairesModel.safe(horaires);
+
+  return horairesValides == null ? {} : { horaires: horairesValides };
+};
 
 export const priseRdvFromDataInclusion = (priseRdv?: string): { prise_rdv?: Url } =>
   priseRdv == null ? {} : { prise_rdv: Url(priseRdv) };
-
-export const structureParenteFromDataInclusion = (structureParente?: string): { structure_parente?: string } =>
-  structureParente == null ? {} : { structure_parente: structureParente };
 
 export const mergeThematiques = (thematiques?: string[], thematiquesToAdd?: string[]): { thematiques: string[] } => ({
   thematiques: Array.from(new Set([...(thematiques ?? []), ...(thematiquesToAdd ?? [])]))

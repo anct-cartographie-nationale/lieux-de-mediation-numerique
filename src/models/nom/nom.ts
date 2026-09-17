@@ -1,18 +1,11 @@
-import { Model } from '../model';
-import { NomError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
 
-export type NomToValidate = string | undefined;
+export const Nom = defineModel(
+  z
+    .string()
+    .refine((nom: string): boolean => nom.trim() !== '', { error: 'Le nom ne doit pas être vide' })
+    .brand('Nom')
+);
 
-export type Nom = Model<'Nom', string>;
-
-export const isValidNom = (nomData: NomToValidate): nomData is Nom => nomData != null && nomData !== '';
-
-const throwNomError = (nomData: NomToValidate): Nom => {
-  if (!isValidNom(nomData)) {
-    throw new NomError(nomData);
-  }
-
-  throw new Error();
-};
-
-export const Nom = (nom: NomToValidate): Nom => (isValidNom(nom) ? nom : throwNomError(nom));
+export type Nom = Model.TypeOf<typeof Nom>;

@@ -1,39 +1,31 @@
-import { Model } from '../model';
-import { LatitudeError, LongitudeError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { dansUneEmpriseFrancaise, estInverse } from './emprises';
 
-export type LocalisationToValidate = {
-  latitude: number;
-  longitude: number;
-};
+export const Latitude = defineModel(z.number().min(-90).max(90).brand('Latitude'));
 
-export type Localisation = Model<
-  'Localisation',
-  {
-    latitude: number;
-    longitude: number;
-  }
->;
+export type Latitude = Model.TypeOf<typeof Latitude>;
 
-const isValidLatitude = (localisationData: LocalisationToValidate): boolean =>
-  localisationData.latitude >= -90 && localisationData.latitude <= 90;
+export const Longitude = defineModel(z.number().min(-180).max(180).brand('Longitude'));
 
-const isValidLongitude = (localisationData: LocalisationToValidate): boolean =>
-  localisationData.longitude >= -180 && localisationData.longitude <= 180;
+export type Longitude = Model.TypeOf<typeof Longitude>;
 
-export const isValidLocalisation = (localisationData: LocalisationToValidate): localisationData is Localisation =>
-  isValidLatitude(localisationData) && isValidLongitude(localisationData);
+export const Localisation = defineModel(
+  z
+    .object({ latitude: Latitude.schema, longitude: Longitude.schema })
+    .refine(
+      ({ latitude, longitude }: { latitude: number; longitude: number }): boolean =>
+        dansUneEmpriseFrancaise(latitude, longitude),
+      {
+        error: (issue: { input: unknown }): string =>
+          estInverse((issue.input as { latitude: number }).latitude, (issue.input as { longitude: number }).longitude)
+            ? 'Les coordonnées semblent inversées : échangées, elles tombent sur le territoire français'
+            : 'Les coordonnées doivent tomber sur le territoire français'
+      }
+    )
+    .brand('Localisation')
+);
 
-const throwLocalisationError = (localisationData: LocalisationToValidate): Localisation => {
-  if (!isValidLatitude(localisationData)) {
-    throw new LatitudeError(localisationData.latitude);
-  }
+export type LocalisationToValidate = Model.InputOf<typeof Localisation>;
 
-  if (!isValidLongitude(localisationData)) {
-    throw new LongitudeError(localisationData.longitude);
-  }
-
-  throw new Error();
-};
-
-export const Localisation = (localisation: LocalisationToValidate): Localisation =>
-  isValidLocalisation(localisation) ? { ...localisation } : throwLocalisationError(localisation);
+export type Localisation = Model.TypeOf<typeof Localisation>;

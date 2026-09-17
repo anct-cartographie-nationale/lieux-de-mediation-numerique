@@ -1,6 +1,5 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { Frais, FraisACharge } from './frais-a-charge';
-import { FraisAChargeError } from './errors';
 
 describe('condition acces model', (): void => {
   it('should create valid conditions acces', (): void => {
@@ -10,14 +9,10 @@ describe('condition acces model', (): void => {
   });
 
   it('should not create invalid conditions acces', (): void => {
-    expect((): void => {
-      FraisACharge(['Remboursable par la sécurité sociale' as Frais]);
-    }).toThrow(new FraisAChargeError('Remboursable par la sécurité sociale' as Frais));
+    expect(FraisACharge.safe(['Remboursable par la sécurité sociale' as Frais])).toBeNull();
   });
 
   it('should not create invalid conditions acces containing a valid and an invalid value', (): void => {
-    expect((): void => {
-      FraisACharge([Frais.GratuitSousCondition, 'Remboursable par la sécurité sociale' as Frais]);
-    }).toThrow(new FraisAChargeError('Remboursable par la sécurité sociale' as Frais));
+    expect(FraisACharge.safe([Frais.GratuitSousCondition, 'Remboursable par la sécurité sociale' as Frais])).toBeNull();
   });
 });

@@ -1,5 +1,6 @@
-import { Model } from '../model';
-import { FraisAChargeError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum Frais {
   Gratuit = 'Gratuit',
@@ -7,17 +8,6 @@ export enum Frais {
   Payant = 'Payant'
 }
 
-export type FraisACharge = Model<'FraisACharge', Frais[]>;
+export const FraisACharge = defineModel(z.array(z.enum(Frais)).transform(sansDoublons).brand('FraisACharge'));
 
-export type FraisAChargeIndefini = 'frais à charge indéfini';
-
-const firstInvalidFraisACharge = (fraisACharge: Frais): boolean => !Object.values(Frais).includes(fraisACharge);
-
-const throwFraisAChargeError = (fraisACharge: Frais[]): FraisACharge => {
-  throw new FraisAChargeError(fraisACharge.find(firstInvalidFraisACharge) ?? 'frais à charge indéfini');
-};
-
-const isFraisACharge = (fraisACharge: Frais[]): fraisACharge is FraisACharge =>
-  fraisACharge.find(firstInvalidFraisACharge) == null;
-
-export const FraisACharge = (frais: Frais[]): FraisACharge => (isFraisACharge(frais) ? frais : throwFraisAChargeError(frais));
+export type FraisACharge = Model.TypeOf<typeof FraisACharge>;

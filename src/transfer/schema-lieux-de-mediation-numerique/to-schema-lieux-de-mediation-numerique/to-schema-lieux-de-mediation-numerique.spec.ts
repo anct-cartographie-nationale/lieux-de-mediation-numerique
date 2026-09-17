@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
+  Horaires,
   Adresse,
   Contact,
   Courriel,
@@ -10,7 +11,7 @@ import {
   Itinerances,
   DispositifProgrammeNational,
   DispositifProgrammesNationaux,
-  LieuMediationNumerique,
+  type LieuMediationNumerique,
   Localisation,
   ModaliteAcces,
   ModalitesAcces,
@@ -28,9 +29,11 @@ import {
   PrisesEnChargeSpecifiques,
   PriseEnChargeSpecifique,
   FormationLabel,
-  FormationsLabels
+  FormationsLabels,
+  Presentation,
+  FicheAccesLibre
 } from '../../../models';
-import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
+import type { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import { toSchemaLieuxDeMediationNumerique } from './to-schema-lieux-de-mediation-numerique';
 
 describe('to schema lieux de mediation numerique', (): void => {
@@ -100,14 +103,13 @@ describe('to schema lieux de mediation numerique', (): void => {
         courriels: [Courriel('contact@laquincaillerie.tl'), Courriel('hello@laquincaillerie.tl')],
         site_web: [Url('https://www.laquincaillerie.tl/'), Url('https://m.facebook.com/laquincaillerienumerique/')]
       }),
-      horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
-      presentation: {
+      horaires: Horaires('Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00'),
+      presentation: Presentation({
         resume: 'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
         detail:
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.'
-      },
+      }),
       source: 'Hubik',
-      structure_parente: 'Pôle emploi',
       publics_specifiquement_adresses: PublicsSpecifiquementAdresses([
         PublicSpecifiquementAdresse.Jeunes,
         PublicSpecifiquementAdresse.Etudiants,
@@ -139,7 +141,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         ModaliteAccompagnement.AccompagnementIndividuel,
         ModaliteAccompagnement.DansUnAtelier
       ]),
-      fiche_acces_libre: Url(
+      fiche_acces_libre: FicheAccesLibre(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       ),
       prise_rdv: Url('https://www.rdv-solidarites.fr/')
@@ -164,13 +166,12 @@ describe('to schema lieux de mediation numerique', (): void => {
         telephone: '+33180059880',
         courriels: 'contact@laquincaillerie.tl|hello@laquincaillerie.tl',
         site_web: 'https://www.laquincaillerie.tl/|https://m.facebook.com/laquincaillerienumerique/',
-        horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
+        horaires: Horaires('Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00'),
         presentation_resume:
           'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
         presentation_detail:
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.',
         source: 'Hubik',
-        structure_parente: 'Pôle emploi',
         publics_specifiquement_adresses: [
           PublicSpecifiquementAdresse.Jeunes,
           PublicSpecifiquementAdresse.Etudiants,

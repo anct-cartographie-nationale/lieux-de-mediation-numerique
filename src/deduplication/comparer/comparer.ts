@@ -1,4 +1,4 @@
-import { LocalisationToValidate, Typologie } from '../../models';
+import { type LocalisationToValidate, Typologie } from '../../models';
 import { memeCommune } from '../commune';
 import { distanceEnMetres } from '../distance';
 import { libelleSansIdentite, normaliserAdresse, normaliserNom } from '../normalisation';

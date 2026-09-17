@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
+  Horaires,
   Adresse,
   Contact,
   Courriel,
@@ -10,7 +11,7 @@ import {
   Frais,
   FraisACharge,
   Id,
-  LieuMediationNumerique,
+  type LieuMediationNumerique,
   Localisation,
   ModaliteAcces,
   ModaliteAccompagnement,
@@ -24,13 +25,14 @@ import {
   PublicsSpecifiquementAdresses,
   Service,
   Services,
-  ServicesError,
   Typologie,
   Typologies,
-  Url
+  Url,
+  Presentation,
+  FicheAccesLibre
 } from '../../../models';
-import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
-import { MandatorySiretOrRnaError } from './errors/mandatory-siret-or-rna.error';
+import { LieuPourLaCartographieSchema } from '../../../validation';
+import type { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import { fromSchemaDataInclusion } from './from-schema-data-inclusion';
 
 describe('from schema data inclusion', (): void => {
@@ -94,7 +96,6 @@ describe('from schema data inclusion', (): void => {
       presentation_detail:
         'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.',
       presentation_resume: 'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
-      structure_parente: 'Pôle emploi',
       typologie: Typologie.TIERS_LIEUX
     };
 
@@ -180,14 +181,13 @@ describe('from schema data inclusion', (): void => {
         courriels: [Courriel('contact@laquincaillerie.tl'), Courriel('bonjour@laquincaillerie.tl')],
         site_web: [Url('https://www.laquincaillerie.tl/'), Url('https://m.facebook.com/laquincaillerienumerique/')]
       }),
-      horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
-      presentation: {
+      horaires: Horaires('Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00'),
+      presentation: Presentation({
         resume: 'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
         detail:
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.'
-      },
+      }),
       source: 'Hubik',
-      structure_parente: 'Pôle emploi',
       publics_specifiquement_adresses: PublicsSpecifiquementAdresses([
         PublicSpecifiquementAdresse.Seniors,
         PublicSpecifiquementAdresse.FamillesEnfants,
@@ -214,7 +214,7 @@ describe('from schema data inclusion', (): void => {
         ModaliteAccompagnement.DansUnAtelier,
         ModaliteAccompagnement.ADistance
       ]),
-      fiche_acces_libre: Url(
+      fiche_acces_libre: FicheAccesLibre(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       ),
       prise_rdv: Url('https://www.rdv-solidarites.fr/')
@@ -308,7 +308,7 @@ describe('from schema data inclusion', (): void => {
     });
   });
 
-  it('should fail when there is no allowed thematiques in data inclusion service', (): void => {
+  it('should build a lieu with no service when no thematique is allowed', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',
       code_postal: '51100',
@@ -326,12 +326,11 @@ describe('from schema data inclusion', (): void => {
       structure_id: 'structure-1'
     };
 
-    expect((): void => {
-      fromSchemaDataInclusion([service], structure);
-    }).toThrow(new ServicesError('service indéfini'));
+    expect(fromSchemaDataInclusion([service], structure).services).toStrictEqual([]);
+    expect(LieuPourLaCartographieSchema.safeParse(fromSchemaDataInclusion([service], structure)).success).toBe(false);
   });
 
-  it('should fail when there is no siret or rna', (): void => {
+  it('should enter without a pivot when there is no siret', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',
       code_postal: '51100',
@@ -345,15 +344,14 @@ describe('from schema data inclusion', (): void => {
       id: 'structure-1-mediation-numerique',
       nom: 'Médiation numérique',
       source: 'Hubik',
-      structure_id: 'structure-1'
+      structure_id: 'structure-1',
+      thematiques: ['numerique--acceder-a-du-materiel']
     };
 
-    expect((): void => {
-      fromSchemaDataInclusion([service], structure);
-    }).toThrow(new MandatorySiretOrRnaError());
+    expect(fromSchemaDataInclusion([service], structure).pivot).toBeUndefined();
   });
 
-  it('should use RNA instead of siret when available', (): void => {
+  it('should ignore the rna, which is no longer a pivot', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',
       code_postal: '51100',
@@ -377,7 +375,6 @@ describe('from schema data inclusion', (): void => {
     expect(lieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
       id: Id('structure-1'),
       nom: Nom('Anonymal'),
-      pivot: Pivot('W9R2003255'),
       adresse: Adresse({
         code_postal: '51100',
         commune: 'Reims',
@@ -427,7 +424,7 @@ describe('from schema data inclusion', (): void => {
     });
   });
 
-  it('should fail when there is no service associated with the structure', (): void => {
+  it('should build a lieu with no service when the structure carries none', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',
       code_postal: '51100',
@@ -438,9 +435,8 @@ describe('from schema data inclusion', (): void => {
       rna: 'W9R2003255'
     };
 
-    expect((): void => {
-      fromSchemaDataInclusion([], structure);
-    }).toThrow(new ServicesError('service indéfini'));
+    expect(fromSchemaDataInclusion([], structure).services).toStrictEqual([]);
+    expect(LieuPourLaCartographieSchema.safeParse(fromSchemaDataInclusion([], structure)).success).toBe(false);
   });
 
   it('should merge two minimal services', (): void => {
@@ -475,7 +471,6 @@ describe('from schema data inclusion', (): void => {
     expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
       id: Id('structure-1'),
       nom: Nom('Anonymal'),
-      pivot: Pivot('W9R2003255'),
       adresse: Adresse({
         code_postal: '51100',
         commune: 'Reims',
@@ -521,7 +516,6 @@ describe('from schema data inclusion', (): void => {
     expect(lieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
       id: Id('structure-1'),
       nom: Nom('Anonymal'),
-      pivot: Pivot('W9R2003255'),
       adresse: Adresse({
         code_postal: '51100',
         commune: 'Reims',
@@ -708,5 +702,48 @@ describe('from schema data inclusion', (): void => {
       ]),
       prise_rdv: Url('http://www.test.com')
     });
+  });
+
+  it('should not carry structure_parente, which left the model', (): void => {
+    const structure: SchemaStructureDataInclusion = {
+      adresse: '12 BIS RUE DE LECLERCQ',
+      code_postal: '51100',
+      commune: 'Reims',
+      date_maj: new Date('2022-10-10').toISOString(),
+      id: 'structure-1',
+      nom: 'Anonymal',
+      structure_parente: 'structure-mere'
+    };
+
+    const service: SchemaServiceDataInclusion = {
+      id: 'structure-1-mediation-numerique',
+      nom: 'Médiation numérique',
+      source: 'Hubik',
+      structure_id: 'structure-1',
+      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives']
+    };
+
+    expect('structure_parente' in fromSchemaDataInclusion([service], structure)).toBe(false);
+  });
+
+  it('should drop a date_maj that cannot be read', (): void => {
+    const structure: SchemaStructureDataInclusion = {
+      adresse: '12 BIS RUE DE LECLERCQ',
+      code_postal: '51100',
+      commune: 'Reims',
+      date_maj: 'pas une date',
+      id: 'structure-1',
+      nom: 'Anonymal'
+    };
+
+    const service: SchemaServiceDataInclusion = {
+      id: 'structure-1-mediation-numerique',
+      nom: 'Médiation numérique',
+      source: 'Hubik',
+      structure_id: 'structure-1',
+      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives']
+    };
+
+    expect('date_maj' in fromSchemaDataInclusion([service], structure)).toBe(false);
   });
 });

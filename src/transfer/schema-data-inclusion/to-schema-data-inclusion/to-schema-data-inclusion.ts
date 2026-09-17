@@ -1,5 +1,5 @@
-import { LieuMediationNumerique } from '../../../models';
-import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
+import type { LieuMediationNumerique } from '../../../models';
+import type { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import {
   adresseFields,
   collecteFields,

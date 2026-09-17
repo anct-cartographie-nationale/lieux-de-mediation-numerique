@@ -1,34 +1,19 @@
+import { z } from 'zod';
 import { Courriel } from '../courriel';
-import { Model } from '../model';
+import { defineModel, type Model } from '../model';
 import { Url } from '../url';
-import { TelephoneError } from './errors';
+import { Telephone } from './telephone';
 
-export type Contact = Model<
-  'Contact',
-  {
-    telephone?: string;
-    courriels?: Courriel[];
-    site_web?: Url[];
-  }
->;
+export const Contact = defineModel(
+  z
+    .object({
+      telephone: Telephone.schema.optional(),
+      courriels: z.array(Courriel.schema).optional(),
+      site_web: z.array(Url.schema).optional()
+    })
+    .brand('Contact')
+);
 
-export type ContactToValidate = Omit<Contact, 'isContact'>;
+export type ContactToValidate = Model.InputOf<typeof Contact>;
 
-const TELEPHONE_REG_EXP: RegExp =
-  /^(?:(?:\+|00)(?:33|262|269|508|590|594|596|681|687|689)[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)(?:(?:[1-9](?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]\d{3}){2})|\d{6}|\s\d{3}(?:\s\d{2}){3})$/u;
-
-export const isValidTelephone = (telephone: string): boolean => TELEPHONE_REG_EXP.test(telephone);
-
-const isValidContact = (contact: Omit<Contact, 'isContact'>): contact is Contact =>
-  contact.telephone == null || isValidTelephone(contact.telephone);
-
-const throwContactError = (contact: Omit<Contact, 'isContact'>): Contact => {
-  if (contact.telephone != null && !isValidTelephone(contact.telephone)) {
-    throw new TelephoneError(contact.telephone);
-  }
-
-  throw new Error();
-};
-
-export const Contact = (contact: ContactToValidate): Contact =>
-  isValidContact(contact) ? { ...contact } : throwContactError(contact);
+export type Contact = Model.TypeOf<typeof Contact>;

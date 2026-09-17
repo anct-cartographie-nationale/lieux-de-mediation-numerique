@@ -1,5 +1,5 @@
-import { LieuMediationNumerique } from '../../../models';
-import {
+import type { LieuMediationNumerique } from '../../../models';
+import type {
   SchemaLieuMediationNumeriqueAccesFields,
   SchemaLieuMediationNumeriqueAdresseFields,
   SchemaLieuMediationNumeriqueCollecteFields,
@@ -14,10 +14,9 @@ import {
 export const generalFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueGeneralFields => ({
   id: lieuMediationNumerique.id,
   nom: lieuMediationNumerique.nom,
-  pivot: lieuMediationNumerique.pivot,
+  ...(lieuMediationNumerique.pivot == null ? {} : { pivot: lieuMediationNumerique.pivot }),
   ...(lieuMediationNumerique.services == null ? {} : { services: lieuMediationNumerique.services.join('|') }),
-  ...(lieuMediationNumerique.typologies == null ? {} : { typologie: lieuMediationNumerique.typologies.join('|') }),
-  ...(lieuMediationNumerique.structure_parente == null ? {} : { structure_parente: lieuMediationNumerique.structure_parente })
+  ...(lieuMediationNumerique.typologies == null ? {} : { typologie: lieuMediationNumerique.typologies.join('|') })
 });
 
 export const adresseFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueAdresseFields => ({
@@ -95,12 +94,13 @@ export const disponibiliteFields = (
   ...(lieuMediationNumerique.prise_rdv == null ? {} : { prise_rdv: lieuMediationNumerique.prise_rdv })
 });
 
-const stringDate = (lieuMediationNumerique: LieuMediationNumerique): string | undefined =>
-  lieuMediationNumerique.date_maj instanceof Date
-    ? lieuMediationNumerique.date_maj.toISOString()
-    : lieuMediationNumerique.date_maj;
+const jourSeulSiPresent = (dateMaj?: Date | string): { date_maj?: string } => {
+  const jour: string | undefined = (dateMaj instanceof Date ? dateMaj.toISOString() : dateMaj)?.split('T')[0];
+
+  return jour == null ? {} : { date_maj: jour };
+};
 
 export const collecteFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueCollecteFields => ({
   ...(lieuMediationNumerique.source == null ? {} : { source: lieuMediationNumerique.source }),
-  date_maj: stringDate(lieuMediationNumerique)?.split('T')[0] ?? ''
+  ...jourSeulSiPresent(lieuMediationNumerique.date_maj)
 });
