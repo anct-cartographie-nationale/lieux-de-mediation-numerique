@@ -13,12 +13,12 @@ import { isValidNom } from '../../models';
 import type { Pivot } from '../../models';
 import type { Presentation } from '../../models';
 import { RESUME_LONGUEUR_MAXIMALE } from '../../models';
-import type { Siret } from '../../models/siret';
-import { isSiret } from '../../models/siret';
-import { isValidTelephone } from '../../models/contact';
-import type { Url } from '../../models/url';
-import { isValidUrl } from '../../models/url';
-import { isValidFicheAccesLibre } from '../../models/fiche-acces-libre';
+import type { Siret } from '../../models';
+import { isSiret } from '../../models';
+import { isValidTelephone } from '../../models';
+import type { Url } from '../../models';
+import { isValidUrl } from '../../models';
+import { isValidFicheAccesLibre } from '../../models';
 
 export const SiretSchema: z.ZodType<Siret> = z
   .string()
