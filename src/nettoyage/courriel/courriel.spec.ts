@@ -51,4 +51,17 @@ describe('nettoyerCourriel', (): void => {
       expect(nettoyerCourriel(courriels)).toBe('a@x.fr|b@y.fr');
     }
   );
+
+  it.each([
+    ['sp-franceservices-fougeres@ille-et-vilaine.gouv.fr'],
+    ['sp-provins-france-services@seine-et-marne.gouv.fr'],
+    ['sp-briey-franceservices@meurthe-et-moselle.gouv.fr'],
+    ['franceservices-nogentlerotrou@eure-et-loir.gouv.fr'],
+    ['sous-prefecture-de-chalon-s-saone@saone-et-loire.pref.gouv.fr'],
+    ['fretigney-et-velloreille@france-services.gouv.fr'],
+    ['msap.scey-sur-saone-et-st-albin@laposte.fr'],
+    ['eco-et-logique@hotmail.fr']
+  ])('laisse %s entier, le tiret ne fait pas du mot un séparateur', (courriel: string): void => {
+    expect(nettoyerCourriel(courriel)).toBe(courriel);
+  });
 });
