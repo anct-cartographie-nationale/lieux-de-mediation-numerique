@@ -20,4 +20,13 @@ const throwFraisAChargeError = (fraisACharge: Frais[]): FraisACharge => {
 const isFraisACharge = (fraisACharge: Frais[]): fraisACharge is FraisACharge =>
   fraisACharge.find(firstInvalidFraisACharge) == null;
 
-export const FraisACharge = (frais: Frais[]): FraisACharge => (isFraisACharge(frais) ? frais : throwFraisAChargeError(frais));
+/**
+ * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
+ * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
+ * été écrits, et qui finissait par surprendre.
+ */
+export const FraisACharge = (frais: Frais[]): FraisACharge => {
+  const sansDoublons: Frais[] = Array.from(new Set(frais));
+
+  return isFraisACharge(sansDoublons) ? sansDoublons : throwFraisAChargeError(frais);
+};

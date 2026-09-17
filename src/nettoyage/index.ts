@@ -3,6 +3,7 @@ export * from './commune';
 export * from './courriel';
 export * from './localisation';
 export * from './nom';
+export * from './presentation';
 export * from './regle';
 export * from './site-web';
 export * from './telephone';

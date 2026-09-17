@@ -19,5 +19,13 @@ const throwItineranceError = (itinerances: Itinerance[]): Itinerances => {
 const isItinerance = (itinerances: Itinerance[]): itinerances is Itinerances =>
   itinerances.find(firstInvalidItinerance) == null;
 
-export const Itinerances = (itinerances: Itinerance[]): Itinerances =>
-  isItinerance(itinerances) ? itinerances : throwItineranceError(itinerances);
+/**
+ * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
+ * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
+ * été écrits, et qui finissait par surprendre.
+ */
+export const Itinerances = (itinerances: Itinerance[]): Itinerances => {
+  const sansDoublons: Itinerance[] = Array.from(new Set(itinerances));
+
+  return isItinerance(sansDoublons) ? (sansDoublons as Itinerances) : throwItineranceError(itinerances);
+};

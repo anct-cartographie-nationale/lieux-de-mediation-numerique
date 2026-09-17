@@ -1,3 +1,4 @@
+import { Horaires, isValidHoraires } from '../../../models';
 import { Pivot } from '../../../models';
 import {
   Adresse,
@@ -71,7 +72,14 @@ export const contactIfAny = (schemaLieuMediationNumerique: SchemaLieuMediationNu
         })
       };
 
-export const horairesIfAny = (horaires?: string): { horaires?: string } => (horaires == null ? {} : { horaires });
+/**
+ * Les horaires ne suivant pas le format OpenStreetMap sont écartés, et le lieu conservé : un
+ * horaire illisible ne doit pas faire disparaître un lieu de la carte. C'est au consommateur
+ * de dire au producteur ce qui est tombé — le `Horaires` du modèle lève, lui, pour qui veut
+ * l'erreur.
+ */
+export const horairesIfAny = (horaires?: string): { horaires?: Horaires } =>
+  horaires == null || !isValidHoraires(horaires) ? {} : { horaires: horaires };
 
 const resumeIfAny = (resume?: string): { resume?: string } => (resume == null ? {} : { resume });
 

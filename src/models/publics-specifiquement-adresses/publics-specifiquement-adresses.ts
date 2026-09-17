@@ -29,9 +29,17 @@ const isPublicsSpecifiquementAdresses = (
 ): publicsSpecifiquementAdresses is PublicsSpecifiquementAdresses =>
   publicsSpecifiquementAdresses.find(firstInvalidPublicSpecifiquementAdresse) == null;
 
+/**
+ * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
+ * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
+ * été écrits, et qui finissait par surprendre.
+ */
 export const PublicsSpecifiquementAdresses = (
   publicsSpecifiquementAdresses: PublicSpecifiquementAdresse[]
-): PublicsSpecifiquementAdresses =>
-  isPublicsSpecifiquementAdresses(publicsSpecifiquementAdresses)
-    ? (publicsSpecifiquementAdresses as PublicsSpecifiquementAdresses)
+): PublicsSpecifiquementAdresses => {
+  const sansDoublons: PublicSpecifiquementAdresse[] = Array.from(new Set(publicsSpecifiquementAdresses));
+
+  return isPublicsSpecifiquementAdresses(sansDoublons)
+    ? (sansDoublons as PublicsSpecifiquementAdresses)
     : throwPublicsSpecifiquementAdressesError(publicsSpecifiquementAdresses);
+};

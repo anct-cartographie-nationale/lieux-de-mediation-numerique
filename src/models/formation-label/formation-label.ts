@@ -28,5 +28,13 @@ const throwFormationsLabelsError = (formationsLabels: FormationLabel[]): Formati
 const isFormationsLabels = (formationsLabels: FormationLabel[]): formationsLabels is FormationsLabels =>
   formationsLabels.find(firstInvalidFormationLabel) == null;
 
-export const FormationsLabels = (formationsLabels: FormationLabel[]): FormationsLabels =>
-  isFormationsLabels(formationsLabels) ? formationsLabels : throwFormationsLabelsError(formationsLabels);
+/**
+ * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
+ * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
+ * été écrits, et qui finissait par surprendre.
+ */
+export const FormationsLabels = (formationsLabels: FormationLabel[]): FormationsLabels => {
+  const sansDoublons: FormationLabel[] = Array.from(new Set(formationsLabels));
+
+  return isFormationsLabels(sansDoublons) ? (sansDoublons as FormationsLabels) : throwFormationsLabelsError(formationsLabels);
+};

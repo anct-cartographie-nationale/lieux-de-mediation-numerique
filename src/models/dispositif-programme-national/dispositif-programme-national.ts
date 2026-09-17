@@ -35,9 +35,17 @@ const isDispositifProgrammesNationaux = (
 ): dispositifProgrammesNationaux is DispositifProgrammesNationaux =>
   dispositifProgrammesNationaux.find(firstInvalidDispositifProgrammeNational) == null;
 
+/**
+ * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
+ * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
+ * été écrits, et qui finissait par surprendre.
+ */
 export const DispositifProgrammesNationaux = (
   dispositifProgrammesNationaux: DispositifProgrammeNational[]
-): DispositifProgrammesNationaux =>
-  isDispositifProgrammesNationaux(dispositifProgrammesNationaux)
-    ? dispositifProgrammesNationaux
+): DispositifProgrammesNationaux => {
+  const sansDoublons: DispositifProgrammeNational[] = Array.from(new Set(dispositifProgrammesNationaux));
+
+  return isDispositifProgrammesNationaux(sansDoublons)
+    ? (sansDoublons as DispositifProgrammesNationaux)
     : throwDispositifProgrammesNationauxError(dispositifProgrammesNationaux);
+};

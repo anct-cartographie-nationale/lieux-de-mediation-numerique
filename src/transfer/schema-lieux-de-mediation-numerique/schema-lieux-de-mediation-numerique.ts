@@ -52,7 +52,7 @@ export type SchemaLieuMediationNumeriqueDisponibiliteFields = {
 };
 
 export type SchemaLieuMediationNumeriqueCollecteFields = {
-  date_maj: string;
+  date_maj?: string;
   source?: string;
 };
 

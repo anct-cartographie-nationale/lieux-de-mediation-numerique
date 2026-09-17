@@ -14,6 +14,7 @@ import { ModalitesAcces } from './modalite-acces';
 import { Url } from './url';
 import { Pivot } from './pivot';
 import { DispositifProgrammesNationaux } from './dispositif-programme-national';
+import { Horaires } from './horaires';
 import { Id } from './id';
 import { Nom } from './nom';
 
@@ -25,10 +26,15 @@ export type LieuMediationNumerique = {
   localisation?: Localisation;
   typologies?: Typologies;
   contact?: Contact;
-  horaires?: string;
+  horaires?: Horaires;
   presentation?: Presentation;
   source?: string;
-  date_maj: Date;
+  /**
+   * La date déclarée par le producteur. Facultative : 559 lieux du jeu national portaient
+   * `1970-01-01`, le repli d'une transformation qui n'avait su lire aucun format — dont trois
+   * sources entières. Une date illisible est une date absente, pas une date en 1970.
+   */
+  date_maj?: Date;
   services?: Services;
   publics_specifiquement_adresses?: PublicsSpecifiquementAdresses;
   prise_en_charge_specifique?: PrisesEnChargeSpecifiques;

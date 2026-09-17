@@ -24,7 +24,15 @@ const throwModalitesAccesError = (modalitesAcces: ModaliteAcces[]): ModalitesAcc
 const isModalitesAcces = (modalitesAcces: ModaliteAcces[]): modalitesAcces is ModalitesAcces =>
   modalitesAcces.find(firstInvalidModaliteAcces) == null;
 
-export const ModalitesAcces = (modalitesAcces: ModaliteAcces[]): ModalitesAcces =>
-  isModalitesAcces(modalitesAcces) ? modalitesAcces : throwModalitesAccesError(modalitesAcces);
+/**
+ * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
+ * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
+ * été écrits, et qui finissait par surprendre.
+ */
+export const ModalitesAcces = (modalitesAcces: ModaliteAcces[]): ModalitesAcces => {
+  const sansDoublons: ModaliteAcces[] = Array.from(new Set(modalitesAcces));
+
+  return isModalitesAcces(sansDoublons) ? (sansDoublons as ModalitesAcces) : throwModalitesAccesError(modalitesAcces);
+};
 
 export const toAccessibleLieu = (modalitesAcces: ModaliteAcces): boolean => modalitesAcces !== ModaliteAcces.PasDePublic;

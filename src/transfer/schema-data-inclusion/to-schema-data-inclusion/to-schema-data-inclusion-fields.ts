@@ -231,7 +231,7 @@ export const disponibiliteFields = (
 
 export const collecteFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaStructureDataInclusionCollecteFields => ({
   ...(lieuMediationNumerique.source == null ? {} : { source: lieuMediationNumerique.source }),
-  date_maj: new Date(lieuMediationNumerique.date_maj).toISOString()
+  date_maj: new Date(lieuMediationNumerique.date_maj ?? 0).toISOString()
 });
 
 const throwNoSourceError = (): string => {

@@ -94,12 +94,17 @@ export const disponibiliteFields = (
   ...(lieuMediationNumerique.prise_rdv == null ? {} : { prise_rdv: lieuMediationNumerique.prise_rdv })
 });
 
-const stringDate = (lieuMediationNumerique: LieuMediationNumerique): string | undefined =>
-  lieuMediationNumerique.date_maj instanceof Date
-    ? lieuMediationNumerique.date_maj.toISOString()
-    : lieuMediationNumerique.date_maj;
+/**
+ * La granularité est le jour : la plupart des sources ne fournissent qu'une date, et prêter une
+ * précision horaire à une information qui ne l'a pas est une affirmation gratuite.
+ */
+const jourSeulSiPresent = (dateMaj?: Date | string): { date_maj?: string } => {
+  const jour: string | undefined = (dateMaj instanceof Date ? dateMaj.toISOString() : dateMaj)?.split('T')[0];
+
+  return jour == null ? {} : { date_maj: jour };
+};
 
 export const collecteFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueCollecteFields => ({
   ...(lieuMediationNumerique.source == null ? {} : { source: lieuMediationNumerique.source }),
-  date_maj: stringDate(lieuMediationNumerique)?.split('T')[0] ?? ''
+  ...jourSeulSiPresent(lieuMediationNumerique.date_maj)
 });

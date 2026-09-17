@@ -1,3 +1,4 @@
+import { Horaires, isValidHoraires } from '../../../models';
 import {
   Adresse,
   Contact,
@@ -366,7 +367,14 @@ export const sourceFromDataInclusion = (source?: string): { source?: string } =>
 export const accessibiliteFromDataInclusion = (accessibilite?: string): { fiche_acces_libre?: Url } =>
   accessibilite == null ? {} : { fiche_acces_libre: Url(accessibilite) };
 
-export const horairesFromDataInclusion = (horaires?: string): { horaires?: string } => (horaires == null ? {} : { horaires });
+/**
+ * Les horaires ne suivant pas le format OpenStreetMap sont écartés, et le lieu conservé : un
+ * horaire illisible ne doit pas faire disparaître un lieu de la carte. C'est au consommateur
+ * de dire au producteur ce qui est tombé — le `Horaires` du modèle lève, lui, pour qui veut
+ * l'erreur.
+ */
+export const horairesFromDataInclusion = (horaires?: string): { horaires?: Horaires } =>
+  horaires == null || !isValidHoraires(horaires) ? {} : { horaires: horaires };
 
 export const priseRdvFromDataInclusion = (priseRdv?: string): { prise_rdv?: Url } =>
   priseRdv == null ? {} : { prise_rdv: Url(priseRdv) };

@@ -57,7 +57,10 @@ export const fromSchemaLieuDeMediationNumerique = (
   ...pivotIfAny(schemaLieuMediationNumeriqueItem.pivot),
   nom: Nom(schemaLieuMediationNumeriqueItem.nom),
   ...adresse(schemaLieuMediationNumeriqueItem),
-  date_maj: new Date(schemaLieuMediationNumeriqueItem.date_maj),
+  /** Une date absente le reste : plus de repli sur l'époque Unix. */
+  ...(schemaLieuMediationNumeriqueItem.date_maj == null
+    ? {}
+    : { date_maj: new Date(schemaLieuMediationNumeriqueItem.date_maj) }),
   ...optionalFields(schemaLieuMediationNumeriqueItem)
 });
 

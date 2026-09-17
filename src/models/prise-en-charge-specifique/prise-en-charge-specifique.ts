@@ -31,7 +31,15 @@ const isPrisesEnChargeSpecifiques = (
 ): prisesEnChargeSpecifiques is PrisesEnChargeSpecifiques =>
   prisesEnChargeSpecifiques.find(firstInvalidPriseEnChargeSpecifique) == null;
 
-export const PrisesEnChargeSpecifiques = (prisesEnChargeSpecifiques: PriseEnChargeSpecifique[]): PrisesEnChargeSpecifiques =>
-  isPrisesEnChargeSpecifiques(prisesEnChargeSpecifiques)
-    ? (prisesEnChargeSpecifiques as PrisesEnChargeSpecifiques)
+/**
+ * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
+ * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
+ * été écrits, et qui finissait par surprendre.
+ */
+export const PrisesEnChargeSpecifiques = (prisesEnChargeSpecifiques: PriseEnChargeSpecifique[]): PrisesEnChargeSpecifiques => {
+  const sansDoublons: PriseEnChargeSpecifique[] = Array.from(new Set(prisesEnChargeSpecifiques));
+
+  return isPrisesEnChargeSpecifiques(sansDoublons)
+    ? (sansDoublons as PrisesEnChargeSpecifiques)
     : throwPrisesEnChargeSpecifiquesError(prisesEnChargeSpecifiques);
+};

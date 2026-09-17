@@ -108,5 +108,13 @@ const throwTypologiesError = (typologies: Typologie[]): Typologies => {
 
 const isTypologies = (typologies: Typologie[]): typologies is Typologies => typologies.find(firstInvalidTypology) == null;
 
-export const Typologies = (typologies: Typologie[]): Typologies =>
-  isTypologies(typologies) ? typologies : throwTypologiesError(typologies);
+/**
+ * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
+ * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
+ * été écrits, et qui finissait par surprendre.
+ */
+export const Typologies = (typologies: Typologie[]): Typologies => {
+  const sansDoublons: Typologie[] = Array.from(new Set(typologies));
+
+  return isTypologies(sansDoublons) ? (sansDoublons as Typologies) : throwTypologiesError(typologies);
+};
