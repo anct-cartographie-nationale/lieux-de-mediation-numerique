@@ -40,4 +40,15 @@ describe('nettoyerCourriel', (): void => {
   it('should never throw', (): void => {
     expect(nettoyerCourriel('')).toBe('');
   });
+  it('ne coupe pas un mot qui contient « et » ou « ou »', (): void => {
+    expect(nettoyerCourriel('mediatheque;creteil.abbaye@gpsea.fr')).toBe('creteil.abbaye@gpsea.fr');
+    expect(nettoyerCourriel('bourgogne@exemple.fr')).toBe('bourgogne@exemple.fr');
+  });
+
+  it.each([['a@x.fr et b@y.fr'], ['a@x.fr ou b@y.fr'], ['a@x.fr / b@y.fr']])(
+    'sépare encore %s, où le mot est bien un séparateur',
+    (courriels: string): void => {
+      expect(nettoyerCourriel(courriels)).toBe('a@x.fr|b@y.fr');
+    }
+  );
 });
