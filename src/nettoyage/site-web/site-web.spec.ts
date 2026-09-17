@@ -26,13 +26,21 @@ describe('nettoyerSiteWeb', (): void => {
     expect(nettoyerSiteWeb('https://a.fr/page(1)')).toBe('https://a.fr/page%281%29');
   });
 
+  /** Les trois formes que le jeu national publiait, et que mednum-cli ne savait que préfixer. */
+  it.each([
+    ['htpps://example.fr', 'https://example.fr'],
+    ['httphttps://cemea-pdll.org/', 'https://cemea-pdll.org/'],
+    ['htthttp://www.citedulivre-aix.com', 'http://www.citedulivre-aix.com']
+  ])('should repair the misspelled protocol of %s', (avant: string, apres: string): void => {
+    expect(nettoyerSiteWeb(avant)).toBe(apres);
+  });
+
   /**
-   * Comportement hérité de mednum-cli, conservé : un protocole mal orthographié ne ressemble pas
-   * à `http`, donc la règle du protocole manquant en ajoute un devant. Le résultat reste
-   * invalide — et la validation le refusera, ce qui est le comportement voulu.
+   * `ftp` n'est pas un `http` mal tapé. Le réparer masquerait une adresse que la validation
+   * doit refuser : le champ ne désigne qu'un site web.
    */
-  it('should prefix a misspelled protocol instead of repairing it', (): void => {
-    expect(nettoyerSiteWeb('htpps://example.fr')).toBe('http://htpps://example.fr');
+  it('should not turn another protocol into http', (): void => {
+    expect(nettoyerSiteWeb('ftp://example.fr')).toBe('http://ftp://example.fr');
   });
 
   it('should never throw', (): void => {

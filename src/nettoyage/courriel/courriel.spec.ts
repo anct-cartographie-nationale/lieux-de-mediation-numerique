@@ -26,12 +26,20 @@ describe('nettoyerCourriel', (): void => {
   });
 
   /**
-   * Comportement hérité de mednum-cli, conservé : la règle du libellé en tête prend « contact »
-   * pour une étiquette et l'ôte. Le déménagement préserve le comportement ; le corriger est une
-   * autre décision.
+   * Un espace collé à l'arobase est une faute de frappe dans l'adresse, pas une étiquette.
+   * mednum-cli n'en laissait que `@example.fr` — une adresse amputée de sa partie locale.
    */
-  it('should mistake a word before a space for a label', (): void => {
-    expect(nettoyerCourriel('contact @example.fr')).toBe('@example.fr');
+  it.each([['contact @example.fr'], ['contact@ example.fr'], ['contact @ example.fr']])(
+    'should join %s across the at sign',
+    (courriel: string): void => {
+      expect(nettoyerCourriel(courriel)).toBe('contact@example.fr');
+    }
+  );
+
+  /** Un espace ailleurs sépare bien une étiquette de l'adresse : la distinction tient. */
+  it('should still drop a label that precedes the address', (): void => {
+    expect(nettoyerCourriel('mail contact@example.fr')).toBe('contact@example.fr');
+    expect(nettoyerCourriel('Contact : contact@example.fr')).toBe('contact@example.fr');
   });
 
   it('should never throw', (): void => {

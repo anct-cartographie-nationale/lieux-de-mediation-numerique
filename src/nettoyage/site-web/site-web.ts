@@ -80,6 +80,30 @@ const DEUX_POINTS_MANQUANTS: RegleDeNettoyage = {
   corriger: (aCorriger: string): string => aCorriger.replace(/(https?)(\/\/)/u, '$1:$2')
 };
 
+/**
+ * Un protocole mal orthographié — `htpps://`, `htthttp://`, `httphttps://`, tous trois publiés
+ * dans le jeu national — ne ressemble pas à `http`, si bien que la règle du protocole manquant
+ * lui en ajoutait un devant et produisait `http://htpps://…`.
+ *
+ * On ne répare que ce qui commence par `h` et contient un `t` et un `p` : `ftp://` et
+ * `gopher://` ne sont pas des `http` mal tapés, et les transformer masquerait une adresse qui
+ * doit être refusée.
+ *
+ * Le `s` décide entre les deux protocoles : `htpps` porte le sien, `htthttp` non.
+ *
+ * La règle vient **après** celles qui réparent un protocole reconnaissable — `https//:`,
+ * `https//`, `http:/` — faute de quoi elle leur volerait leur correspondance et laisserait
+ * un deux-points orphelin derrière elle.
+ */
+const PROTOCOLE_MAL_ORTHOGRAPHIE: RegleDeNettoyage = {
+  nom: 'protocole mal orthographié',
+  selecteur: /^(?!https?:\/\/)h(?=[a-z]*t)(?=[a-z]*p)[a-z]{1,11}:?\/\//u,
+  corriger: (aCorriger: string): string =>
+    aCorriger.replace(/^h([a-z]{1,11}):?\/\//u, (_: string, suite: string): string =>
+      suite.includes('s') ? 'https://' : 'http://'
+    )
+};
+
 const PROTOCOLE_MANQUANT: RegleDeNettoyage = {
   nom: 'protocole manquant',
   selecteur: /^(?!http).*/u,
@@ -111,6 +135,7 @@ export const REGLES_SITE_WEB: readonly RegleDeNettoyage[] = [
   PARENTHESES,
   DEUX_POINTS_DEPLACES,
   DEUX_POINTS_MANQUANTS,
+  PROTOCOLE_MAL_ORTHOGRAPHIE,
   PROTOCOLE_MANQUANT,
   PROTOCOLE_MANQUANT_DANS_UNE_LISTE
 ];

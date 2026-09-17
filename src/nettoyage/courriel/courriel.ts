@@ -18,6 +18,20 @@ const ESPACE_DANS_LE_DOMAINE: RegleDeNettoyage = {
   corriger: (aCorriger: string): string => aCorriger.replace(/\s/u, '')
 };
 
+/**
+ * Un espace **collé à l'arobase** est une faute de frappe dans l'adresse, pas une étiquette :
+ * « contact @example.fr » désigne bien `contact@example.fr`.
+ *
+ * C'est ce qui distingue les deux cas. Sans cette règle, celle du libellé en tête prenait
+ * « contact » pour une étiquette et n'en laissait que `@example.fr` — une adresse amputée de
+ * sa partie locale, donc irrécupérable.
+ */
+const ESPACE_COLLE_A_L_AROBASE: RegleDeNettoyage = {
+  nom: 'espace collé à l arobase',
+  selecteur: /\s@|@\s/u,
+  corriger: (aCorriger: string): string => aCorriger.replace(/\s*@\s*/gu, '@')
+};
+
 /** Un libellé collé devant l'adresse : « contact ; nom@example.fr ». */
 const LIBELLE_EN_TETE: RegleDeNettoyage = {
   nom: 'libellé en tête',
@@ -75,6 +89,7 @@ const ACCENTS: RegleDeNettoyage = {
  */
 export const REGLES_COURRIEL: readonly RegleDeNettoyage[] = [
   ESPACES_DE_BORD,
+  ESPACE_COLLE_A_L_AROBASE,
   ESPACE_AVANT_LE_POINT,
   ESPACE_DANS_LE_DOMAINE,
   LIBELLE_AVEC_DEUX_POINTS,
