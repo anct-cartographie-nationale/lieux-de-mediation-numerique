@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import type { z } from 'zod';
 import { LieuPourLaCartographieSchema } from './assemblages';
+import type { LieuMediationNumerique, Localisation, Services } from '../models';
 import { Adresse, Siret } from '../models';
+import type { LieuPourLaCartographie } from './assemblages';
 
 const lieuValide = {
   id: 'Reims_1',
@@ -16,6 +18,40 @@ const lieuValide = {
  * Le constructeur et le schéma ne sont plus deux déclarations à tenir d'accord : le premier
  * n'est qu'une porte ouverte sur le second.
  */
+/**
+ * Contrôle de conformité **au niveau des types**, et non à l'exécution : il échoue sous
+ * `pnpm ts.check` — que la CI passe sur les tests aussi — le jour où l'assemblage et le modèle
+ * cessent de décrire la même chose.
+ *
+ * Ce n'est pas une précaution théorique : les deux formes ont divergé pendant tout le chantier
+ * sans que rien ne le signale. Le `.optional()` de zod produit `pivot?: Pivot | undefined`, que
+ * `pivot?: Pivot` refusait sous `exactOptionalPropertyTypes` — un consommateur qui validait un
+ * lieu ne pouvait pas le publier sans conversion, et la bibliothèque n'en savait rien puisque
+ * rien en son sein ne faisait les deux.
+ */
+const conformeAuModele = (lieu: LieuPourLaCartographie): LieuMediationNumerique => lieu;
+
+/** Ce que l'assemblage exige en plus du modèle : une localisation et des services. */
+type LieuCartographiable = LieuMediationNumerique & { localisation: Localisation; services: Services };
+
+const conformeALAssemblage = (lieu: LieuCartographiable): LieuPourLaCartographie => lieu;
+
+describe("l'assemblage et le modèle décrivent la même chose", (): void => {
+  it('should hand back a place the model accepts', (): void => {
+    const resultat = LieuPourLaCartographieSchema.safeParse(lieuValide);
+
+    expect(resultat.success).toBe(true);
+    expect(resultat.success ? conformeAuModele(resultat.data) : null).toStrictEqual(resultat.success ? resultat.data : null);
+  });
+
+  it('should accept a place of the model that carries what it requires', (): void => {
+    const resultat = LieuPourLaCartographieSchema.safeParse(lieuValide);
+    const lieu: LieuCartographiable | null = resultat.success ? resultat.data : null;
+
+    expect(lieu == null ? null : conformeALAssemblage(lieu)).toStrictEqual(lieu);
+  });
+});
+
 describe('le schéma d’un modèle est celui de son constructeur', (): void => {
   it('should accept what the constructor accepts', (): void => {
     expect(Siret.schema.safeParse('43575434300018').success).toBe(true);
