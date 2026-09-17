@@ -58,7 +58,7 @@
     "ts.check": "tsc --noEmit",
     "test": "vitest",
     "build": "tsdown",
-    "prepare": "husky"
+    "prepare": "husky || true"
   },
   "contributors": [
     {
