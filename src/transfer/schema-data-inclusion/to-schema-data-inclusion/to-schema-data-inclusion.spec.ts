@@ -36,7 +36,7 @@ describe('to schema data.inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
       nom: Nom('MOBILETTE'),
-      pivot: Pivot('60487647500499'),
+      pivot: Pivot('60487647500491'),
       adresse: Adresse({
         code_postal: '09891',
         commune: 'Robinboeuf',
@@ -53,7 +53,7 @@ describe('to schema data.inclusion', (): void => {
     expect(toSchemaStructuresDataInclusion([minimalLieuMediationNumerique])).toStrictEqual<SchemaStructureDataInclusion[]>([
       {
         id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
-        siret: '60487647500499',
+        siret: '60487647500491',
         nom: 'MOBILETTE',
         commune: 'Robinboeuf',
         code_postal: '09891',
@@ -74,7 +74,7 @@ describe('to schema data.inclusion', (): void => {
   it('should convert full lieux de mediation numerique model to data.inclusion structure schema', (): void => {
     const lieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
-      pivot: Pivot('60487647500499'),
+      pivot: Pivot('60487647500491'),
       nom: Nom('MOBILETTE'),
       adresse: Adresse({
         code_postal: '09891',
@@ -101,7 +101,6 @@ describe('to schema data.inclusion', (): void => {
           "connaissance de l'offre de transport du territoire / accès à un véhicule 2 ou 4 roues / transport solidaire / accès au permis"
       },
       source: 'solidagregateur',
-      structure_parente: '7713e292-abd1-42fc-b1f0-071b7e7a2f61',
       date_maj: new Date('2022-04-28'),
       services: Services([
         Service.MaterielInformatiqueAPrixSolidaire,
@@ -131,7 +130,7 @@ describe('to schema data.inclusion', (): void => {
     expect(toSchemaStructuresDataInclusion([lieuMediationNumerique])).toStrictEqual<SchemaStructureDataInclusion[]>([
       {
         id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
-        siret: '60487647500499',
+        siret: '60487647500491',
         nom: 'MOBILETTE',
         commune: 'Robinboeuf',
         code_postal: '09891',
@@ -150,7 +149,6 @@ describe('to schema data.inclusion', (): void => {
         presentation_detail:
           "connaissance de l'offre de transport du territoire / accès à un véhicule 2 ou 4 roues / transport solidaire / accès au permis",
         source: 'solidagregateur',
-        structure_parente: '7713e292-abd1-42fc-b1f0-071b7e7a2f61',
         horaires_ouverture: 'Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off',
         accessibilite:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
@@ -182,7 +180,7 @@ describe('to schema data.inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
       nom: Nom('MOBILETTE'),
-      pivot: Pivot('60487647500499'),
+      pivot: Pivot('60487647500491'),
       adresse: Adresse({
         code_postal: '09891',
         commune: 'Robinboeuf',
@@ -207,7 +205,7 @@ describe('to schema data.inclusion', (): void => {
   it('should convert full lieux de mediation numerique model to data.inclusion service schema', (): void => {
     const lieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
-      pivot: Pivot('60487647500499'),
+      pivot: Pivot('60487647500491'),
       nom: Nom('MOBILETTE'),
       adresse: Adresse({
         code_postal: '09891',
@@ -314,7 +312,7 @@ describe('to schema data.inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
       nom: Nom('MOBILETTE'),
-      pivot: Pivot('60487647500499'),
+      pivot: Pivot('60487647500491'),
       adresse: Adresse({
         code_postal: '09891',
         commune: 'Robinboeuf',
@@ -342,7 +340,7 @@ describe('to schema data.inclusion', (): void => {
     const minimalLieuMediationNumerique: LieuMediationNumerique = {
       id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
       nom: Nom('MOBILETTE'),
-      pivot: Pivot('60487647500499'),
+      pivot: Pivot('60487647500491'),
       adresse: Adresse({
         code_postal: '09891',
         commune: 'Robinboeuf',

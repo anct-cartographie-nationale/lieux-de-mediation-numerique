@@ -14,10 +14,9 @@ import {
 export const generalFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueGeneralFields => ({
   id: lieuMediationNumerique.id,
   nom: lieuMediationNumerique.nom,
-  pivot: lieuMediationNumerique.pivot,
+  ...(lieuMediationNumerique.pivot == null ? {} : { pivot: lieuMediationNumerique.pivot }),
   ...(lieuMediationNumerique.services == null ? {} : { services: lieuMediationNumerique.services.join('|') }),
-  ...(lieuMediationNumerique.typologies == null ? {} : { typologie: lieuMediationNumerique.typologies.join('|') }),
-  ...(lieuMediationNumerique.structure_parente == null ? {} : { structure_parente: lieuMediationNumerique.structure_parente })
+  ...(lieuMediationNumerique.typologies == null ? {} : { typologie: lieuMediationNumerique.typologies.join('|') })
 });
 
 export const adresseFields = (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumeriqueAdresseFields => ({

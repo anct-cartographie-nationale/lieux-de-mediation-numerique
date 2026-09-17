@@ -19,7 +19,7 @@ import { Nom } from './nom';
 
 export type LieuMediationNumerique = {
   id: Id;
-  pivot: Pivot;
+  pivot?: Pivot;
   nom: Nom;
   adresse: Adresse;
   localisation?: Localisation;
@@ -28,7 +28,6 @@ export type LieuMediationNumerique = {
   horaires?: string;
   presentation?: Presentation;
   source?: string;
-  structure_parente?: string;
   date_maj: Date;
   services?: Services;
   publics_specifiquement_adresses?: PublicsSpecifiquementAdresses;

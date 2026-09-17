@@ -7,7 +7,6 @@ import {
   PublicsSpecifiquementAdresses
 } from '../../../models';
 import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
-import { MandatorySiretOrRnaError } from './errors/mandatory-siret-or-rna.error';
 import {
   accessibiliteFromDataInclusion,
   adresseFromDataInclusion,
@@ -67,10 +66,6 @@ export const mergeServices = (
     thematiques: []
   });
 
-const throwMandatorySiretOrRnaError = (): Pivot => {
-  throw new MandatorySiretOrRnaError();
-};
-
 const ifAnyPublicSpecifiquementAdresseInArray = (publicSpecifiquementAdresse: {
   publics_specifiquement_adresses?: PublicsSpecifiquementAdresses;
 }): {
@@ -89,7 +84,11 @@ const fromSchemaDataInclusionItem = (
 ): LieuMediationNumerique => ({
   id: Id(structure.id),
   nom: Nom(structure.nom),
-  pivot: Pivot(structure.siret ?? structure.rna ?? throwMandatorySiretOrRnaError()),
+  /**
+   * Le RNA est sorti de la modélisation, et le pivot n'est plus obligatoire : une structure qui
+   * n'a pas de SIRET entre simplement sans pivot, là où il fallait auparavant la refuser.
+   */
+  ...(structure.siret == null ? {} : { pivot: Pivot(structure.siret) }),
   ...adresseFromDataInclusion(structure),
   ...localisationFromDataInclusion(structure.latitude, structure.longitude),
   ...servicesFromDataInclusion(service.thematiques),

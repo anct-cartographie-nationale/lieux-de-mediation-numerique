@@ -1,3 +1,4 @@
+import { Pivot } from '../../../models';
 import {
   Adresse,
   Contact,
@@ -90,8 +91,12 @@ export const presentationIfAny = (
 
 export const sourceIfAny = (source?: string): { source?: string } => (source == null ? {} : { source });
 
-export const structureParenteIfAny = (structureParente?: string): { structure_parente?: string } =>
-  structureParente == null ? {} : { structure_parente: structureParente };
+/**
+ * Le pivot d'un lieu qui n'en déclare pas : une absence, et non une valeur qui en tient lieu.
+ * `00000000000000` a longtemps rempli ce rôle et représentait sept lignes sur dix du jeu
+ * national, ce qu'aucun réutilisateur ne pouvait interpréter.
+ */
+export const pivotIfAny = (pivot?: string): { pivot?: Pivot } => (pivot == null || pivot === '' ? {} : { pivot: Pivot(pivot) });
 
 export const publicsSpecifiquementAdressesIfAny = (
   publicsSpecifiquementAdresses?: string,

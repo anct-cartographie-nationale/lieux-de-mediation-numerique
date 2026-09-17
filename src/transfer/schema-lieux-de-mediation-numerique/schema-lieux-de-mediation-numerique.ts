@@ -2,9 +2,8 @@ export type SchemaLieuMediationNumeriqueGeneralFields = {
   id: string;
   nom: string;
   services?: string;
-  pivot: string;
+  pivot?: string;
   typologie?: string;
-  structure_parente?: string;
 };
 
 export type SchemaLieuMediationNumeriqueAdresseFields = {

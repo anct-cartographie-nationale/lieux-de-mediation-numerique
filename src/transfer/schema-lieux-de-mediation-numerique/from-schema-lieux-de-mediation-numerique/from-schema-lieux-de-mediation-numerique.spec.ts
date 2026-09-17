@@ -121,7 +121,6 @@ describe('from schema lieux de mediation numerique', (): void => {
         presentation_detail:
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.',
         source: 'Hubik',
-        structure_parente: 'Pôle emploi',
         publics_specifiquement_adresses: [
           PublicSpecifiquementAdresse.Jeunes,
           PublicSpecifiquementAdresse.Etudiants,
@@ -200,7 +199,6 @@ describe('from schema lieux de mediation numerique', (): void => {
             'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.'
         },
         source: 'Hubik',
-        structure_parente: 'Pôle emploi',
         publics_specifiquement_adresses: PublicsSpecifiquementAdresses([
           PublicSpecifiquementAdresse.Jeunes,
           PublicSpecifiquementAdresse.Etudiants,
@@ -269,7 +267,6 @@ describe('from schema lieux de mediation numerique', (): void => {
         presentation_detail:
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.',
         source: 'Hubik',
-        structure_parente: 'Pôle emploi',
         publics_specifiquement_adresses: [
           PublicSpecifiquementAdresse.Jeunes,
           PublicSpecifiquementAdresse.Etudiants,
@@ -342,7 +339,6 @@ describe('from schema lieux de mediation numerique', (): void => {
             'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.'
         },
         source: 'Hubik',
-        structure_parente: 'Pôle emploi',
         dispositif_programmes_nationaux: DispositifProgrammesNationaux([
           DispositifProgrammeNational.FranceServices,
           DispositifProgrammeNational.AidantsConnect,

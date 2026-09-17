@@ -142,11 +142,10 @@ export const structureGeneralFields = (
 ): SchemaStructureDataInclusionStructureGeneralFields => ({
   id: lieuMediationNumerique.id,
   nom: lieuMediationNumerique.nom,
-  siret: lieuMediationNumerique.pivot,
+  ...(lieuMediationNumerique.pivot == null ? {} : { siret: lieuMediationNumerique.pivot }),
   ...(lieuMediationNumerique.typologies != null && lieuMediationNumerique.typologies.length > 0
     ? typologyIfExist(lieuMediationNumerique.typologies.at(0)?.toString())
     : {}),
-  ...(lieuMediationNumerique.structure_parente == null ? {} : { structure_parente: lieuMediationNumerique.structure_parente }),
   ...(lieuMediationNumerique.fiche_acces_libre == null ? {} : { accessibilite: lieuMediationNumerique.fiche_acces_libre }),
   thematiques: [
     'numerique',

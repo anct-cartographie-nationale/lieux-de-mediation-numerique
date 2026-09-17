@@ -30,7 +30,6 @@ import {
   Url
 } from '../../../models';
 import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
-import { MandatorySiretOrRnaError } from './errors/mandatory-siret-or-rna.error';
 import { fromSchemaDataInclusion } from './from-schema-data-inclusion';
 
 describe('from schema data inclusion', (): void => {
@@ -331,7 +330,11 @@ describe('from schema data inclusion', (): void => {
     }).toThrow(new ServicesError('service indéfini'));
   });
 
-  it('should fail when there is no siret or rna', (): void => {
+  /**
+   * Le pivot n'est plus obligatoire (D12) et le RNA est sorti de la modélisation (D13) : une
+   * structure sans SIRET entre désormais sans pivot, au lieu d'être refusée.
+   */
+  it('should enter without a pivot when there is no siret', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',
       code_postal: '51100',
@@ -345,15 +348,14 @@ describe('from schema data inclusion', (): void => {
       id: 'structure-1-mediation-numerique',
       nom: 'Médiation numérique',
       source: 'Hubik',
-      structure_id: 'structure-1'
+      structure_id: 'structure-1',
+      thematiques: ['numerique--acceder-a-du-materiel']
     };
 
-    expect((): void => {
-      fromSchemaDataInclusion([service], structure);
-    }).toThrow(new MandatorySiretOrRnaError());
+    expect(fromSchemaDataInclusion([service], structure)[0]?.pivot).toBeUndefined();
   });
 
-  it('should use RNA instead of siret when available', (): void => {
+  it('should ignore the rna, which is no longer a pivot', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',
       code_postal: '51100',
@@ -377,7 +379,6 @@ describe('from schema data inclusion', (): void => {
     expect(lieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
       id: Id('structure-1'),
       nom: Nom('Anonymal'),
-      pivot: Pivot('W9R2003255'),
       adresse: Adresse({
         code_postal: '51100',
         commune: 'Reims',
@@ -475,7 +476,6 @@ describe('from schema data inclusion', (): void => {
     expect(minimalLieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
       id: Id('structure-1'),
       nom: Nom('Anonymal'),
-      pivot: Pivot('W9R2003255'),
       adresse: Adresse({
         code_postal: '51100',
         commune: 'Reims',
@@ -521,7 +521,6 @@ describe('from schema data inclusion', (): void => {
     expect(lieuMediationNumerique).toStrictEqual<LieuMediationNumerique>({
       id: Id('structure-1'),
       nom: Nom('Anonymal'),
-      pivot: Pivot('W9R2003255'),
       adresse: Adresse({
         code_postal: '51100',
         commune: 'Reims',
