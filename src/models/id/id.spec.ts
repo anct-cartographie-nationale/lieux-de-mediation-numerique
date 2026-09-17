@@ -26,4 +26,18 @@ describe('id model', (): void => {
       Id(idData);
     }).toThrow(new IdError(idData));
   });
+
+  /** L'identifiant sert de clé et voyage dans des URL. */
+  it.each([['avec espace'], ['avec/barre'], ['avec?point-interrogation'], ['avec#diese']])(
+    'should refuse %s, which does not survive a URL',
+    (id: string): void => {
+      expect((): void => {
+        Id(id);
+      }).toThrow(new IdError(id));
+    }
+  );
+
+  it.each([['Paris_12'], ['dora_7dd05681-606a-4e8d'], ['a.b~c-d']])('should accept %s', (id: string): void => {
+    expect(Id(id)).toBe(id);
+  });
 });

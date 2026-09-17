@@ -34,4 +34,17 @@ describe('url model', (): void => {
 
     expect(url).toStrictEqual(urlData as Url);
   });
+
+  it.each([['htpps://example.fr'], ['htthttp://example.fr'], ['httphttps://example.fr'], ['ftp://example.fr']])(
+    'should refuse %s, whose protocol is not http',
+    (url: string): void => {
+      expect((): void => {
+        Url(url);
+      }).toThrow(new UrlError(url));
+    }
+  );
+
+  it.each([['http://example.fr'], ['https://example.fr/page?a=1#b']])('should accept %s', (url: string): void => {
+    expect(Url(url)).toBe(url);
+  });
 });

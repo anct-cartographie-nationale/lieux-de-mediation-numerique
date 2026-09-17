@@ -42,17 +42,14 @@ describe('adresse model', (): void => {
     }).toThrow(new CodeInseeError('error'));
   });
 
-  it('should create a valid address with 6 digits for code insee including optional 0 after department code', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '4 rue des Acacias',
-      code_postal: '38110',
-      code_insee: '380546',
-      commune: 'La Tour-du-Pin'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  /**
+   * Forme que le motif d'origine admettait et que le code officiel géographique ne connaît
+   * pas : aucun des 18730 codes du jeu national ne la porte.
+   */
+  it('should refuse a code insee that is not five characters', (): void => {
+    expect((): void => {
+      Adresse({ voie: '12 rue des Acacias', code_postal: '38000', code_insee: '380546', commune: 'Grenoble' });
+    }).toThrow(new CodeInseeError('380546'));
   });
 
   it('should throw CodeInseeError when code_insee is 7 digits', (): void => {
@@ -68,17 +65,14 @@ describe('adresse model', (): void => {
     }).toThrow(new CodeInseeError('5723687'));
   });
 
-  it('should create a valid address with 8 digits code_insee', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '4 rue des Acacias',
-      code_postal: '38100',
-      code_insee: '38-2-33-546',
-      commune: 'Metz'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+  /**
+   * Forme que le motif d'origine admettait et que le code officiel géographique ne connaît
+   * pas : aucun des 18730 codes du jeu national ne la porte.
+   */
+  it('should refuse a code insee that is not five characters', (): void => {
+    expect((): void => {
+      Adresse({ voie: '12 rue des Acacias', code_postal: '38000', code_insee: '38-2-33-546', commune: 'Grenoble' });
+    }).toThrow(new CodeInseeError('38-2-33-546'));
   });
 
   it('should create a valid address with code_insee in Corse', (): void => {
@@ -337,4 +331,23 @@ describe('adresse model', (): void => {
 
     expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
   });
+
+  it.each([['2A004'], ['2B033'], ['97101'], ['97701'], ['98818'], ['98735'], ['75101'], ['69381'], ['13201']])(
+    'should accept %s, a code the official geographic code defines',
+    (codeInsee: string): void => {
+      expect(
+        Adresse({ voie: '12 rue des Acacias', code_postal: '20000', code_insee: codeInsee, commune: 'Ajaccio' }).code_insee
+      ).toBe(codeInsee);
+    }
+  );
+
+  /** `20` désigne la Corse d'avant 1976 ; `96` et `99` ne sont pas des départements. */
+  it.each([['20004'], ['96001'], ['99123'], ['2C004']])(
+    'should refuse %s, which no department carries',
+    (codeInsee: string): void => {
+      expect((): void => {
+        Adresse({ voie: '12 rue des Acacias', code_postal: '20000', code_insee: codeInsee, commune: 'Ajaccio' });
+      }).toThrow(new CodeInseeError(codeInsee));
+    }
+  );
 });

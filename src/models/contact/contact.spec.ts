@@ -69,16 +69,14 @@ describe('contact model', (): void => {
     }).toThrow(new TelephoneError('024178384'));
   });
 
-  it('should allow 0 8XX XX XX XX telephone format', (): void => {
-    const contactData: ContactToValidate = {
-      telephone: '0 809 36 12 12'
-    };
-
-    const contact: Contact = Contact(contactData);
-
-    expect(contact).toStrictEqual({
-      telephone: '0 809 36 12 12'
-    });
+  /**
+   * Le modèle ne porte plus que l'E.164 : une seule écriture possible d'un même numéro. Les
+   * 11221 numéros du jeu national le sont déjà tous.
+   */
+  it('should refuse the national format, which is a display concern', (): void => {
+    expect((): void => {
+      Contact({ telephone: '0 809 36 12 12' });
+    }).toThrow(new TelephoneError('0 809 36 12 12'));
   });
 
   it('should allow nouvelle caledonie telephone format (indicatif + 6 digits)', (): void => {
@@ -91,5 +89,19 @@ describe('contact model', (): void => {
     expect(contact).toStrictEqual({
       telephone: '+687241541'
     });
+  });
+
+  it.each([['+33102030405'], ['+262262202020'], ['+590690000001'], ['+508412345']])(
+    'should accept %s, an E.164 number the national schema admits',
+    (telephone: string): void => {
+      expect(Contact({ telephone }).telephone).toBe(telephone);
+    }
+  );
+
+  /** Un numéro étranger, fût-il valide, n'a pas sa place sur une cartographie française. */
+  it('should refuse a foreign number', (): void => {
+    expect((): void => {
+      Contact({ telephone: '+32470442543' });
+    }).toThrow(new TelephoneError('+32470442543'));
   });
 });

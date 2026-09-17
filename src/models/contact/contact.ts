@@ -14,8 +14,14 @@ export type Contact = Model<
 
 export type ContactToValidate = Omit<Contact, 'isContact'>;
 
-const TELEPHONE_REG_EXP: RegExp =
-  /^(?:(?:\+|00)(?:33|262|269|508|590|594|596|681|687|689)[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)(?:(?:[1-9](?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]\d{3}){2})|\d{6}|\s\d{3}(?:\s\d{2}){3})$/u;
+/**
+ * L'E.164, et rien d'autre : une seule écriture possible d'un même numéro. La mise en forme
+ * nationale — `01 02 03 04 05` — redevient ce qu'elle est, une affaire d'affichage.
+ *
+ * Les indicatifs sont ceux que le schéma national admet : métropole et outre-mer. Un numéro
+ * étranger, fût-il valide, n'a pas sa place sur une cartographie française.
+ */
+const TELEPHONE_REG_EXP: RegExp = /^\+(?:33|262|269|508|590|594|596|681|687|689)\d{6,9}$/u;
 
 export const isValidTelephone = (telephone: string): boolean => TELEPHONE_REG_EXP.test(telephone);
 

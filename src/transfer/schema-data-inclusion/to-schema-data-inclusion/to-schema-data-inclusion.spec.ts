@@ -90,7 +90,7 @@ describe('to schema data.inclusion', (): void => {
       typologies: Typologies([Typologie.ASSO]),
       contact: Contact({
         site_web: [Url('https://www.asso-gonzalez.net/'), Url('https://www.facebook.com/asso-gonzalez.net/')],
-        telephone: '0102030405',
+        telephone: '+33102030405',
         courriels: [Courriel('julie@example.net'), Courriel('paul@example.net')]
       }),
       horaires: 'Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off',
@@ -141,7 +141,7 @@ describe('to schema data.inclusion', (): void => {
         longitude: 7.848133,
         latitude: 48.7703,
         typologie: Typologie.ASSO,
-        telephone: '0102030405',
+        telephone: '+33102030405',
         courriel: 'julie@example.net',
         site_web: 'https://www.asso-gonzalez.net/',
         presentation_resume:
