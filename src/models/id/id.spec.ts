@@ -16,18 +16,26 @@ describe('id model', (): void => {
     expect(Id.safe('')).toBeNull();
   });
 
-  it.each([['avec espace'], ['avec/barre'], ['avec?point-interrogation'], ['avec#diese']])(
+  it.each([['avec espace'], ['avec?point-interrogation'], ['avec#diese'], ['avec&esperluette'], ['avec%pourcent']])(
     'refuse %s, qui ne survit pas à une URL',
     (id: string): void => {
       expect(Id.safe(id)).toBeNull();
     }
   );
 
+  it.each([['.'], ['..'], ['-'], ['~'], ['/']])('refuse %s, qui ne porte aucune lettre ni chiffre', (id: string): void => {
+    expect(Id.safe(id)).toBeNull();
+  });
+
   it.each([['Paris_12'], ['dora_7dd05681-606a-4e8d'], ['a.b~c-d']])('accepte %s', (id: string): void => {
     expect(Id(id)).toBe(id);
   });
 
-  it.each([['.'], ['..'], ['-'], ['~']])('refuse %s, qui ne porte aucun caractère alphanumérique', (id: string): void => {
-    expect(Id.safe(id)).toBeNull();
+  it.each([
+    ['Conseil-départemental-des-Vosges_e42243b2-738e'],
+    ['Hérault_12'],
+    ['fredo_fredo-fredo--97407_13185-activités-/-ateliers']
+  ])('accepte %s, qui circule dans les jeux publiés', (id: string): void => {
+    expect(Id(id)).toBe(id);
   });
 });
