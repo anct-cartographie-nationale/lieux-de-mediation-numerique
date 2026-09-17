@@ -11,11 +11,6 @@ export enum ModaliteAcces {
   PasDePublic = "Ce lieu n'accueille pas de public"
 }
 
-/**
- * Les doublons tombent à la construction, et c'est le schéma qui les écarte : la mise en
- * forme survit ainsi à la composition, là où un traitement posé dans le constructeur serait
- * contourné dès que `.schema` est imbriqué ailleurs.
- */
 export const ModalitesAcces = defineModel(z.array(z.enum(ModaliteAcces)).transform(sansDoublons).brand('ModalitesAcces'));
 
 export type ModalitesAcces = Model.TypeOf<typeof ModalitesAcces>;

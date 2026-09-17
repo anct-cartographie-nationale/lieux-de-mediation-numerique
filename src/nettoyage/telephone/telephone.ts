@@ -19,7 +19,6 @@ const DETAILS_EN_QUEUE: RegleDeNettoyage = {
   corriger: (aCorriger: string): string => aCorriger.replace(/\s[A-Za-z].*$/gu, '')
 };
 
-/** Deux numéros séparés par une barre oblique : on garde le premier. */
 const LISTE_PAR_BARRE_OBLIQUE: RegleDeNettoyage = {
   nom: 'liste de numéros séparés par une barre oblique',
   selecteur: /\d{10}\/\/?\d{10}/u,
@@ -50,11 +49,6 @@ const ZERO_APRES_LE_PLUS: RegleDeNettoyage = {
   corriger: (aCorriger: string): string => aCorriger.replace(/^\+0(\d{9})/u, '+33$1')
 };
 
-/**
- * Les numéros courts nationaux, ramenés à leur équivalent géographique : aucun consommateur ne
- * veut avoir à traiter un format hors standard international, et `libphonenumber-js` ne sait
- * pas les analyser.
- */
 const NUMERO_COURT_CAF: RegleDeNettoyage = {
   nom: 'numéro court de la CAF',
   selecteur: /3230/u,
@@ -67,7 +61,6 @@ const NUMERO_COURT_ASSURANCE_RETRAITE: RegleDeNettoyage = {
   corriger: (): string => '+33971103960'
 };
 
-/** L'indicatif d'outre-mer déduit du code postal du lieu, faute de mieux dans le numéro. */
 const indicatifSelonLeCodePostal = (codePostal?: string): string => {
   switch (codePostal?.slice(0, 3)) {
     case '971':
@@ -83,13 +76,6 @@ const indicatifSelonLeCodePostal = (codePostal?: string): string => {
   }
 };
 
-/**
- * Un numéro national privé de son zéro initial. L'indicatif se déduit du **code postal du
- * lieu** : le numéro seul ne dit pas d'où il vient.
- *
- * La règle est donc curryfiée — elle a besoin d'un contexte que les autres n'ont pas — de façon
- * à s'employer exactement comme elles une fois ce contexte fourni.
- */
 export const zeroInitialPerdu = (codePostal?: string): RegleDeNettoyage => ({
   nom: 'zéro initial perdu',
   selecteur: /^[1-9]\d{8}$/u,
@@ -114,22 +100,11 @@ export const reglesTelephone = (codePostal?: string): readonly RegleDeNettoyage[
   zeroInitialPerdu(codePostal)
 ];
 
-/**
- * Le numéro débarrassé de ce qui l'empêche d'être analysé. **Ne rend pas une forme canonique** :
- * c'est `telephoneCanonique` qui s'en charge, et lui seul sait quel pays reconnaître.
- *
- * Le code postal du lieu sert à deviner l'indicatif d'outre-mer d'un numéro amputé de son zéro.
- */
 export const nettoyerTelephone =
   (codePostal?: string) =>
   (telephone: string): string =>
     appliquerRegles(reglesTelephone(codePostal), telephone);
 
-/**
- * Les préfixes d'outre-mer partagent le format national de la métropole mais relèvent d'un
- * indicatif pays distinct. En défaut de région « FR », `libphonenumber-js` lirait `0262…` comme
- * de la métropole : on route donc les préfixes connus vers leur région propre.
- */
 const REGION_OUTRE_MER: ReadonlyArray<readonly [RegExp, CountryCode]> = [
   [/^0(?:262|263|692|693)/u, 'RE'],
   [/^0(?:269|639)/u, 'YT'],
@@ -141,13 +116,6 @@ const REGION_OUTRE_MER: ReadonlyArray<readonly [RegExp, CountryCode]> = [
 const regionDe = (compact: string): CountryCode =>
   REGION_OUTRE_MER.find(([prefixe]: readonly [RegExp, CountryCode]): boolean => prefixe.test(compact))?.[1] ?? 'FR';
 
-/**
- * Le numéro en E.164, seule forme sous laquelle deux écritures d'un même numéro se
- * reconnaissent — ou `null` si ce n'en est pas un.
- *
- * `libphonenumber-js` plutôt qu'un assemblage de motifs : un numéro se reconnaît à un plan de
- * numérotation, qui change, pas à une expression régulière écrite une fois.
- */
 export const telephoneCanonique = (telephone: string): string | null => {
   const compact: string = telephone.replace(/[\s()./-]/gu, '');
   const analyse = parsePhoneNumberFromString(compact, regionDe(compact));

@@ -44,7 +44,6 @@ describe('nettoyerVoie', (): void => {
     expect(nettoyerVoie('12 rue "des" Marronniers')).toBe('12 rue des Marronniers');
   });
 
-  /** Réécrit avec `TextDecoder` : `Buffer` n'existe pas dans un navigateur. */
   it('should repair a latin-1 reading of utf-8 bytes', (): void => {
     expect(nettoyerVoie('2 rue du Caf\u00c3\u00a9')).toBe('2 rue du Café');
   });
@@ -53,12 +52,6 @@ describe('nettoyerVoie', (): void => {
     expect(nettoyerVoie('')).toBe('');
   });
 
-  /**
-   * `LOT` est la seule abréviation que la table ne porte pas, et c'est mesuré : développée,
-   * elle fait *perdre* du score BAN — −0,051 en tête d'adresse, −0,163 quand le mot appartient
-   * au nom de la voie. Le référentiel garde `LOT` comme nom et paraît défalquer `Lotissement`
-   * comme type.
-   */
   it.each([['LOT Le Clos d Achille'], ['12 LOT des Mimosas'], ['16 Avenue du LOT']])(
     'should leave %s alone, the reference scoring it better abbreviated',
     (voie: string): void => {

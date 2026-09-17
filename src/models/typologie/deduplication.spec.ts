@@ -6,10 +6,6 @@ import { ModaliteAcces, ModalitesAcces } from '../modalite-acces';
 import { PublicSpecifiquementAdresse, PublicsSpecifiquementAdresses } from '../publics-specifiquement-adresses';
 import { Typologie, Typologies } from './typologie';
 
-/**
- * La bibliothèque ne dédupliquait que `Services` et `ModalitesAccompagnement`, un écart qui ne
- * tenait qu'à l'ordre dans lequel les modèles ont été écrits.
- */
 describe('every closed vocabulary deduplicates', (): void => {
   it('should deduplicate typologies', (): void => {
     expect(Typologies([Typologie.CCAS, Typologie.CCAS, Typologie.MJC])).toStrictEqual([Typologie.CCAS, Typologie.MJC]);

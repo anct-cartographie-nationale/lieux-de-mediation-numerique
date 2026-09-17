@@ -18,10 +18,6 @@ describe('service model', (): void => {
     ).toBeNull();
   });
 
-  /**
-   * Le socle admet la liste vide ; c'est l'assemblage « pour la cartographie » qui exige au
-   * moins un service (D29.3).
-   */
   it('should accept an empty list, which the cartography assembly refuses on its own', (): void => {
     expect(Services([])).toStrictEqual([]);
   });

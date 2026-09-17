@@ -25,10 +25,6 @@ describe('nettoyerCourriel', (): void => {
     expect(nettoyerCourriel('a@example.fr;b@example.fr')).toBe('a@example.fr|b@example.fr');
   });
 
-  /**
-   * Un espace collé à l'arobase est une faute de frappe dans l'adresse, pas une étiquette.
-   * mednum-cli n'en laissait que `@example.fr` — une adresse amputée de sa partie locale.
-   */
   it.each([['contact @example.fr'], ['contact@ example.fr'], ['contact @ example.fr']])(
     'should join %s across the at sign',
     (courriel: string): void => {
@@ -36,7 +32,6 @@ describe('nettoyerCourriel', (): void => {
     }
   );
 
-  /** Un espace ailleurs sépare bien une étiquette de l'adresse : la distinction tient. */
   it('should still drop a label that precedes the address', (): void => {
     expect(nettoyerCourriel('mail contact@example.fr')).toBe('contact@example.fr');
     expect(nettoyerCourriel('Contact : contact@example.fr')).toBe('contact@example.fr');

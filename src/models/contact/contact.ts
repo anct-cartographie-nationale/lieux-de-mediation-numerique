@@ -14,8 +14,6 @@ export const Contact = defineModel(
     .brand('Contact')
 );
 
-/** La forme, telle qu'on l'écrit avant de la faire valider. */
 export type ContactToValidate = Model.InputOf<typeof Contact>;
 
-/** Une valeur dont le constructeur a vérifié chaque partie. */
 export type Contact = Model.TypeOf<typeof Contact>;

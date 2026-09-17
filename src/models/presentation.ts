@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import { defineModel, type Model } from './model';
 
-/** La longueur du résumé, telle que la carte du lieu l'affiche. */
 export const RESUME_LONGUEUR_MAXIMALE = 280;
 
 export const Presentation = defineModel(

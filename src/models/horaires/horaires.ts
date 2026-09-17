@@ -1,21 +1,12 @@
 import { z } from 'zod';
 import { defineModel, type Model } from '../model';
 
-/**
- * Les horaires au format `opening_hours` d'OpenStreetMap.
- *
- * C'était le seul champ du modèle laissé en chaîne nue, sans aucune validation — et le jeu
- * national en porte les traces : 662 valeurs sur 8654 sont invalides, dont 551 franchement
- * corrompues, avec des `:undefined-17:00` où le mot `undefined` de JavaScript a fui dans une
- * donnée publique, et 111 qui écrivent `Sun` là où OSM écrit `Su`.
- */
 const JOUR = 'Mo|Tu|We|Th|Fr|Sa|Su|PH';
 const PLAGE = '(?:[01]\\d|2[0-3]):[0-5]\\d-(?:[01]\\d|2[0-3]):[0-5]\\d';
-/** Un commentaire entre guillemets s'attache à n'importe quelle règle, pas à la dernière seule. */
+
 const COMMENTAIRE = '(?:\\s+"[^"]*")?';
 const REGLE = `(?:${JOUR})(?:[-,](?:${JOUR}))*\\s+(?:${PLAGE}(?:,${PLAGE})*|off)${COMMENTAIRE}`;
 
-/** Le préfixe de semaine paire ou impaire, que le standard admet et que les sources emploient. */
 const SEMAINE = '(?:week\\s+\\d{1,2}-\\d{1,2}\\/\\d\\s+)?';
 
 const HORAIRES_REG_EXP: RegExp = new RegExp(`^(?:24/7|${SEMAINE}${REGLE}(?:\\s*;\\s*${REGLE})*)(?:\\s*"[^"]*")?$`, 'u');

@@ -42,11 +42,4 @@ const ESPACES_DE_BORD: RegleDeNettoyage = {
 
 export const REGLES_PRESENTATION: readonly RegleDeNettoyage[] = [BALISES, ENTITES_HTML, ESPACES_MULTIPLES, ESPACES_DE_BORD];
 
-/**
- * Un texte de présentation débarrassé de son balisage.
- *
- * **Non appliquée d'office** : 57 détails du jeu national portent une balise et 5 une entité,
- * mais leur texte est par ailleurs utile. Les refuser à la validation ferait perdre le fond
- * pour un défaut de forme ; c'est au consommateur qui affiche de décider.
- */
 export const nettoyerPresentation = (texte: string): string => appliquerRegles(REGLES_PRESENTATION, texte);

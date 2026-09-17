@@ -22,10 +22,6 @@ describe('enCasseNaturelle', (): void => {
     expect(enCasseNaturelle('Médiathèque Jean Moulin')).toBe('Médiathèque Jean Moulin');
   });
 
-  /**
-   * Limite assumée : aucune forme ne distingue un sigle d'un mot court, seule la liste le fait.
-   * `ADF` n'est pas un code de typologie, il est donc capitalisé comme un mot.
-   */
   it('should capitalise an acronym it does not know', (): void => {
     expect(enCasseNaturelle('ADF')).toBe('Adf');
   });

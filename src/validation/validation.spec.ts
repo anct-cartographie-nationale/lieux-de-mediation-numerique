@@ -14,24 +14,8 @@ const lieuValide = {
   services: ['Aide aux démarches administratives']
 };
 
-/**
- * Le constructeur et le schéma ne sont plus deux déclarations à tenir d'accord : le premier
- * n'est qu'une porte ouverte sur le second.
- */
-/**
- * Contrôle de conformité **au niveau des types**, et non à l'exécution : il échoue sous
- * `pnpm ts.check` — que la CI passe sur les tests aussi — le jour où l'assemblage et le modèle
- * cessent de décrire la même chose.
- *
- * Ce n'est pas une précaution théorique : les deux formes ont divergé pendant tout le chantier
- * sans que rien ne le signale. Le `.optional()` de zod produit `pivot?: Pivot | undefined`, que
- * `pivot?: Pivot` refusait sous `exactOptionalPropertyTypes` — un consommateur qui validait un
- * lieu ne pouvait pas le publier sans conversion, et la bibliothèque n'en savait rien puisque
- * rien en son sein ne faisait les deux.
- */
 const conformeAuModele = (lieu: LieuPourLaCartographie): LieuMediationNumerique => lieu;
 
-/** Ce que l'assemblage exige en plus du modèle : une localisation et des services. */
 type LieuCartographiable = LieuMediationNumerique & { localisation: Localisation; services: Services };
 
 const conformeALAssemblage = (lieu: LieuCartographiable): LieuPourLaCartographie => lieu;
@@ -61,17 +45,12 @@ describe('le schéma d’un modèle est celui de son constructeur', (): void => 
     expect(Siret.schema.safeParse('12345678910111').success).toBe(false);
   });
 
-  /** L'écart d'avant : `Siret()` retirait les espaces, `SiretSchema` les refusait. */
   it('should normalize exactly like the constructor does', (): void => {
     expect(Siret.schema.parse('435 754 343 00018')).toBe(Siret('435 754 343 00018'));
   });
 });
 
 describe('toutes les erreurs, en une passe', (): void => {
-  /**
-   * Le constructeur `Adresse` lève sur la voie et tait le code postal. Un producteur corrigeait
-   * ses données une erreur à la fois, en relançant la chaîne entre chaque.
-   */
   it('should report every faulty field of an address at once, each with its path', (): void => {
     const resultat = Adresse.schema.safeParse({ voie: '', code_postal: '999', code_insee: '96001', commune: 'Reims!!' });
 
@@ -118,7 +97,6 @@ describe("l'assemblage pour la cartographie", (): void => {
     expect(LieuPourLaCartographieSchema.safeParse(sansPivot).success).toBe(true);
   });
 
-  /** L'exigence vit dans l'assemblage, pas dans le champ : la coop admet la liste vide. */
   it('should refuse a place that announces no service', (): void => {
     expect(LieuPourLaCartographieSchema.safeParse({ ...lieuValide, services: [] }).success).toBe(false);
   });

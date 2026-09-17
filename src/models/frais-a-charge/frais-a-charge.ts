@@ -8,11 +8,6 @@ export enum Frais {
   Payant = 'Payant'
 }
 
-/**
- * Les doublons tombent à la construction, et c'est le schéma qui les écarte : la mise en
- * forme survit ainsi à la composition, là où un traitement posé dans le constructeur serait
- * contourné dès que `.schema` est imbriqué ailleurs.
- */
 export const FraisACharge = defineModel(z.array(z.enum(Frais)).transform(sansDoublons).brand('FraisACharge'));
 
 export type FraisACharge = Model.TypeOf<typeof FraisACharge>;

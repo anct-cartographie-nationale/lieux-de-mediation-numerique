@@ -19,10 +19,6 @@ describe('localisation model', (): void => {
     expect(Localisation.safe({ latitude, longitude })).toBeNull();
   });
 
-  /**
-   * Le jeu d'essai d'origine portait Lyon coordonnées inversées — `4.83 / 45.76` — et le test
-   * affirmait que c'était valide. Les bornes du globe ne pouvaient pas s'en apercevoir.
-   */
   it('refuse un couple qui ne devient valide qu’une fois échangé, et le dit', (): void => {
     const resultat = Localisation.schema.safeParse({ latitude: 4.8375548, longitude: 45.7665478 });
 

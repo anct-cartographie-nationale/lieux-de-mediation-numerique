@@ -84,10 +84,7 @@ const fromSchemaDataInclusionItem = (
 ): LieuMediationNumerique => ({
   id: Id(structure.id),
   nom: Nom(structure.nom),
-  /**
-   * Le RNA est sorti de la modélisation, et le pivot n'est plus obligatoire : une structure qui
-   * n'a pas de SIRET entre simplement sans pivot, là où il fallait auparavant la refuser.
-   */
+
   ...(structure.siret == null ? {} : { pivot: Pivot(structure.siret) }),
   ...adresseFromDataInclusion(structure),
   ...localisationFromDataInclusion(structure.latitude, structure.longitude),

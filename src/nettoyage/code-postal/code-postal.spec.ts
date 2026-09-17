@@ -15,11 +15,6 @@ describe('nettoyerCodePostal', (): void => {
     expect(nettoyerCodePostal('75001.0')).toBe('75001');
   });
 
-  /**
-   * Comportement d'origine, conservé tel quel : la règle du zéro initial s'applique avant celle
-   * des décimales, et `1000.0` ne ressemble pas à quatre chiffres. Le zéro n'est donc pas
-   * restitué. Le déménagement préserve le comportement ; le corriger est une autre décision.
-   */
   it('should not restore the leading zero when decimals hid it', (): void => {
     expect(nettoyerCodePostal('1000.0')).toBe('1000');
   });

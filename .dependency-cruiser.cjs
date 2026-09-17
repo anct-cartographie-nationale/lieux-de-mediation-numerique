@@ -1,5 +1,3 @@
-/** @type {import('dependency-cruiser').IConfiguration} */
-
 const SPEC_FILES = '[.](?:spec|test)[.](?:js|mjs|cjs|ts|mts|cts)$';
 
 const HYGIENE = [
@@ -42,12 +40,6 @@ const HYGIENE = [
   }
 ];
 
-/**
- * Le cloisonnement de la bibliothèque, vérifié mécaniquement plutôt que promis en commentaire.
- *
- * `models` est le socle : il ne dépend d'aucun autre module. Les quatre autres s'appuient sur
- * lui, et `nettoyage` ne s'appuie **que** sur lui.
- */
 const COUCHES = [
   {
     name: 'models-ne-depend-de-personne',
@@ -83,11 +75,7 @@ module.exports = {
   forbidden: [...HYGIENE, ...COUCHES],
   options: {
     doNotFollow: { path: ['node_modules'] },
-    /**
-     * swc et non le compilateur TypeScript : dependency-cruiser 18 n'accepte pas encore
-     * TypeScript 7, et sans analyseur il ne lit **aucun** module — il rend « 0 modules cruised »
-     * et passe au vert. Une règle qui ne voit rien est toujours d'accord.
-     */
+
     parser: 'swc',
     enhancedResolveOptions: {
       exportsFields: ['exports'],

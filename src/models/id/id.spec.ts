@@ -16,7 +16,6 @@ describe('id model', (): void => {
     expect(Id.safe('')).toBeNull();
   });
 
-  /** L'identifiant sert de clé et voyage dans des URL. */
   it.each([['avec espace'], ['avec/barre'], ['avec?point-interrogation'], ['avec#diese']])(
     'refuse %s, qui ne survit pas à une URL',
     (id: string): void => {

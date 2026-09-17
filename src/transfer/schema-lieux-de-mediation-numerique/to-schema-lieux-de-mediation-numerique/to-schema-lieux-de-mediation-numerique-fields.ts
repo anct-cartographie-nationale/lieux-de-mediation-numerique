@@ -94,10 +94,6 @@ export const disponibiliteFields = (
   ...(lieuMediationNumerique.prise_rdv == null ? {} : { prise_rdv: lieuMediationNumerique.prise_rdv })
 });
 
-/**
- * La granularité est le jour : la plupart des sources ne fournissent qu'une date, et prêter une
- * précision horaire à une information qui ne l'a pas est une affirmation gratuite.
- */
 const jourSeulSiPresent = (dateMaj?: Date | string): { date_maj?: string } => {
   const jour: string | undefined = (dateMaj instanceof Date ? dateMaj.toISOString() : dateMaj)?.split('T')[0];
 

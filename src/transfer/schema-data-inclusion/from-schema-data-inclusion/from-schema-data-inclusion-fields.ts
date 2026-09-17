@@ -312,7 +312,6 @@ export const modalitesAccompagnementFromDataInclusion = (
         ])
       };
 
-/** Un résumé trop long retire la présentation, il n'écarte pas le lieu (D21). */
 const presentationOuRien = (presentation: Model.InputOf<typeof Presentation>): { presentation?: Presentation } => {
   const presentationValide: Presentation | null = Presentation.safe(presentation);
 
@@ -375,12 +374,6 @@ export const sourceFromDataInclusion = (source?: string): { source?: string } =>
 export const accessibiliteFromDataInclusion = (accessibilite?: string): { fiche_acces_libre?: FicheAccesLibre } =>
   accessibilite == null ? {} : { fiche_acces_libre: FicheAccesLibre(accessibilite) };
 
-/**
- * Les horaires ne suivant pas le format OpenStreetMap sont écartés, et le lieu conservé : un
- * horaire illisible ne doit pas faire disparaître un lieu de la carte. C'est au consommateur
- * de dire au producteur ce qui est tombé — le `Horaires` du modèle lève, lui, pour qui veut
- * l'erreur.
- */
 export const horairesFromDataInclusion = (horaires?: string): { horaires?: Horaires } => {
   const horairesValides: Horaires | null = horaires == null ? null : HorairesModel.safe(horaires);
 

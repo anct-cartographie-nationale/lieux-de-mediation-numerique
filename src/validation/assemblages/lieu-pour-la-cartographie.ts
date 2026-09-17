@@ -22,15 +22,6 @@ import {
   DispositifProgrammesNationaux
 } from '../../models';
 
-/**
- * Un assemblage parmi d'autres possibles : ce que la cartographie nationale exige d'un lieu
- * pour l'afficher. Il ne redit aucune règle de champ — il compose les schémas des modèles —
- * et n'ajoute que ses propres exigences, celles qui tiennent à l'usage et non à la donnée.
- *
- * Ici, une seule : **au moins un service**. Elle vit dans l'assemblage et non dans le socle,
- * sans quoi la coop ne pourrait pas composer les mêmes briques sans renier sa base, qui
- * autorise la liste vide et ne filtre qu'à la publication (D29.3).
- */
 export const LieuPourLaCartographieSchema = z.object({
   id: Id.schema,
   nom: Nom.schema,

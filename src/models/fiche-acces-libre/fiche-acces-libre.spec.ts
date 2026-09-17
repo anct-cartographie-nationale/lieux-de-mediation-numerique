@@ -8,10 +8,6 @@ describe('fiche acces libre model', (): void => {
     );
   });
 
-  /**
-   * Six des 305 fiches du jeu national pointaient ailleurs, dont l'une vers un site de partage
-   * de photos, publiée comme fiche d'accessibilité.
-   */
   it.each([['https://www.23hq.com/okcupid/photo/147204673'], ['https://example.fr'], ['pas une url']])(
     'refuse %s, qui n’est pas une fiche acceslibre',
     (url: string): void => {

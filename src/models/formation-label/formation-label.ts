@@ -15,11 +15,6 @@ export enum FormationLabel {
   SudLabs = 'SUD LABS (PACA)'
 }
 
-/**
- * Les doublons tombent à la construction, et c'est le schéma qui les écarte : la mise en
- * forme survit ainsi à la composition, là où un traitement posé dans le constructeur serait
- * contourné dès que `.schema` est imbriqué ailleurs.
- */
 export const FormationsLabels = defineModel(z.array(z.enum(FormationLabel)).transform(sansDoublons).brand('FormationsLabels'));
 
 export type FormationsLabels = Model.TypeOf<typeof FormationsLabels>;

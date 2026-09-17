@@ -34,10 +34,6 @@ describe('contact model', (): void => {
     expect(Contact.safe({ telephone })).toBeNull();
   });
 
-  /**
-   * Le modèle ne porte plus que l'E.164 : une seule écriture possible d'un même numéro. Les
-   * 11221 numéros du jeu national le sont déjà tous.
-   */
   it('refuse la mise en forme nationale, qui est une affaire d’affichage', (): void => {
     expect(Contact.safe({ telephone: '0 809 36 12 12' })).toBeNull();
   });
@@ -53,7 +49,6 @@ describe('contact model', (): void => {
     }
   );
 
-  /** Un numéro étranger, fût-il valide, n'a pas sa place sur une cartographie française. */
   it('refuse un numéro étranger', (): void => {
     expect(Contact.safe({ telephone: '+32470442543' })).toBeNull();
   });

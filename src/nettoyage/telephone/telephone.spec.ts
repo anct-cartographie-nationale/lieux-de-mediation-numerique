@@ -25,7 +25,6 @@ describe('nettoyerTelephone', (): void => {
     expect(nettoyer('+0102030405')).toBe('+33102030405');
   });
 
-  /** Le numéro seul ne dit pas d'où il vient : c'est le code postal du lieu qui le dit. */
   it('should read the overseas country code from the postal code of the place', (): void => {
     expect(nettoyerTelephone('97400')('102030405')).toBe('+262102030405');
     expect(nettoyerTelephone('75001')('102030405')).toBe('+33102030405');
@@ -44,7 +43,6 @@ describe('telephoneCanonique', (): void => {
     expect(telephoneCanonique('0033102030405')).toBe('+33102030405');
   });
 
-  /** Les préfixes d'outre-mer partagent le format national mais pas l'indicatif pays. */
   it('should give overseas numbers their own country code', (): void => {
     expect(telephoneCanonique('02 62 20 20 20')).toBe('+262262202020');
     expect(telephoneCanonique('0690000001')).toBe('+590690000001');
@@ -55,10 +53,6 @@ describe('telephoneCanonique', (): void => {
     expect(telephoneCanonique('')).toBeNull();
   });
 
-  /**
-   * Canoniser n'est pas valider : un numéro étranger est un numéro. C'est la validation qui
-   * restreint aux indicatifs que le schéma national admet.
-   */
   it('should accept a valid foreign number, which validation will refuse later', (): void => {
     expect(telephoneCanonique('+32 470 44 25 43')).toBe('+32470442543');
   });

@@ -12,7 +12,6 @@ describe('pivot model', (): void => {
     expect(Pivot.safe('12345678910111')).toBeNull();
   });
 
-  /** Le RNA est sorti de la modélisation : cinq lieux sur dix-huit mille en portaient un. */
   it('refuse un RNA, qui n’est plus un pivot', (): void => {
     expect(Pivot.safe('W9R2003255')).toBeNull();
   });

@@ -308,10 +308,6 @@ describe('from schema data inclusion', (): void => {
     });
   });
 
-  /**
-   * Le socle admet la liste vide ; c'est l'assemblage « pour la cartographie » qui refuse un
-   * lieu sans service (D29.3). Le transfert construit, l'assemblage juge.
-   */
   it('should build a lieu with no service when no thematique is allowed', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',
@@ -334,10 +330,6 @@ describe('from schema data inclusion', (): void => {
     expect(LieuPourLaCartographieSchema.safeParse(fromSchemaDataInclusion([service], structure)).success).toBe(false);
   });
 
-  /**
-   * Le pivot n'est plus obligatoire (D12) et le RNA est sorti de la modélisation (D13) : une
-   * structure sans SIRET entre désormais sans pivot, au lieu d'être refusée.
-   */
   it('should enter without a pivot when there is no siret', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',
@@ -712,11 +704,6 @@ describe('from schema data inclusion', (): void => {
     });
   });
 
-  /**
-   * `structure_parente` est sorti de la modélisation (D14) : aucun lieu ne le renseignait. Le
-   * champ restait pourtant projeté depuis data·inclusion, et l'étalement le posait sur un objet
-   * dont le type ne le déclare plus — ce que le compilateur ne voit pas.
-   */
   it('should not carry structure_parente, which left the model', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',
@@ -739,7 +726,6 @@ describe('from schema data inclusion', (): void => {
     expect('structure_parente' in fromSchemaDataInclusion([service], structure)).toBe(false);
   });
 
-  /** Une date illisible est une date absente, pas un `Date` dont le temps est `NaN` (D24.1). */
   it('should drop a date_maj that cannot be read', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',

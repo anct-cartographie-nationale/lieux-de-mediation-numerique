@@ -16,7 +16,6 @@ describe('corrigerInversion', (): void => {
     });
   });
 
-  /** On ne devine pas : un point qui n'est valide dans aucun sens reste tel quel. */
   it('should leave a pair that makes sense in neither direction', (): void => {
     expect(corrigerInversion({ latitude: 52.52, longitude: 13.405 })).toStrictEqual({ latitude: 52.52, longitude: 13.405 });
   });

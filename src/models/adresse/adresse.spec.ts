@@ -21,10 +21,7 @@ describe('adresse model', (): void => {
 
   it.each([
     ['error'],
-    /**
-     * Formes que le motif d'origine admettait et que le code officiel géographique ne connaît
-     * pas : aucun des 18730 codes du jeu national ne les porte.
-     */
+
     ['380546'],
     ['5723687'],
     ['38-2-33-546'],
@@ -68,11 +65,6 @@ describe('adresse model', (): void => {
     expect(Adresse.safe({ voie: '4 rue des Acacias', code_postal: '57100', commune: 'Metz *' })).toBeNull();
   });
 
-  /**
-   * Le constructeur d'avant s'arrêtait à la première erreur : un producteur dont la voie *et*
-   * le code postal étaient mauvais corrigeait la voie, relançait, et découvrait le code postal
-   * la nuit suivante (D10).
-   */
   it('rend toutes les erreurs d’une adresse en une passe', (): void => {
     const resultat = Adresse.schema.safeParse({ voie: '', code_postal: 'error', code_insee: 'error', commune: 'Metz *' });
 

@@ -63,7 +63,6 @@ const generalFieldsFromServiceAndStructure = (
   ...(structure.site_web == null ? {} : { site_web: structure.site_web })
 });
 
-/** La date du service prime sur celle de la structure ; aucune des deux ne s'invente. */
 const dateMajSiConnue = (dateMaj?: string): { date_maj?: string } => (dateMaj == null ? {} : { date_maj: dateMaj });
 
 const collecteFieldsFromServiceAndStructure = (

@@ -23,10 +23,6 @@ describe('appliquerRegle', (): void => {
     expect(appliquerRegle('a1c', saufSiChiffre)).toBe('a1c');
   });
 
-  /**
-   * Un sélecteur porteur du drapeau `g` garde un index interne entre deux `test`, si bien qu'une
-   * même règle reconnaîtrait une valeur sur deux. Le drapeau est retiré à la reconstruction.
-   */
   it('should stay stable across calls when the selector carries the global flag', (): void => {
     const global: RegleDeNettoyage = { ...enMajuscules, selecteur: /[a-z]/gu };
 
@@ -35,7 +31,6 @@ describe('appliquerRegle', (): void => {
     expect(appliquerRegle('abc', global)).toBe('ABC');
   });
 
-  /** À l'inverse, `i` doit survivre : le perdre rendrait muettes des règles écrites avec lui. */
   it('should keep the case insensitive flag', (): void => {
     const insensible: RegleDeNettoyage = { ...enMajuscules, selecteur: /ABC/iu };
 

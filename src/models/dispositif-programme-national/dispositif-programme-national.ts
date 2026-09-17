@@ -16,11 +16,6 @@ export enum DispositifProgrammeNational {
   RelaisNumeriqueEmmausConnect = 'Relais numérique (Emmaüs Connect)'
 }
 
-/**
- * Les doublons tombent à la construction, et c'est le schéma qui les écarte : la mise en
- * forme survit ainsi à la composition, là où un traitement posé dans le constructeur serait
- * contourné dès que `.schema` est imbriqué ailleurs.
- */
 export const DispositifProgrammesNationaux = defineModel(
   z.array(z.enum(DispositifProgrammeNational)).transform(sansDoublons).brand('DispositifProgrammesNationaux')
 );

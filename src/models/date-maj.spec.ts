@@ -14,11 +14,6 @@ describe('dateMajSiLisible', (): void => {
     expect(dateMajSiLisible(dateMaj)).toStrictEqual({});
   });
 
-  /**
-   * `new Date('pas une date')` ne lève pas : elle rend un `Date` dont le temps est `NaN`, qui
-   * se range sans bruit dans un champ typé `Date` et ne se trahit qu'à la sérialisation, très
-   * loin de la donnée fautive.
-   */
   it.each([['pas une date'], ['2022-13-45'], ['']])('rend un objet vide pour la date illisible %s', (dateMaj): void => {
     expect(dateMajSiLisible(dateMaj)).toStrictEqual({});
   });

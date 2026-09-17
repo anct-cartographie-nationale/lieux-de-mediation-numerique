@@ -1,13 +1,3 @@
-/**
- * Les emprises françaises, métropole et outre-mer.
- *
- * Les bornes du globe — ±90 et ±180 — laissent passer une inversion latitude/longitude : le
- * jeu national publie « Bus France services de Cap Nord Martinique » en `lat = -61,028`, au
- * large de l'Afrique du Sud, et `-61` est une latitude parfaitement valide.
- *
- * Vérifié sur les 18769 lieux du jeu national : **un seul** tombe hors de ces emprises, et
- * c'est précisément celui dont les coordonnées sont inversées.
- */
 export type Emprise = {
   nom: string;
   latitudeMinimale: number;
@@ -81,9 +71,5 @@ export const dansUneEmpriseFrancaise = (latitude: number, longitude: number): bo
       longitude <= emprise.longitudeMaximale
   );
 
-/**
- * Une inversion avérée : le couple échangé tombe dans une emprise, le couple d'origine non.
- * C'est la cause la plus probable, et la seule qu'on sache reconnaître sans deviner.
- */
 export const estInverse = (latitude: number, longitude: number): boolean =>
   !dansUneEmpriseFrancaise(latitude, longitude) && dansUneEmpriseFrancaise(longitude, latitude);

@@ -25,11 +25,6 @@ describe('siret model', (): void => {
     expect(Siret.safe('00000000000000')).toBeNull();
   });
 
-  /**
-   * La Poste immatricule ses établissements sous des SIRET qui ne respectent pas la clé de
-   * contrôle. Sans cette exemption, cent trente-neuf lieux du jeu national perdent leur pivot
-   * au lieu de quatre.
-   */
   it('accepte un siret de La Poste, qui ne respecte pas la clé de contrôle', (): void => {
     expect(Siret('35600000067271')).toBe('35600000067271');
   });

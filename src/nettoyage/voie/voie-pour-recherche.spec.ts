@@ -10,7 +10,6 @@ describe('nettoyerVoiePourRecherche', (): void => {
     expect(nettoyerVoiePourRecherche('3 rue des Lilas (Bat B)')).toBe('3 rue des Lilas');
   });
 
-  /** Une commune déléguée entre parenthèses lève une ambiguïté : elle doit survivre. */
   it('should keep a delegated commune between parentheses', (): void => {
     expect(nettoyerVoiePourRecherche('27 Rue Victor Hugo (Saint-Pol-sur-Mer)')).toBe('27 Rue Victor Hugo (Saint-Pol-sur-Mer)');
   });
@@ -23,7 +22,6 @@ describe('nettoyerVoiePourRecherche', (): void => {
     expect(nettoyerVoiePourRecherche('IMMEUBLE ANTHYLLIS ZAC BASSO CAMBO 8 RUE PAUL MESPLE')).toBe('8 RUE PAUL MESPLE');
   });
 
-  /** « Grande Rue » et « Grand-Place » portent le type de voie dans leur nom. */
   it('should keep a compound name that carries the street type', (): void => {
     expect(nettoyerVoiePourRecherche('Grand-Place')).toBe('Grand-Place');
   });
@@ -32,7 +30,6 @@ describe('nettoyerVoiePourRecherche', (): void => {
     expect(nettoyerVoiePourRecherche('46 b Avenue Joliot Curie')).toBe('46 Avenue Joliot Curie');
   });
 
-  /** Le R de « 372 R des Tovets » abrège la rue : l'amputer détruirait l'adresse. */
   it('should keep a letter that abbreviates the street type itself', (): void => {
     expect(nettoyerVoiePourRecherche('372 R des Tovets')).toBe('372 R des Tovets');
   });

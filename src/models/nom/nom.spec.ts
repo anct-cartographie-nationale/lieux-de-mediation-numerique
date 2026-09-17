@@ -16,15 +16,10 @@ describe('nom model', (): void => {
     expect(Nom.safe('')).toBeNull();
   });
 
-  /** Un nom fait d'espaces est un nom vide. */
   it('refuse un nom fait d’espaces', (): void => {
     expect(Nom.safe('   ')).toBeNull();
   });
 
-  /**
-   * Retirer les espaces de bord est une réparation, que `nettoyerNom` sait faire et que le
-   * consommateur applique s'il le veut (D16.2). La validation constate, elle ne corrige pas.
-   */
   it('ne rogne pas les espaces de bord, qui relèvent du nettoyage', (): void => {
     expect(Nom(' Anonymal ')).toBe(' Anonymal ');
   });

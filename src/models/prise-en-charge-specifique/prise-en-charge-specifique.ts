@@ -12,11 +12,6 @@ export enum PriseEnChargeSpecifique {
   DeficienceVisuelle = 'Déficience visuelle'
 }
 
-/**
- * Les doublons tombent à la construction, et c'est le schéma qui les écarte : la mise en
- * forme survit ainsi à la composition, là où un traitement posé dans le constructeur serait
- * contourné dès que `.schema` est imbriqué ailleurs.
- */
 export const PrisesEnChargeSpecifiques = defineModel(
   z.array(z.enum(PriseEnChargeSpecifique)).transform(sansDoublons).brand('PrisesEnChargeSpecifiques')
 );

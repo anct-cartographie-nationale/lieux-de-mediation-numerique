@@ -10,13 +10,6 @@ export const Longitude = defineModel(z.number().min(-180).max(180).brand('Longit
 
 export type Longitude = Model.TypeOf<typeof Longitude>;
 
-/**
- * Le point doit tomber sur le territoire français. Les bornes du globe laissent passer une
- * inversion latitude/longitude, qui publie un lieu de Martinique au large de l'Afrique du Sud.
- *
- * Le message nomme cette cause quand le couple échangé serait valide : c'est une information
- * que l'appelant ne peut pas retrouver seul.
- */
 export const Localisation = defineModel(
   z
     .object({ latitude: Latitude.schema, longitude: Longitude.schema })

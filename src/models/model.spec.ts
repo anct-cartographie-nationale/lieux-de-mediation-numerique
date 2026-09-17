@@ -43,11 +43,6 @@ describe('defineModel', (): void => {
     });
   });
 
-  /**
-   * Le garde-fou de la règle « la mise en forme vit dans le schéma ». Un préprocesseur posé à
-   * côté du schéma serait contourné ici, silencieusement : c'est `.schema` qui est composé, pas
-   * le constructeur. Ce test échoue si quelqu'un réintroduit ce mécanisme.
-   */
   describe('composition : un .schema imbriqué dans un autre modèle', (): void => {
     const Paire = defineModel(z.object({ gauche: Majuscules.schema, droite: Trigramme.schema }).brand('Paire'));
 

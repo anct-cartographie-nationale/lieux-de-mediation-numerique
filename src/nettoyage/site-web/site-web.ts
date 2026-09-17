@@ -12,7 +12,6 @@ const DEUX_POINTS_APRES_WWW: RegleDeNettoyage = {
   corriger: (aCorriger: string): string => aCorriger.replace(/www:/gu, 'www.')
 };
 
-/** Le schéma national sépare les adresses multiples par une barre verticale. */
 const SEPARATEUR_INATTENDU: RegleDeNettoyage = {
   nom: 'séparateur inattendu entre adresses',
   selecteur: /;|\s(?:ou|\/|;)\s/u,
@@ -80,21 +79,6 @@ const DEUX_POINTS_MANQUANTS: RegleDeNettoyage = {
   corriger: (aCorriger: string): string => aCorriger.replace(/(https?)(\/\/)/u, '$1:$2')
 };
 
-/**
- * Un protocole mal orthographié — `htpps://`, `htthttp://`, `httphttps://`, tous trois publiés
- * dans le jeu national — ne ressemble pas à `http`, si bien que la règle du protocole manquant
- * lui en ajoutait un devant et produisait `http://htpps://…`.
- *
- * On ne répare que ce qui commence par `h` et contient un `t` et un `p` : `ftp://` et
- * `gopher://` ne sont pas des `http` mal tapés, et les transformer masquerait une adresse qui
- * doit être refusée.
- *
- * Le `s` décide entre les deux protocoles : `htpps` porte le sien, `htthttp` non.
- *
- * La règle vient **après** celles qui réparent un protocole reconnaissable — `https//:`,
- * `https//`, `http:/` — faute de quoi elle leur volerait leur correspondance et laisserait
- * un deux-points orphelin derrière elle.
- */
 const PROTOCOLE_MAL_ORTHOGRAPHIE: RegleDeNettoyage = {
   nom: 'protocole mal orthographié',
   selecteur: /^(?!https?:\/\/)h(?=[a-z]*t)(?=[a-z]*p)[a-z]{1,11}:?\/\//u,
@@ -116,11 +100,6 @@ const PROTOCOLE_MANQUANT_DANS_UNE_LISTE: RegleDeNettoyage = {
   corriger: (aCorriger: string): string => aCorriger.replace(/\|((?!http[s]?:\/\/)[^|]+)/gu, '|http://$1')
 };
 
-/**
- * L'ordre vient de mednum-cli, et il compte : les protocoles se réparent avant d'être ajoutés,
- * sans quoi `PROTOCOLE_MANQUANT` préfixerait une adresse dont le protocole est seulement mal
- * écrit.
- */
 export const REGLES_SITE_WEB: readonly RegleDeNettoyage[] = [
   RETOUR_A_LA_LIGNE,
   DEUX_POINTS_APRES_WWW,
@@ -140,5 +119,4 @@ export const REGLES_SITE_WEB: readonly RegleDeNettoyage[] = [
   PROTOCOLE_MANQUANT_DANS_UNE_LISTE
 ];
 
-/** L'adresse de site web réparée. Ne valide rien : c'est l'affaire de la validation. */
 export const nettoyerSiteWeb = (siteWeb: string): string => appliquerRegles(REGLES_SITE_WEB, siteWeb);

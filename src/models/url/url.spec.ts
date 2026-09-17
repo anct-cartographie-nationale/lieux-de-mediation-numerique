@@ -33,7 +33,6 @@ describe('url model', (): void => {
     expect(Url(url)).toBe(url);
   });
 
-  /** Le jeu national publiait `http://www`, `https://w` et `https://www/carct.fr`. */
   it.each([['http://www'], ['https://w'], ['https://www/carct.fr'], ['https://example'], ['https://www.']])(
     'refuse %s, dont l’hôte ne porte pas de domaine',
     (url: string): void => {

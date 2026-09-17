@@ -59,7 +59,6 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
-      # Le cloisonnement des modules, vérifié plutôt que promis en commentaire.
       - name: Check module boundaries
         run: pnpm lint.architecture
 
@@ -80,7 +79,6 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
-      # La construction ne type que ce qui part dans le paquet : les tests lui échappent.
       - name: Check types, tests included
         run: pnpm ts.check
 
@@ -107,8 +105,6 @@ jobs:
         run: pnpm lint.commit
 
   tests:
-    # Le plancher que `engines` annonce, et celui sur lequel tournent les consommateurs. Une
-    # version déclarée que rien n'exécute n'est qu'une promesse.
     name: Tests (Node ${{ matrix.node }})
     runs-on: ubuntu-latest
     strategy:
