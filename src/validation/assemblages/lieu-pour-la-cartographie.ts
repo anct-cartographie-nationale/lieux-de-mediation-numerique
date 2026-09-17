@@ -1,14 +1,16 @@
 import { z } from 'zod';
-import { DispositifProgrammeNational } from '../../models/dispositif-programme-national';
-import { FormationLabel } from '../../models/formation-label';
-import { Frais } from '../../models/frais-a-charge';
-import { Itinerance } from '../../models/itinerance';
-import { ModaliteAcces } from '../../models/modalite-acces';
-import { ModaliteAccompagnement } from '../../models/modalite-accompagnement';
-import { PriseEnChargeSpecifique } from '../../models/prise-en-charge-specifique';
-import { PublicSpecifiquementAdresse } from '../../models/publics-specifiquement-adresses';
-import { Service } from '../../models/service';
-import { Typologie } from '../../models/typologie';
+import {
+  DispositifProgrammeNational,
+  FormationLabel,
+  Frais,
+  Itinerance,
+  ModaliteAcces,
+  ModaliteAccompagnement,
+  PriseEnChargeSpecifique,
+  PublicSpecifiquementAdresse,
+  Service,
+  Typologie
+} from '../../models';
 import {
   AdresseSchema,
   CourrielSchema,

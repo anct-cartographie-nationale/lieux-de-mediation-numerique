@@ -1,24 +1,29 @@
 import { z } from 'zod';
-import { isValidCodeInsee, isValidCodePostal, isValidCommune, isValidVoie } from '../../models';
-import type { Courriel } from '../../models';
-import { isValidCourriel } from '../../models';
-import type { Horaires } from '../../models';
-import { isValidHoraires } from '../../models';
-import type { Id } from '../../models';
-import { isValidId } from '../../models';
-import type { Localisation } from '../../models';
-import { isValidLocalisation } from '../../models';
-import type { Nom } from '../../models';
-import { isValidNom } from '../../models';
-import type { Pivot } from '../../models';
-import type { Presentation } from '../../models';
-import { RESUME_LONGUEUR_MAXIMALE } from '../../models';
-import type { Siret } from '../../models';
-import { isSiret } from '../../models';
-import { isValidTelephone } from '../../models';
-import type { Url } from '../../models';
-import { isValidUrl } from '../../models';
-import { isValidFicheAccesLibre } from '../../models';
+import {
+  isSiret,
+  isValidCodeInsee,
+  isValidCodePostal,
+  isValidCommune,
+  isValidCourriel,
+  isValidFicheAccesLibre,
+  isValidHoraires,
+  isValidId,
+  isValidLocalisation,
+  isValidNom,
+  isValidTelephone,
+  isValidUrl,
+  isValidVoie,
+  RESUME_LONGUEUR_MAXIMALE,
+  type Courriel,
+  type Horaires,
+  type Id,
+  type Localisation,
+  type Nom,
+  type Pivot,
+  type Presentation,
+  type Siret,
+  type Url
+} from '../../models';
 
 export const SiretSchema: z.ZodType<Siret> = z
   .string()

@@ -1,17 +1,18 @@
-import { Horaires, isValidHoraires } from '../../../models';
-import { Pivot } from '../../../models';
 import {
   Adresse,
   Contact,
   Courriel,
+  DispositifProgrammesNationaux,
   FormationsLabels,
   FraisACharge,
+  Horaires,
+  isValidHoraires,
   Itinerances,
-  DispositifProgrammesNationaux,
   Localisation,
   ModaliteAcces,
   ModalitesAcces,
   ModalitesAccompagnement,
+  Pivot,
   Presentation,
   PrisesEnChargeSpecifiques,
   PublicsSpecifiquementAdresses,
