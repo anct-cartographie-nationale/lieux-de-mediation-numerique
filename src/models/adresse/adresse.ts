@@ -1,18 +1,17 @@
 import type { Model } from '../model';
 import { CodeInseeError, CodePostalError, CommuneError, VoieError } from './errors';
 
-export type Adresse = Model<
-  'Adresse',
-  {
-    voie: string;
-    complement_adresse?: string;
-    code_postal: string;
-    code_insee?: string;
-    commune: string;
-  }
->;
+/** La forme, telle qu'on l'écrit avant de la faire valider. */
+export type AdresseToValidate = {
+  voie: string;
+  complement_adresse?: string;
+  code_postal: string;
+  code_insee?: string;
+  commune: string;
+};
 
-export type AdresseToValidate = Omit<Adresse, 'isAdresse'>;
+/** Une valeur dont le constructeur a vérifié chaque partie. */
+export type Adresse = Model<'Adresse', AdresseToValidate>;
 
 const CODE_POSTAL_REG_EXP: RegExp = /^\d{5}$/u;
 
@@ -41,13 +40,13 @@ export const isValidCommune = (commune: string): boolean => COMMUNE_REG_EXP.test
 
 export const isValidVoie = (voie: string): boolean => voie.length > 0 && VOIE_REG_EXP.test(voie);
 
-export const isValidAddress = (adresse: Omit<Adresse, 'isAdresse'>): adresse is Adresse =>
+export const isValidAddress = (adresse: AdresseToValidate): adresse is Adresse =>
   isValidVoie(adresse.voie) &&
   isValidCodePostal(adresse.code_postal) &&
   (adresse.code_insee == null || isValidCodeInsee(adresse.code_insee)) &&
   isValidCommune(adresse.commune);
 
-const throwAdresseError = (adresse: Omit<Adresse, 'isAdresse'>): Adresse => {
+const throwAdresseError = (adresse: AdresseToValidate): Adresse => {
   if (!isValidVoie(adresse.voie)) throw new VoieError(adresse.voie);
   if (!isValidCodePostal(adresse.code_postal)) throw new CodePostalError(adresse.code_postal);
   if (adresse.code_insee != null && !isValidCodeInsee(adresse.code_insee)) throw new CodeInseeError(adresse.code_insee);
