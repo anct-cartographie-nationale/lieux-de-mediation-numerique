@@ -1,5 +1,6 @@
 export * from './adresse';
 export * from './contact';
+export * from './date-maj';
 export * from './courriel';
 export * from './dispositif-programme-national';
 export * from './fiche-acces-libre';

@@ -1,4 +1,4 @@
-import { Id, type LieuMediationNumerique, Nom, type Services } from '../../../models';
+import { dateMajSiLisible, Id, type LieuMediationNumerique, Nom, type Services } from '../../../models';
 import type { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import {
   ficheAccedLibreIfAny,
@@ -57,10 +57,8 @@ export const fromSchemaLieuDeMediationNumerique = (
   ...pivotIfAny(schemaLieuMediationNumeriqueItem.pivot),
   nom: Nom(schemaLieuMediationNumeriqueItem.nom),
   ...adresse(schemaLieuMediationNumeriqueItem),
-  /** Une date absente le reste : plus de repli sur l'époque Unix. */
-  ...(schemaLieuMediationNumeriqueItem.date_maj == null
-    ? {}
-    : { date_maj: new Date(schemaLieuMediationNumeriqueItem.date_maj) }),
+  /** Une date absente le reste, et une date illisible le devient : plus de repli sur l'époque Unix. */
+  ...dateMajSiLisible(schemaLieuMediationNumeriqueItem.date_maj),
   ...optionalFields(schemaLieuMediationNumeriqueItem)
 });
 

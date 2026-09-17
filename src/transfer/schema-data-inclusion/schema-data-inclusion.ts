@@ -71,7 +71,13 @@ export type SchemaStructureDataInclusionDisponibiliteFields = {
 };
 
 export type SchemaStructureDataInclusionCollecteFields = {
-  date_maj: string;
+  /**
+   * Le schéma data·inclusion rend ce champ obligatoire ; notre modèle ne le fait plus (D24.1).
+   * Le rendre facultatif ici est une divergence assumée : une structure dont la date est
+   * inconnue sort sans date, là où elle sortait datée de 1970. Mieux vaut un champ manquant,
+   * que data·inclusion signalera, qu'une valeur fausse que personne ne remarque.
+   */
+  date_maj?: string;
   source?: string;
   lien_source?: string;
 };

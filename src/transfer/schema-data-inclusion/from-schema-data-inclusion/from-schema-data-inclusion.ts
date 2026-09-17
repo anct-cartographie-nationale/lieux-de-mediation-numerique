@@ -1,4 +1,5 @@
 import {
+  dateMajSiLisible,
   Id,
   type LieuMediationNumerique,
   Nom,
@@ -31,7 +32,6 @@ import {
   publicSpecifiquementAdresseFromDataInclusion,
   servicesFromDataInclusion,
   sourceFromDataInclusion,
-  structureParenteFromDataInclusion,
   TYPOLOGIES_MAP,
   typologiesFromDataInclusion
 } from './from-schema-data-inclusion-fields';
@@ -92,7 +92,7 @@ const fromSchemaDataInclusionItem = (
   ...adresseFromDataInclusion(structure),
   ...localisationFromDataInclusion(structure.latitude, structure.longitude),
   ...servicesFromDataInclusion(service.thematiques),
-  date_maj: new Date(structure.date_maj),
+  ...dateMajSiLisible(structure.date_maj),
   ...contactFromDataInclusion(structure.courriel, structure.telephone, structure.site_web),
   ...sourceFromDataInclusion(structure.source),
   ...accessibiliteFromDataInclusion(structure.accessibilite),
@@ -108,7 +108,6 @@ const fromSchemaDataInclusionItem = (
   ...priseRdvFromDataInclusion(service.prise_rdv),
   ...ifAnyPublicSpecifiquementAdresseInArray(publicSpecifiquementAdresseFromDataInclusion(service.profils)),
   ...ifAnyPriseEnChargeSpecifiqueInArray(priseEnChargeSpecifiqueFromDataInclusion(service.profils)),
-  ...structureParenteFromDataInclusion(structure.structure_parente),
   ...(structure.typologie == null ? {} : typologiesFromDataInclusion(TYPOLOGIES_MAP.get(structure.typologie)))
 });
 

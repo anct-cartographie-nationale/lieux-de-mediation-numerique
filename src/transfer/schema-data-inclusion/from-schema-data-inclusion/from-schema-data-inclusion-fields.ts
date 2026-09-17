@@ -390,9 +390,6 @@ export const horairesFromDataInclusion = (horaires?: string): { horaires?: Horai
 export const priseRdvFromDataInclusion = (priseRdv?: string): { prise_rdv?: Url } =>
   priseRdv == null ? {} : { prise_rdv: Url(priseRdv) };
 
-export const structureParenteFromDataInclusion = (structureParente?: string): { structure_parente?: string } =>
-  structureParente == null ? {} : { structure_parente: structureParente };
-
 export const mergeThematiques = (thematiques?: string[], thematiquesToAdd?: string[]): { thematiques: string[] } => ({
   thematiques: Array.from(new Set([...(thematiques ?? []), ...(thematiquesToAdd ?? [])]))
 });

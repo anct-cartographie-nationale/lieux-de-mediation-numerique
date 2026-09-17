@@ -711,4 +711,53 @@ describe('from schema data inclusion', (): void => {
       prise_rdv: Url('http://www.test.com')
     });
   });
+
+  /**
+   * `structure_parente` est sorti de la modélisation (D14) : aucun lieu ne le renseignait. Le
+   * champ restait pourtant projeté depuis data·inclusion, et l'étalement le posait sur un objet
+   * dont le type ne le déclare plus — ce que le compilateur ne voit pas.
+   */
+  it('should not carry structure_parente, which left the model', (): void => {
+    const structure: SchemaStructureDataInclusion = {
+      adresse: '12 BIS RUE DE LECLERCQ',
+      code_postal: '51100',
+      commune: 'Reims',
+      date_maj: new Date('2022-10-10').toISOString(),
+      id: 'structure-1',
+      nom: 'Anonymal',
+      structure_parente: 'structure-mere'
+    };
+
+    const service: SchemaServiceDataInclusion = {
+      id: 'structure-1-mediation-numerique',
+      nom: 'Médiation numérique',
+      source: 'Hubik',
+      structure_id: 'structure-1',
+      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives']
+    };
+
+    expect('structure_parente' in fromSchemaDataInclusion([service], structure)).toBe(false);
+  });
+
+  /** Une date illisible est une date absente, pas un `Date` dont le temps est `NaN` (D24.1). */
+  it('should drop a date_maj that cannot be read', (): void => {
+    const structure: SchemaStructureDataInclusion = {
+      adresse: '12 BIS RUE DE LECLERCQ',
+      code_postal: '51100',
+      commune: 'Reims',
+      date_maj: 'pas une date',
+      id: 'structure-1',
+      nom: 'Anonymal'
+    };
+
+    const service: SchemaServiceDataInclusion = {
+      id: 'structure-1-mediation-numerique',
+      nom: 'Médiation numérique',
+      source: 'Hubik',
+      structure_id: 'structure-1',
+      thematiques: ['numerique--devenir-autonome-dans-les-demarches-administratives']
+    };
+
+    expect('date_maj' in fromSchemaDataInclusion([service], structure)).toBe(false);
+  });
 });

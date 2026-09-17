@@ -367,4 +367,21 @@ describe('to schema data.inclusion', (): void => {
       }
     ]);
   });
+
+  /**
+   * `new Date(date_maj ?? 0)` datait de 1970 une structure sans date : la sentinelle que D24.1
+   * supprime, sous un autre nom. Le champ manque désormais, et data·inclusion le signalera —
+   * ce qu'une date fausse ne permettait à personne de remarquer.
+   */
+  it('should omit date_maj rather than date the structure from 1970', (): void => {
+    const sansDate: LieuMediationNumerique = {
+      id: Id('c3d15659-8de9-4fd6-b283-04d50f6ace57'),
+      nom: Nom('MOBILETTE'),
+      adresse: Adresse({ code_postal: '09891', commune: 'Robinboeuf', voie: '3 RUE DE LECLERCQ' }),
+      services: Services([Service.AccesInternetEtMaterielInformatique]),
+      source: 'solidagregateur'
+    };
+
+    expect('date_maj' in (toSchemaStructuresDataInclusion([sansDate])[0] ?? {})).toBe(false);
+  });
 });
