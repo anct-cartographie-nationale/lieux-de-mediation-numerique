@@ -33,13 +33,13 @@ const COMMUNE_REG_EXP: RegExp = /^[A-Za-z\dÀ-ÖØ-öø-ÿœ-ŸŒ\-'’\s]+$/u;
 
 const VOIE_REG_EXP: RegExp = /^[0-9A-Za-z\dÀ-ÖØ-öø-ÿœ-ŸŒ\-,()°.&:+–|;'’/\s]+$/u;
 
-const isValidCodePostal = (codePostal: string): boolean => CODE_POSTAL_REG_EXP.test(codePostal);
+export const isValidCodePostal = (codePostal: string): boolean => CODE_POSTAL_REG_EXP.test(codePostal);
 
-const isValidCodeInsee = (codeInsee: string): boolean => CODE_INSEE_REG_EXP.test(codeInsee);
+export const isValidCodeInsee = (codeInsee: string): boolean => CODE_INSEE_REG_EXP.test(codeInsee);
 
-const isValidCommune = (commune: string): boolean => COMMUNE_REG_EXP.test(commune);
+export const isValidCommune = (commune: string): boolean => COMMUNE_REG_EXP.test(commune);
 
-const isValidVoie = (voie: string): boolean => voie.length > 0 && VOIE_REG_EXP.test(voie);
+export const isValidVoie = (voie: string): boolean => voie.length > 0 && VOIE_REG_EXP.test(voie);
 
 export const isValidAddress = (adresse: Omit<Adresse, 'isAdresse'>): adresse is Adresse =>
   isValidVoie(adresse.voie) &&

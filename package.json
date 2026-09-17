@@ -45,7 +45,8 @@
   },
   "dependencies": {
     "fuzzball": "^2.2.3",
-    "libphonenumber-js": "^1.13.13"
+    "libphonenumber-js": "^1.13.12",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.2",

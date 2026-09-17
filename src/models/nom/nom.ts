@@ -5,7 +5,8 @@ export type NomToValidate = string | undefined;
 
 export type Nom = Model<'Nom', string>;
 
-export const isValidNom = (nomData: NomToValidate): nomData is Nom => nomData != null && nomData !== '';
+/** Un nom fait d'espaces est un nom vide : `!== ''` ne suffisait pas à le dire. */
+export const isValidNom = (nomData: NomToValidate): nomData is Nom => nomData != null && nomData.trim() !== '';
 
 const throwNomError = (nomData: NomToValidate): Nom => {
   if (!isValidNom(nomData)) {

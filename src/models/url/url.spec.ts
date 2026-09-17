@@ -47,4 +47,14 @@ describe('url model', (): void => {
   it.each([['http://example.fr'], ['https://example.fr/page?a=1#b']])('should accept %s', (url: string): void => {
     expect(Url(url)).toBe(url);
   });
+
+  /** Le jeu national publiait `http://www`, `https://w` et `https://www/carct.fr`. */
+  it.each([['http://www'], ['https://w'], ['https://www/carct.fr'], ['https://example'], ['https://www.']])(
+    'should refuse %s, whose host carries no domain',
+    (url: string): void => {
+      expect((): void => {
+        Url(url);
+      }).toThrow(new UrlError(url));
+    }
+  );
 });
