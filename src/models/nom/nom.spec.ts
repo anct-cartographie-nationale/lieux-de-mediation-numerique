@@ -1,29 +1,23 @@
-import { describe, it, expect } from 'vitest';
-import { Nom, type NomToValidate } from './nom';
-import { NomError } from './errors';
+import { describe, expect, it } from 'vitest';
+import { Nom } from './nom';
 
 describe('nom model', (): void => {
-  it('should create a valid nom', (): void => {
-    const nomData: NomToValidate = '4cf5az948azc4z4';
-
-    const nom: Nom = Nom(nomData);
+  it('construit un nom valide', (): void => {
+    const nom: Nom = Nom('4cf5az948azc4z4');
 
     expect(nom).toBe('4cf5az948azc4z4');
   });
 
-  it('should throw NomError when nom is null', (): void => {
-    const nomData: NomToValidate = null as unknown as string;
-
-    expect((): void => {
-      Nom(nomData);
-    }).toThrow(new NomError(nomData));
+  it('refuse une valeur absente', (): void => {
+    expect(Nom.safe(null as unknown as string)).toBeNull();
   });
 
-  it('should throw NomError when nom is empty string', (): void => {
-    const nomData: NomToValidate = '';
+  it('refuse un nom vide', (): void => {
+    expect(Nom.safe('')).toBeNull();
+  });
 
-    expect((): void => {
-      Nom(nomData);
-    }).toThrow(new NomError(nomData));
+  /** Un nom fait d'espaces est un nom vide. */
+  it('refuse un nom fait d’espaces', (): void => {
+    expect(Nom.safe('   ')).toBeNull();
   });
 });

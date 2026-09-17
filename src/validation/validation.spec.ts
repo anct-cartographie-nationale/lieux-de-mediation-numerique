@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+import type { z } from 'zod';
 import { LieuPourLaCartographieSchema } from './assemblages';
-import { AdresseSchema, SiretSchema } from './champs';
+import { Adresse, Siret } from '../models';
 
 const lieuValide = {
   id: 'Reims_1',
@@ -11,13 +12,22 @@ const lieuValide = {
   services: ['Aide aux démarches administratives']
 };
 
-describe('les schémas réutilisent les règles du modèle', (): void => {
+/**
+ * Le constructeur et le schéma ne sont plus deux déclarations à tenir d'accord : le premier
+ * n'est qu'une porte ouverte sur le second.
+ */
+describe('le schéma d’un modèle est celui de son constructeur', (): void => {
   it('should accept what the constructor accepts', (): void => {
-    expect(SiretSchema.safeParse('43575434300018').success).toBe(true);
+    expect(Siret.schema.safeParse('43575434300018').success).toBe(true);
   });
 
   it('should refuse what the constructor refuses', (): void => {
-    expect(SiretSchema.safeParse('12345678910111').success).toBe(false);
+    expect(Siret.schema.safeParse('12345678910111').success).toBe(false);
+  });
+
+  /** L'écart d'avant : `Siret()` retirait les espaces, `SiretSchema` les refusait. */
+  it('should normalize exactly like the constructor does', (): void => {
+    expect(Siret.schema.parse('435 754 343 00018')).toBe(Siret('435 754 343 00018'));
   });
 });
 
@@ -27,15 +37,12 @@ describe('toutes les erreurs, en une passe', (): void => {
    * ses données une erreur à la fois, en relançant la chaîne entre chaque.
    */
   it('should report every faulty field of an address at once, each with its path', (): void => {
-    const resultat = AdresseSchema.safeParse({ voie: '', code_postal: '999', code_insee: '96001', commune: 'Reims!!' });
+    const resultat = Adresse.schema.safeParse({ voie: '', code_postal: '999', code_insee: '96001', commune: 'Reims!!' });
 
     expect(resultat.success).toBe(false);
-    expect(resultat.success ? [] : resultat.error.issues.map((probleme) => probleme.path.join('.'))).toStrictEqual([
-      'voie',
-      'code_postal',
-      'code_insee',
-      'commune'
-    ]);
+    expect(
+      resultat.success ? [] : resultat.error.issues.map((probleme: z.core.$ZodIssue): string => probleme.path.join('.'))
+    ).toStrictEqual(['voie', 'code_postal', 'code_insee', 'commune']);
   });
 
   it('should report every faulty field of a place at once', (): void => {
@@ -49,7 +56,9 @@ describe('toutes les erreurs, en une passe', (): void => {
       contact: { telephone: '0102030405', courriels: ['pas-une-adresse'], site_web: ['htpps://a.fr'] }
     });
 
-    expect(resultat.success ? [] : resultat.error.issues.map((probleme) => probleme.path.join('.'))).toStrictEqual([
+    expect(
+      resultat.success ? [] : resultat.error.issues.map((probleme: z.core.$ZodIssue): string => probleme.path.join('.'))
+    ).toStrictEqual([
       'id',
       'pivot',
       'localisation',

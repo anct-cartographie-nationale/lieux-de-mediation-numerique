@@ -1,5 +1,5 @@
-import type { Model } from '../model';
-import { UrlError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
 
 /**
  * Deux resserrements, chacun motivé par une adresse réellement publiée.
@@ -15,12 +15,8 @@ import { UrlError } from './errors';
 const URL_REGEXP: RegExp =
   /^https?:\/\/(?:[;:&=+$,\w-]+@)?[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+(?:(?:\/[+~,%@/.\w_-]*)?\??[-+=&;%@.\w_]*#?[.!/\\\w]*)?$/u;
 
-export type Url = Model<'Url', string>;
+export const Url = defineModel(
+  z.string().regex(URL_REGEXP, { error: "L'adresse doit être en http ou https, sur un hôte qui porte un domaine" }).brand('Url')
+);
 
-const throwUrlError = (url: string): Url => {
-  throw new UrlError(url);
-};
-
-export const isValidUrl = (url: string): url is Url => URL_REGEXP.test(url);
-
-export const Url = (url: string): Url => (isValidUrl(url) ? url : throwUrlError(url));
+export type Url = Model.TypeOf<typeof Url>;

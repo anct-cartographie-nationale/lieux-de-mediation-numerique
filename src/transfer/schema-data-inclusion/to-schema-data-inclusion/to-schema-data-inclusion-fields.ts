@@ -187,14 +187,13 @@ export const contactFields = (lieuMediationNumerique: LieuMediationNumerique): S
 export const presentationFields = (
   lieuMediationNumerique: LieuMediationNumerique
 ): SchemaStructureDataInclusionPresentationFields => ({
+  /**
+   * Le résumé n'a plus à être tronqué ici : le modèle le borne à `RESUME_LONGUEUR_MAXIMALE`,
+   * qui est la limite du schéma data.inclusion. Une valeur trop longue n'arrive plus jusque-là.
+   */
   ...(lieuMediationNumerique.presentation?.resume == null
     ? {}
-    : {
-        presentation_resume:
-          lieuMediationNumerique.presentation.resume.length > 280
-            ? `${lieuMediationNumerique.presentation.resume.slice(0, 277)}...`
-            : lieuMediationNumerique.presentation.resume
-      }),
+    : { presentation_resume: lieuMediationNumerique.presentation.resume }),
   ...(lieuMediationNumerique.presentation?.detail == null
     ? {}
     : { presentation_detail: lieuMediationNumerique.presentation.detail })

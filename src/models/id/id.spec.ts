@@ -1,43 +1,30 @@
-import { describe, it, expect } from 'vitest';
-import { Id, type IdToValidate } from './id';
-import { IdError } from './errors';
+import { describe, expect, it } from 'vitest';
+import { Id } from './id';
 
 describe('id model', (): void => {
-  it('should create a valid id', (): void => {
-    const idData: IdToValidate = '4cf5az948azc4z4';
-
-    const id: Id = Id(idData);
+  it('construit un identifiant valide', (): void => {
+    const id: Id = Id('4cf5az948azc4z4');
 
     expect(id).toBe('4cf5az948azc4z4');
   });
 
-  it('should throw IdError when id is null', (): void => {
-    const idData: IdToValidate = null as unknown as string;
-
-    expect((): void => {
-      Id(idData);
-    }).toThrow(new IdError(idData));
+  it('refuse une valeur absente', (): void => {
+    expect(Id.safe(null as unknown as string)).toBeNull();
   });
 
-  it('should throw IdError when id is empty string', (): void => {
-    const idData: IdToValidate = '';
-
-    expect((): void => {
-      Id(idData);
-    }).toThrow(new IdError(idData));
+  it('refuse un identifiant vide', (): void => {
+    expect(Id.safe('')).toBeNull();
   });
 
   /** L'identifiant sert de clé et voyage dans des URL. */
   it.each([['avec espace'], ['avec/barre'], ['avec?point-interrogation'], ['avec#diese']])(
-    'should refuse %s, which does not survive a URL',
+    'refuse %s, qui ne survit pas à une URL',
     (id: string): void => {
-      expect((): void => {
-        Id(id);
-      }).toThrow(new IdError(id));
+      expect(Id.safe(id)).toBeNull();
     }
   );
 
-  it.each([['Paris_12'], ['dora_7dd05681-606a-4e8d'], ['a.b~c-d']])('should accept %s', (id: string): void => {
+  it.each([['Paris_12'], ['dora_7dd05681-606a-4e8d'], ['a.b~c-d']])('accepte %s', (id: string): void => {
     expect(Id(id)).toBe(id);
   });
 });

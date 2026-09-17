@@ -1,6 +1,5 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { PriseEnChargeSpecifique, PrisesEnChargeSpecifiques } from './prise-en-charge-specifique';
-import { PrisesEnChargeSpecifiquesError } from './errors';
 
 describe('prise en charge spécifique adresses model', (): void => {
   it('should create valid prise en charge spécifique', (): void => {
@@ -12,14 +11,12 @@ describe('prise en charge spécifique adresses model', (): void => {
   });
 
   it('should not create invalid prise en charge spécifique', (): void => {
-    expect((): void => {
-      PrisesEnChargeSpecifiques(['Handicape psychique' as PriseEnChargeSpecifique]);
-    }).toThrow(new PrisesEnChargeSpecifiquesError('Handicape psychique' as PriseEnChargeSpecifique));
+    expect(PrisesEnChargeSpecifiques.safe(['Handicape psychique' as PriseEnChargeSpecifique])).toBeNull();
   });
 
   it('should not create invalid prise en charge spécifique containing a valid and an invalid value', (): void => {
-    expect((): void => {
-      PrisesEnChargeSpecifiques([PriseEnChargeSpecifique.Illettrisme, 'Handicape psychique' as PriseEnChargeSpecifique]);
-    }).toThrow(new PrisesEnChargeSpecifiquesError('Handicape psychique' as PriseEnChargeSpecifique));
+    expect(
+      PrisesEnChargeSpecifiques.safe([PriseEnChargeSpecifique.Illettrisme, 'Handicape psychique' as PriseEnChargeSpecifique])
+    ).toBeNull();
   });
 });

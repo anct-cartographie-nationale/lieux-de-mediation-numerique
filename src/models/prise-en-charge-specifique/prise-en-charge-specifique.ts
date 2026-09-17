@@ -1,5 +1,6 @@
-import type { Model } from '../model';
-import { PrisesEnChargeSpecifiquesError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum PriseEnChargeSpecifique {
   Surdite = 'Surdité',
@@ -11,35 +12,13 @@ export enum PriseEnChargeSpecifique {
   DeficienceVisuelle = 'Déficience visuelle'
 }
 
-export type PrisesEnChargeSpecifiques = Model<'PrisesEnChargeSpecifiques', PriseEnChargeSpecifique[]>;
-
-export type PriseEnChargeSpecifiqueIndefini = 'public pris en charge spécifiquement indéfini';
-
-const firstInvalidPriseEnChargeSpecifique = (priseEnChargeSpecifique: PriseEnChargeSpecifique): boolean =>
-  !Object.values(PriseEnChargeSpecifique).includes(priseEnChargeSpecifique);
-
-const throwPrisesEnChargeSpecifiquesError = (
-  prisesEnChargeSpecifiques: PriseEnChargeSpecifique[]
-): PrisesEnChargeSpecifiques => {
-  throw new PrisesEnChargeSpecifiquesError(
-    prisesEnChargeSpecifiques.find(firstInvalidPriseEnChargeSpecifique) ?? 'public pris en charge spécifiquement indéfini'
-  );
-};
-
-const isPrisesEnChargeSpecifiques = (
-  prisesEnChargeSpecifiques: PriseEnChargeSpecifique[]
-): prisesEnChargeSpecifiques is PrisesEnChargeSpecifiques =>
-  prisesEnChargeSpecifiques.find(firstInvalidPriseEnChargeSpecifique) == null;
-
 /**
- * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
- * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
- * été écrits, et qui finissait par surprendre.
+ * Les doublons tombent à la construction, et c'est le schéma qui les écarte : la mise en
+ * forme survit ainsi à la composition, là où un traitement posé dans le constructeur serait
+ * contourné dès que `.schema` est imbriqué ailleurs.
  */
-export const PrisesEnChargeSpecifiques = (prisesEnChargeSpecifiques: PriseEnChargeSpecifique[]): PrisesEnChargeSpecifiques => {
-  const sansDoublons: PriseEnChargeSpecifique[] = Array.from(new Set(prisesEnChargeSpecifiques));
+export const PrisesEnChargeSpecifiques = defineModel(
+  z.array(z.enum(PriseEnChargeSpecifique)).transform(sansDoublons).brand('PrisesEnChargeSpecifiques')
+);
 
-  return isPrisesEnChargeSpecifiques(sansDoublons)
-    ? (sansDoublons as PrisesEnChargeSpecifiques)
-    : throwPrisesEnChargeSpecifiquesError(prisesEnChargeSpecifiques);
-};
+export type PrisesEnChargeSpecifiques = Model.TypeOf<typeof PrisesEnChargeSpecifiques>;

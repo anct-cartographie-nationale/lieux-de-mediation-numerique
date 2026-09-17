@@ -1,5 +1,6 @@
-import type { Model } from '../model';
-import { ModalitesAccesError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum ModaliteAcces {
   SePresenter = 'Se présenter',
@@ -10,29 +11,13 @@ export enum ModaliteAcces {
   PasDePublic = "Ce lieu n'accueille pas de public"
 }
 
-export type ModalitesAcces = Model<'ModalitesAcces', ModaliteAcces[]>;
-
-export type ModalitesAccesIndefinie = "modalité d'accès indéfinie";
-
-const firstInvalidModaliteAcces = (modaliteAcces: ModaliteAcces): boolean =>
-  !Object.values(ModaliteAcces).includes(modaliteAcces);
-
-const throwModalitesAccesError = (modalitesAcces: ModaliteAcces[]): ModalitesAcces => {
-  throw new ModalitesAccesError(modalitesAcces.find(firstInvalidModaliteAcces) ?? "modalité d'accès indéfinie");
-};
-
-const isModalitesAcces = (modalitesAcces: ModaliteAcces[]): modalitesAcces is ModalitesAcces =>
-  modalitesAcces.find(firstInvalidModaliteAcces) == null;
-
 /**
- * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
- * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
- * été écrits, et qui finissait par surprendre.
+ * Les doublons tombent à la construction, et c'est le schéma qui les écarte : la mise en
+ * forme survit ainsi à la composition, là où un traitement posé dans le constructeur serait
+ * contourné dès que `.schema` est imbriqué ailleurs.
  */
-export const ModalitesAcces = (modalitesAcces: ModaliteAcces[]): ModalitesAcces => {
-  const sansDoublons: ModaliteAcces[] = Array.from(new Set(modalitesAcces));
+export const ModalitesAcces = defineModel(z.array(z.enum(ModaliteAcces)).transform(sansDoublons).brand('ModalitesAcces'));
 
-  return isModalitesAcces(sansDoublons) ? (sansDoublons as ModalitesAcces) : throwModalitesAccesError(modalitesAcces);
-};
+export type ModalitesAcces = Model.TypeOf<typeof ModalitesAcces>;
 
 export const toAccessibleLieu = (modalitesAcces: ModaliteAcces): boolean => modalitesAcces !== ModaliteAcces.PasDePublic;

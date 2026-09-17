@@ -1,5 +1,6 @@
-import type { Model } from '../model';
-import { ServicesError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum Service {
   MaterielInformatiqueAPrixSolidaire = 'Acquisition de matériel informatique à prix solidaire',
@@ -13,18 +14,15 @@ export enum Service {
   AccesInternetEtMaterielInformatique = 'Accès internet et matériel informatique'
 }
 
-export type Services = Model<'Services', Service[]>;
+/**
+ * Le socle admet la liste vide : c'est l'assemblage « pour la cartographie » qui exige au
+ * moins un service, faute de quoi la coop ne pourrait pas composer ce schéma sans renier sa
+ * base, qui autorise la liste vide et ne filtre qu'à la publication (D29.3).
+ *
+ * Les doublons tombent à la construction, et c'est le schéma qui les écarte : la mise en
+ * forme survit ainsi à la composition, là où un traitement posé dans le constructeur serait
+ * contourné dès que `.schema` est imbriqué ailleurs.
+ */
+export const Services = defineModel(z.array(z.enum(Service)).transform(sansDoublons).brand('Services'));
 
-export type ServiceIndefini = 'service indéfini';
-
-const firstInvalidService = (service: Service): boolean => !Object.values(Service).includes(service);
-
-const throwServicesError = (services: Service[]): Services => {
-  throw new ServicesError(services.find(firstInvalidService) ?? 'service indéfini');
-};
-
-const isServices = (services: Service[]): services is Services =>
-  services.length > 0 && services.find(firstInvalidService) == null;
-
-export const Services = (services: Service[]): Services =>
-  isServices(services) ? (Array.from(new Set(services)) as Services) : throwServicesError(services);
+export type Services = Model.TypeOf<typeof Services>;

@@ -1,59 +1,38 @@
-import type { Model } from '../model';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
 import { dansUneEmpriseFrancaise, estInverse } from './emprises';
-import { LatitudeError, LongitudeError } from './errors';
 
-export type LocalisationToValidate = {
-  latitude: number;
-  longitude: number;
-};
+export const Latitude = defineModel(z.number().min(-90).max(90).brand('Latitude'));
 
-export type Localisation = Model<
-  'Localisation',
-  {
-    latitude: number;
-    longitude: number;
-  }
->;
+export type Latitude = Model.TypeOf<typeof Latitude>;
 
-const isValidLatitude = (localisationData: LocalisationToValidate): boolean =>
-  localisationData.latitude >= -90 && localisationData.latitude <= 90;
+export const Longitude = defineModel(z.number().min(-180).max(180).brand('Longitude'));
 
-const isValidLongitude = (localisationData: LocalisationToValidate): boolean =>
-  localisationData.longitude >= -180 && localisationData.longitude <= 180;
+export type Longitude = Model.TypeOf<typeof Longitude>;
 
 /**
  * Le point doit tomber sur le territoire français. Les bornes du globe laissent passer une
  * inversion latitude/longitude, qui publie un lieu de Martinique au large de l'Afrique du Sud.
+ *
+ * Le message nomme cette cause quand le couple échangé serait valide : c'est une information
+ * que l'appelant ne peut pas retrouver seul.
  */
-const dansLeTerritoire = (localisationData: LocalisationToValidate): boolean =>
-  dansUneEmpriseFrancaise(localisationData.latitude, localisationData.longitude);
+export const Localisation = defineModel(
+  z
+    .object({ latitude: Latitude.schema, longitude: Longitude.schema })
+    .refine(
+      ({ latitude, longitude }: { latitude: number; longitude: number }): boolean =>
+        dansUneEmpriseFrancaise(latitude, longitude),
+      {
+        error: (issue: { input: unknown }): string =>
+          estInverse((issue.input as { latitude: number }).latitude, (issue.input as { longitude: number }).longitude)
+            ? 'Les coordonnées semblent inversées : échangées, elles tombent sur le territoire français'
+            : 'Les coordonnées doivent tomber sur le territoire français'
+      }
+    )
+    .brand('Localisation')
+);
 
-export const isValidLocalisation = (localisationData: LocalisationToValidate): localisationData is Localisation =>
-  isValidLatitude(localisationData) && isValidLongitude(localisationData) && dansLeTerritoire(localisationData);
+export type LocalisationToValidate = Model.InputOf<typeof Localisation>;
 
-const throwLocalisationError = (localisationData: LocalisationToValidate): Localisation => {
-  if (!isValidLatitude(localisationData)) {
-    throw new LatitudeError(localisationData.latitude);
-  }
-
-  if (!isValidLongitude(localisationData)) {
-    throw new LongitudeError(localisationData.longitude);
-  }
-
-  /**
-   * Le message nomme la cause la plus probable quand le couple échangé serait valide : c'est
-   * une information que l'appelant ne peut pas retrouver seul.
-   */
-  if (estInverse(localisationData.latitude, localisationData.longitude)) {
-    throw new LatitudeError(localisationData.latitude);
-  }
-
-  if (!dansLeTerritoire(localisationData)) {
-    throw new LatitudeError(localisationData.latitude);
-  }
-
-  throw new Error();
-};
-
-export const Localisation = (localisation: LocalisationToValidate): Localisation =>
-  isValidLocalisation(localisation) ? { ...localisation } : throwLocalisationError(localisation);
+export type Localisation = Model.TypeOf<typeof Localisation>;

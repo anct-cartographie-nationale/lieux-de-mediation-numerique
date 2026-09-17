@@ -1,5 +1,6 @@
-import type { Model } from '../model';
-import { TypologiesError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum Typologie {
   ACI = 'ACI', // Structures porteuses d’ateliers et chantiers d’insertion
@@ -96,25 +97,11 @@ export enum Typologie {
   UDAF = 'UDAF' // Union Départementale d’Aide aux Familles
 }
 
-export type Typologies = Model<'Typologies', Typologie[]>;
-
-export type TypologiesIndefinie = 'typologie indéfinie';
-
-const firstInvalidTypology = (typologie: Typologie): boolean => !Object.values(Typologie).includes(typologie);
-
-const throwTypologiesError = (typologies: Typologie[]): Typologies => {
-  throw new TypologiesError(typologies.find(firstInvalidTypology) ?? 'typologie indéfinie');
-};
-
-const isTypologies = (typologies: Typologie[]): typologies is Typologies => typologies.find(firstInvalidTypology) == null;
-
 /**
- * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
- * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
- * été écrits, et qui finissait par surprendre.
+ * Les doublons tombent à la construction, et c'est le schéma qui les écarte : la mise en
+ * forme survit ainsi à la composition, là où un traitement posé dans le constructeur serait
+ * contourné dès que `.schema` est imbriqué ailleurs.
  */
-export const Typologies = (typologies: Typologie[]): Typologies => {
-  const sansDoublons: Typologie[] = Array.from(new Set(typologies));
+export const Typologies = defineModel(z.array(z.enum(Typologie)).transform(sansDoublons).brand('Typologies'));
 
-  return isTypologies(sansDoublons) ? (sansDoublons as Typologies) : throwTypologiesError(typologies);
-};
+export type Typologies = Model.TypeOf<typeof Typologies>;

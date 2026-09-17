@@ -6,20 +6,22 @@ import {
   FormationsLabels,
   FraisACharge,
   type Horaires,
-  isValidHoraires,
+  FicheAccesLibre,
+  Horaires as HorairesModel,
   Itinerances,
   Localisation,
   ModaliteAcces,
   ModalitesAcces,
   ModalitesAccompagnement,
   Pivot,
-  type Presentation,
+  Presentation,
   PrisesEnChargeSpecifiques,
   PublicsSpecifiquementAdresses,
   Services,
   toAccessibleLieu,
   Typologies,
-  Url
+  Url,
+  type Model
 } from '../../../models';
 import type { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 
@@ -79,24 +81,32 @@ export const contactIfAny = (schemaLieuMediationNumerique: SchemaLieuMediationNu
  * de dire au producteur ce qui est tombé — le `Horaires` du modèle lève, lui, pour qui veut
  * l'erreur.
  */
-export const horairesIfAny = (horaires?: string): { horaires?: Horaires } =>
-  horaires == null || !isValidHoraires(horaires) ? {} : { horaires: horaires };
+export const horairesIfAny = (horaires?: string): { horaires?: Horaires } => {
+  const horairesValides: Horaires | null = horaires == null ? null : HorairesModel.safe(horaires);
+
+  return horairesValides == null ? {} : { horaires: horairesValides };
+};
 
 const resumeIfAny = (resume?: string): { resume?: string } => (resume == null ? {} : { resume });
 
 const detailIfAny = (detail?: string): { detail?: string } => (detail == null ? {} : { detail });
+
+/** Un résumé trop long retire la présentation, il n'écarte pas le lieu (D21). */
+const presentationOuRien = (presentation: Model.InputOf<typeof Presentation>): { presentation?: Presentation } => {
+  const presentationValide: Presentation | null = Presentation.safe(presentation);
+
+  return presentationValide == null ? {} : { presentation: presentationValide };
+};
 
 export const presentationIfAny = (
   schemaLieuMediationNumerique: SchemaLieuMediationNumerique
 ): { presentation?: Presentation } =>
   schemaLieuMediationNumerique.presentation_resume == null && schemaLieuMediationNumerique.presentation_detail == null
     ? {}
-    : {
-        presentation: {
-          ...resumeIfAny(schemaLieuMediationNumerique.presentation_resume),
-          ...detailIfAny(schemaLieuMediationNumerique.presentation_detail)
-        }
-      };
+    : presentationOuRien({
+        ...resumeIfAny(schemaLieuMediationNumerique.presentation_resume),
+        ...detailIfAny(schemaLieuMediationNumerique.presentation_detail)
+      });
 
 export const sourceIfAny = (source?: string): { source?: string } => (source == null ? {} : { source });
 
@@ -163,7 +173,7 @@ const noPublicAccess = (): { modalites_acces: ModalitesAcces } => ({
 export const modalitesAccessIfAny = (modalitesAcces?: string, services?: Services): { modalites_acces?: ModalitesAcces } =>
   hasServices(services) ? PublicAccess(modalitesAcces) : noPublicAccess();
 
-export const ficheAccedLibreIfAny = (ficheAccesLibre?: string): { fiche_acces_libre?: Url } =>
-  ficheAccesLibre == null ? {} : { fiche_acces_libre: Url(ficheAccesLibre) };
+export const ficheAccedLibreIfAny = (ficheAccesLibre?: string): { fiche_acces_libre?: FicheAccesLibre } =>
+  ficheAccesLibre == null ? {} : { fiche_acces_libre: FicheAccesLibre(ficheAccesLibre) };
 
 export const priseRdvIfAny = (priseRdv?: string): { prise_rdv?: Url } => (priseRdv == null ? {} : { prise_rdv: Url(priseRdv) });

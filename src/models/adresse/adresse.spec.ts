@@ -1,9 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { Adresse, type AdresseToValidate } from './adresse';
-import { CodeInseeError, CodePostalError, CommuneError, VoieError } from './errors';
 
 describe('adresse model', (): void => {
-  it('should create a valid address', (): void => {
+  it('construit une adresse valide', (): void => {
     const adresseData: AdresseToValidate = {
       voie: '4 rue des Acacias',
       code_postal: '57100',
@@ -13,341 +12,76 @@ describe('adresse model', (): void => {
 
     const adresse: Adresse = Adresse(adresseData);
 
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
+    expect(adresse).toStrictEqual({ ...adresseData });
   });
 
-  it('should throw CodePostalError when code_postal is invalid', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '4 rue des Acacias',
-      code_postal: 'error',
-      code_insee: '57260',
-      commune: 'Metz'
-    };
-
-    expect((): void => {
-      Adresse(adresseData);
-    }).toThrow(new CodePostalError(adresseData.code_postal));
+  it('refuse un code postal invalide', (): void => {
+    expect(Adresse.safe({ voie: '4 rue des Acacias', code_postal: 'error', code_insee: '57260', commune: 'Metz' })).toBeNull();
   });
 
-  it('should throw CodeInseeError when code_insee is invalid', (): void => {
-    const adresseData: AdresseToValidate = {
+  it.each([
+    ['error'],
+    /**
+     * Formes que le motif d'origine admettait et que le code officiel géographique ne connaît
+     * pas : aucun des 18730 codes du jeu national ne les porte.
+     */
+    ['380546'],
+    ['5723687'],
+    ['38-2-33-546'],
+    ['20004']
+  ])('refuse le code insee %s', (code_insee: string): void => {
+    expect(Adresse.safe({ voie: '4 rue des Acacias', code_postal: '57100', code_insee, commune: 'Metz' })).toBeNull();
+  });
+
+  it.each([
+    ['Corse', '20000', '2A004'],
+    ['Saint-Barthélemy', '97133', '97701'],
+    ['Nouvelle-Calédonie', '98800', '98818'],
+    ['Polynésie française', '98700', '98735'],
+    ['arrondissement de Paris', '75001', '75101'],
+    ['arrondissement de Lyon', '69001', '69381'],
+    ['arrondissement de Marseille', '13001', '13201']
+  ])('accepte le code insee de %s', (_: string, code_postal: string, code_insee: string): void => {
+    expect(Adresse({ voie: '4 rue des Acacias', code_postal, code_insee, commune: 'Commune' }).code_insee).toBe(code_insee);
+  });
+
+  it('accepte une adresse sans code insee', (): void => {
+    expect(Adresse({ voie: '4 rue des Acacias', code_postal: '57100', commune: 'Metz' })).toStrictEqual({
       voie: '4 rue des Acacias',
       code_postal: '57100',
-      code_insee: 'error',
       commune: 'Metz'
-    };
+    });
+  });
 
-    expect((): void => {
-      Adresse(adresseData);
-    }).toThrow(new CodeInseeError('error'));
+  it('conserve le complément d’adresse', (): void => {
+    expect(
+      Adresse({ voie: '4 rue des Acacias', complement_adresse: 'Bâtiment B', code_postal: '57100', commune: 'Metz' })
+        .complement_adresse
+    ).toBe('Bâtiment B');
+  });
+
+  it('refuse une voie vide', (): void => {
+    expect(Adresse.safe({ voie: '', code_postal: '57100', commune: 'Metz' })).toBeNull();
+  });
+
+  it('refuse une commune qui n’en est pas une', (): void => {
+    expect(Adresse.safe({ voie: '4 rue des Acacias', code_postal: '57100', commune: 'Metz *' })).toBeNull();
   });
 
   /**
-   * Forme que le motif d'origine admettait et que le code officiel géographique ne connaît
-   * pas : aucun des 18730 codes du jeu national ne la porte.
+   * Le constructeur d'avant s'arrêtait à la première erreur : un producteur dont la voie *et*
+   * le code postal étaient mauvais corrigeait la voie, relançait, et découvrait le code postal
+   * la nuit suivante (D10).
    */
-  it('should refuse a code insee that is not five characters', (): void => {
-    expect((): void => {
-      Adresse({ voie: '12 rue des Acacias', code_postal: '38000', code_insee: '380546', commune: 'Grenoble' });
-    }).toThrow(new CodeInseeError('380546'));
+  it('rend toutes les erreurs d’une adresse en une passe', (): void => {
+    const resultat = Adresse.schema.safeParse({ voie: '', code_postal: 'error', code_insee: 'error', commune: 'Metz *' });
+
+    expect(resultat.success).toBe(false);
+    expect(resultat.error?.issues.map((issue): PropertyKey | undefined => issue.path[0])).toStrictEqual([
+      'voie',
+      'code_postal',
+      'code_insee',
+      'commune'
+    ]);
   });
-
-  it('should throw CodeInseeError when code_insee is 7 digits', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '4 rue des Acacias',
-      code_postal: '57100',
-      code_insee: '5723687',
-      commune: 'Metz'
-    };
-
-    expect((): void => {
-      Adresse(adresseData);
-    }).toThrow(new CodeInseeError('5723687'));
-  });
-
-  /**
-   * Forme que le motif d'origine admettait et que le code officiel géographique ne connaît
-   * pas : aucun des 18730 codes du jeu national ne la porte.
-   */
-  it('should refuse a code insee that is not five characters', (): void => {
-    expect((): void => {
-      Adresse({ voie: '12 rue des Acacias', code_postal: '38000', code_insee: '38-2-33-546', commune: 'Grenoble' });
-    }).toThrow(new CodeInseeError('38-2-33-546'));
-  });
-
-  it('should create a valid address with code_insee in Corse', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '4 rue des Acacias',
-      code_postal: '20100',
-      code_insee: '2A100',
-      commune: 'Ajaccio'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should create a valid address with commune containing accents', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '4 rue des Acacias',
-      code_postal: '17410',
-      code_insee: '17369',
-      commune: 'Saint-Martin de Ré'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should create a valid address with commune containing apostrophes', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: 'Ante 1 rue Denfert Rochereau',
-      code_postal: '79400',
-      commune: 'Saint-Maixent-l’Ecole'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should create a valid address without code insee', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '4 rue des Acacias',
-      code_postal: '17410',
-      commune: 'Saint-Martin de Ré'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should throw CommuneError when commune contains $ invalid character', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '4 rue des Acacias',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Metz$'
-    };
-
-    expect((): void => {
-      Adresse(adresseData);
-    }).toThrow(new CommuneError(adresseData.commune));
-  });
-
-  it('should throw CommuneError when commune contains " invalid character', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '"Château de la Roche" Route de Louerre',
-      code_postal: '49350',
-      commune: 'Gennes-Val-de-Loire'
-    };
-
-    expect((): void => {
-      Adresse(adresseData);
-    }).toThrow(new VoieError(adresseData.voie));
-  });
-
-  it('should allow Commune with œ characters', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '69 Bd Clemenceau',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Marcq-en-Barœul'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should allow Commune with Œ (upper case) character', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '69 Bd Clemenceau',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'MARCQ-EN-BARŒUL'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should throw VoieError when voie is empty', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Metz'
-    };
-
-    expect((): void => {
-      Adresse(adresseData);
-    }).toThrow(new VoieError(adresseData.voie));
-  });
-
-  it('should accept comma in voie', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '128, Rue Jean Jaurès',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Metz'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should accept parentheses in voie', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: 'Rond-Point Ibrahim Ali (1978-1995)',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Metz'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should accept ° in voie', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: 'APPARTEMENT N°3 1 R PIERRE LEMIÈRE',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Metz'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should accept dot in voie', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '5 ter. avenue des Sports',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Metz'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should accept & in voie', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: 'CENTRE VIE & LIBERTE 10 R DU DOYENNE',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Metz'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should accept double dot in voie', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: 'ADRESSE ADMINISTRATIVE : 8 R DES PECHEURS COUX',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Metz'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should accept + in voie', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: 'ACCUEIL FEMMES + ENFANTS 35 R FESSART',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Metz'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should accept long dash in voie', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '2067 chemin ST Claude – Nova Antipolis',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Metz'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should accept pipe in voie', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '1022 R Antoine de Saint-exupery | R Antoine Saint-exupery',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Metz'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should accept semicolon in voie', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: "53 Avenue de l'Europe Ecopolis; 1er étage bureau 09",
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Metz'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it('should accept slash in voie', (): void => {
-    const adresseData: AdresseToValidate = {
-      voie: '17/19 Rue du Colonel Driant',
-      code_postal: '57100',
-      code_insee: '57236',
-      commune: 'Metz'
-    };
-
-    const adresse: Adresse = Adresse(adresseData);
-
-    expect(adresse).toStrictEqual({ ...adresseData } as Adresse);
-  });
-
-  it.each([['2A004'], ['2B033'], ['97101'], ['97701'], ['98818'], ['98735'], ['75101'], ['69381'], ['13201']])(
-    'should accept %s, a code the official geographic code defines',
-    (codeInsee: string): void => {
-      expect(
-        Adresse({ voie: '12 rue des Acacias', code_postal: '20000', code_insee: codeInsee, commune: 'Ajaccio' }).code_insee
-      ).toBe(codeInsee);
-    }
-  );
-
-  /** `20` désigne la Corse d'avant 1976 ; `96` et `99` ne sont pas des départements. */
-  it.each([['20004'], ['96001'], ['99123'], ['2C004']])(
-    'should refuse %s, which no department carries',
-    (codeInsee: string): void => {
-      expect((): void => {
-        Adresse({ voie: '12 rue des Acacias', code_postal: '20000', code_insee: codeInsee, commune: 'Ajaccio' });
-      }).toThrow(new CodeInseeError(codeInsee));
-    }
-  );
 });

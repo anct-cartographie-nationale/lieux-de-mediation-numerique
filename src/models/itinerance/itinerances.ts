@@ -1,31 +1,17 @@
-import type { Model } from '../model';
-import { ItineranceError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum Itinerance {
   Itinerant = 'Itinérant',
   Fixe = 'Fixe'
 }
 
-export type Itinerances = Model<'Itinerances', Itinerance[]>;
-
-export type ItineranceIndefinie = 'itinerance indéfinie';
-
-const firstInvalidItinerance = (itinerance: Itinerance): boolean => !Object.values(Itinerance).includes(itinerance);
-
-const throwItineranceError = (itinerances: Itinerance[]): Itinerances => {
-  throw new ItineranceError(itinerances.find(firstInvalidItinerance) ?? 'itinerance indéfinie');
-};
-
-const isItinerance = (itinerances: Itinerance[]): itinerances is Itinerances =>
-  itinerances.find(firstInvalidItinerance) == null;
-
 /**
- * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
- * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
- * été écrits, et qui finissait par surprendre.
+ * Les doublons tombent à la construction, et c'est le schéma qui les écarte : la mise en
+ * forme survit ainsi à la composition, là où un traitement posé dans le constructeur serait
+ * contourné dès que `.schema` est imbriqué ailleurs.
  */
-export const Itinerances = (itinerances: Itinerance[]): Itinerances => {
-  const sansDoublons: Itinerance[] = Array.from(new Set(itinerances));
+export const Itinerances = defineModel(z.array(z.enum(Itinerance)).transform(sansDoublons).brand('Itinerances'));
 
-  return isItinerance(sansDoublons) ? (sansDoublons as Itinerances) : throwItineranceError(itinerances);
-};
+export type Itinerances = Model.TypeOf<typeof Itinerances>;

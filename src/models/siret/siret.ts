@@ -1,11 +1,5 @@
-import type { Model } from '../model';
-import { SiretError } from './errors';
-
-export type Siret = Model<'Siret', string>;
-
-const throwSiretError = (siretNumber: string): Siret => {
-  throw new SiretError(siretNumber);
-};
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
 
 /**
  * La formule de Luhn : chaque chiffre de rang pair en partant de la fin est doublé, un résultat
@@ -39,12 +33,21 @@ const SENTINELLE_HISTORIQUE = '00000000000000';
 
 const QUATORZE_CHIFFRES: RegExp = /^\d{14}$/u;
 
-export const isSiret = (siret: string): siret is Siret =>
-  QUATORZE_CHIFFRES.test(siret) &&
-  siret !== SENTINELLE_HISTORIQUE &&
-  (siret.startsWith(SIREN_LA_POSTE) || cleDeLuhnValide(siret));
+const ESPACES: RegExp = /\s/gu;
 
-export const Siret = (siret: string): Siret => {
-  const siretSansEspaces: string = siret.replace(/\s/gu, '');
-  return isSiret(siretSansEspaces) ? siretSansEspaces : throwSiretError(siretSansEspaces);
-};
+export const Siret = defineModel(
+  z
+    .string()
+    /** Les sources écrivent `842 887 408 00018` ; le SIRET, lui, n'a pas d'espaces. */
+    .transform((siret: string): string => siret.replace(ESPACES, ''))
+    .refine(
+      (siret: string): boolean =>
+        QUATORZE_CHIFFRES.test(siret) &&
+        siret !== SENTINELLE_HISTORIQUE &&
+        (siret.startsWith(SIREN_LA_POSTE) || cleDeLuhnValide(siret)),
+      { error: 'Le SIRET doit être composé de 14 chiffres et respecter sa clé de contrôle' }
+    )
+    .brand('Siret')
+);
+
+export type Siret = Model.TypeOf<typeof Siret>;

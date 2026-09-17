@@ -27,7 +27,9 @@ import {
   Services,
   Typologie,
   Typologies,
-  Url
+  Url,
+  Presentation,
+  FicheAccesLibre
 } from '../../../models';
 import type { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import { toSchemaServicesDataInclusion, toSchemaStructuresDataInclusion } from './to-schema-data-inclusion';
@@ -45,10 +47,10 @@ describe('to schema data.inclusion', (): void => {
       }),
       services: Services([Service.AideAuxDemarchesAdministratives]),
       date_maj: new Date('2022-04-28'),
-      presentation: {
+      presentation: Presentation({
         resume:
           'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle'
-      }
+      })
     };
 
     expect(toSchemaStructuresDataInclusion([minimalLieuMediationNumerique])).toStrictEqual<SchemaStructureDataInclusion[]>([
@@ -95,12 +97,12 @@ describe('to schema data.inclusion', (): void => {
         courriels: [Courriel('julie@example.net'), Courriel('paul@example.net')]
       }),
       horaires: Horaires('Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off'),
-      presentation: {
+      presentation: Presentation({
         resume:
-          'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle, nous sommes spécialisés dans la mobilité en milieu rurale, mais nous pouvons également proposer un accompagnement pour la mobilité en milieu urbain.',
+          'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle, nous sommes spécialisés dans la mobilité en milieu rurale, mais nous accompagnons aussi la mobilité en milieu urbain.',
         detail:
           "connaissance de l'offre de transport du territoire / accès à un véhicule 2 ou 4 roues / transport solidaire / accès au permis"
-      },
+      }),
       source: 'solidagregateur',
       date_maj: new Date('2022-04-28'),
       services: Services([
@@ -123,7 +125,7 @@ describe('to schema data.inclusion', (): void => {
       ]),
       formations_labels: FormationsLabels([FormationLabel.ArniaMednum, FormationLabel.Ordi3]),
       autres_formations_labels: ['Nièvre médiation numérique'],
-      fiche_acces_libre: Url(
+      fiche_acces_libre: FicheAccesLibre(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       )
     };
@@ -146,7 +148,7 @@ describe('to schema data.inclusion', (): void => {
         courriel: 'julie@example.net',
         site_web: 'https://www.asso-gonzalez.net/',
         presentation_resume:
-          'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle, nous sommes spécialisés dans la mobilité en milieu rurale, mais nous pouvons également proposer un accompagnement pour la mobilité en...',
+          'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle, nous sommes spécialisés dans la mobilité en milieu rurale, mais nous accompagnons aussi la mobilité en milieu urbain.',
         presentation_detail:
           "connaissance de l'offre de transport du territoire / accès à un véhicule 2 ou 4 roues / transport solidaire / accès au permis",
         source: 'solidagregateur',

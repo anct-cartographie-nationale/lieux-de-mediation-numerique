@@ -1,30 +1,23 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { Pivot } from './pivot';
-import { PivotError } from './errors';
 
 describe('pivot model', (): void => {
-  it('should create a valide pivot using Siret id', (): void => {
+  it('construit un pivot à partir d’un siret', (): void => {
     const pivot: Pivot = Pivot('43575434300018');
 
     expect(pivot).toBe('43575434300018');
   });
 
-  it('should refuse a siret that fails its check digit', (): void => {
-    expect((): void => {
-      Pivot('12345678910111');
-    }).toThrow(new PivotError('12345678910111'));
+  it('refuse un siret dont la clé de contrôle est fausse', (): void => {
+    expect(Pivot.safe('12345678910111')).toBeNull();
   });
 
   /** Le RNA est sorti de la modélisation : cinq lieux sur dix-huit mille en portaient un. */
-  it('should refuse a RNA, which is no longer a pivot', (): void => {
-    expect((): void => {
-      Pivot('W9R2003255');
-    }).toThrow(new PivotError('W9R2003255'));
+  it('refuse un RNA, qui n’est plus un pivot', (): void => {
+    expect(Pivot.safe('W9R2003255')).toBeNull();
   });
 
-  it('should throw PivotError if pivot do no match required format', (): void => {
-    expect((): void => {
-      Pivot('42');
-    }).toThrow(new PivotError('42'));
+  it('refuse ce qui n’a pas la forme d’un siret', (): void => {
+    expect(Pivot.safe('42')).toBeNull();
   });
 });

@@ -25,11 +25,13 @@ import {
   PublicsSpecifiquementAdresses,
   Service,
   Services,
-  ServicesError,
   Typologie,
   Typologies,
-  Url
+  Url,
+  Presentation,
+  FicheAccesLibre
 } from '../../../models';
+import { LieuPourLaCartographieSchema } from '../../../validation';
 import type { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import { fromSchemaDataInclusion } from './from-schema-data-inclusion';
 
@@ -180,11 +182,11 @@ describe('from schema data inclusion', (): void => {
         site_web: [Url('https://www.laquincaillerie.tl/'), Url('https://m.facebook.com/laquincaillerienumerique/')]
       }),
       horaires: Horaires('Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00'),
-      presentation: {
+      presentation: Presentation({
         resume: 'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
         detail:
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.'
-      },
+      }),
       source: 'Hubik',
       publics_specifiquement_adresses: PublicsSpecifiquementAdresses([
         PublicSpecifiquementAdresse.Seniors,
@@ -212,7 +214,7 @@ describe('from schema data inclusion', (): void => {
         ModaliteAccompagnement.DansUnAtelier,
         ModaliteAccompagnement.ADistance
       ]),
-      fiche_acces_libre: Url(
+      fiche_acces_libre: FicheAccesLibre(
         'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/'
       ),
       prise_rdv: Url('https://www.rdv-solidarites.fr/')
@@ -306,7 +308,11 @@ describe('from schema data inclusion', (): void => {
     });
   });
 
-  it('should fail when there is no allowed thematiques in data inclusion service', (): void => {
+  /**
+   * Le socle admet la liste vide ; c'est l'assemblage « pour la cartographie » qui refuse un
+   * lieu sans service (D29.3). Le transfert construit, l'assemblage juge.
+   */
+  it('should build a lieu with no service when no thematique is allowed', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',
       code_postal: '51100',
@@ -324,9 +330,8 @@ describe('from schema data inclusion', (): void => {
       structure_id: 'structure-1'
     };
 
-    expect((): void => {
-      fromSchemaDataInclusion([service], structure);
-    }).toThrow(new ServicesError('service indéfini'));
+    expect(fromSchemaDataInclusion([service], structure).services).toStrictEqual([]);
+    expect(LieuPourLaCartographieSchema.safeParse(fromSchemaDataInclusion([service], structure)).success).toBe(false);
   });
 
   /**
@@ -427,7 +432,7 @@ describe('from schema data inclusion', (): void => {
     });
   });
 
-  it('should fail when there is no service associated with the structure', (): void => {
+  it('should build a lieu with no service when the structure carries none', (): void => {
     const structure: SchemaStructureDataInclusion = {
       adresse: '12 BIS RUE DE LECLERCQ',
       code_postal: '51100',
@@ -438,9 +443,8 @@ describe('from schema data inclusion', (): void => {
       rna: 'W9R2003255'
     };
 
-    expect((): void => {
-      fromSchemaDataInclusion([], structure);
-    }).toThrow(new ServicesError('service indéfini'));
+    expect(fromSchemaDataInclusion([], structure).services).toStrictEqual([]);
+    expect(LieuPourLaCartographieSchema.safeParse(fromSchemaDataInclusion([], structure)).success).toBe(false);
   });
 
   it('should merge two minimal services', (): void => {

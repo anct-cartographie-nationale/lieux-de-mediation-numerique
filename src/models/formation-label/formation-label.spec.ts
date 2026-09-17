@@ -1,6 +1,5 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { FormationLabel, FormationsLabels } from './formation-label';
-import { FormationLabelError } from './errors';
 
 describe('formations labels model', (): void => {
   it('should create valid formations labels', (): void => {
@@ -10,14 +9,10 @@ describe('formations labels model', (): void => {
   });
 
   it('should not create invalid formation label', (): void => {
-    expect((): void => {
-      FormationsLabels(['France Emploi' as FormationLabel]);
-    }).toThrow(new FormationLabelError('France Emploi' as FormationLabel));
+    expect(FormationsLabels.safe(['France Emploi' as FormationLabel])).toBeNull();
   });
 
   it('should not create invalid formation label containing a valid and an invalid value', (): void => {
-    expect((): void => {
-      FormationsLabels([FormationLabel.SudLabs, 'Nièvre formation' as FormationLabel]);
-    }).toThrow(new FormationLabelError('Nièvre formation' as FormationLabel));
+    expect(FormationsLabels.safe([FormationLabel.SudLabs, 'Nièvre formation' as FormationLabel])).toBeNull();
   });
 });

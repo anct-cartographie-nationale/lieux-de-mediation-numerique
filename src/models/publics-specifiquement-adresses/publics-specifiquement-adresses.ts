@@ -1,5 +1,6 @@
-import type { Model } from '../model';
-import { PublicsSpecifiquementAdressesError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum PublicSpecifiquementAdresse {
   Jeunes = 'Jeunes',
@@ -9,37 +10,13 @@ export enum PublicSpecifiquementAdresse {
   Femmes = 'Femmes'
 }
 
-export type PublicsSpecifiquementAdresses = Model<'PublicsSpecifiquementAdresses', PublicSpecifiquementAdresse[]>;
-
-export type PublicSpecifiquementAdresseIndefini = 'public spécifiquement adressé indéfini';
-
-const firstInvalidPublicSpecifiquementAdresse = (publicSpecifiquementAdresse: PublicSpecifiquementAdresse): boolean =>
-  !Object.values(PublicSpecifiquementAdresse).includes(publicSpecifiquementAdresse);
-
-const throwPublicsSpecifiquementAdressesError = (
-  publicsSpecifiquementAdresses: PublicSpecifiquementAdresse[]
-): PublicsSpecifiquementAdresses => {
-  throw new PublicsSpecifiquementAdressesError(
-    publicsSpecifiquementAdresses.find(firstInvalidPublicSpecifiquementAdresse) ?? 'public spécifiquement adressé indéfini'
-  );
-};
-
-const isPublicsSpecifiquementAdresses = (
-  publicsSpecifiquementAdresses: PublicSpecifiquementAdresse[]
-): publicsSpecifiquementAdresses is PublicsSpecifiquementAdresses =>
-  publicsSpecifiquementAdresses.find(firstInvalidPublicSpecifiquementAdresse) == null;
-
 /**
- * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
- * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
- * été écrits, et qui finissait par surprendre.
+ * Les doublons tombent à la construction, et c'est le schéma qui les écarte : la mise en
+ * forme survit ainsi à la composition, là où un traitement posé dans le constructeur serait
+ * contourné dès que `.schema` est imbriqué ailleurs.
  */
-export const PublicsSpecifiquementAdresses = (
-  publicsSpecifiquementAdresses: PublicSpecifiquementAdresse[]
-): PublicsSpecifiquementAdresses => {
-  const sansDoublons: PublicSpecifiquementAdresse[] = Array.from(new Set(publicsSpecifiquementAdresses));
+export const PublicsSpecifiquementAdresses = defineModel(
+  z.array(z.enum(PublicSpecifiquementAdresse)).transform(sansDoublons).brand('PublicsSpecifiquementAdresses')
+);
 
-  return isPublicsSpecifiquementAdresses(sansDoublons)
-    ? (sansDoublons as PublicsSpecifiquementAdresses)
-    : throwPublicsSpecifiquementAdressesError(publicsSpecifiquementAdresses);
-};
+export type PublicsSpecifiquementAdresses = Model.TypeOf<typeof PublicsSpecifiquementAdresses>;

@@ -1,4 +1,4 @@
-import { isValidTelephone, isValidCourriel } from '../../../models';
+import { Courriel, Telephone } from '../../../models';
 import type {
   SchemaServiceDataInclusion,
   SchemaServiceDataInclusionWithAdresse,
@@ -41,8 +41,8 @@ const contactFromServiceOrStructure = (
 ): SchemaStructureDataInclusionContactFields => ({
   ...(structure.telephone == null ? {} : { telephone: structure.telephone }),
   ...(structure.courriel == null ? {} : { courriel: structure.courriel }),
-  ...(isValidTelephone(service.telephone ?? '') ? { telephone: service.telephone } : {}),
-  ...(isValidCourriel(service.courriel ?? '') ? { courriel: service.courriel } : {})
+  ...(Telephone.safe(service.telephone ?? '') == null ? {} : { telephone: service.telephone }),
+  ...(Courriel.safe(service.courriel ?? '') == null ? {} : { courriel: service.courriel })
 });
 
 const labelsFromStructure = (structure: SchemaStructureDataInclusion): SchemaStructureDataInclusionLabelsFields => ({

@@ -1,15 +1,11 @@
-import type { Model } from '../model';
-import { CourrielError } from './errors';
-
-export type Courriel = Model<'Courriel', string>;
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
 
 const COURRIEL_REG_EXP: RegExp =
   /^(?:[a-zA-Z0-9_][a-zA-Z0-9.!#$%&'*+\\=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9])+(?:;|$))+$/u;
 
-const throwCourrielError = (courriel: string): Courriel => {
-  throw new CourrielError(courriel);
-};
+export const Courriel = defineModel(
+  z.string().regex(COURRIEL_REG_EXP, { error: "L'adresse électronique n'est pas reconnue" }).brand('Courriel')
+);
 
-export const isValidCourriel = (courriel: string): courriel is Courriel => COURRIEL_REG_EXP.test(courriel);
-
-export const Courriel = (courriel: string): Courriel => (isValidCourriel(courriel) ? courriel : throwCourrielError(courriel));
+export type Courriel = Model.TypeOf<typeof Courriel>;

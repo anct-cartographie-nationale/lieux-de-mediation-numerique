@@ -1,9 +1,11 @@
-import { describe, it, expect } from 'vitest';
-import { isValidFicheAccesLibre } from './fiche-acces-libre';
+import { describe, expect, it } from 'vitest';
+import { FicheAccesLibre } from './fiche-acces-libre';
 
-describe('isValidFicheAccesLibre', (): void => {
-  it('should accept a fiche on acceslibre', (): void => {
-    expect(isValidFicheAccesLibre('https://acceslibre.beta.gouv.fr/app/51-reims/a/x/')).toBe(true);
+describe('fiche acces libre model', (): void => {
+  it('accepte une fiche publiée sur acceslibre', (): void => {
+    expect(FicheAccesLibre('https://acceslibre.beta.gouv.fr/app/51-reims/a/x/')).toBe(
+      'https://acceslibre.beta.gouv.fr/app/51-reims/a/x/'
+    );
   });
 
   /**
@@ -11,9 +13,9 @@ describe('isValidFicheAccesLibre', (): void => {
    * de photos, publiée comme fiche d'accessibilité.
    */
   it.each([['https://www.23hq.com/okcupid/photo/147204673'], ['https://example.fr'], ['pas une url']])(
-    'should refuse %s, which is not an acceslibre fiche',
+    'refuse %s, qui n’est pas une fiche acceslibre',
     (url: string): void => {
-      expect(isValidFicheAccesLibre(url)).toBe(false);
+      expect(FicheAccesLibre.safe(url)).toBeNull();
     }
   );
 });

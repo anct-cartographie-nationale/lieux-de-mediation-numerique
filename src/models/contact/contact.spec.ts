@@ -1,11 +1,10 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { Courriel } from '../courriel';
 import { Url } from '../url';
 import { Contact, type ContactToValidate } from './contact';
-import { TelephoneError } from './errors';
 
 describe('contact model', (): void => {
-  it('should create a valid contact', (): void => {
+  it('construit un contact valide', (): void => {
     const contactData: ContactToValidate = {
       telephone: '+33145896378',
       courriels: [Courriel('contact@cartographienationale.fr')],
@@ -14,94 +13,52 @@ describe('contact model', (): void => {
 
     const contact: Contact = Contact(contactData);
 
-    expect(contact).toStrictEqual({ ...contactData } as Contact);
+    expect(contact).toStrictEqual({ ...contactData });
   });
 
-  it('should create a valid contact with only telephone property', (): void => {
-    const contactData: ContactToValidate = {
-      telephone: '+33145896378'
-    };
-
-    const contact: Contact = Contact(contactData);
-
-    expect(contact).toStrictEqual({ ...contactData } as Contact);
+  it('construit un contact qui ne porte qu’un téléphone', (): void => {
+    expect(Contact({ telephone: '+33145896378' })).toStrictEqual({ telephone: '+33145896378' });
   });
 
-  it('should create a valid contact with only courriel property', (): void => {
-    const contactData: ContactToValidate = {
-      courriels: [Courriel('contact@cartographienationale.fr')]
-    };
-
-    const contact: Contact = Contact(contactData);
-
-    expect(contact).toStrictEqual({ ...contactData } as Contact);
+  it('construit un contact qui ne porte qu’un courriel', (): void => {
+    expect(Contact({ courriels: ['contact@cartographienationale.fr'] })).toStrictEqual({
+      courriels: ['contact@cartographienationale.fr']
+    });
   });
 
-  it('should create a valid contact with a phone from French Guiana', (): void => {
-    const contactData: ContactToValidate = {
-      telephone: '+594694020905',
-      courriels: [Courriel('direction.yenkumu.lutu@gmail.com')],
-      site_web: [Url('https://www.facebook.com/YenkumuLutuPapaichton/')]
-    };
-
-    const contact: Contact = Contact(contactData);
-
-    expect(contact).toStrictEqual({ ...contactData } as Contact);
+  it('construit un contact dont le téléphone est guyanais', (): void => {
+    expect(Contact({ telephone: '+594694020905' }).telephone).toBe('+594694020905');
   });
 
-  it('should throw TelephoneError when telephone is invalid', (): void => {
-    const contactData: ContactToValidate = {
-      telephone: 'error'
-    };
-
-    expect((): void => {
-      Contact(contactData);
-    }).toThrow(new TelephoneError('error'));
-  });
-
-  it('should throw TelephoneError when telephone has missing numbers', (): void => {
-    const contactData: ContactToValidate = {
-      telephone: '024178384'
-    };
-
-    expect((): void => {
-      Contact(contactData);
-    }).toThrow(new TelephoneError('024178384'));
+  it.each([['error'], ['024178384']])('refuse le téléphone %s', (telephone: string): void => {
+    expect(Contact.safe({ telephone })).toBeNull();
   });
 
   /**
    * Le modèle ne porte plus que l'E.164 : une seule écriture possible d'un même numéro. Les
    * 11221 numéros du jeu national le sont déjà tous.
    */
-  it('should refuse the national format, which is a display concern', (): void => {
-    expect((): void => {
-      Contact({ telephone: '0 809 36 12 12' });
-    }).toThrow(new TelephoneError('0 809 36 12 12'));
+  it('refuse la mise en forme nationale, qui est une affaire d’affichage', (): void => {
+    expect(Contact.safe({ telephone: '0 809 36 12 12' })).toBeNull();
   });
 
-  it('should allow nouvelle caledonie telephone format (indicatif + 6 digits)', (): void => {
-    const contactData: ContactToValidate = {
-      telephone: '+687241541'
-    };
-
-    const contact: Contact = Contact(contactData);
-
-    expect(contact).toStrictEqual({
-      telephone: '+687241541'
-    });
+  it('accepte un numéro de Nouvelle-Calédonie, indicatif suivi de six chiffres', (): void => {
+    expect(Contact({ telephone: '+687241541' })).toStrictEqual({ telephone: '+687241541' });
   });
 
   it.each([['+33102030405'], ['+262262202020'], ['+590690000001'], ['+508412345']])(
-    'should accept %s, an E.164 number the national schema admits',
+    'accepte %s, un numéro E.164 que le schéma national admet',
     (telephone: string): void => {
       expect(Contact({ telephone }).telephone).toBe(telephone);
     }
   );
 
   /** Un numéro étranger, fût-il valide, n'a pas sa place sur une cartographie française. */
-  it('should refuse a foreign number', (): void => {
-    expect((): void => {
-      Contact({ telephone: '+32470442543' });
-    }).toThrow(new TelephoneError('+32470442543'));
+  it('refuse un numéro étranger', (): void => {
+    expect(Contact.safe({ telephone: '+32470442543' })).toBeNull();
+  });
+
+  it('refuse un courriel mal formé dans la liste', (): void => {
+    expect(Contact.safe({ courriels: ['contact@cartographienationale.fr', 'contact@gmail'] })).toBeNull();
   });
 });

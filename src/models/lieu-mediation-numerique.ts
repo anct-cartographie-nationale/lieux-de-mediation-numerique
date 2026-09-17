@@ -11,6 +11,7 @@ import type { FraisACharge } from './frais-a-charge';
 import type { Itinerances } from './itinerance';
 import type { ModalitesAccompagnement } from './modalite-accompagnement';
 import type { ModalitesAcces } from './modalite-acces';
+import type { FicheAccesLibre } from './fiche-acces-libre';
 import type { Url } from './url';
 import type { Pivot } from './pivot';
 import type { DispositifProgrammesNationaux } from './dispositif-programme-national';
@@ -45,6 +46,6 @@ export type LieuMediationNumerique = {
   formations_labels?: FormationsLabels;
   autres_formations_labels?: string[];
   modalites_accompagnement?: ModalitesAccompagnement;
-  fiche_acces_libre?: Url;
+  fiche_acces_libre?: FicheAccesLibre;
   prise_rdv?: Url;
 };

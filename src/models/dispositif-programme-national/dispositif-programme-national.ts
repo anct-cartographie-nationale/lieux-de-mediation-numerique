@@ -1,5 +1,6 @@
-import type { Model } from '../model';
-import { DispositifProgrammeNationalError } from './errors';
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
+import { sansDoublons } from '../liste';
 
 export enum DispositifProgrammeNational {
   AidantsConnect = 'Aidants Connect',
@@ -15,37 +16,13 @@ export enum DispositifProgrammeNational {
   RelaisNumeriqueEmmausConnect = 'Relais numérique (Emmaüs Connect)'
 }
 
-export type DispositifProgrammesNationaux = Model<'DispositifProgrammesNationaux', DispositifProgrammeNational[]>;
-
-export type DispositifProgrammeNationalIndefini = 'dispositif ou programme national indéfini';
-
-const firstInvalidDispositifProgrammeNational = (dispositifProgrammeNational: DispositifProgrammeNational): boolean =>
-  !Object.values(DispositifProgrammeNational).includes(dispositifProgrammeNational);
-
-const throwDispositifProgrammesNationauxError = (
-  dispositifProgrammesNationaux: DispositifProgrammeNational[]
-): DispositifProgrammesNationaux => {
-  throw new DispositifProgrammeNationalError(
-    dispositifProgrammesNationaux.find(firstInvalidDispositifProgrammeNational) ?? 'dispositif ou programme national indéfini'
-  );
-};
-
-const isDispositifProgrammesNationaux = (
-  dispositifProgrammesNationaux: DispositifProgrammeNational[]
-): dispositifProgrammesNationaux is DispositifProgrammesNationaux =>
-  dispositifProgrammesNationaux.find(firstInvalidDispositifProgrammeNational) == null;
-
 /**
- * Les doublons tombent à la construction. La bibliothèque ne dédupliquait que `Services` et
- * `ModalitesAccompagnement` — un écart qui ne tenait qu'à l'ordre dans lequel les modèles ont
- * été écrits, et qui finissait par surprendre.
+ * Les doublons tombent à la construction, et c'est le schéma qui les écarte : la mise en
+ * forme survit ainsi à la composition, là où un traitement posé dans le constructeur serait
+ * contourné dès que `.schema` est imbriqué ailleurs.
  */
-export const DispositifProgrammesNationaux = (
-  dispositifProgrammesNationaux: DispositifProgrammeNational[]
-): DispositifProgrammesNationaux => {
-  const sansDoublons: DispositifProgrammeNational[] = Array.from(new Set(dispositifProgrammesNationaux));
+export const DispositifProgrammesNationaux = defineModel(
+  z.array(z.enum(DispositifProgrammeNational)).transform(sansDoublons).brand('DispositifProgrammesNationaux')
+);
 
-  return isDispositifProgrammesNationaux(sansDoublons)
-    ? (sansDoublons as DispositifProgrammesNationaux)
-    : throwDispositifProgrammesNationauxError(dispositifProgrammesNationaux);
-};
+export type DispositifProgrammesNationaux = Model.TypeOf<typeof DispositifProgrammesNationaux>;

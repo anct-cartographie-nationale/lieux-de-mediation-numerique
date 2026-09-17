@@ -1,7 +1,5 @@
-import type { Model } from '../model';
-import { HorairesError } from './errors';
-
-export type Horaires = Model<'Horaires', string>;
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
 
 /**
  * Les horaires au format `opening_hours` d'OpenStreetMap.
@@ -22,10 +20,8 @@ const SEMAINE = '(?:week\\s+\\d{1,2}-\\d{1,2}\\/\\d\\s+)?';
 
 const HORAIRES_REG_EXP: RegExp = new RegExp(`^(?:24/7|${SEMAINE}${REGLE}(?:\\s*;\\s*${REGLE})*)(?:\\s*"[^"]*")?$`, 'u');
 
-export const isValidHoraires = (horaires: string): horaires is Horaires => HORAIRES_REG_EXP.test(horaires);
+export const Horaires = defineModel(
+  z.string().regex(HORAIRES_REG_EXP, { error: 'Les horaires ne suivent pas le format OpenStreetMap' }).brand('Horaires')
+);
 
-const throwHorairesError = (horaires: string): Horaires => {
-  throw new HorairesError(horaires);
-};
-
-export const Horaires = (horaires: string): Horaires => (isValidHoraires(horaires) ? horaires : throwHorairesError(horaires));
+export type Horaires = Model.TypeOf<typeof Horaires>;

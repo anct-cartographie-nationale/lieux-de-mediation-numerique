@@ -1,9 +1,5 @@
-import type { Model } from '../model';
-import { IdError } from './errors';
-
-export type IdToValidate = string | undefined;
-
-export type Id = Model<'Id', string>;
+import { z } from 'zod';
+import { defineModel, type Model } from '../model';
 
 /**
  * L'identifiant sert de clé et voyage dans des URL : il ne porte ni espace ni caractère à
@@ -12,14 +8,8 @@ export type Id = Model<'Id', string>;
  */
 const ID_REG_EXP: RegExp = /^[A-Za-z0-9._~-]+$/u;
 
-export const isValidId = (idData: IdToValidate): idData is Id => idData != null && ID_REG_EXP.test(idData);
+export const Id = defineModel(
+  z.string().regex(ID_REG_EXP, { error: "L'identifiant ne doit être ni vide ni porteur d'un caractère à échapper" }).brand('Id')
+);
 
-const throwIdError = (idData: IdToValidate): Id => {
-  if (!isValidId(idData)) {
-    throw new IdError(idData);
-  }
-
-  throw new Error();
-};
-
-export const Id = (id: IdToValidate): Id => (isValidId(id) ? id : throwIdError(id));
+export type Id = Model.TypeOf<typeof Id>;
