@@ -8,7 +8,12 @@
     "outDir": "../lib/esm",
     "rootDir": "../src",
     "lib": ["es2022"],
-    "module": "es2022",
+    "module": "esnext",
+    /* `classic`, le défaut quand `module` ne vaut pas `commonjs`, ne cherche pas dans
+       `node_modules` : sans dépendance d'exécution ça ne se voyait pas, avec une, si.
+       `bundler` autorise les imports relatifs sans extension, que tout le dépôt emploie —
+       `nodenext` les refuserait et demanderait de réécrire chaque import. */
+    "moduleResolution": "bundler",
     "target": "es2021"
   }
 }
