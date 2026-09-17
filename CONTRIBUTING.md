@@ -45,16 +45,16 @@ s'en charge à l'installation des dépendances ; il n'y a rien de plus à faire.
 
 Ces commandes servent dans un contexte de développement de l'application.
 
-| Commande | Ce qu'elle fait |
-| --- | --- |
-| `pnpm build` | construit la bibliothèque avec tsdown ; le résultat est dans `lib/` |
-| `pnpm test` | lance Vitest — en mode surveillance en local, en passe unique en CI |
-| `pnpm lint` | analyse statique et mise en forme, par Biome |
-| `pnpm lint.fix` | la même chose, en corrigeant ce qui peut l'être |
-| `pnpm lint.architecture` | vérifie le cloisonnement des modules, par dependency-cruiser |
-| `pnpm ts.check` | vérifie les types, **tests compris** — ce que la construction ne fait pas, puisqu'elle ne type que ce qui part dans le paquet |
-| `pnpm lint.commit` | valide les messages de commit depuis la dernière version commune avec `main` |
-| `pnpm lint.publish` | vérifie le paquet tel que npm le recevra, par `publint` et `@arethetypeswrong/cli` |
+| Commande                 | Ce qu'elle fait                                                                                                               |
+|--------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| `pnpm build`             | construit la bibliothèque avec tsdown ; le résultat est dans `lib/`                                                           |
+| `pnpm test`              | lance Vitest — en mode surveillance en local, en passe unique en CI                                                           |
+| `pnpm lint`              | analyse statique et mise en forme, par Biome                                                                                  |
+| `pnpm lint.fix`          | la même chose, en corrigeant ce qui peut l'être                                                                               |
+| `pnpm lint.architecture` | vérifie le cloisonnement des modules, par dependency-cruiser                                                                  |
+| `pnpm ts.check`          | vérifie les types, **tests compris** — ce que la construction ne fait pas, puisqu'elle ne type que ce qui part dans le paquet |
+| `pnpm lint.commit`       | valide les messages de commit depuis la dernière version commune avec `main`                                                  |
+| `pnpm lint.publish`      | vérifie le paquet tel que npm le recevra, par `publint` et `@arethetypeswrong/cli`                                            |
 
 > Les dépendances de développement sont alignées sur celles de mednum-cli, et Biome comme tsdown
 > y sont **épinglés exactement** : un correctif de linter ou de constructeur change la mise en

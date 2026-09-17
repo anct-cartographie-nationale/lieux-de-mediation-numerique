@@ -51,7 +51,7 @@
   "scripts": {
     "lint": "biome check .",
     "lint.fix": "biome check --write .",
-    "lint.architecture": "depcruise src",
+    "lint.architecture": "node scripts/lint-architecture.mjs",
     "lint.commit": "commitlint --from origin/main",
     "lint.publish": "publint && attw --pack .",
     "lint-staged": "lint-staged",
