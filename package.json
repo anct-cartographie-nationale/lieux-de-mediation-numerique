@@ -51,6 +51,7 @@
   "scripts": {
     "lint": "biome check .",
     "lint.fix": "biome check --write .",
+    "lint.architecture": "depcruise src",
     "lint.commit": "commitlint --from origin/main",
     "lint.publish": "publint && attw --pack .",
     "lint-staged": "lint-staged",
@@ -78,20 +79,17 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
-    "@biomejs/biome": "^2.5.14",
+    "@biomejs/biome": "2.5.12",
     "@commitlint/cli": "^21.2.2",
     "@commitlint/config-conventional": "^21.2.2",
-    "@types/node": "^26.6.1",
-    "@typescript/native": "npm:typescript@^7.0.2",
-    "concurrently": "^10.0.5",
-    "globals": "^17.12.0",
+    "@swc/core": "^1.16.2",
+    "@types/node": "^26.4.1",
+    "dependency-cruiser": "^18.2.0",
     "husky": "^9.1.7",
-    "lint-staged": "^17.5.1",
+    "lint-staged": "^17.4.1",
     "publint": "^0.3.24",
-    "ts-node": "^10.9.1",
-    "tsdown": "^0.23.0",
-    "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "vite": "^8.3.0",
-    "vitest": "^5.0.1"
+    "tsdown": "0.23.0",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.0"
   }
 }

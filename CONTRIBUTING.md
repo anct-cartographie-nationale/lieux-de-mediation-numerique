@@ -38,7 +38,7 @@ pnpm install
 [Husky](https://typicode.github.io/husky) installe les hooks git du dépôt. Le script `prepare`
 s'en charge à l'installation des dépendances ; il n'y a rien de plus à faire.
 
-- `pre-commit` passe Biome sur les fichiers indexés, en corrigeant ce qui peut l'être ;
+- `pre-commit` passe Biome sur les fichiers indexés puis vérifie le cloisonnement des modules ;
 - `commit-msg` vérifie que le message suit les Commits Conventionnels.
 
 ## Utilisation
@@ -51,9 +51,18 @@ Ces commandes servent dans un contexte de développement de l'application.
 | `pnpm test` | lance Vitest — en mode surveillance en local, en passe unique en CI |
 | `pnpm lint` | analyse statique et mise en forme, par Biome |
 | `pnpm lint.fix` | la même chose, en corrigeant ce qui peut l'être |
+| `pnpm lint.architecture` | vérifie le cloisonnement des modules, par dependency-cruiser |
 | `pnpm ts.check` | vérifie les types, **tests compris** — ce que la construction ne fait pas, puisqu'elle ne type que ce qui part dans le paquet |
 | `pnpm lint.commit` | valide les messages de commit depuis la dernière version commune avec `main` |
 | `pnpm lint.publish` | vérifie le paquet tel que npm le recevra, par `publint` et `@arethetypeswrong/cli` |
+
+> Les dépendances de développement sont alignées sur celles de mednum-cli, et Biome comme tsdown
+> y sont **épinglés exactement** : un correctif de linter ou de constructeur change la mise en
+> forme ou la sortie sans prévenir, et fait rougir une CI sur du code qu'on n'a pas touché.
+>
+> `pnpm-workspace.yaml` porte `minimumReleaseAge: 14400` — dix jours. Une version publiée
+> récemment ne s'installe pas ; c'est un garde-fou de chaîne d'approvisionnement délibéré, à ne
+> pas contourner.
 
 > Le champ `version` de `package.json` vaut `0.0.0-development` : c'est semantic-release qui
 > écrit la vraie version au moment de publier. Sans lui, `npm pack` refuse de travailler et
@@ -85,6 +94,7 @@ La branche `main`, ainsi que l'ensemble des branches de travail avec un préfixe
 - Il faut forcément créer une nouvelle branche de travail avec l'un préfixe autorisé
 - À chaque publication sur une branche de travail, le workflow `validate` sur [github actions](https://github.com/anct-cartographie-nationale/lieux-de-mediation-numerique/actions) vérifie
   - Que la mise en forme et les règles de [Biome](https://biomejs.dev/) sont respectées
+  - Que le cloisonnement des modules tient
   - Que les types sont justes, tests compris
   - Que les messages des commits suivent le standard établi par [Conventional Commits](https://www.conventionalcommits.org/fr)
   - Que les tests passent
@@ -115,6 +125,7 @@ La fusion sur la branche principale entraîne automatiquement la publication d'u
 - [Biome](https://biomejs.dev/) est un analyseur statique et un formateur, qui tient le rôle qu'ESLint et Prettier tenaient à deux
 - [tsdown](https://tsdown.dev/) construit le paquet et ses déclarations de types, en CommonJS et en ESM
 - [publint](https://publint.dev/) et [@arethetypeswrong/cli](https://arethetypeswrong.github.io/) vérifient le paquet tel qu'un consommateur le recevra
+- [dependency-cruiser](https://github.com/sverweij/dependency-cruiser) vérifie mécaniquement le cloisonnement des modules
 - [Zod](https://zod.dev/) porte les schémas dont chaque modèle est tiré
 - [Husky](https://typicode.github.io/husky/#/) est un outil qui permet d'effectuer des vérifications automatiques avant de publier des contributions.
 - [Commitlint](https://github.com/conventional-changelog/commitlint) est un outil de vérification des commits suivant le [format des Commits Conventionnels](https://www.conventionalcommits.org/fr/v1.0.0/).
