@@ -29,24 +29,12 @@ const ContactSchema = z.object({
   site_web: z.array(UrlSchema).optional()
 });
 
-/**
- * Le lieu tel que la **cartographie nationale** l'exige.
- *
- * C'est un **assemblage**, pas le socle. Les schémas de champ s'importent un à un et se
- * composent : un consommateur qui a d'autres besoins — la coop, dont la base admet un lieu
- * sans adresse et sans service — bâtit le sien à partir des mêmes briques, sans avoir à
- * relâcher celui-ci.
- *
- * On n'assouplit pas par extension : `.refine` et `.extend` ne savent que resserrer. C'est
- * pourquoi l'unité de composition est le champ, et non le lieu.
- */
 export const LieuPourLaCartographieSchema = z.object({
   id: IdSchema,
   nom: NomSchema,
   pivot: PivotSchema.optional(),
   adresse: AdresseSchema,
   localisation: LocalisationSchema,
-  /** Un lieu qui n'annonce aucun service n'oriente personne : la carte le retient. */
   services: z.array(z.enum(Service)).min(1, { error: 'Un lieu doit annoncer au moins un service' }),
   date_maj: z.date().optional(),
   source: z.string().optional(),
