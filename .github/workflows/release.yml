@@ -65,5 +65,4 @@ jobs:
           NPM_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
         run: |
           ln -s .tooling/.semantic-release/.semantic-release.config.cjs release.config.cjs
-          ln -s .tooling/.semantic-release/.npmignore .npmignore
           npx semantic-release

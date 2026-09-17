@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { Localisation, LocalisationToValidate } from './localisation';
+import { Localisation, type LocalisationToValidate } from './localisation';
 import { LatitudeError, LongitudeError } from './errors';
 
 describe('localisation model', (): void => {

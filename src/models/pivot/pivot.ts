@@ -1,4 +1,4 @@
-import { isSiret, Siret } from '../siret';
+import { isSiret, type Siret } from '../siret';
 import { PivotError } from './errors';
 
 /**

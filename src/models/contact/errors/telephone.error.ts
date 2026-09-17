@@ -1,5 +1,5 @@
 import { ModelError } from '../../../errors';
-import { Contact } from '../contact';
+import type { Contact } from '../contact';
 
 export class TelephoneError extends ModelError<Contact> {
   constructor(telephone: string) {

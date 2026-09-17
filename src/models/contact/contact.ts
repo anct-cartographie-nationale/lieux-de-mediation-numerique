@@ -1,6 +1,6 @@
-import { Courriel } from '../courriel';
-import { Model } from '../model';
-import { Url } from '../url';
+import type { Courriel } from '../courriel';
+import type { Model } from '../model';
+import type { Url } from '../url';
 import { TelephoneError } from './errors';
 
 export type Contact = Model<

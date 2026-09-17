@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { Typologie } from '../../models';
-import { comparer, Comparaison, ComparaisonMesuree, LieuAComparer, OptionsComparaison, preparer } from './comparer';
+import {
+  comparer,
+  type Comparaison,
+  type ComparaisonMesuree,
+  type LieuAComparer,
+  type OptionsComparaison,
+  preparer
+} from './comparer';
 
 const mediatheque: LieuAComparer = {
   nom: 'Médiathèque de Fleury',

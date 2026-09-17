@@ -1,4 +1,4 @@
-import { LocalisationToValidate } from '../../models';
+import type { LocalisationToValidate } from '../../models';
 
 const RAYON_TERRESTRE_EN_METRES: 6_371_000 = 6_371_000 as const;
 

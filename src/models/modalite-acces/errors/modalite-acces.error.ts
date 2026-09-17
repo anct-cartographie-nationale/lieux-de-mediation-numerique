@@ -1,6 +1,6 @@
 import { ModelError } from '../../../errors';
-import { LieuMediationNumerique } from '../../lieu-mediation-numerique';
-import { ModaliteAcces, ModalitesAccesIndefinie } from '../modalite-acces';
+import type { LieuMediationNumerique } from '../../lieu-mediation-numerique';
+import type { ModaliteAcces, ModalitesAccesIndefinie } from '../modalite-acces';
 
 export class ModalitesAccesError extends ModelError<LieuMediationNumerique> {
   constructor(modalitesAcces: ModaliteAcces | ModalitesAccesIndefinie) {

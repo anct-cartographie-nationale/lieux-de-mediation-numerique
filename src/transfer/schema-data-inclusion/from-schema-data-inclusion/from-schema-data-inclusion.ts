@@ -1,12 +1,12 @@
 import {
   Id,
-  LieuMediationNumerique,
+  type LieuMediationNumerique,
   Nom,
   Pivot,
-  PrisesEnChargeSpecifiques,
-  PublicsSpecifiquementAdresses
+  type PrisesEnChargeSpecifiques,
+  type PublicsSpecifiquementAdresses
 } from '../../../models';
-import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
+import type { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import {
   accessibiliteFromDataInclusion,
   adresseFromDataInclusion,

@@ -1,11 +1,11 @@
 import {
   Adresse,
   Contact,
-  Courriel,
+  type Courriel,
   DispositifProgrammesNationaux,
   FormationsLabels,
   FraisACharge,
-  Horaires,
+  type Horaires,
   isValidHoraires,
   Itinerances,
   Localisation,
@@ -13,7 +13,7 @@ import {
   ModalitesAcces,
   ModalitesAccompagnement,
   Pivot,
-  Presentation,
+  type Presentation,
   PrisesEnChargeSpecifiques,
   PublicsSpecifiquementAdresses,
   Services,
@@ -21,7 +21,7 @@ import {
   Typologies,
   Url
 } from '../../../models';
-import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
+import type { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 
 const toListOf = <T>(listItem: string): T => listItem as T;
 

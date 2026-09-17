@@ -8,14 +8,14 @@ import {
   FormationsLabels,
   Frais,
   FraisACharge,
-  Horaires,
+  type Horaires,
   isValidHoraires,
   Localisation,
   ModaliteAcces,
   ModaliteAccompagnement,
   ModalitesAcces,
   ModalitesAccompagnement,
-  Presentation,
+  type Presentation,
   PriseEnChargeSpecifique,
   PrisesEnChargeSpecifiques,
   PublicSpecifiquementAdresse,
@@ -26,7 +26,7 @@ import {
   Typologies,
   Url
 } from '../../../models';
-import {
+import type {
   ModeOrientationAccompagnateur,
   ModeOrientationBeneficiaire,
   SchemaStructureDataInclusion

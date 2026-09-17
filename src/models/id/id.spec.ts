@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { Id, IdToValidate } from './id';
+import { Id, type IdToValidate } from './id';
 import { IdError } from './errors';
 
 describe('id model', (): void => {

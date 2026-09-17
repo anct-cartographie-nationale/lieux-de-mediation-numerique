@@ -12,7 +12,7 @@ import {
   Id,
   Itinerance,
   Itinerances,
-  LieuMediationNumerique,
+  type LieuMediationNumerique,
   Localisation,
   ModaliteAcces,
   ModaliteAccompagnement,
@@ -30,7 +30,7 @@ import {
   Typologies,
   Url
 } from '../../../models';
-import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
+import type { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import { fromSchemaLieuxDeMediationNumerique } from './from-schema-lieux-de-mediation-numerique';
 
 describe('from schema lieux de mediation numerique', (): void => {

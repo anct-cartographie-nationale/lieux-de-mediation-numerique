@@ -1,5 +1,5 @@
 import { ModelError } from '../../../errors';
-import { Localisation } from '../localisation';
+import type { Localisation } from '../localisation';
 
 export class LongitudeError extends ModelError<Localisation> {
   constructor(longitude: number | 'indéfinie') {

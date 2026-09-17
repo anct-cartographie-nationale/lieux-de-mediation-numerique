@@ -1,4 +1,4 @@
-import { Model } from '../model';
+import type { Model } from '../model';
 import { SiretError } from './errors';
 
 export type Siret = Model<'Siret', string>;

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { Courriel } from '../courriel';
 import { Url } from '../url';
-import { Contact, ContactToValidate } from './contact';
+import { Contact, type ContactToValidate } from './contact';
 import { TelephoneError } from './errors';
 
 describe('contact model', (): void => {

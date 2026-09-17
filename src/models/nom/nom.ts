@@ -1,4 +1,4 @@
-import { Model } from '../model';
+import type { Model } from '../model';
 import { NomError } from './errors';
 
 export type NomToValidate = string | undefined;

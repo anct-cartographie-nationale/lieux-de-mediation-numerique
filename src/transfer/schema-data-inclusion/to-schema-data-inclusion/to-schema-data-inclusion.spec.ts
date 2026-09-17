@@ -10,7 +10,7 @@ import {
   Frais,
   FraisACharge,
   Id,
-  LieuMediationNumerique,
+  type LieuMediationNumerique,
   Localisation,
   ModaliteAcces,
   ModaliteAccompagnement,
@@ -28,7 +28,7 @@ import {
   Typologies,
   Url
 } from '../../../models';
-import { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
+import type { SchemaServiceDataInclusion, SchemaStructureDataInclusion } from '../schema-data-inclusion';
 import { toSchemaServicesDataInclusion, toSchemaStructuresDataInclusion } from './to-schema-data-inclusion';
 
 describe('to schema data.inclusion', (): void => {

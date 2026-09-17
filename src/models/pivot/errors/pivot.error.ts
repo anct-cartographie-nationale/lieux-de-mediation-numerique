@@ -1,5 +1,5 @@
 import { ModelError } from '../../../errors';
-import { LieuMediationNumerique } from '../../lieu-mediation-numerique';
+import type { LieuMediationNumerique } from '../../lieu-mediation-numerique';
 
 export class PivotError extends ModelError<LieuMediationNumerique> {
   constructor(pivot: string) {

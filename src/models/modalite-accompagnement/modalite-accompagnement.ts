@@ -1,5 +1,5 @@
 import { ModalitesAccompagnementError } from './errors';
-import { Model } from '../model';
+import type { Model } from '../model';
 
 export enum ModaliteAccompagnement {
   EnAutonomie = 'En autonomie',

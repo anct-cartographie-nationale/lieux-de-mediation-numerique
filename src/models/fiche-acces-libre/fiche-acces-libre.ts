@@ -1,4 +1,4 @@
-import { isValidUrl, Url } from '../url';
+import { isValidUrl, type Url } from '../url';
 
 const PREFIXE_ACCES_LIBRE = 'https://acceslibre.beta.gouv.fr/';
 

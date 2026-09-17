@@ -10,7 +10,7 @@ import {
   Itinerances,
   DispositifProgrammeNational,
   DispositifProgrammesNationaux,
-  LieuMediationNumerique,
+  type LieuMediationNumerique,
   Localisation,
   ModaliteAcces,
   ModalitesAcces,
@@ -30,7 +30,7 @@ import {
   FormationLabel,
   FormationsLabels
 } from '../../../models';
-import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
+import type { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import { toSchemaLieuxDeMediationNumerique } from './to-schema-lieux-de-mediation-numerique';
 
 describe('to schema lieux de mediation numerique', (): void => {

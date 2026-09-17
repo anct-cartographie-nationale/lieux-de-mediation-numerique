@@ -1,4 +1,4 @@
-import { Model } from '../model';
+import type { Model } from '../model';
 import { CodeInseeError, CodePostalError, CommuneError, VoieError } from './errors';
 
 export type Adresse = Model<

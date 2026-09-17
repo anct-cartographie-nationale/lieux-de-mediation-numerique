@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { Nom, NomToValidate } from './nom';
+import { Nom, type NomToValidate } from './nom';
 import { NomError } from './errors';
 
 describe('nom model', (): void => {

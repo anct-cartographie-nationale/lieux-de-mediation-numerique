@@ -1,6 +1,6 @@
 import { ModelError } from '../../../errors';
-import { PriseEnChargeSpecifique, PriseEnChargeSpecifiqueIndefini } from '../prise-en-charge-specifique';
-import { LieuMediationNumerique } from '../../lieu-mediation-numerique';
+import type { PriseEnChargeSpecifique, PriseEnChargeSpecifiqueIndefini } from '../prise-en-charge-specifique';
+import type { LieuMediationNumerique } from '../../lieu-mediation-numerique';
 
 export class PrisesEnChargeSpecifiquesError extends ModelError<LieuMediationNumerique> {
   constructor(priseEnChargeSpecifique: PriseEnChargeSpecifique | PriseEnChargeSpecifiqueIndefini) {

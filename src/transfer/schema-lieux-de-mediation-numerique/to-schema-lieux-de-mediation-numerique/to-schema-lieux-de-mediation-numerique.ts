@@ -1,5 +1,5 @@
-import { LieuMediationNumerique } from '../../../models';
-import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
+import type { LieuMediationNumerique } from '../../../models';
+import type { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import {
   accesFields,
   adresseFields,
@@ -74,6 +74,7 @@ export const toSchemaLieuxDeMediationNumerique = (
   lieuxMediationNumerique: LieuMediationNumerique[],
   withArrondissement: boolean = false
 ): SchemaLieuMediationNumerique[] =>
-  lieuxMediationNumerique.map((lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumerique =>
-    toSchemaLieuMediationNumerique(lieuMediationNumerique, withArrondissement)
+  lieuxMediationNumerique.map(
+    (lieuMediationNumerique: LieuMediationNumerique): SchemaLieuMediationNumerique =>
+      toSchemaLieuMediationNumerique(lieuMediationNumerique, withArrondissement)
   );

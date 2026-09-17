@@ -1,5 +1,5 @@
 import { isValidTelephone, isValidCourriel } from '../../../models';
-import {
+import type {
   SchemaServiceDataInclusion,
   SchemaServiceDataInclusionWithAdresse,
   SchemaStructureDataInclusion,

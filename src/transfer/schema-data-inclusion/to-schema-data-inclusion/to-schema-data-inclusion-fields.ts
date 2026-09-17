@@ -1,16 +1,16 @@
 import {
   Frais,
   DispositifProgrammeNational,
-  LieuMediationNumerique,
+  type LieuMediationNumerique,
   ModaliteAcces,
   ModaliteAccompagnement,
-  ModalitesAccompagnement,
+  type ModalitesAccompagnement,
   PriseEnChargeSpecifique,
   PublicSpecifiquementAdresse,
   Service,
   FormationLabel
 } from '../../../models';
-import {
+import type {
   ModeOrientationAccompagnateur,
   ModeOrientationBeneficiaire,
   SchemaStructureDataInclusionAccesFields,

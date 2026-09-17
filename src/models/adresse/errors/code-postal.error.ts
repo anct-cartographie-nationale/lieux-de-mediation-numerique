@@ -1,5 +1,5 @@
 import { ModelError } from '../../../errors';
-import { Adresse } from '../adresse';
+import type { Adresse } from '../adresse';
 
 export class CodePostalError extends ModelError<Adresse> {
   constructor(codePostal: string) {

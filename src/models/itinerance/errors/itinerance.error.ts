@@ -1,6 +1,6 @@
 import { ModelError } from '../../../errors';
-import { Itinerance, ItineranceIndefinie } from '../itinerances';
-import { LieuMediationNumerique } from '../../lieu-mediation-numerique';
+import type { Itinerance, ItineranceIndefinie } from '../itinerances';
+import type { LieuMediationNumerique } from '../../lieu-mediation-numerique';
 
 export class ItineranceError extends ModelError<LieuMediationNumerique> {
   constructor(itinerance: Itinerance | ItineranceIndefinie) {

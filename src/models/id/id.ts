@@ -1,4 +1,4 @@
-import { Model } from '../model';
+import type { Model } from '../model';
 import { IdError } from './errors';
 
 export type IdToValidate = string | undefined;

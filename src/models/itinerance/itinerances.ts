@@ -1,4 +1,4 @@
-import { Model } from '../model';
+import type { Model } from '../model';
 import { ItineranceError } from './errors';
 
 export enum Itinerance {

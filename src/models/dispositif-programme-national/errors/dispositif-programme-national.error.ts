@@ -1,6 +1,6 @@
 import { ModelError } from '../../../errors';
-import { DispositifProgrammeNational, DispositifProgrammeNationalIndefini } from '../dispositif-programme-national';
-import { LieuMediationNumerique } from '../../lieu-mediation-numerique';
+import type { DispositifProgrammeNational, DispositifProgrammeNationalIndefini } from '../dispositif-programme-national';
+import type { LieuMediationNumerique } from '../../lieu-mediation-numerique';
 
 export class DispositifProgrammeNationalError extends ModelError<LieuMediationNumerique> {
   constructor(dispositifProgrammeNational: DispositifProgrammeNational | DispositifProgrammeNationalIndefini) {

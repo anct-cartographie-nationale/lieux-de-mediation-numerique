@@ -1,6 +1,6 @@
 import { ModelError } from '../../../errors';
-import { FormationLabel, FormationLabelIndefini } from '../formation-label';
-import { LieuMediationNumerique } from '../../lieu-mediation-numerique';
+import type { FormationLabel, FormationLabelIndefini } from '../formation-label';
+import type { LieuMediationNumerique } from '../../lieu-mediation-numerique';
 
 export class FormationLabelError extends ModelError<LieuMediationNumerique> {
   constructor(formationLabel: FormationLabel | FormationLabelIndefini) {

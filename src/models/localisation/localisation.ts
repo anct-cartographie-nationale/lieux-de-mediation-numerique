@@ -1,4 +1,4 @@
-import { Model } from '../model';
+import type { Model } from '../model';
 import { dansUneEmpriseFrancaise, estInverse } from './emprises';
 import { LatitudeError, LongitudeError } from './errors';
 

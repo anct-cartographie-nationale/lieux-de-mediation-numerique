@@ -1,6 +1,6 @@
-import { Service, ServiceIndefini } from '../service';
+import type { Service, ServiceIndefini } from '../service';
 import { ModelError } from '../../../errors';
-import { LieuMediationNumerique } from '../../lieu-mediation-numerique';
+import type { LieuMediationNumerique } from '../../lieu-mediation-numerique';
 
 export class ServicesError extends ModelError<LieuMediationNumerique> {
   constructor(service: Service | ServiceIndefini) {

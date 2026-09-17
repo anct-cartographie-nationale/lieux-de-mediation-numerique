@@ -1,6 +1,6 @@
 import { ModelError } from '../../../errors';
-import { PublicSpecifiquementAdresse, PublicSpecifiquementAdresseIndefini } from '../publics-specifiquement-adresses';
-import { LieuMediationNumerique } from '../../lieu-mediation-numerique';
+import type { PublicSpecifiquementAdresse, PublicSpecifiquementAdresseIndefini } from '../publics-specifiquement-adresses';
+import type { LieuMediationNumerique } from '../../lieu-mediation-numerique';
 
 export class PublicsSpecifiquementAdressesError extends ModelError<LieuMediationNumerique> {
   constructor(publicSpecifiquementAdresse: PublicSpecifiquementAdresse | PublicSpecifiquementAdresseIndefini) {

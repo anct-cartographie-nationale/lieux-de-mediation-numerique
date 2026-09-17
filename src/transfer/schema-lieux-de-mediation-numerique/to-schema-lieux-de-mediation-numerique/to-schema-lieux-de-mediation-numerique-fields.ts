@@ -1,5 +1,5 @@
-import { LieuMediationNumerique } from '../../../models';
-import {
+import type { LieuMediationNumerique } from '../../../models';
+import type {
   SchemaLieuMediationNumeriqueAccesFields,
   SchemaLieuMediationNumeriqueAdresseFields,
   SchemaLieuMediationNumeriqueCollecteFields,

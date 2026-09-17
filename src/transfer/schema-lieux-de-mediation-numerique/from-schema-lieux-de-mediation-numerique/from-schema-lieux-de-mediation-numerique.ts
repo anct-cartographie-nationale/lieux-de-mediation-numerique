@@ -1,5 +1,5 @@
-import { Id, LieuMediationNumerique, Nom, Services } from '../../../models';
-import { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
+import { Id, type LieuMediationNumerique, Nom, type Services } from '../../../models';
+import type { SchemaLieuMediationNumerique } from '../schema-lieux-de-mediation-numerique';
 import {
   ficheAccedLibreIfAny,
   adresse,

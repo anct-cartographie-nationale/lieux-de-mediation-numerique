@@ -1,6 +1,6 @@
 import { ModelError } from '../../../errors';
-import { Frais, FraisAChargeIndefini } from '../frais-a-charge';
-import { LieuMediationNumerique } from '../../lieu-mediation-numerique';
+import type { Frais, FraisAChargeIndefini } from '../frais-a-charge';
+import type { LieuMediationNumerique } from '../../lieu-mediation-numerique';
 
 export class FraisAChargeError extends ModelError<LieuMediationNumerique> {
   constructor(frais: Frais | FraisAChargeIndefini) {

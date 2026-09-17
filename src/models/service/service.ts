@@ -1,4 +1,4 @@
-import { Model } from '../model';
+import type { Model } from '../model';
 import { ServicesError } from './errors';
 
 export enum Service {

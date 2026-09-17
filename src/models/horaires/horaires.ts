@@ -1,4 +1,4 @@
-import { Model } from '../model';
+import type { Model } from '../model';
 import { HorairesError } from './errors';
 
 export type Horaires = Model<'Horaires', string>;
