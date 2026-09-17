@@ -1,12 +1,39 @@
+import { type CountryCode, parsePhoneNumberFromString } from 'libphonenumber-js';
 import { z } from 'zod';
 import { defineModel, type Model } from '../model';
 
-const TELEPHONE_REG_EXP: RegExp = /^\+(?:33|262|269|508|590|594|596|681|687|689)\d{6,9}$/u;
+const TERRITOIRES_FRANCAIS: ReadonlySet<CountryCode> = new Set<CountryCode>([
+  'FR',
+  'GF',
+  'GP',
+  'MQ',
+  'YT',
+  'RE',
+  'BL',
+  'MF',
+  'PM',
+  'NC',
+  'PF',
+  'WF'
+]);
+
+const estUnTelephoneFrancais = (telephone: string): boolean => {
+  const analyse = parsePhoneNumberFromString(telephone);
+
+  return (
+    analyse?.isValid() === true &&
+    analyse.number === telephone &&
+    analyse.country != null &&
+    TERRITOIRES_FRANCAIS.has(analyse.country)
+  );
+};
 
 export const Telephone = defineModel(
   z
     .string()
-    .regex(TELEPHONE_REG_EXP, { error: 'Le téléphone doit être au format E.164 avec un indicatif français' })
+    .refine(estUnTelephoneFrancais, {
+      error: 'Le téléphone doit être un numéro français valide, écrit en E.164'
+    })
     .brand('Telephone')
 );
 

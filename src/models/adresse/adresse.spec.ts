@@ -76,4 +76,30 @@ describe('adresse model', (): void => {
       'commune'
     ]);
   });
+
+  it.each([['00000'], ['96000'], ['99999']])(
+    'refuse le code postal %s, qui ne désigne aucun département',
+    (code_postal: string): void => {
+      expect(Adresse.safe({ voie: '4 rue des Acacias', code_postal, commune: 'Metz' })).toBeNull();
+    }
+  );
+
+  it.each([['12345'], ['   '], ['-'], ['M']])('refuse la commune %s', (commune: string): void => {
+    expect(Adresse.safe({ voie: '4 rue des Acacias', code_postal: '57100', commune })).toBeNull();
+  });
+
+  it.each([['12345'], ['   '], ['0'], ['.']])('refuse la voie %s, qui ne porte aucune lettre', (voie: string): void => {
+    expect(Adresse.safe({ voie, code_postal: '57100', commune: 'Metz' })).toBeNull();
+  });
+
+  it('refuse un complément d’adresse hors charte, là où rien ne le contrôlait', (): void => {
+    expect(
+      Adresse.safe({
+        voie: '4 rue des Acacias',
+        complement_adresse: 'ZAE Joncquier & Morelles',
+        code_postal: '57100',
+        commune: 'Metz'
+      })
+    ).toBeNull();
+  });
 });

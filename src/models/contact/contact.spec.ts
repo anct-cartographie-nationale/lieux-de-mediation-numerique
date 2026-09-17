@@ -56,4 +56,15 @@ describe('contact model', (): void => {
   it('refuse un courriel mal formé dans la liste', (): void => {
     expect(Contact.safe({ courriels: ['contact@cartographienationale.fr', 'contact@gmail'] })).toBeNull();
   });
+
+  it.each([['+33123456'], ['+33000000000'], ['+590123456'], ['+508608839449']])(
+    'refuse %s, qui a la forme d’un numéro français sans en être un',
+    (telephone: string): void => {
+      expect(Contact.safe({ telephone })).toBeNull();
+    }
+  );
+
+  it('refuse un numéro écrit avec des espaces, même valide', (): void => {
+    expect(Contact.safe({ telephone: '+33 1 02 03 04 05' })).toBeNull();
+  });
 });

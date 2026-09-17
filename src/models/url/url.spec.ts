@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Url } from './url';
+import { Url, URL_LONGUEUR_MAXIMALE } from './url';
 
 describe('url model', (): void => {
   it('construit une url valide', (): void => {
@@ -39,4 +39,26 @@ describe('url model', (): void => {
       expect(Url.safe(url)).toBeNull();
     }
   );
+
+  it.each([['https://exemple.fr:8443/a'], ['https://exemple.fr/a(b)'], ['https://exemple.fr/chemin/é']])(
+    'accepte %s, que le motif d’origine refusait à tort',
+    (url: string): void => {
+      expect(Url(url)).toBe(url);
+    }
+  );
+
+  it.each([['https://user:pass@exemple.fr'], ['https://tracythequeb@gmail.com']])(
+    'refuse %s, qui porte des identifiants',
+    (url: string): void => {
+      expect(Url.safe(url)).toBeNull();
+    }
+  );
+
+  it('refuse deux adresses collées par une barre verticale', (): void => {
+    expect(Url.safe('https://a.fr/|https://b.fr')).toBeNull();
+  });
+
+  it('refuse une adresse plus longue que la limite', (): void => {
+    expect(Url.safe(`https://exemple.fr/${'x'.repeat(URL_LONGUEUR_MAXIMALE)}`)).toBeNull();
+  });
 });

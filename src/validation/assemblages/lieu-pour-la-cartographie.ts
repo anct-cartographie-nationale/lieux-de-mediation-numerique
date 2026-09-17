@@ -32,7 +32,10 @@ export const LieuPourLaCartographieSchema = z.object({
     error: 'Un lieu doit annoncer au moins un service'
   }),
   date_maj: z.date().optional(),
-  source: z.string().optional(),
+  source: z
+    .string()
+    .refine((source: string): boolean => source.trim() !== '', { error: 'La source ne doit pas être vide' })
+    .optional(),
   horaires: Horaires.schema.optional(),
   presentation: Presentation.schema.optional(),
   contact: Contact.schema.optional(),
@@ -44,7 +47,9 @@ export const LieuPourLaCartographieSchema = z.object({
   itinerance: Itinerances.schema.optional(),
   dispositif_programmes_nationaux: DispositifProgrammesNationaux.schema.optional(),
   formations_labels: FormationsLabels.schema.optional(),
-  autres_formations_labels: z.array(z.string()).optional(),
+  autres_formations_labels: z
+    .array(z.string().refine((label: string): boolean => label.trim() !== '', { error: 'Un label ne doit pas être vide' }))
+    .optional(),
   modalites_accompagnement: ModalitesAccompagnement.schema.optional(),
   fiche_acces_libre: FicheAccesLibre.schema.optional(),
   prise_rdv: Url.schema.optional()

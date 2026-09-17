@@ -26,4 +26,8 @@ describe('id model', (): void => {
   it.each([['Paris_12'], ['dora_7dd05681-606a-4e8d'], ['a.b~c-d']])('accepte %s', (id: string): void => {
     expect(Id(id)).toBe(id);
   });
+
+  it.each([['.'], ['..'], ['-'], ['~']])('refuse %s, qui ne porte aucun caractère alphanumérique', (id: string): void => {
+    expect(Id.safe(id)).toBeNull();
+  });
 });

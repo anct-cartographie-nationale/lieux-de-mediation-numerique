@@ -105,3 +105,15 @@ describe("l'assemblage pour la cartographie", (): void => {
     expect(LieuPourLaCartographieSchema.safeParse({ ...lieuValide, nom: '   ' }).success).toBe(false);
   });
 });
+
+describe("l'assemblage resserre ce que le socle laisse libre", (): void => {
+  it('should refuse a source made of spaces', (): void => {
+    expect(LieuPourLaCartographieSchema.safeParse({ ...lieuValide, source: '   ' }).success).toBe(false);
+  });
+
+  it('should refuse an empty free label', (): void => {
+    expect(LieuPourLaCartographieSchema.safeParse({ ...lieuValide, autres_formations_labels: ['Arnia', '  '] }).success).toBe(
+      false
+    );
+  });
+});
