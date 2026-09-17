@@ -66,6 +66,12 @@ const AROBASE_MASQUEE: RegleDeNettoyage = {
   corriger: (aCorriger: string): string => aCorriger.replace('[a]', '@')
 };
 
+const CAPITALES: RegleDeNettoyage = {
+  nom: 'capitales',
+  selecteur: /[A-Z]/u,
+  corriger: (aCorriger: string): string => aCorriger.toLowerCase()
+};
+
 const ACCENTS: RegleDeNettoyage = {
   nom: 'accents, qu une adresse ne porte pas',
   selecteur: /[éèç]/u,
@@ -74,6 +80,7 @@ const ACCENTS: RegleDeNettoyage = {
 
 export const REGLES_COURRIEL: readonly RegleDeNettoyage[] = [
   ESPACES_DE_BORD,
+  CAPITALES,
   ESPACE_COLLE_A_L_AROBASE,
   ESPACE_AVANT_LE_POINT,
   ESPACE_DANS_LE_DOMAINE,
