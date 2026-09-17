@@ -56,8 +56,8 @@ const POINT_INITIAL: RegleDeNettoyage = {
 
 const SEPARATEUR_INATTENDU: RegleDeNettoyage = {
   nom: 'séparateur inattendu entre adresses',
-  selecteur: /\S\s?(?:\bet\b|\bou\b|;|\s|\/)\s?\S/u,
-  corriger: (aCorriger: string): string => aCorriger.replace(/\s?(?:\bet\b|\bou\b|;|\s|\/)\s?/gu, '|')
+  selecteur: /\S(?:\s+(?:et|ou)\s+|\s*[;/]\s*|\s+)\S/u,
+  corriger: (aCorriger: string): string => aCorriger.replace(/\s+(?:et|ou)\s+|\s*[;/]\s*|\s+/gu, '|')
 };
 
 const AROBASE_MASQUEE: RegleDeNettoyage = {
