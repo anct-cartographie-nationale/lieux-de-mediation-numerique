@@ -16,6 +16,15 @@ describe('nettoyerCourriel', (): void => {
     expect(nettoyerCourriel('contact[a]example.fr')).toBe('contact@example.fr');
   });
 
+  it.each([
+    ['Contact@csalma.org', 'contact@csalma.org'],
+    ['a.catalano@activcites.Fr', 'a.catalano@activcites.fr'],
+    ['MNS-cysoingpontamarcq@lenord.fr', 'mns-cysoingpontamarcq@lenord.fr'],
+    ['Sip-sie.denain@dgfip.finances.gouv.fr', 'sip-sie.denain@dgfip.finances.gouv.fr']
+  ])('ramène %s en minuscules', (courriel: string, attendu: string): void => {
+    expect(nettoyerCourriel(courriel)).toBe(attendu);
+  });
+
   it('should drop accents, which an address does not carry', (): void => {
     expect(nettoyerCourriel('prénom@example.fr')).toBe('prenom@example.fr');
   });
