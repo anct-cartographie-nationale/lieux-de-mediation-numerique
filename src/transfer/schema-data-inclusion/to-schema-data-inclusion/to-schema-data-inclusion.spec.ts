@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
+  Horaires,
   Adresse,
   Contact,
   Courriel,
@@ -93,7 +94,7 @@ describe('to schema data.inclusion', (): void => {
         telephone: '+33102030405',
         courriels: [Courriel('julie@example.net'), Courriel('paul@example.net')]
       }),
-      horaires: 'Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off',
+      horaires: Horaires('Mo-Fr 10:00-20:00 "sur rendez-vous"; PH off'),
       presentation: {
         resume:
           'L’association Mobilette propose des solutions de déplacement aux personnes pour qui la non-mobilité est un frein à l’insertion professionnelle, nous sommes spécialisés dans la mobilité en milieu rurale, mais nous pouvons également proposer un accompagnement pour la mobilité en milieu urbain.',

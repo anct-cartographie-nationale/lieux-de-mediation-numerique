@@ -13,7 +13,9 @@ export type Horaires = Model<'Horaires', string>;
  */
 const JOUR = 'Mo|Tu|We|Th|Fr|Sa|Su|PH';
 const PLAGE = '(?:[01]\\d|2[0-3]):[0-5]\\d-(?:[01]\\d|2[0-3]):[0-5]\\d';
-const REGLE = `(?:${JOUR})(?:[-,](?:${JOUR}))*\\s+(?:${PLAGE}(?:,${PLAGE})*|off)`;
+/** Un commentaire entre guillemets s'attache à n'importe quelle règle, pas à la dernière seule. */
+const COMMENTAIRE = '(?:\\s+"[^"]*")?';
+const REGLE = `(?:${JOUR})(?:[-,](?:${JOUR}))*\\s+(?:${PLAGE}(?:,${PLAGE})*|off)${COMMENTAIRE}`;
 
 /** Le préfixe de semaine paire ou impaire, que le standard admet et que les sources emploient. */
 const SEMAINE = '(?:week\\s+\\d{1,2}-\\d{1,2}\\/\\d\\s+)?';

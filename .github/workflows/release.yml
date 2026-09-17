@@ -58,11 +58,9 @@ jobs:
         with:
           name: bundle
 
-      # Using a symbolic link because there is no base option to have a config path with semantic-release as of 2022-08-31
-      - name: Link the semantic release config and release
+      - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
         run: |
-          ln -s .tooling/.semantic-release/.semantic-release.config.cjs release.config.cjs
           npx semantic-release

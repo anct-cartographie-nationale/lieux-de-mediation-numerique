@@ -30,7 +30,7 @@ describe('comparer', (): void => {
     const comparaison: Comparaison = comparerLieux(mediatheque, mediatheque);
 
     expect(comparaison.vetos).toEqual([]);
-    expect(comparaison.score).toBe(100);
+    expect('score' in comparaison ? comparaison.score : undefined).toBe(100);
   });
 
   it('should raise the name score for equivalent administrative denominations', (): void => {

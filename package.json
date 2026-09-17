@@ -50,10 +50,10 @@
   "scripts": {
     "lint": "biome check ./src",
     "lint.fix": "biome check --write ./src",
-    "lint.commit": "npx commitlint --from origin/main --config ./.tooling/.commitlint/commitlint.config.cjs",
+    "lint.commit": "commitlint --from origin/main",
     "lint.publish": "publint && attw --pack .",
-    "lint-staged": "lint-staged --config=./.tooling/.lintstaged/.lintstagedrc",
-    "ts.check": "tsc -p ./.tsconfig/tsconfig.esm.json --noEmit",
+    "lint-staged": "lint-staged",
+    "ts.check": "tsc --noEmit",
     "test": "vitest",
     "build": "tsdown"
   },

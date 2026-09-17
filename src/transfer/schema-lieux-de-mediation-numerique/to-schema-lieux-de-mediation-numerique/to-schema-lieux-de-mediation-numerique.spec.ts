@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
+  Horaires,
   Adresse,
   Contact,
   Courriel,
@@ -100,7 +101,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         courriels: [Courriel('contact@laquincaillerie.tl'), Courriel('hello@laquincaillerie.tl')],
         site_web: [Url('https://www.laquincaillerie.tl/'), Url('https://m.facebook.com/laquincaillerienumerique/')]
       }),
-      horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
+      horaires: Horaires('Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00'),
       presentation: {
         resume: 'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
         detail:
@@ -163,7 +164,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         telephone: '+33180059880',
         courriels: 'contact@laquincaillerie.tl|hello@laquincaillerie.tl',
         site_web: 'https://www.laquincaillerie.tl/|https://m.facebook.com/laquincaillerienumerique/',
-        horaires: 'Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00',
+        horaires: Horaires('Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00'),
         presentation_resume:
           'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
         presentation_detail:
