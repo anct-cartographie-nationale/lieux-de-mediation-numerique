@@ -56,4 +56,12 @@ describe('telephoneCanonique', (): void => {
   it('should accept a valid foreign number, which validation will refuse later', (): void => {
     expect(telephoneCanonique('+32 470 44 25 43')).toBe('+32470442543');
   });
+  it.each([
+    ['39 60', '+33971103960'],
+    ['3960', '+33971103960'],
+    ['32 30', '+33969322121'],
+    ['3230', '+33969322121']
+  ])('reconnaît le numéro court %s, espaces compris', (brut: string, attendu: string): void => {
+    expect(telephoneCanonique(nettoyerTelephone()(brut))).toBe(attendu);
+  });
 });
