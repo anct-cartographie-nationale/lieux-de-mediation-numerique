@@ -52,4 +52,17 @@ describe('nettoyerVoie', (): void => {
   it('should never throw', (): void => {
     expect(nettoyerVoie('')).toBe('');
   });
+
+  /**
+   * `LOT` est la seule abréviation que la table ne porte pas, et c'est mesuré : développée,
+   * elle fait *perdre* du score BAN — −0,051 en tête d'adresse, −0,163 quand le mot appartient
+   * au nom de la voie. Le référentiel garde `LOT` comme nom et paraît défalquer `Lotissement`
+   * comme type.
+   */
+  it.each([['LOT Le Clos d Achille'], ['12 LOT des Mimosas'], ['16 Avenue du LOT']])(
+    'should leave %s alone, the reference scoring it better abbreviated',
+    (voie: string): void => {
+      expect(nettoyerVoie(voie)).toBe(voie);
+    }
+  );
 });
