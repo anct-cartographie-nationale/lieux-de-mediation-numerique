@@ -48,8 +48,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "lint": "biome check ./src",
-    "lint.fix": "biome check --write ./src",
+    "lint": "biome check .",
+    "lint.fix": "biome check --write .",
     "lint.commit": "commitlint --from origin/main",
     "lint.publish": "publint && attw --pack .",
     "lint-staged": "lint-staged",

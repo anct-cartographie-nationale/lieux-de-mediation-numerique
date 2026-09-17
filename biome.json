@@ -1,12 +1,7 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.5.14/schema.json",
   "files": {
-    "includes": [
-      "**",
-      "!**/node_modules",
-      "!lib",
-      "!coverage"
-    ]
+    "includes": ["**", "!**/node_modules", "!lib", "!coverage"]
   },
   "formatter": {
     "enabled": true,
@@ -58,5 +53,17 @@
       "bracketSpacing": true,
       "bracketSameLine": true
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["*.config.*", "*.cjs", "*.mjs"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    }
+  ]
 }
