@@ -22,7 +22,7 @@ Elle porte ce qui doit être **dit une seule fois** pour les trois produits qui 
 
 ## Prérequis
 
-- [Node](https://nodejs.org/) : environnement d'exécution pour JavaScript, en version 20 ou supérieure
+- [Node](https://nodejs.org/) : environnement d'exécution pour JavaScript, en version 22.13 ou supérieure
 - [pnpm](https://pnpm.io/) : gestionnaire de paquets, dont la version attendue est déclarée par le champ `packageManager`
 
 > Node peut être installé via [nvm](https://github.com/nvm-sh/nvm), qui permet d'obtenir et d'utiliser rapidement différentes versions de Node via la ligne de commande. pnpm s'active ensuite par `corepack enable`.

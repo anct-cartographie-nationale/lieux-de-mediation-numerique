@@ -11,7 +11,7 @@
 ## Prérequis
 
 - [Git](https://git-scm.com/) : Système de contrôle de versions distribué d'un ensemble de fichiers
-- [Node](https://nodejs.org/) : Environnement d'exécution pour Javascript, en version 20 ou supérieure
+- [Node](https://nodejs.org/) : Environnement d'exécution pour Javascript, en version 22.13 ou supérieure
 - [pnpm](https://pnpm.io/) : Gestionnaire de paquets, dont la version attendue est déclarée par le champ `packageManager`
 
 > Node peut être installé via [nvm](https://github.com/nvm-sh/nvm) qui permet d'obtenir et d'utiliser rapidement différentes versions de Node via la ligne de commande. pnpm s'active ensuite par `corepack enable`.
@@ -97,7 +97,7 @@ La branche `main`, ainsi que l'ensemble des branches de travail avec un préfixe
   - Que le cloisonnement des modules tient
   - Que les types sont justes, tests compris
   - Que les messages des commits suivent le standard établi par [Conventional Commits](https://www.conventionalcommits.org/fr)
-  - Que les tests passent
+  - Que les tests passent, sur Node 22 comme sur Node 24 — le plancher annoncé par `engines` est celui qu'on exécute
   - Qu'il est possible de créer un build sans erreur
   - Que le paquet est correct tel que npm le recevra
 - Une fois les développements terminés, il faut créer une [pull request](https://github.com/anct-cartographie-nationale/lieux-de-mediation-numerique/pulls) avec la banche de travail comme origin et la branche `main` comme destination.
