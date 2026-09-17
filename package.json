@@ -18,6 +18,7 @@
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "Agence nationale de la cohésion des territoires",
+  "version": "0.0.0-development",
   "packageManager": "pnpm@12.3.2",
   "engines": {
     "node": ">=20"
@@ -55,7 +56,8 @@
     "lint-staged": "lint-staged",
     "ts.check": "tsc --noEmit",
     "test": "vitest",
-    "build": "tsdown"
+    "build": "tsdown",
+    "prepare": "husky"
   },
   "contributors": [
     {
