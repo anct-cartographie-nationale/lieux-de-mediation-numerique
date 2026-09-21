@@ -9,6 +9,7 @@ export * from './frais-a-charge';
 export * from './horaires';
 export * from './id';
 export * from './itinerance';
+export * from './liste';
 export * from './localisation';
 export * from './modalite-acces';
 export * from './modalite-accompagnement';
