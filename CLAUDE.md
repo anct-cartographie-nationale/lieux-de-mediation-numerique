@@ -65,6 +65,22 @@ Deux règles en découlent, et elles sont structurelles :
 2. **Un modèle composite imbrique les `.schema` de ses parties**, il ne réécrit pas leurs règles — c'est ce
    qui rend toutes les erreurs d'une adresse en une passe, chacune avec son chemin.
 
+### L'ordre d'une liste n'est pas une information
+
+Toute liste publiée est **dédoublonnée et ordonnée** par `sansDoublons` puis `triee` (`models/liste.ts`),
+avec la collation française — `Étudiants` se range auprès de `Femmes`, pas après le z. Cela vaut pour les dix
+vocabulaires fermés comme pour `courriels` et `site_web`.
+
+Sans cela, deux lieux identiques publiés dans un ordre de saisie différent produisent des chaînes différentes,
+et toute comparaison de versions signale un changement qui n'en est pas un. Sur le jeu national, trois quarts
+des lieux portaient au moins une liste non ordonnée.
+
+Le prix est que **l'ordre cesse de porter une intention** : le premier courriel n'est plus le contact
+principal. Un consommateur qui a besoin de cette distinction doit la demander par un champ, pas par une place
+dans une liste. Corollaire à ne pas défaire : aucune conversion ne doit lire `.at(0)` d'une liste pour en tirer
+une valeur unique — c'est le défaut que `fraisFromConditionAcces` portait, et qui faisait sortir « gratuit »
+d'un lieu déclaré « payant » dès que le tri changeait l'ordre.
+
 Nettoyer, valider et normaliser sont trois choses distinctes, et les verbes les séparent : `nettoyer*`
 (`nettoyage`) préserve le sens et rend une valeur publiable ; `normaliser*` (`deduplication`) fabrique une clé
 de comparaison destructrice qui n'est **jamais** publiée ; un modèle valide et met en forme.

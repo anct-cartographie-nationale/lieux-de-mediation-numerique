@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { defineModel, type Model } from '../model';
-import { sansDoublons } from '../liste';
+import { sansDoublons, triee } from '../liste';
 
 export enum ModaliteAccompagnement {
   EnAutonomie = 'En autonomie',
@@ -10,7 +10,7 @@ export enum ModaliteAccompagnement {
 }
 
 export const ModalitesAccompagnement = defineModel(
-  z.array(z.enum(ModaliteAccompagnement)).transform(sansDoublons).brand('ModalitesAccompagnement')
+  z.array(z.enum(ModaliteAccompagnement)).transform(sansDoublons).transform(triee).brand('ModalitesAccompagnement')
 );
 
 export type ModalitesAccompagnement = Model.TypeOf<typeof ModalitesAccompagnement>;

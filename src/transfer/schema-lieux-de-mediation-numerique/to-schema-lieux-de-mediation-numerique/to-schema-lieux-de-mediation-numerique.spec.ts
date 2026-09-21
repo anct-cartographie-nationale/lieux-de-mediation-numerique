@@ -156,16 +156,16 @@ describe('to schema lieux de mediation numerique', (): void => {
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
-          'Acquisition de matériel informatique à prix solidaire|Aide aux démarches administratives|Maîtrise des outils numériques du quotidien|Insertion professionnelle via le numérique|Utilisation sécurisée du numérique|Parentalité et éducation avec le numérique|Loisirs et créations numériques|Compréhension du monde numérique|Accès internet et matériel informatique',
+          'Accès internet et matériel informatique|Acquisition de matériel informatique à prix solidaire|Aide aux démarches administratives|Compréhension du monde numérique|Insertion professionnelle via le numérique|Loisirs et créations numériques|Maîtrise des outils numériques du quotidien|Parentalité et éducation avec le numérique|Utilisation sécurisée du numérique',
         date_maj: '2022-10-10',
         code_insee: '51454',
         complement_adresse: 'Le patio du bois de l’Aulne',
         latitude: 43.52609,
         longitude: 5.41423,
-        typologie: 'TIERS_LIEUX|ASSO',
+        typologie: 'ASSO|TIERS_LIEUX',
         telephone: '+33180059880',
         courriels: 'contact@laquincaillerie.tl|hello@laquincaillerie.tl',
-        site_web: 'https://www.laquincaillerie.tl/|https://m.facebook.com/laquincaillerienumerique/',
+        site_web: 'https://m.facebook.com/laquincaillerienumerique/|https://www.laquincaillerie.tl/',
         horaires: Horaires('Mo-Fr 09:00-12:00,14:00-18:30; Sa 08:30-12:00'),
         presentation_resume:
           'Notre association propose des formations aux outils numériques à destination des personnes âgées.',
@@ -173,32 +173,32 @@ describe('to schema lieux de mediation numerique', (): void => {
           'Notre parcours d’initiation permet l’acquisition de compétences numériques de base. Nous proposons également un accompagnement à destination des personnes déjà initiées qui souhaiteraient approfondir leurs connaissances. Du matériel informatique est en libre accès pour nos adhérents tous les après-midis. En plus de d’accueillir les personnes dans notre lieu en semaine (sur rendez-vous), nous assurons une permanence le samedi matin dans la médiathèque XX.',
         source: 'Hubik',
         publics_specifiquement_adresses: [
-          PublicSpecifiquementAdresse.Jeunes,
           PublicSpecifiquementAdresse.Etudiants,
           PublicSpecifiquementAdresse.FamillesEnfants,
-          PublicSpecifiquementAdresse.Seniors,
-          PublicSpecifiquementAdresse.Femmes
+          PublicSpecifiquementAdresse.Femmes,
+          PublicSpecifiquementAdresse.Jeunes,
+          PublicSpecifiquementAdresse.Seniors
         ].join('|'),
         prise_en_charge_specifique: [
-          PriseEnChargeSpecifique.Surdite,
-          PriseEnChargeSpecifique.HandicapsMoteurs,
+          PriseEnChargeSpecifique.DeficienceVisuelle,
           PriseEnChargeSpecifique.HandicapsMentaux,
+          PriseEnChargeSpecifique.HandicapsMoteurs,
           PriseEnChargeSpecifique.Illettrisme,
           PriseEnChargeSpecifique.LanguesEtrangeresAnglais,
           PriseEnChargeSpecifique.LanguesEtrangeresAutre,
-          PriseEnChargeSpecifique.DeficienceVisuelle
+          PriseEnChargeSpecifique.Surdite
         ].join('|'),
-        modalites_acces: 'Se présenter|Téléphoner|Contacter par mail|Envoyer un mail avec une fiche de prescription',
-        frais_a_charge: 'Payant|Gratuit sous condition',
-        itinerance: 'Itinérant|Fixe',
+        modalites_acces: 'Contacter par mail|Envoyer un mail avec une fiche de prescription|Se présenter|Téléphoner',
+        frais_a_charge: 'Gratuit sous condition|Payant',
+        itinerance: 'Fixe|Itinérant',
         dispositif_programmes_nationaux: [
-          DispositifProgrammeNational.FranceServices,
           DispositifProgrammeNational.AidantsConnect,
-          DispositifProgrammeNational.ConseillersNumeriques
+          DispositifProgrammeNational.ConseillersNumeriques,
+          DispositifProgrammeNational.FranceServices
         ].join('|'),
-        formations_labels: [FormationLabel.SudLabs, FormationLabel.Ordi3, FormationLabel.MesPapiers].join('|'),
+        formations_labels: [FormationLabel.MesPapiers, FormationLabel.Ordi3, FormationLabel.SudLabs].join('|'),
         autres_formations_labels: ['Numi formations', 'Nièvre médiation numérique'].join('|'),
-        modalites_accompagnement: 'À distance|En autonomie|Accompagnement individuel|Dans un atelier collectif',
+        modalites_accompagnement: 'À distance|Accompagnement individuel|Dans un atelier collectif|En autonomie',
         fiche_acces_libre:
           'https://acceslibre.beta.gouv.fr/app/29-lampaul-plouarzel/a/bibliotheque-mediatheque/erp/mediatheque-13/',
         prise_rdv: 'https://www.rdv-solidarites.fr/'
@@ -239,7 +239,7 @@ describe('to schema lieux de mediation numerique', (): void => {
         code_postal: '51100',
         adresse: '12 BIS RUE DE LECLERCQ',
         services:
-          'Acquisition de matériel informatique à prix solidaire|Aide aux démarches administratives|Maîtrise des outils numériques du quotidien|Insertion professionnelle via le numérique|Utilisation sécurisée du numérique|Parentalité et éducation avec le numérique|Loisirs et créations numériques|Compréhension du monde numérique|Accès internet et matériel informatique',
+          'Accès internet et matériel informatique|Acquisition de matériel informatique à prix solidaire|Aide aux démarches administratives|Compréhension du monde numérique|Insertion professionnelle via le numérique|Loisirs et créations numériques|Maîtrise des outils numériques du quotidien|Parentalité et éducation avec le numérique|Utilisation sécurisée du numérique',
         date_maj: '2022-10-10'
       }
     ]);

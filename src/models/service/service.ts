@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { defineModel, type Model } from '../model';
-import { sansDoublons } from '../liste';
+import { sansDoublons, triee } from '../liste';
 
 export enum Service {
   MaterielInformatiqueAPrixSolidaire = 'Acquisition de matériel informatique à prix solidaire',
@@ -14,6 +14,6 @@ export enum Service {
   AccesInternetEtMaterielInformatique = 'Accès internet et matériel informatique'
 }
 
-export const Services = defineModel(z.array(z.enum(Service)).transform(sansDoublons).brand('Services'));
+export const Services = defineModel(z.array(z.enum(Service)).transform(sansDoublons).transform(triee).brand('Services'));
 
 export type Services = Model.TypeOf<typeof Services>;

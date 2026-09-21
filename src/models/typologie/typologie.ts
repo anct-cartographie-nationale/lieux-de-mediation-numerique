@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { defineModel, type Model } from '../model';
-import { sansDoublons } from '../liste';
+import { sansDoublons, triee } from '../liste';
 
 export enum Typologie {
   ACI = 'ACI', // Structures porteuses d’ateliers et chantiers d’insertion
@@ -97,6 +97,6 @@ export enum Typologie {
   UDAF = 'UDAF' // Union Départementale d’Aide aux Familles
 }
 
-export const Typologies = defineModel(z.array(z.enum(Typologie)).transform(sansDoublons).brand('Typologies'));
+export const Typologies = defineModel(z.array(z.enum(Typologie)).transform(sansDoublons).transform(triee).brand('Typologies'));
 
 export type Typologies = Model.TypeOf<typeof Typologies>;
