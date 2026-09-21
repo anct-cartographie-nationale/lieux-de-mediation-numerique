@@ -159,21 +159,21 @@ describe('to schema data.inclusion', (): void => {
         labels_autres: ['Nièvre médiation numérique'],
         thematiques: [
           'numerique',
+          'numerique--acceder-a-une-connexion-internet',
+          'numerique--acceder-a-du-materiel',
           'numerique--s-equiper-en-materiel-informatique',
           'numerique--realiser-des-demarches-administratives-avec-un-accompagnement',
           'numerique--devenir-autonome-dans-les-demarches-administratives',
           'numerique--accompagner-les-demarches-de-sante',
+          'numerique--approfondir-ma-culture-numerique',
+          'numerique--promouvoir-la-citoyennete-numerique',
+          'numerique--favoriser-mon-insertion-professionnelle',
+          'numerique--creer-et-developper-mon-entreprise',
+          'numerique--creer-avec-le-numerique',
           'numerique--prendre-en-main-un-smartphone-ou-une-tablette',
           'numerique--prendre-en-main-un-ordinateur',
           'numerique--utiliser-le-numerique-au-quotidien',
-          'numerique--favoriser-mon-insertion-professionnelle',
-          'numerique--creer-et-developper-mon-entreprise',
-          'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique',
-          'numerique--creer-avec-le-numerique',
-          'numerique--approfondir-ma-culture-numerique',
-          'numerique--promouvoir-la-citoyennete-numerique',
-          'numerique--acceder-a-une-connexion-internet',
-          'numerique--acceder-a-du-materiel'
+          'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique'
         ]
       }
     ]);
@@ -272,41 +272,41 @@ describe('to schema data.inclusion', (): void => {
         structure_id: 'c3d15659-8de9-4fd6-b283-04d50f6ace57',
         source: 'solidagregateur',
         nom: 'Médiation numérique',
-        types: ['autonomie', 'accompagnement', 'atelier'],
+        types: ['accompagnement', 'atelier', 'autonomie'],
         modes_accueil: ['a-distance', 'en-presentiel'],
         thematiques: [
           'numerique',
+          'numerique--acceder-a-une-connexion-internet',
+          'numerique--acceder-a-du-materiel',
           'numerique--s-equiper-en-materiel-informatique',
           'numerique--realiser-des-demarches-administratives-avec-un-accompagnement',
           'numerique--devenir-autonome-dans-les-demarches-administratives',
           'numerique--accompagner-les-demarches-de-sante',
+          'numerique--approfondir-ma-culture-numerique',
+          'numerique--promouvoir-la-citoyennete-numerique',
+          'numerique--favoriser-mon-insertion-professionnelle',
+          'numerique--creer-et-developper-mon-entreprise',
+          'numerique--creer-avec-le-numerique',
           'numerique--prendre-en-main-un-smartphone-ou-une-tablette',
           'numerique--prendre-en-main-un-ordinateur',
           'numerique--utiliser-le-numerique-au-quotidien',
-          'numerique--favoriser-mon-insertion-professionnelle',
-          'numerique--creer-et-developper-mon-entreprise',
-          'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique',
-          'numerique--creer-avec-le-numerique',
-          'numerique--approfondir-ma-culture-numerique',
-          'numerique--promouvoir-la-citoyennete-numerique',
-          'numerique--acceder-a-une-connexion-internet',
-          'numerique--acceder-a-du-materiel'
+          'numerique--soutenir-la-parentalite-et-l-education-avec-le-numerique'
         ],
         prise_rdv: 'https://www.rdv-solidarites.fr/',
-        frais: ['payant'],
+        frais: ['gratuit-sous-conditions', 'payant'],
         profils: [
-          'surdite',
+          'deficience-visuelle',
           'handicaps-mentaux',
           'personnes-en-situation-illettrisme',
           'public-langues-etrangeres',
-          'deficience-visuelle',
-          'jeunes-16-26',
+          'surdite',
           'familles-enfants',
-          'seniors-65',
-          'femmes'
+          'femmes',
+          'jeunes-16-26',
+          'seniors-65'
         ],
-        modes_orientation_accompagnateur: ['telephoner', 'envoyer-un-mail', 'envoyer-un-mail-avec-une-fiche-de-prescription'],
-        modes_orientation_beneficiaire: ['se-presenter', 'telephoner', 'envoyer-un-mail']
+        modes_orientation_accompagnateur: ['envoyer-un-mail', 'envoyer-un-mail-avec-une-fiche-de-prescription', 'telephoner'],
+        modes_orientation_beneficiaire: ['envoyer-un-mail', 'se-presenter', 'telephoner']
       }
     ]);
   });

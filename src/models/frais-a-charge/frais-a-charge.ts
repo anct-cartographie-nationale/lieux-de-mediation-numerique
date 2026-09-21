@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { defineModel, type Model } from '../model';
-import { sansDoublons } from '../liste';
+import { sansDoublons, triee } from '../liste';
 
 export enum Frais {
   Gratuit = 'Gratuit',
@@ -8,6 +8,6 @@ export enum Frais {
   Payant = 'Payant'
 }
 
-export const FraisACharge = defineModel(z.array(z.enum(Frais)).transform(sansDoublons).brand('FraisACharge'));
+export const FraisACharge = defineModel(z.array(z.enum(Frais)).transform(sansDoublons).transform(triee).brand('FraisACharge'));
 
 export type FraisACharge = Model.TypeOf<typeof FraisACharge>;

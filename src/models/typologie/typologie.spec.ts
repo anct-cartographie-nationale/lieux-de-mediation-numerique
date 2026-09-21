@@ -16,3 +16,15 @@ describe('typologie model', (): void => {
     expect(Typologies.safe([Typologie.ACI, 'MAIRIE' as Typologie])).toBeNull();
   });
 });
+
+describe('ordre des typologies', (): void => {
+  it('publie les typologies dans le même ordre quelle que soit la saisie', (): void => {
+    expect(Typologies([Typologie.TIERS_LIEUX, Typologie.ASSO])).toStrictEqual(
+      Typologies([Typologie.ASSO, Typologie.TIERS_LIEUX])
+    );
+  });
+
+  it('ordonne et dédoublonne en une seule fois', (): void => {
+    expect(Typologies([Typologie.BIB, Typologie.ASSO, Typologie.BIB])).toStrictEqual([Typologie.ASSO, Typologie.BIB]);
+  });
+});

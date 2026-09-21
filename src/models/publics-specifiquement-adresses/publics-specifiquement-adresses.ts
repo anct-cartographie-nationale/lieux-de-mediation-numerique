@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { defineModel, type Model } from '../model';
-import { sansDoublons } from '../liste';
+import { sansDoublons, triee } from '../liste';
 
 export enum PublicSpecifiquementAdresse {
   Jeunes = 'Jeunes',
@@ -11,7 +11,7 @@ export enum PublicSpecifiquementAdresse {
 }
 
 export const PublicsSpecifiquementAdresses = defineModel(
-  z.array(z.enum(PublicSpecifiquementAdresse)).transform(sansDoublons).brand('PublicsSpecifiquementAdresses')
+  z.array(z.enum(PublicSpecifiquementAdresse)).transform(sansDoublons).transform(triee).brand('PublicsSpecifiquementAdresses')
 );
 
 export type PublicsSpecifiquementAdresses = Model.TypeOf<typeof PublicsSpecifiquementAdresses>;

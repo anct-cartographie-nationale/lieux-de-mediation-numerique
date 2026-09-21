@@ -132,10 +132,13 @@ const siteWebIfExist = (site_web?: string): { site_web?: string } => (site_web =
 
 const courrielIfExist = (courriel?: string): { courriel?: string } => (courriel == null ? {} : { courriel });
 
-const fraisIfExist = (frais?: string): { frais?: string[] } => (frais == null ? {} : { frais: [frais] });
+const fraisFromConditionAcces = (conditionsAcces: Frais[]): { frais?: string[] } => {
+  const frais: string[] = conditionsAcces
+    .map((condition: Frais): string | undefined => CONDITION_ACCES_TO_FRAIS.get(condition))
+    .filter((valeur: string | undefined): valeur is string => valeur != null);
 
-const fraisFromConditionAcces = (conditionAcces?: Frais): { frais?: string[] } =>
-  conditionAcces == null ? {} : fraisIfExist(CONDITION_ACCES_TO_FRAIS.get(conditionAcces));
+  return frais.length === 0 ? {} : { frais };
+};
 
 export const structureGeneralFields = (
   lieuMediationNumerique: LieuMediationNumerique
@@ -330,9 +333,7 @@ export const accesFields = (lieuMediationNumerique: LieuMediationNumerique): Sch
   ...(lieuMediationNumerique.modalites_accompagnement == null
     ? {}
     : modesAccueilFromModalitesAccompagnement(lieuMediationNumerique)),
-  ...(lieuMediationNumerique.frais_a_charge == null
-    ? {}
-    : fraisFromConditionAcces(lieuMediationNumerique.frais_a_charge.at(0))),
+  ...(lieuMediationNumerique.frais_a_charge == null ? {} : fraisFromConditionAcces(lieuMediationNumerique.frais_a_charge)),
   ...(lieuMediationNumerique.publics_specifiquement_adresses == null &&
   lieuMediationNumerique.prise_en_charge_specifique == null
     ? {}

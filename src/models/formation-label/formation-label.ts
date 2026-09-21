@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { defineModel, type Model } from '../model';
-import { sansDoublons } from '../liste';
+import { sansDoublons, triee } from '../liste';
 
 export enum FormationLabel {
   FormeAMonEspaceSante = 'Formé à « Mon Espace Santé »',
@@ -15,6 +15,8 @@ export enum FormationLabel {
   SudLabs = 'SUD LABS (PACA)'
 }
 
-export const FormationsLabels = defineModel(z.array(z.enum(FormationLabel)).transform(sansDoublons).brand('FormationsLabels'));
+export const FormationsLabels = defineModel(
+  z.array(z.enum(FormationLabel)).transform(sansDoublons).transform(triee).brand('FormationsLabels')
+);
 
 export type FormationsLabels = Model.TypeOf<typeof FormationsLabels>;
