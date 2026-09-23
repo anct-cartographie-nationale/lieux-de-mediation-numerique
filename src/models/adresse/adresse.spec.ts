@@ -92,14 +92,62 @@ describe('adresse model', (): void => {
     expect(Adresse.safe({ voie, code_postal: '57100', commune: 'Metz' })).toBeNull();
   });
 
-  it('refuse un complément d’adresse hors charte, là où rien ne le contrôlait', (): void => {
-    expect(
-      Adresse.safe({
-        voie: '4 rue des Acacias',
-        complement_adresse: 'ZAE Joncquier & Morelles',
-        code_postal: '57100',
-        commune: 'Metz'
-      })
-    ).toBeNull();
+  const avecLaVoie = (voie: string): AdresseToValidate => ({ voie, code_postal: '57100', commune: 'Metz' });
+  const avecLeComplement = (complement_adresse: string): AdresseToValidate => ({
+    voie: '4 rue des Acacias',
+    complement_adresse,
+    code_postal: '57100',
+    commune: 'Metz'
   });
+
+  it.each([
+    ['4 rue du Général de Gaulle – Bâtiment B'],
+    ['Place de l’Hôtel de Ville — Mairie'],
+    ['Résidence « Les Terrasses »'],
+    ['Résidence “Les Terrasses”'],
+    ['ZAE Joncquier & Morelles'],
+    ['CRE@VALLEE BOULEVARD DES SAVEURS'],
+    ['Centre culturel Le MI[X]']
+  ])('accepte la voie %s, écrite comme on l’écrit à la main', (voie: string): void => {
+    expect(Adresse(avecLaVoie(voie)).voie).toBe(voie);
+  });
+
+  it.each([['Groupe scolaire "Les Terrasses"'], ['12 rue des Acacias #3'], ['12 rue des Acacias; Metz'], ['Rue_de_la_Mairie']])(
+    'refuse la voie %s, dont un caractère ne s’écrit pas dans une adresse',
+    (voie: string): void => {
+      expect(Adresse.safe(avecLaVoie(voie))).toBeNull();
+    }
+  );
+
+  it.each([['-12 rue des Acacias'], ['@mairie rue des Acacias']])(
+    'refuse la voie %s, qu’un tableur lirait comme une formule',
+    (voie: string): void => {
+      expect(Adresse.safe(avecLaVoie(voie))).toBeNull();
+    }
+  );
+
+  it.each([['5'], ['163'], ['1034']])('accepte le complément d’adresse %s, un simple numéro', (complement: string): void => {
+    expect(Adresse(avecLeComplement(complement)).complement_adresse).toBe(complement);
+  });
+
+  it.each([['77250'], ['06 02 16 12 33'], ['21850033800015'], [''], ['   '], ['-']])(
+    'refuse le complément d’adresse %s, qui n’est ni un texte ni un numéro',
+    (complement: string): void => {
+      expect(Adresse.safe(avecLeComplement(complement))).toBeNull();
+    }
+  );
+
+  it.each([['Marché des Halles – 1er étage'], ['Centre culturel Le MI[X]'], ['Espace « Arts & Métiers »']])(
+    'accepte le complément d’adresse %s',
+    (complement: string): void => {
+      expect(Adresse(avecLeComplement(complement)).complement_adresse).toBe(complement);
+    }
+  );
+
+  it.each([['Groupe scolaire "Les Terrasses"'], ['- Bâtiment B'], ['=1+1']])(
+    'refuse le complément d’adresse %s, hors charte',
+    (complement: string): void => {
+      expect(Adresse.safe(avecLeComplement(complement))).toBeNull();
+    }
+  );
 });
