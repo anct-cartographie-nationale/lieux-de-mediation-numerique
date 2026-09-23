@@ -14,6 +14,19 @@ describe('nettoyerVoie', (): void => {
     expect(nettoyerVoie('AV. de la Gare')).toBe('Avenue de la Gare');
   });
 
+  it('should expand the abbreviations the reference spells out in full', (): void => {
+    expect(nettoyerVoie('4 PLACE HOTEL VILLE ESP LIBERATION')).toBe('4 PLACE HOTEL VILLE Esplanade LIBERATION');
+    expect(nettoyerVoie('39 RUE GEN DUFIEUX')).toBe('39 RUE Général DUFIEUX');
+    expect(nettoyerVoie('25 Avenue Cdt Dumont')).toBe('25 Avenue Commandant Dumont');
+    expect(nettoyerVoie('2 Place DU DOC LAZARE GOUJON')).toBe('2 Place DU Docteur LAZARE GOUJON');
+  });
+
+  it('should expand these abbreviations whatever their case', (): void => {
+    expect(nettoyerVoie('3 rue du gen Leclerc')).toBe('3 rue du Général Leclerc');
+    expect(nettoyerVoie('5 place du Doc. Roux')).toBe('5 place du Docteur Roux');
+    expect(nettoyerVoie('1 esp des Arts')).toBe('1 Esplanade des Arts');
+  });
+
   it('should not mistake the start of a word for an abbreviation', (): void => {
     expect(nettoyerVoie('Allee des Roses')).toBe('Allee des Roses');
   });
