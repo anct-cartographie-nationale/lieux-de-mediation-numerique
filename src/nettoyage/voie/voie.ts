@@ -1,24 +1,12 @@
 import { appliquerRegles, type RegleDeNettoyage } from '../regle';
-import { relireCommeUtf8 } from './decodeur-utf8';
+import {
+  DEBUT_DE_FORMULE,
+  ESPACES_DE_BORD,
+  ESPACES_MULTIPLES,
+  REGLES_TYPOGRAPHIQUES,
+  RETOURS_A_LA_LIGNE
+} from '../typographie';
 import { ABREVIATIONS_DE_TYPE_DE_VOIE, ABREVIATIONS_EN_TETE_DE_VOIE_SEULEMENT } from './types-de-voie';
-
-const ENCODAGE_ABIME: RegleDeNettoyage = {
-  nom: 'encodage abîmé',
-  selecteur: /Ã[\x80-\xFF]/u,
-  corriger: relireCommeUtf8
-};
-
-const ESPACES_MULTIPLES: RegleDeNettoyage = {
-  nom: 'espaces multiples',
-  selecteur: /\s+/u,
-  corriger: (aCorriger: string): string => aCorriger.replace(/\s+/gu, ' ')
-};
-
-const APOSTROPHE_ABIMEE: RegleDeNettoyage = {
-  nom: 'apostrophe abîmée par un encodage Windows-1252',
-  selecteur: /\u0092/u,
-  corriger: (aCorriger: string): string => aCorriger.replace(/\u0092/gu, "'")
-};
 
 const NUMERO_ZERO: RegleDeNettoyage = {
   nom: 'numéro zéro',
@@ -32,16 +20,23 @@ const CARACTERES_INTERDITS: RegleDeNettoyage = {
   corriger: (aCorriger: string): string => aCorriger.replace(/[",²]/gu, '')
 };
 
-const RETOURS_A_LA_LIGNE: RegleDeNettoyage = {
-  nom: 'retours à la ligne',
-  selecteur: /\n|\\n/u,
-  corriger: (aCorriger: string): string => aCorriger.replace(/\n|\\n/u, ' ')
-};
-
 const PREFIXE_NULL: RegleDeNettoyage = {
   nom: 'préfixe null',
   selecteur: /^[Nn][Uu][Ll][Ll]\s+/u,
   corriger: (aCorriger: string): string => aCorriger.replace(/^[Nn][Uu][Ll][Ll]\s+/u, '')
+};
+
+const MENTION_NON_DIFFUSIBLE: RegleDeNettoyage = {
+  nom: 'mention d’une adresse non diffusible',
+  selecteur: /^\s*\[?\s*non[\s-]*diffusible\s*\]?\s*$/iu,
+  corriger: (): string => ''
+};
+
+const SANS_LETTRE: RegleDeNettoyage = {
+  nom: 'sans aucune lettre',
+  selecteur: /\p{L}/u,
+  negation: true,
+  corriger: (): string => ''
 };
 
 const SEULEMENT_UN_CODE_POSTAL: RegleDeNettoyage = {
@@ -93,24 +88,20 @@ const SUFFIXE_DE_NUMERO: RegleDeNettoyage = {
     )
 };
 
-const ESPACES_DE_BORD: RegleDeNettoyage = {
-  nom: 'espaces de bord',
-  selecteur: /^\s+|\s+$/u,
-  corriger: (aCorriger: string): string => aCorriger.trim()
-};
-
 export const REGLES_VOIE: readonly RegleDeNettoyage[] = [
-  ENCODAGE_ABIME,
+  ...REGLES_TYPOGRAPHIQUES,
   ESPACES_MULTIPLES,
-  APOSTROPHE_ABIMEE,
   NUMERO_ZERO,
   CARACTERES_INTERDITS,
   RETOURS_A_LA_LIGNE,
   PREFIXE_NULL,
+  MENTION_NON_DIFFUSIBLE,
   SEULEMENT_UN_CODE_POSTAL,
   CODE_POSTAL_ET_SUITE,
   ABREVIATIONS_DE_VOIE,
   SUFFIXE_DE_NUMERO,
+  DEBUT_DE_FORMULE,
+  SANS_LETTRE,
   ESPACES_DE_BORD
 ];
 

@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { Voie } from '../../models';
 import { nettoyerVoie } from './voie';
 
 describe('nettoyerVoie', (): void => {
@@ -99,6 +100,29 @@ describe('nettoyerVoie', (): void => {
   it('should repair a latin-1 reading of utf-8 bytes', (): void => {
     expect(nettoyerVoie('2 rue du Caf\u00c3\u00a9')).toBe('2 rue du Café');
   });
+
+  it('should empty the mention of an address kept undisclosed', (): void => {
+    expect(nettoyerVoie('[Non-Diffusible]')).toBe('');
+  });
+
+  it('should empty a voie without a single letter', (): void => {
+    expect(nettoyerVoie('1 - 3')).toBe('');
+  });
+
+  it('should read underscores as spaces', (): void => {
+    expect(nettoyerVoie('28 Rue_de_la_Mairie')).toBe('28 Rue de la Mairie');
+  });
+
+  it('should drop the start a spreadsheet would read as a formula', (): void => {
+    expect(nettoyerVoie('- 12 rue de la Paix')).toBe('12 rue de la Paix');
+  });
+
+  it.each([['28 Rue_de_la_Mairie'], ['4 Place de l´Église'], ['- 12 rue de la Paix'], ['12 rue "des" Marronniers']])(
+    'should make %s valid',
+    (voie: string): void => {
+      expect(Voie.safe(nettoyerVoie(voie))).not.toBeNull();
+    }
+  );
 
   it('should never throw', (): void => {
     expect(nettoyerVoie('')).toBe('');

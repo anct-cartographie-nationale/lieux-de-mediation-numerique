@@ -1,5 +1,6 @@
 export * from './code-postal';
 export * from './commune';
+export * from './complement-adresse';
 export * from './courriel';
 export * from './localisation';
 export * from './nom';
@@ -7,4 +8,5 @@ export * from './presentation';
 export * from './regle';
 export * from './site-web';
 export * from './telephone';
+export * from './typographie';
 export * from './voie';
