@@ -27,6 +27,45 @@ describe('nettoyerVoie', (): void => {
     expect(nettoyerVoie('1 esp des Arts')).toBe('1 Esplanade des Arts');
   });
 
+  it('should expand the other abbreviations met in the field', (): void => {
+    expect(nettoyerVoie('207 CHS DU 24EME TERRITORIAL')).toBe('207 Chaussée DU 24EME TERRITORIAL');
+    expect(nettoyerVoie('30 Rue du Pr Andre Beaudoing')).toBe('30 Rue du Professeur Andre Beaudoing');
+    expect(nettoyerVoie('4 Av de la Gde Duchesse Charlotte')).toBe('4 Avenue de la Grande Duchesse Charlotte');
+    expect(nettoyerVoie('RPT DES SOURCES DE LA VENDEE')).toBe('Rond-point DES SOURCES DE LA VENDEE');
+    expect(nettoyerVoie('Prom Villard Valmar')).toBe('Promenade Villard Valmar');
+    expect(nettoyerVoie('QUA KOUTROUZATSINI')).toBe('Quartier KOUTROUZATSINI');
+  });
+
+  it('should read QU as a quartier, which is what the field means by it', (): void => {
+    expect(nettoyerVoie('QU. DARBOUSSON 201 CHEMIN DE FAVEYROLLES')).toBe('Quartier DARBOUSSON 201 CHEMIN DE FAVEYROLLES');
+  });
+
+  it('should expand an ambiguous abbreviation when it opens the voie or follows the number', (): void => {
+    expect(nettoyerVoie('PAS DES ECOLES')).toBe('Passage DES ECOLES');
+    expect(nettoyerVoie('11 Pas de la Mairie')).toBe('11 Passage de la Mairie');
+    expect(nettoyerVoie('54 PRO DES LICES')).toBe('54 Promenade DES LICES');
+    expect(nettoyerVoie('12 B AVE FOCH')).toBe('12 B Avenue FOCH');
+    expect(nettoyerVoie('QU COSMES 23 AVENUE GEORGES POMPIDOU')).toBe('Quartier COSMES 23 AVENUE GEORGES POMPIDOU');
+  });
+
+  it.each([
+    ["2 Rue de l'Ave Maria"],
+    ['Allée des Petits Pas'],
+    ['12 rue de la Zone Pro'],
+    ['POLE DE SERVICES - QU LES OLIVIERS 30 AVENUE DE ZELZATE']
+  ])('should leave %s alone, an ambiguous abbreviation being a word anywhere else', (voie: string): void => {
+    expect(nettoyerVoie(voie)).toBe(voie);
+  });
+
+  it('should part an abbreviation from the name its dot is glued to', (): void => {
+    expect(nettoyerVoie('Avenue du Dr.Monmont')).toBe('Avenue du Docteur Monmont');
+  });
+
+  it('should not expand an abbreviation glued to anything but a name', (): void => {
+    expect(nettoyerVoie('mairie@st.fr')).toBe('mairie@st.fr');
+    expect(nettoyerVoie('12 av.de la Gare')).toBe('12 av.de la Gare');
+  });
+
   it('should not mistake the start of a word for an abbreviation', (): void => {
     expect(nettoyerVoie('Allee des Roses')).toBe('Allee des Roses');
   });

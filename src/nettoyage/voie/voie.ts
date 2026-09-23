@@ -1,6 +1,6 @@
 import { appliquerRegles, type RegleDeNettoyage } from '../regle';
 import { relireCommeUtf8 } from './decodeur-utf8';
-import { ABREVIATIONS_DE_TYPE_DE_VOIE } from './types-de-voie';
+import { ABREVIATIONS_DE_TYPE_DE_VOIE, ABREVIATIONS_EN_TETE_DE_VOIE_SEULEMENT } from './types-de-voie';
 
 const ENCODAGE_ABIME: RegleDeNettoyage = {
   nom: 'encodage abîmé',
@@ -59,8 +59,16 @@ const CODE_POSTAL_ET_SUITE: RegleDeNettoyage = {
 const touteCasse = (abreviation: string): string =>
   [abreviation, `${abreviation[0]}${abreviation.slice(1).toLowerCase()}`, abreviation.toLowerCase()].join('|');
 
+const alternatives = (abreviations: string[]): string => abreviations.map(touteCasse).join('|');
+
+const EN_TETE_DE_VOIE: string = '^\\s*|\\d\\s*(?:[Bb][Ii][Ss]|[Tt][Ee][Rr]|[Qq][Uu][Aa][Tt][Ee][Rr]|\\p{L})?\\s+';
+
 const MOTIF_ABREVIATION: RegExp = new RegExp(
-  `(?<![\\p{L}\\d])(${Object.keys(ABREVIATIONS_DE_TYPE_DE_VOIE).map(touteCasse).join('|')})\\.?(?![\\p{L}\\d])`,
+  `(?<![\\p{L}\\d])(?:${alternatives(
+    Object.keys(ABREVIATIONS_DE_TYPE_DE_VOIE).filter(
+      (abreviation: string): boolean => !ABREVIATIONS_EN_TETE_DE_VOIE_SEULEMENT.has(abreviation)
+    )
+  )}|(?<=${EN_TETE_DE_VOIE})(?:${alternatives([...ABREVIATIONS_EN_TETE_DE_VOIE_SEULEMENT])}))(?:(\\.)(?=\\p{Lu}\\p{Ll})|\\.?(?![\\p{L}\\d]|\\.\\p{L}))`,
   'gu'
 );
 
@@ -68,10 +76,11 @@ const ABREVIATIONS_DE_VOIE: RegleDeNettoyage = {
   nom: 'abréviations de type de voie',
   selecteur: MOTIF_ABREVIATION,
   corriger: (aCorriger: string): string =>
-    aCorriger.replace(
-      MOTIF_ABREVIATION,
-      (abreviation: string): string => ABREVIATIONS_DE_TYPE_DE_VOIE[abreviation.replace('.', '').toUpperCase()] ?? abreviation
-    )
+    aCorriger.replace(MOTIF_ABREVIATION, (abreviation: string, pointColle: string | undefined): string => {
+      const developpee: string | undefined = ABREVIATIONS_DE_TYPE_DE_VOIE[abreviation.replace('.', '').toUpperCase()];
+      if (developpee == null) return abreviation;
+      return pointColle == null ? developpee : `${developpee} `;
+    })
 };
 
 const SUFFIXE_DE_NUMERO: RegleDeNettoyage = {
