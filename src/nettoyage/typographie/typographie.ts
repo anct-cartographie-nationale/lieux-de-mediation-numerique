@@ -52,7 +52,7 @@ export const SOULIGNES: RegleDeNettoyage = {
 export const RETOURS_A_LA_LIGNE: RegleDeNettoyage = {
   nom: 'retours à la ligne',
   selecteur: /\n|\\n/u,
-  corriger: (aCorriger: string): string => aCorriger.replace(/\n|\\n/u, ' ')
+  corriger: (aCorriger: string): string => aCorriger.replace(/\n|\\n/gu, ' ')
 };
 
 export const GUILLEMETS_DROITS: RegleDeNettoyage = {
@@ -70,10 +70,16 @@ export const DEBUT_DE_FORMULE: RegleDeNettoyage = {
   corriger: (aCorriger: string): string => aCorriger.replace(/^[\s\-@=+]+/u, '')
 };
 
+const estInsecableDeGuillemet = (blancs: string, avant: string, apres: string): boolean =>
+  /^[\u00a0\u202f]$/u.test(blancs) && (avant === '«' || apres === '»');
+
 export const ESPACES_MULTIPLES: RegleDeNettoyage = {
-  nom: 'espaces multiples',
+  nom: 'espaces multiples, hors insécable d’un guillemet français',
   selecteur: /\s+/u,
-  corriger: (aCorriger: string): string => aCorriger.replace(/\s+/gu, ' ')
+  corriger: (aCorriger: string): string =>
+    aCorriger.replace(/\s+/gu, (blancs: string, position: number, texte: string): string =>
+      estInsecableDeGuillemet(blancs, texte.charAt(position - 1), texte.charAt(position + blancs.length)) ? blancs : ' '
+    )
 };
 
 export const ESPACES_DE_BORD: RegleDeNettoyage = {
