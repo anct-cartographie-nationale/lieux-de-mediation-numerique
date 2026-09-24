@@ -37,7 +37,24 @@ describe('nettoyerComplementAdresse', (): void => {
     expect(ComplementAdresse.safe(nettoyerComplementAdresse(complement))).not.toBeNull();
   });
 
+  it('should replace every escaped line break', (): void => {
+    expect(nettoyerComplementAdresse('Bât A\\nEsc B\\nEtage 2')).toBe('Bât A Esc B Etage 2');
+  });
+
   it('should never throw', (): void => {
     expect(nettoyerComplementAdresse('')).toBe('');
+  });
+
+  it.each([
+    ['Groupe scolaire "Les Terrasses"'],
+    ['Résidence " Les Pins "  Bât A'],
+    ['"Le Forum" puis "La Halle"'],
+    ['Bât A\\nEsc B\\nEtage 2'],
+    ['Résidence « Les Pins »'],
+    ['- Bâtiment_B']
+  ])('should be idempotent on %j', (complement: string): void => {
+    const nettoye: string = nettoyerComplementAdresse(complement);
+
+    expect(nettoyerComplementAdresse(nettoye)).toBe(nettoye);
   });
 });

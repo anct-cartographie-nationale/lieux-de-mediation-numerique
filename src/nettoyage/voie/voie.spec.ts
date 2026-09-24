@@ -134,4 +134,13 @@ describe('nettoyerVoie', (): void => {
       expect(nettoyerVoie(voie)).toBe(voie);
     }
   );
+
+  it.each([['Rue "Les Terrasses"'], ['12 rue\\ndu Port\\nBât A'], ['  AV  de la  République ']])(
+    'should be idempotent on %j',
+    (voie: string): void => {
+      const nettoyee: string = nettoyerVoie(voie);
+
+      expect(nettoyerVoie(nettoyee)).toBe(nettoyee);
+    }
+  );
 });
